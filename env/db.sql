@@ -82,3 +82,9 @@ orderItems_TotalPrice float(53) NOT NULL,
 FOREIGN KEY(item_ID) REFERENCES item(item_ID) ON UPDATE CASCADE,
 FOREIGN KEY(order_ID) REFERENCES orders(order_ID) ON UPDATE CASCADE
 );
+
+INSERT INTO branch (
+	branch_Name, branch_Address
+) VALUES (
+	'VICAS', ' Block 6 Lot 1 Congressional Road, Raibow Village 5 Bagumbong Caloocan'
+)
