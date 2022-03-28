@@ -5,7 +5,7 @@
     $categ = "";
     $branch = 1;
 
-    if (isset($_GET['categ'])) {
+    if (isset($_GET['categ']) && $_GET['categ'] != "all") {
         $categ = $_GET['categ'];
 
         $sqlItems = "SELECT * FROM inventory iv 

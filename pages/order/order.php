@@ -42,7 +42,7 @@
             <?php    
                 }
             ?>
-
+                <button onclick="showItems('all')">all</button>
             <div id="list"> List of Items </div>
         </div>
         
