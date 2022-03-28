@@ -43,7 +43,8 @@
 				<td>".$row['supplier_ContactNum']."</td>
                 <td>".$row['supplier_Address']."</td>
 				<td><button onclick=\"location.href='editsupplier.php?supplier_ID=".$row['supplier_ID']."'\">Edit</button></td>
-				<td> <button> <a onclick='return checkdelete()' href='deletesupplier.php?supplier_ID=".$row['supplier_ID']."'> Delete</button></a></td></tr>";
+				<td> <button> <a onclick='return checkdelete()' href='deletesupplier.php?supplier_ID=".$row['supplier_ID']."'> Delete</button></a></td>
+				<td> <button onclick=\"location.href='suppliertable.php?supplier_ID=".$row['supplier_ID']."'\">More Information</button></td></tr>";
 		}
 		echo "</table>";
 	}
