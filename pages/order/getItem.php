@@ -39,18 +39,21 @@
                 <div>
     <?php
                 while (($rowItems = mysqli_fetch_assoc($resItems))) {
+                    $itemID = $rowItems['item_ID']; //item ID
                     $itemName = $rowItems['item_Name']; //item name
                     $itemStock = $rowItems['item_Stock']; //item stock
                     $itemUnit = $rowItems['item_unit']; //item unit
                     $itemPrice = $rowItems['item_RetailPrice']; //item price
     ?>
                     <div style="width:24%; border-style: solid">
+                        <form action="addItem.php?itemID=<?php echo $itemID ?>" method="post" target="_top">
                         <div>
                             <?php echo $itemName ?><br>
                             <?php echo "Stocks: ".$itemStock ?><br>
                             <?php echo "P".$itemPrice."/".$itemUnit ?><br>
-                            <button>add to cart</button>
+                            <input type="submit" name="add" value="Add to Cart"/>
                         </div>
+                        </form>
                     </div>
     <?php
                     $i++; //number of items in row
@@ -76,9 +79,6 @@
                 }
                     echo "</div>";
                     echo "</div><br><br>";
-        } else {
-            mysqli_error($conn);
-            echo $sqlItems;
         }
     ?>
 </body>
