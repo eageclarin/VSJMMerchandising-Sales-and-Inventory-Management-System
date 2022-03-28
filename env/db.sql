@@ -56,7 +56,7 @@ branch_Address varchar(100) NOT NULL
 
 
 CREATE TABLE inventory (
-	branch_ID int NOT NULL PRIMARY KEY,
+	branch_ID int NOT NULL,
 	item_ID int NOT NULL,
 	item_Stock int NOT NULL,
 	item_RetailPrice float(53) NOT NULL,
@@ -87,4 +87,25 @@ INSERT INTO branch (
 	branch_Name, branch_Address
 ) VALUES (
 	'VICAS', ' Block 6 Lot 1 Congressional Road, Raibow Village 5 Bagumbong Caloocan'
-)
+);
+
+
+INSERT INTO `item` ( `item_Name`, `item_unit`, `item_Brand`) 
+VALUES 	('item-01', 'pc', 'brand-01'), 
+	( 'item-02', 'pc', 'brand-02'),
+	('item-03', 'bot', 'brand-02'), 
+	( 'item-04', 'pack', 'brand-01'),
+	('item-05', 'kg', 'brand-02'), 
+	( 'item-06', 'bot', 'brand-03'),
+	('item-07', 'can', 'brand-02'), 
+	( 'item-08', 'can', 'brand-02'),
+	('item-09', 'doz', 'brand-03'), 
+	( 'item-10', 'roll', 'brand-03');
+
+INSERT INTO `inventory` ( `branch_ID`, `item_ID`, `item_Stock`, `item_RetailPrice`, `item_category`, `item_markup`) 
+VALUES	(1,1,5,25,'tools',1.28),
+	(1,2,4,30,'architectural',1.5),
+	(1,3,10,20,'electrical',1.2),
+	(1,5,100,10,'tools',1.15),
+	(1,8,12,1,'architectural',0.5),
+	(1,10,20,200,'plumbing',3);
