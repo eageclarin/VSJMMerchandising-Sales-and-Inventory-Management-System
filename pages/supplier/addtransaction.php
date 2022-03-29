@@ -66,7 +66,7 @@
 
 			    mysqli_close($db1); 
 
-			    /*$db2 = mysqli_connect("localhost","root","","VSJM");
+			    $db2 = mysqli_connect("localhost","root","","VSJM");
 
 				if(!$db2)
 				{
@@ -77,17 +77,10 @@
 			    $insert = mysqli_query($db2,"INSERT INTO supplier_item". "(supplier_ID, item_ID) ". "
 						  VALUES('$supplier_ID', '$item_ID')");
 						
-			               
-			    if(!$insert)
-			    {
-			        echo mysqli_error($db2);
-			    }
-			    else
-			    {
-			        echo " Supplier item records added successfully.";
-			    }
+			   
+			    
 
-			    mysqli_close($db2); */
+			    mysqli_close($db2); 
 
 			   
 			}

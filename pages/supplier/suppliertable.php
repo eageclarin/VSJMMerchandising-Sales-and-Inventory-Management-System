@@ -88,7 +88,7 @@
 						<th>Brand</th>
 						<?php
 							
-							$sql = "SELECT * from item where item_ID in ( SELECT item_ID from supplier_transactions INNER JOIN transaction_items on transaction_items.transaction_ID = supplier_transactions.transaction_ID where supplier_ID = ".$supplier_chosen.")";
+							$sql = "SELECT * from item where item_ID in ( SELECT item_ID from supplier_item where supplier_ID = ".$supplier_chosen.")";
 							
 							$result = $conn-> query($sql) or die($conn->error);
 
@@ -101,16 +101,17 @@
 											<td>". $row["item_Brand"]."</td>
 											<td><button onclick=\"location.href='editsupplieritem.php?item_ID=".$row['item_ID']."&supplier_ID=".$supplier_chosen."'\">Edit Item</button></td>
 											<td><a onclick='return checkdelete()' href='deletesupplieritem.php?item_ID=".$row['item_ID']."&supplier_ID=".$supplier_chosen."'\"><button>Delete Item For This Supplier</a></button></td>
+											<td><a onclick='return checkdelete()' href='deleteitemtransactions.php?item_ID=".$row['item_ID']."&supplier_ID=".$supplier_chosen."'\"><button>Delete Item & Transactions</a></button></td>
 					
 									</tr>";
 
 								}
-							echo "<tr><td colspan=\"11\"><button onclick=\"location.href='addtransaction.php?supplier_chosen=".$supplier_chosen."'\">Add Item to Supplier</button></td></tr>";
+							echo "<tr><td colspan=\"11\"><button onclick=\"location.href='addsupplieritem.php?supplier_ID=".$supplier_chosen."'\">Add Item to Supplier</button></td></tr>";
 							}
 							else {
 									
 									echo "<tr><td colspan=\"6\">There are 0 results.</td></tr>";
-									echo "<tr><td colspan=\"11\"><button onclick=\"location.href='addtransaction.php?supplier_chosen=".$supplier_chosen."'\">Add Item to Supplier</button></td></tr>";
+									echo "<tr><td colspan=\"11\"><button onclick=\"location.href='addsupplieritem.php?supplier_ID=".$supplier_chosen."'\">Add Item to Supplier</button></td></tr>";
 							}								
 
 						?>
