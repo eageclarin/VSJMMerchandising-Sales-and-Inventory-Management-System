@@ -44,8 +44,6 @@ if(isset($_POST['submit']))
 mysqli_close($db); // Close connection
 ?>
 
-
-
 <form action="./additem.php" method="post">
     <p>
         Item Name:
@@ -64,7 +62,7 @@ mysqli_close($db); // Close connection
   
   
   <input type="submit" name="submit" value="Submit">
-  <button type="button" onclick="location.href='./inventory.php'">Go back </button>
+  <button type="button" onclick="location.href='./items.php'">Go back </button>
 </form>
 
 </body>
