@@ -44,9 +44,7 @@ if(isset($_POST['submit']))
 mysqli_close($db); // Close connection
 ?>
 
-<!-- ------------------------ walang supplier ID, autoincrement ? --------------------------- -->
 
-<h3>Fill the Form</h3>
 
 <form action="./additem.php" method="post">
     <p>
