@@ -99,19 +99,22 @@
 											<td>". $row["item_Name"]."</td>
 											<td>". $row["item_unit"]."</td>
 											<td>". $row["item_Brand"]."</td>
-											<td><button>Edit Item</button></td>
-											<td><button>Delete Item For This Supplier</button></td>
+											<td><button onclick=\"location.href='editsupplieritem.php?item_ID=".$row['item_ID']."&supplier_ID=".$supplier_chosen."'\">Edit Item</button></td>
+											<td><a onclick='return checkdelete()' href='deletesupplieritem.php?item_ID=".$row['item_ID']."&supplier_ID=".$supplier_chosen."'\"><button>Delete Item For This Supplier</a></button></td>
 					
 									</tr>";
 
 								}
-							echo "<tr><td colspan=\"6\"><button>Add Item to Supplier</button></td></tr></table>";
+							echo "<tr><td colspan=\"11\"><button onclick=\"location.href='addtransaction.php?supplier_chosen=".$supplier_chosen."'\">Add Item to Supplier</button></td></tr>";
 							}
 							else {
+									
 									echo "<tr><td colspan=\"6\">There are 0 results.</td></tr>";
+									echo "<tr><td colspan=\"11\"><button onclick=\"location.href='addtransaction.php?supplier_chosen=".$supplier_chosen."'\">Add Item to Supplier</button></td></tr>";
 							}								
 
 						?>
+					</table>
 				</div>
 
 				<input type="radio" id="tabtransactions" name="mytabs">
@@ -151,13 +154,17 @@
 									</tr>";
 
 								}
-							echo "<tr><td colspan=\"11\"><button onclick=\"location.href='addtransaction.php?supplier_chosen=".$supplier_chosen."'\">Add Transaction</button></td></tr></table>";
+							echo "<tr><td colspan=\"11\"><button onclick=\"location.href='addtransaction.php?supplier_chosen=".$supplier_chosen."'\">Add Transaction</button></td></tr>";
 							}
 							else {
+									
 									echo "<tr><td colspan=\"11\">There are 0 results.</td></tr>";
-							}								
+									echo "<tr><td colspan=\"11\"><button onclick=\"location.href='addtransaction.php?supplier_chosen=".$supplier_chosen."'\">Add Transaction</button></td></tr>";
+							}	
+
 
 						?>
+					</table>
 			    </div>
 
 			    <input type="radio" id="tabinformation" name="mytabs">
