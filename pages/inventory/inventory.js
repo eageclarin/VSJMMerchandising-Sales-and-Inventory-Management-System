@@ -1,11 +1,38 @@
+function fill(Value) {
+    $('#search').val(Value);
+    $('#display').hide();
+ }
+
+
 $(document).ready(function(){
+        $("#search").keyup(function() {
+        var input = $(this).val();
+        //alert(input);
+       // if (input == "") {  
+            //$("#display").html("");
+
+       // }
+       //  else {
+            $.ajax({
+                type: "POST",
+                url: "search_sort.php",
+                data: {
+                    search: input
+                },
+                success: function(data) {
+                    $("#display").html(data);
+                }
+            });
+       // };
+    });
+
     $("#sort").change(function(){
         var option = $(this).find(":selected").val();
         sessionStorage.setItem("selectedOption", option);
         var optionValue = $(this).selectedIndex;
         $.ajax({
             type: "POST",
-            url: "inventory.php",
+            url: "search_sort.php",
             data: {
                 selected: option
             },
