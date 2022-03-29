@@ -1,3 +1,5 @@
+//wait di pa to final kasi may error pa siya hehe
+//I'll update na lang yung wala nang error. Thankies
 <?php
 	$server = "localhost:3306";
 	$user = "root";
