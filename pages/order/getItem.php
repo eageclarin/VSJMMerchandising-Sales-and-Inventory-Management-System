@@ -28,6 +28,10 @@
 ?>
 
 <html>
+<head>
+    <link rel="stylesheet" href="order.css" />
+    <script src="order.js"></script>
+</head>
 <body style="margin:0;">
     <?php
         if ($resItems) {
@@ -46,12 +50,12 @@
                     $itemPrice = $rowItems['item_RetailPrice']; //item price
     ?>
                     <div style="width:24%; border-style: solid">
-                        <form action="addItem.php?itemID=<?php echo $itemID ?>" method="post" target="_top">
+                        <form action="order.php?action=add&itemID=<?php echo $itemID ?>&itemName=<?php echo $itemName ?>&itemPrice=<?php echo $itemPrice ?>" method='post' target="_top">
                         <div>
                             <?php echo $itemName ?><br>
-                            <?php echo "Stocks: ".$itemStock ?><br>
-                            <?php echo "P".$itemPrice."/".$itemUnit ?><br>
-                            <input type="submit" name="add" value="Add to Cart"/>
+                            Stocks: <?php echo $itemStock ?> <br>
+                            <?php echo $itemPrice ?> / <?php echo $itemUnit ?><br>
+                            <input type="submit" value="Add to Cart"/>
                         </div>
                         </form>
                     </div>
@@ -65,12 +69,15 @@
                     if(++$row == $count) {
                         while ($i % 4 != 0) {
                             echo '<div style="width:24%">
+                                <form action="" method="">
                                 <div>
-                                    <?php echo $itemName ?>
-                                    <?php echo $itemStock ?>
-                                    <?php echo $itemPrice ?>
-                                    <button>add to cart</button>
+                                    <input type="hidden" class="itemID" name="itemID" value="" />
+                                    <input type="hidden" class="itemName" name="itemName"  value="" /><br>
+                                    Stocks: <br>
+                                    <input type="hidden" class="itemPrice" name="itemPrice" value="" /> / <?php echo $itemUnit ?><br>
+                                    <input type="hidden" onclick="" name="add" value="Add to Cart" />
                                 </div>
+                                </form>
                             </div>
                             ';
                             $i++;

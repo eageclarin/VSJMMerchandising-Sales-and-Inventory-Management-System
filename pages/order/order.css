@@ -9,3 +9,7 @@ body {
 .left .right {
     flex: 1;
 }
+
+input[type=text] {
+    border: none;
+}
