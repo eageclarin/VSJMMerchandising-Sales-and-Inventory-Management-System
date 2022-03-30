@@ -1,79 +1,85 @@
-//wait di pa to final kasi may error pa siya hehe
-//I'll update na lang yung wala nang error. Thankies
 <?php
-	$server = "localhost:3306";
-	$user = "root";
-	$pass = "";
-	$db = "VSJM";
-	$conn=mysqli_connect($server, $user, $pass, "$db");
-	
-	if(!$conn){
-		die('Could not connect MYSql:' .mysql_error());
+	include_once '../../env/conn.php';
+	$itemID = $_SESSION['itemID'];
+	echo $itemID;
+
+	if (isset($_POST['update'])) { //UPDATING INVENTORY
+		$item_Retail =$_POST['item_RetailPrice'];
+			$item_Markup =$_POST['item_Markup'];
+			$item_Stock =$_POST['item_Stock'];
+			$item_Category = $_POST['item_Category'];
+
+		$updateStatus = "UPDATE inventory SET in_pending=0, item_Stock = '$item_Stock', item_RetailPrice = '$item_Retail', Item_markup = '$item_Markup', item_category = '$item_Category'   WHERE item_ID = '$itemID';";
+		$sqlUpdate = mysqli_query($conn,$updateStatus);
+		if ($sqlUpdate) {
+		  echo "Update in inventory success <br/>";
+		} else {
+		  echo mysqli_error($conn);
+		} 
+		unset($_POST['update']);
 	}
 ?>
 
-<?php
-	$result = mysqli_query($conn,"SELECT * FROM inventory");
-?>
 
 
 <!DOCTYPE html>
 <html>
 <body>
-<?php
-	// Redirects back to main if GET and POST variables are not set
-	if(!isset($_POST['item_ID']) && !isset($_GET['item_ID'])){
-		header("Location: ./inventory.php");
-		exit;
-	}
-?>
-<?php
-		if(count($_POST)>0){
-			mysqli_query($conn, "UPDATE inventory set item_ID=' " . $_POST['item_ID'] . " ', item_Name=' " . $_POST['item_Name'] . " ', item_unit=' " . $_POST['item_unit'] . " ', 
-			item_Brand=' " . $_POST['item_Brand'] . " ', item_RetailPrice=' " . $_POST['item_RetailPrice'] . " ', Item_markup=' " . $_POST['Item_markup'] . " ', 
-			item_Stock=' " . $_POST['item_Stock'] . " ', item_category=' " . $_POST['item_category'] . " ',
-			WHERE item_ID = ' " . $_POST['item_ID'] . " ' ");
-			$message = "Record Editted Successfully";
-			header("Location: inventory.php");
+<?php 
+	$sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) WHERE item.item_ID='$itemID' ;";   
+	$result = mysqli_query($conn,$sql);
+	$resultCheck = mysqli_num_rows($result);
+	if ($resultCheck>0){
+		while ($row = mysqli_fetch_assoc($result)) {
+			$item_Name = $row['item_Name'];
+			$item_Unit =$row['item_unit'];
+			$item_Brand =$row['item_Brand'];
+			$item_Retail =$row['item_RetailPrice'];
+			$item_Markup =$row['Item_markup'];
+			$item_Stock =$row['item_Stock'];
+			$item_Category = $row['item_category'];
 		}
-		$result = mysqli_query($conn, "SELECT * FROM inventory WHERE item_ID=' " . $_GET['item_ID'] . "'");
-		$row = mysqli_fetch_array($result);
-?>
+	}
 
+?>
 <form action="./editinventory.php" method="post">
-<input type="hidden" name="item_ID" value=<?php echo $_GET['item_ID']; ?>>
-	<?php if(isset($message)) { echo $message; } ?>
+<input type="hidden" name="item_ID" value=<?php echo $itemID; ?>>
 	
-	<p> Item Name
-	<input type="text" name="item_Name" value="<?php echo $row['item_Name']; ?>" required> 
+	
+	<p> Item ID
+	<input type="text" name="item_ID" value="<?php echo $itemID; ?>"required disabled>
 	</p>
-	
+
+	<p> Item Name
+	<input type="text" name="item_Name" value="<?php echo $item_Name; ?>"required disabled>
+	</p>
+
 	<p> Item Unit
-	<input type="text" name="item_unit" value="<?php echo $row['item_unit']; ?>" required>
+	<input type="text" name="item_Unit" value="<?php echo $item_Unit ?>"required disabled>
 	</p>
 	
 	<p> Item Brand
-	<input type="text" name="item_Brand" value="<?php echo $row['item_Brand']; ?>"required>
+	<input type="text" name="item_Brand" value="<?php echo $item_Brand ?>"required disabled>
 	</p>
-	
+
 	<p> Item Retail Price
-	<input type="text" name="item_RetailPrice" value="<?php echo $row['item_RetailPrice']; ?>"required>
+	<input type="number" name="item_RetailPrice" value="<?php echo  $item_Retail?>"required>
 	</p>
 	
 	<p> Item Markup
-	<input type="text" name="Item_markup" value="<?php echo $row['Item_markup']; ?>"required>
+	<input type="number" name="item_Markup" value="<?php echo  $item_Markup?>"required>
 	</p>
 	
 	<p> Item Stock
-	<input type="text" name="item_Stock" value="<?php echo $row['item_Stock']; ?>"required>
+	<input type="number" name="item_Stock" value="<?php echo $item_Stock  ?>"required>
 	</p>
 	
 	<p> Item Category
-	<input type="text" name="item_category" value="<?php echo $row['item_category']; ?>"required>
+	<input type="text" name="item_Category" value="<?php echo  $item_Category?>"required>
 	</p>
 	
 	
-	<input type="submit" name="edit" value= "Submit" class="button">
+	<input type="submit" name="update" value= "Update" class="button">
 	<button type="button" onclick="location.href='inventory.php'">Back</button>
 </form>
 

@@ -1,6 +1,25 @@
 <?php
 include_once '../../env/conn.php';
 
+if (isset($_POST['delete'])) {
+  $itemID = $_POST['itemID'];
+  $deleteItem = "DELETE FROM inventory WHERE item_ID = '$itemID';";
+  $sqlDelete = mysqli_query($conn,$deleteItem);
+  if ($sqlDelete) {
+    echo "deleted";
+  } else {
+    echo mysqli_error($conn);
+  }
+  unset($_SESSION['delete']);
+}
+
+if(isset($_POST['edit'])){
+    $_SESSION['itemID'] = $_POST['itemID'];
+		header("Location: ./editinventory.php");
+    unset($_POST['edit']);
+	}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -46,7 +65,8 @@ include_once '../../env/conn.php';
     </select>
 
     <input type="text" id="search" autocomplete="off" placeholder="Search" style="height:30px;">
-</div>
+    <button type="button" onclick="location.href='addinventory.php'">New Item</button>
+  </div>
 
 <div id="display">
     <?php
@@ -64,6 +84,7 @@ include_once '../../env/conn.php';
                     <th> Markup </th>
                     <th> Stock </th>
                     <th> Category </th>
+                    <th> </th>
                 </tr>";
 
         if ($resultCheck>0){
@@ -79,7 +100,7 @@ include_once '../../env/conn.php';
                     }   // END OF ADDING IN PENDING ORDERS =====================================================
                     
                 } else{   //NOT LOW ON STOCK =================================================
-                    echo "<tr>";
+                    echo '<tr><form action="inventory.php" class="mb-1" method="post">';
                 }   
                 echo "<td>" .$row['item_ID']. "</td>";  
                 echo "<td>". $row['item_Name']. "</td>";  
@@ -87,9 +108,21 @@ include_once '../../env/conn.php';
                 echo "<td>" . $row['item_Brand'] . "</td>";  
                 echo "<td>" . $row['item_RetailPrice']. "</td>"; 
                 echo "<td>" .$row['Item_markup']. "</td>";
-                echo "<td>" .$row['item_Stock']. "</td>";  
-                echo "<td>" .$row['item_category']. "</td>";       
-                echo "</tr>";   
+               // echo "<td> <input type=number name=itemStock id='itemStock' min=1 value=" .$row['item_Stock']." style='width:70px;'/> </td>";  
+               echo "<td>" .$row['item_Stock']. "</td>"; 
+               echo "<td>" .$row['item_category']. "</td>";      
+                ?>
+                <!--DELETE BUTTON-->
+                  <td>
+                  
+                  <input type=hidden name=itemID value=<?php echo $row['item_ID']?>>
+                    <button class="btn-primary" name="delete" type="submit">Delete</button>
+                    <a href="editinventory.php"> <button class="btn-primary" name="edit" type="submit">Edit</button></a>
+                  
+                  </td>
+                  </form>
+              </tr>
+                <?php
             }
         } 
 

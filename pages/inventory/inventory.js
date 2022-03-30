@@ -57,5 +57,4 @@ $(document).ready(function(){
     })
     $('#sort').find('option[value='+sessionStorage.getItem('selectedOption')+']').attr('selected','selected');
 
-
-})
+});
