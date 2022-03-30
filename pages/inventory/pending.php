@@ -1,6 +1,61 @@
 <?php
 include_once '../../env/conn.php';
 
+// IF ORDER BUTTON IS SET FOR EACH TRANSACTION
+if(isset($_POST['order'])){ 
+  echo "You're about to order... //insert modal form here";
+  $transID=$_POST['transaction'];
+  //GET ALL ITEMS IN GIVEN TRANSACTION ID
+  $getitems = "SELECT * FROM transaction_Items WHERE transaction_ID = '$transID';";
+  $resultItems = mysqli_query($conn,$getitems);
+  $resultCheckItems = mysqli_num_rows($resultItems);
+        if ($resultCheckItems>0){
+          while ($rowitems = mysqli_fetch_assoc($resultItems)) {
+            $transItem = $rowitems["item_ID"];
+            $transQuant = $rowitems["transactionItems_Quantity"];
+            $CostTrans =$rowitems["transactionItems_CostPrice"];
+            //UPDATING ITEMS IN INVENTORY
+            $inventoryItem = "SELECT * FROM inventory WHERE item_ID = '$transItem'";
+            $resultInventory = mysqli_query($conn,$inventoryItem);
+            $resultCheckInventory = mysqli_num_rows($resultInventory);
+            if($resultCheckInventory>0){
+              while ($rowinventory = mysqli_fetch_assoc($resultInventory)) {
+                // SETTING OF NEW PRICE BASED ON NEW COSTPRICE
+                $currentPrice = $rowinventory['item_RetailPrice'];
+                $newPrice = $CostTrans*$rowinventory['Item_markup'];
+                if($currentPrice> $newPrice){
+                  $newPrice = $currentPrice;
+                } 
+              } // END OF SETTING NEW PRICE
+              // IF ITEM IS ALREADY IN INVENTORY
+              $updateStatus = "UPDATE inventory SET in_pending=0, item_Stock = item_Stock + '$transQuant', item_RetailPrice = '$newPrice'   WHERE item_ID = '$transItem';";
+               $sqlUpdate = mysqli_query($conn,$updateStatus);
+               if ($sqlUpdate) {
+                 echo "Update in inventory success <br/>";
+               } else {
+                 echo mysqli_error($conn);
+               } //END OF ITEM IS ALREADY IN INVENTORY
+
+            } else {  //ELSE, INSERT NEW ITEM IN INVENTORY
+              $markup = 1.0; //to be edited, insert modal here for item cetegory and markup
+              $newPrice = $CostTrans*$markup;
+              $insert = "INSERT INTO inventory(branch_ID, item_ID, item_Stock, item_RetailPrice, item_category, Item_markup, in_pending)
+        VALUES (1, '$transItem', '$transQuant', '$newPrice' , 'dummy', $markup, 0);";
+               $sqlInsert = mysqli_query($conn, $insert);
+            } //END OF INSERTING NEW ITEM  
+          } 
+        }//END OF UPDATING ITEMS IN INVENTORY
+        //UPDATE TRANSACTION_STATUS TO 1 (ORDERED ALREADY)
+        $updateStatusTrans = "UPDATE supplier_transactions SET transaction_Status=1 WHERE transaction_ID = '$transID';";
+        $sqlUpdateTrans = mysqli_query($conn,$updateStatusTrans);
+        if ($sqlUpdateTrans) {
+          echo "Update in supplier transactions Success </br>";
+        } else {
+          echo mysqli_error($conn);
+        } //END OF UPDATING TRANSACTION STATUS
+
+}// END OF ORDER BUTTON SET
+
 ?>
 
 <!DOCTYPE html>
@@ -44,11 +99,21 @@ include_once '../../env/conn.php';
         $supplier = $row['supplier_ID'];
         $transacDate = $row['transaction_Date'];   
         $total = $row['transaction_TotalPrice'];
-
-        echo "<h4> Transaction ID: ".$ID. "</h4>";
+       
+        echo "<h4> Transaction ID: ".$ID. "</h4>"; 
         echo "Supplier ID: ".$supplier. "<br/>";
         echo "Date: ".$transacDate. "<br/>";
-        echo "Total: ".$total. "<br/>";
+        echo "Total: ".$total. "<br/>";?>
+
+      <!--ORDER BUTTON-->
+      <form action="pending.php" class="mb-1" method="post">
+      <input type=hidden name=transaction value=<?php echo $ID?>>
+        <button class="btn-primary" name="order" type="submit">Order</button>
+      </form>
+
+        <?php
+
+        
         echo "<table class='table'> 
                 <tr> 
                     <th> ID </th>
