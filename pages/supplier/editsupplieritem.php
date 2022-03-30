@@ -18,7 +18,10 @@
 				mysqli_query($conn, "UPDATE item set item_ID=' " . $_POST['item_ID'] . " ', item_Name=' " . $_POST['item_Name'] . " ', item_unit=' " . $_POST['item_unit'] . " ', 
 				item_Brand=' " . $_POST['item_Brand'] . " '
 				WHERE item_ID = ' " . $_POST['item_ID'] . " ' ");
-				$message = "Record Editted Successfully";
+				$message = "Record Edited Successfully";
+
+				mysqli_query($conn,"UPDATE supplier_item set supplierItem_CostPrice='".$_POST['supplierItem_CostPrice']."' WHERE supplier_ID ='".$supplier_ID."' and item_ID ='".$_POST['item_ID']."'");
+
 
 				header("Location: ./suppliertable.php?supplier_ID=".$supplier_ID);
 				exit();
@@ -26,7 +29,7 @@
 
 			$item_ID = $_GET['item_ID'];
 
-			$result = mysqli_query($conn, "SELECT * from item where item_ID = $item_ID") or die( mysqli_error($conn));
+			$result = mysqli_query($conn, "SELECT * from item inner join supplier_item on item.item_ID=supplier_item.item_ID where supplier_ID = ".$supplier_ID."") or die( mysqli_error($conn));
 			$orig=mysqli_fetch_array($result);
 		?>
 		<div id ="supplieritemform">
@@ -48,6 +51,9 @@
 
 				<p> Brand
 				<input type="text" name="item_Brand" value="<?php echo $orig['item_Brand']; ?>">
+				</p>
+
+				<input type="text" name="supplierItem_CostPrice" value="<?php echo $orig['supplierItem_CostPrice']; ?>">
 				</p>
 
 				<input type="hidden" name="supplier_ID" value="<?php echo $supplier_ID; ?>">

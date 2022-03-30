@@ -6,14 +6,12 @@
 	</head>
 	<body>
 		<?php
-
-			/*$sql = "SELECT * from supplier_transactions INNER JOIN transaction_items on transaction_items.transaction_ID = supplier_transactions.transaction_ID";
-			$result = $conn-> query($sql) or die($conn->error);
-			*/
 			
 			if(count($_POST)>0){
 			
 				$supplier_ID = $_POST['supplier_ID'];
+				$item_ID = $_POST['item_ID'];
+				$supplierItem_CostPrice = $_POST['transactionItems_CostPrice'];
 				$transactionItems_TotalPrice = $_POST['transactionItems_Quantity']*$_POST['transactionItems_CostPrice'];
 				
 				mysqli_query($conn, "UPDATE supplier_transactions set transaction_ID='".$_SESSION['transaction_ID']."', supplier_ID='".$_POST['supplier_ID']."', transaction_Date='".$_POST['transaction_Date']."', transaction_Status='".$_POST['transaction_Status']."', transaction_TotalPrice='".$_POST['transaction_TotalPrice']."' WHERE transaction_ID = '". $_SESSION['transaction_ID']."'") or die( mysqli_error($conn));
@@ -26,7 +24,22 @@
 				
 				$message = "Transaction item record edited successfully.";
 
+				$nonempty=0;
+
+				$sql = "SELECT * from supplier_item where supplier_ID =".$_POST['supplier_ID']." and item_ID =".$_POST['item_ID'];
+					$result = $conn-> query($sql) or die($conn->error);
+					if ($result-> num_rows >0) {
+						$nonempty=1;
+					}
 				
+				if($nonempty==0){
+					$insert = mysqli_query($conn,"INSERT INTO supplier_item". "(supplier_ID, item_ID, supplierItem_CostPrice)"."VALUES('$supplier_ID', '$item_ID', '$supplierItem_CostPrice')");
+					mysqli_query($conn, $insert);
+				}
+				if($nonempty==1){
+					$update = mysqli_query($conn,"UPDATE supplier_item set supplierItem_CostPrice='".$supplierItem_CostPrice."' WHERE supplier_ID ='".$supplier_ID."' and item_ID ='".$item_ID."'");
+					mysqli_query($conn, $update);
+				}
 
 				unset($_SESSION['transaction_ID']);
 				mysqli_close($conn);

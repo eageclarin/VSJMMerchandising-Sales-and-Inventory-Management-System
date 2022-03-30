@@ -16,6 +16,7 @@
 			    $supplier_ID= $_POST['supplier_ID'];
 			    $item_ID= $_POST['item_ID'];
 			    $transactionItems_Quantity= $_POST['transactionItems_Quantity'];
+			    $supplierItem_CostPrice= $_POST['transactionItems_CostPrice'];
 			    $transactionItems_CostPrice= $_POST['transactionItems_CostPrice'];
 			    $transaction_Date= $_POST['transaction_Date'];
 			    $transaction_TotalPrice= $_POST['transaction_TotalPrice'];
@@ -74,13 +75,22 @@
 				}
 			  
 
-			    $insert = mysqli_query($db2,"INSERT INTO supplier_item". "(supplier_ID, item_ID) ". "
-						  VALUES('$supplier_ID', '$item_ID')");
-						
-			   
-			    
+			    $nonempty=0;
 
-			    mysqli_close($db2); 
+				$sql = "SELECT * from supplier_item where supplier_ID =".$_POST['supplier_ID']." and item_ID =".$_POST['item_ID'];
+					$result = $db2-> query($sql) or die($conn->error);
+					if ($result-> num_rows >0) {
+						$nonempty=1;
+					}
+				
+				if($nonempty==0){
+					$insert = mysqli_query($db2,"INSERT INTO supplier_item". "(supplier_ID, item_ID, supplierItem_CostPrice)"."VALUES('$supplier_ID', '$item_ID', '$supplierItem_CostPrice')");
+					mysqli_query($db2, $insert);
+				}
+				if($nonempty==1){
+					$update = mysqli_query($db2,"UPDATE supplier_item set supplierItem_CostPrice='".$supplierItem_CostPrice."' WHERE supplier_ID ='".$supplier_ID."' and item_ID ='".$item_ID."'");
+					mysqli_query($db2, $update);
+				}
 
 			   
 			}

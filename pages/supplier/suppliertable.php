@@ -86,9 +86,10 @@
 						<th>Name</th>
 						<th>Unit</th>
 						<th>Brand</th>
+						<th>Cost Price</th>
 						<?php
 							
-							$sql = "SELECT * from item where item_ID in ( SELECT item_ID from supplier_item where supplier_ID = ".$supplier_chosen.")";
+							$sql = "SELECT * from item inner join supplier_item on item.item_ID=supplier_item.item_ID where supplier_ID = ".$supplier_chosen."";
 							
 							$result = $conn-> query($sql) or die($conn->error);
 
@@ -99,6 +100,7 @@
 											<td>". $row["item_Name"]."</td>
 											<td>". $row["item_unit"]."</td>
 											<td>". $row["item_Brand"]."</td>
+											<td>". $row["supplierItem_CostPrice"]."</td>
 											<td><button onclick=\"location.href='editsupplieritem.php?item_ID=".$row['item_ID']."&supplier_ID=".$supplier_chosen."'\">Edit Item</button></td>
 											<td><a onclick='return checkdelete()' href='deletesupplieritem.php?item_ID=".$row['item_ID']."&supplier_ID=".$supplier_chosen."'\"><button>Delete Item For This Supplier</a></button></td>
 											<td><a onclick='return checkdelete()' href='deleteitemtransactions.php?item_ID=".$row['item_ID']."&supplier_ID=".$supplier_chosen."'\"><button>Delete Item & Transactions</a></button></td>
