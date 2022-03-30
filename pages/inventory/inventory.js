@@ -3,7 +3,20 @@ function fill(Value) {
     $('#display').hide();
  }
 
-
+function add(){
+    alert("found i");
+    $.ajax({
+        type: "POST",
+        url: "addpending.php",
+        data: {
+            pending_ItemID: '<?php echo $_SESSION["pending_ItemID"]?>'
+        },
+        success: function(data) {  
+            $("#dummy").html(data);
+        }
+    });
+}
+    
 $(document).ready(function(){
         $("#search").keyup(function() {
         var input = $(this).val();
@@ -43,5 +56,6 @@ $(document).ready(function(){
         
     })
     $('#sort').find('option[value='+sessionStorage.getItem('selectedOption')+']').attr('selected','selected');
+
 
 })

@@ -1,6 +1,6 @@
 <?php
 include_once '../../env/conn.php';
-//$k = $_SESSION['option'];
+
 ?>
 
 <!DOCTYPE html>
@@ -14,8 +14,24 @@ include_once '../../env/conn.php';
 <script type="text/javascript" src="inventory.js"></script> 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
        
+
+
 </head>
 <body >
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link active" aria-current="page" href="inventory.php">Active</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link " href="pending.php">Pending</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link " href="additem.php">Items</a>
+  </li>
+  <li class="nav-item active">
+    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Others</a>
+  </li>
+</ul>
 <h1> Inventory </h1>
 
 <div class="container-fluid" >
@@ -52,9 +68,17 @@ include_once '../../env/conn.php';
 
         if ($resultCheck>0){
             while ($row = mysqli_fetch_assoc($result)) {
-                if ($row['item_Stock']<=5){
+                if ($row['item_Stock']<=5){ //LOW ON STOCK ======================================
                     echo "<tr class='table-danger'>";
-                } else{
+                  
+                    //ADDING IN PENDING ORDERS===================================================================
+                    if ($row['in_pending']==0) {
+                        $_SESSION['pending_ItemID'] = $row['item_ID'];
+                        echo $_SESSION['pending_ItemID'];
+                        include 'addpending.php';
+                    }   // END OF ADDING IN PENDING ORDERS =====================================================
+                    
+                } else{   //NOT LOW ON STOCK =================================================
                     echo "<tr>";
                 }   
                 echo "<td>" .$row['item_ID']. "</td>";  
@@ -71,9 +95,8 @@ include_once '../../env/conn.php';
 
         mysqli_close($conn);
         echo "</table>";
-
-?>
+    ?>
 </div>
-
+<div id="dummy"></div>
 </body>
 </html>
