@@ -21,6 +21,13 @@
 <html>
 <body>
 <?php
+	// Redirects back to main if GET and POST variables are not set
+	if(!isset($_POST['item_ID']) && !isset($_GET['item_ID'])){
+		header("Location: ./inventory.php");
+		exit;
+	}
+?>
+<?php
 		if(count($_POST)>0){
 			mysqli_query($conn, "UPDATE inventory set item_ID=' " . $_POST['item_ID'] . " ', item_Name=' " . $_POST['item_Name'] . " ', item_unit=' " . $_POST['item_unit'] . " ', 
 			item_Brand=' " . $_POST['item_Brand'] . " ', item_RetailPrice=' " . $_POST['item_RetailPrice'] . " ', Item_markup=' " . $_POST['Item_markup'] . " ', 
@@ -34,10 +41,8 @@
 ?>
 
 <form action="./editinventory.php" method="post">
+<input type="hidden" name="item_ID" value=<?php echo $_GET['item_ID']; ?>>
 	<?php if(isset($message)) { echo $message; } ?>
-	<p> Item ID
-	<input type="text" name="item_ID" value="<?php echo $row['item_ID']; ?>" required>
-	</p>
 	
 	<p> Item Name
 	<input type="text" name="item_Name" value="<?php echo $row['item_Name']; ?>" required> 
