@@ -87,6 +87,11 @@
                 
 
                 break;
+            case "delete":
+                $sqlEmpty = "TRUNCATE TABLE cart";
+                if(mysqli_query($conn, $sqlEmpty)) {
+                    header("location: order.php");
+                }
         }
     }
 ?>
