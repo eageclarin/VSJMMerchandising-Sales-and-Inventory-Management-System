@@ -13,6 +13,9 @@ include_once '../../env/conn.php';
 <body>
 <ul class="nav nav-tabs">
   <li class="nav-item">
+    <a class="nav-link" href="../../index.php">Home</a>
+  </li>
+  <li class="nav-item">
     <a class="nav-link" aria-current="page" href="inventory.php">Inventory</a>
   </li>
   <li class="nav-item">

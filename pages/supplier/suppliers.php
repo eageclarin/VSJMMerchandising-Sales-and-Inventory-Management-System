@@ -7,6 +7,7 @@
 <title>Hardware Suppliers</title>
 </head>
 <body>
+<a href="../../index.php"><button> home </button></a>
 <?php
 	$server = "localhost:3306";
 	$user = "root";

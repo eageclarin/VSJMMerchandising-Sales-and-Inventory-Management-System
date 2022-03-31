@@ -17,6 +17,7 @@
 <!DOCTYPE html>
 <html>
 <body>
+<a href="../../index.php"><button> home </button></a>
 <?php
 		if(count($_POST)>0){
 			mysqli_query($conn, "UPDATE supplier set supplier_ID=' " . $_POST['supplier_ID'] . " ', supplier_Name=' " . $_POST['supplier_Name'] . " ', supplier_ContactPerson=' " . $_POST['supplier_ContactPerson'] . " ', 
