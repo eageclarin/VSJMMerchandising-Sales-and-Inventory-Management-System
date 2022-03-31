@@ -2,6 +2,14 @@
 	<head>
 		<?php
 			include_once '../../env/conn.php';
+
+			if(isset($_POST['order'])){
+				$_SESSION['orderItemID'] = $_POST['orderItemID'];
+				$_SESSION['orderItemSupp'] = $_POST['orderItemSupp'];
+					header("Location: ../inventory/addinventory.php");
+				unset($_POST['edit']);
+				}
+
 		?>
 		<script src="myjs.js" type="text/javascript"></script>
 		<style>
@@ -101,9 +109,17 @@
 											<td>". $row["item_Brand"]."</td>
 											<td><button onclick=\"location.href='editsupplieritem.php?item_ID=".$row['item_ID']."&supplier_ID=".$supplier_chosen."'\">Edit Item</button></td>
 											<td><a onclick='return checkdelete()' href='deletesupplieritem.php?item_ID=".$row['item_ID']."&supplier_ID=".$supplier_chosen."'\"><button>Delete Item For This Supplier</a></button></td>
-											<td><a onclick='return checkdelete()' href='deleteitemtransactions.php?item_ID=".$row['item_ID']."&supplier_ID=".$supplier_chosen."'\"><button>Delete Item & Transactions</a></button></td>
-					
-									</tr>";
+											<td><a onclick='return checkdelete()' href='deleteitemtransactions.php?item_ID=".$row['item_ID']."&supplier_ID=".$supplier_chosen."'\"><button>Delete Item & Transactions</a></button></td>"
+											?>
+											<td>
+												<form action="suppliertable.php" class="mb-1" method="post">
+												<input type=hidden name=orderItemID value=<?php echo $row['item_ID']?>>
+												<input type=hidden name=orderItemSupp value=<?php echo $supplier_chosen?>>
+												<a href="../inventory/addinventory.php"> <button class="btn-primary" name="order" type="submit">Order</button></a>
+												</form>
+											</td>
+									<?php
+									echo"</tr>";
 
 								}
 							echo "<tr><td colspan=\"11\"><button onclick=\"location.href='addsupplieritem.php?supplier_ID=".$supplier_chosen."'\">Add Item to Supplier</button></td></tr>";

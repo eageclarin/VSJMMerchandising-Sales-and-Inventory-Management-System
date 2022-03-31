@@ -22,7 +22,7 @@ if(isset($_POST['order'])){
               while ($rowinventory = mysqli_fetch_assoc($resultInventory)) {
                 // SETTING OF NEW PRICE BASED ON NEW COSTPRICE
                 $currentPrice = $rowinventory['item_RetailPrice'];
-                $newPrice = $CostTrans*$rowinventory['Item_markup'];
+                $newPrice = $CostTrans+($CostTrans*$rowinventory['Item_markup']/100);
                 if($currentPrice> $newPrice){
                   $newPrice = $currentPrice;
                 } 
@@ -79,7 +79,7 @@ if(isset($_POST['order'])){
     <a class="nav-link active" href="pending.php">Pending</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link " href="additem.php">Items</a>
+    <a class="nav-link " href="items.php">Items</a>
   </li>
   <li class="nav-item active">
     <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Others</a>

@@ -38,14 +38,14 @@
 			$item_Markup =$row['Item_markup'];
 			$item_Stock =$row['item_Stock'];
 			$item_Category = $row['item_category'];
+			
 		}
 	}
 
 ?>
 <form action="./editinventory.php" method="post">
 <input type="hidden" name="item_ID" value=<?php echo $itemID; ?>>
-	
-	
+
 	<p> Item ID
 	<input type="text" name="item_ID" value="<?php echo $itemID; ?>"required disabled>
 	</p>
@@ -75,9 +75,18 @@
 	</p>
 	
 	<p> Item Category
-	<input type="text" name="item_Category" value="<?php echo  $item_Category?>"required>
-	</p>
 	
+	
+	<select name="item_Category" id="item_Category" style="height:30px;">
+			<option value="<?php echo  $item_Category?>" selected ><?php echo  $item_Category?></option>
+            <option value="Elec\'l" >Elec'l</option>
+            <option value="Plumbing">Plumbing</option>
+            <option value="Arch\'l"> Arch'l</option>
+            <option value="Paints">Paints</option>
+            <option value="Bolts">Bolts</option>
+            <option value="Tools">Tools</option>
+        </select>
+	</p>
 	
 	<input type="submit" name="update" value= "Update" class="button">
 	<button type="button" onclick="location.href='inventory.php'">Back</button>

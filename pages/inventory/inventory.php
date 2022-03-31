@@ -45,7 +45,7 @@ if(isset($_POST['edit'])){
     <a class="nav-link " href="pending.php">Pending</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link " href="additem.php">Items</a>
+    <a class="nav-link " href="items.php">Items</a>
   </li>
   <li class="nav-item active">
     <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Others</a>
@@ -65,12 +65,12 @@ if(isset($_POST['edit'])){
     </select>
 
     <input type="text" id="search" autocomplete="off" placeholder="Search" style="height:30px;">
-    <button type="button" onclick="location.href='addinventory.php'">New Item</button>
+    <button type="button" onclick="location.href='../supplier/suppliers.php'">New Item</button>
   </div>
 
 <div id="display">
     <?php
-         $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID);";   
+         $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) ORDER BY inventory.item_ID;";   
         $result = mysqli_query($conn,$sql);
         $resultCheck = mysqli_num_rows($result);
             
