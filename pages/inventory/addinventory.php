@@ -37,6 +37,7 @@ if(isset($_POST['submit']))
     $_SESSION['addInventory_markup'] = $Item_markup;
 	$item_Stock= $_POST['item_Stock'];
 	$item_category= $_POST['item_category'];
+    $_SESSION['addInventory_category'] = $item_category;
 	$item_RetailPrice = $item_CostPrice+($item_CostPrice*$Item_markup/100);
     echo $item_RetailPrice;
 

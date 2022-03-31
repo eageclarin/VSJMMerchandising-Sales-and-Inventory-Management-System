@@ -125,10 +125,11 @@ if(isset($_POST['deliver'])){
       <form action="pending.php" class="mb-1" method="post">
         <input type=hidden name=transaction value=<?php echo $ID?>>
         <button class="btn-primary" name="order" type="submit">Order</button>
+        
       </form>
 
         <?php
-          
+          echo "<a href='../supplier/suppliertable.php?supplier_ID=".$supplier."'>Add Items</a>";
         
         echo "<table class='table'> 
                 <tr> 
