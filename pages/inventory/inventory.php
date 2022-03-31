@@ -64,7 +64,19 @@ if(isset($_POST['edit'])){
     <option value="Salability">Salability</option>
     </select>
 
-    <input type="text" id="search" autocomplete="off" placeholder="Search" style="height:30px;">
+    <label for="categ">Category:</label>
+    <select name="categ" id="categ" style="height:30px;">
+    <option value="All" selected >All</option>
+    <option value="Arch\'l"> Architectural</option>
+    <option value="Elec\'l"> Electrical</option>
+    <option value="Plumbing"> Plumbing</option>
+    <option value="Tools">Tools</option>
+    <option value="Bolts">Bolts and Nuts</option>
+    <option value="Paints">Paints and Accessories</option>
+    </select>
+
+
+    <input type="text" id="search" autocomplete="off" placeholder="Search for items, brand, category..." style="height:30px;">
     <button type="button" onclick="location.href='../supplier/suppliers.php'">New Item</button>
   </div>
 

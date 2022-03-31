@@ -54,7 +54,21 @@ $(document).ready(function(){
             }
         });
         
-    })
-    $('#sort').find('option[value='+sessionStorage.getItem('selectedOption')+']').attr('selected','selected');
+    });
 
+    //$('#sort').find('option[value='+sessionStorage.getItem('selectedOption')+']').attr('selected','selected');
+    $("#categ").change(function(){
+        var categOption = $(this).find(":selected").val();
+        $.ajax({
+            type: "POST",
+            url: "search_sort.php",
+            data: {
+                category: categOption
+            },
+            success: function(data) { 
+                $("#display").html(data);
+            }
+        });
+        
+    });
 });

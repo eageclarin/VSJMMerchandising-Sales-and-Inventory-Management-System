@@ -46,7 +46,16 @@
             $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID);"; 
         }
         
-    } else {
+    } else if (isset($_POST['category'])) {
+        $category= $_POST['category'];
+        echo "<h4> ".$category . "</h4>";
+        if ($category=='All') {
+            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID)";
+        } else {
+            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) WHERE  item_category = '$category' ";
+        }
+        
+    }  else {
             $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) ORDER BY inventory.item_ID;"; 
         }  
                                    
