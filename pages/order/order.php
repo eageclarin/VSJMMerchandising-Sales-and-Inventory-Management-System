@@ -102,6 +102,7 @@
     </script>
 </head>
 <body>
+    <a href="../../index.php"><button> home </button></a>
     <div class="container">
         <div class="left" style="width:70%;">
             <?php
@@ -197,6 +198,9 @@
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#receipt">
                             Order
                             </button>
+                            <form action="updateItem.php?action=delete" method="post">
+                                <input type="submit" class="btn btn-secondary" value="Clear"/>
+                            </form>
                         </td>
                     </tr>
             </table>
