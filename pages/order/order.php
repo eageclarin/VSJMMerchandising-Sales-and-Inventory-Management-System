@@ -19,10 +19,28 @@
 
                     $sqlSearch = "SELECT * FROM cart WHERE itemID = $id";
                     $resSearch = mysqli_query($conn, $sqlSearch);
+                    $countSearch = mysqli_num_rows($resSearch);
                     $rowSearch = mysqli_fetch_assoc($resSearch);
-                    $checkID = $rowSearch['itemID'];
 
-                    if(!$checkID) { //if product not in cart yet
+                    if($countSearch >= 1) { //if product not in cart yet
+                        $qty = $rowSearch['quantity'];
+                        $itemTotal = $rowSearch['itemTotalP'];
+                        
+                        $qty++;
+                        $itemTotal = $qty * $price;
+
+                        $sqlUpdate = "UPDATE cart SET quantity = '$qty', itemTotalP = '$itemTotal'
+                            WHERE itemID = '$id'";
+                        $resUpdate = mysqli_query($conn, $sqlUpdate);
+
+                        //update total
+                        //decreae stock
+                        if ($resUpdate) {
+                            header('location: order.php');
+                        } else {
+                            echo "ERROR: Could not be able to execute $sqlUpdate." . mysqli_error($conn);
+                        }
+                    } else { //if product already in cart
                         $sqlInsert = "INSERT INTO cart (
                             itemID, itemName, itemPrice, quantity, itemTotalP)
                             VALUES (
@@ -35,25 +53,6 @@
                             header("location: order.php");
                         } else {
                             echo "ERROR: Could not be able to execute $sqlInsert." . mysqli_error($conn);
-                        }
-                        
-                    } else { //if product already in cart
-                        $itemQty = $rowSearch['quantity'];
-                        $itemTotal = $rowSearch['itemTotalP'];
-                        
-                        $itemQty++;
-                        $itemTotal = $itemQty * $price;
-
-                        $sqlUpdate = "UPDATE cart SET quantity = '$itemQty', itemTotalP = '$itemTotal'
-                            WHERE itemID = (SELECT cart_ID FROM cart WHERE itemID = '$id')";
-                        $resUpdate = mysqli_query($conn, $sqlUpdate);
-
-                        //update total
-                        //decreae stock
-                        if ($resUpdate) {
-                            header('location: order.php');
-                        } else {
-                            echo "ERROR: Could not be able to execute $sqlUpdate." . mysqli_error($conn);
                         }
                     }
                 }
@@ -85,7 +84,14 @@
 
 <html>
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
     <link rel="stylesheet" href="order.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
     <script src="order.js"></script>
     <script type="text/javascript">
@@ -126,23 +132,130 @@
                     $totalPrice = 0;
 
                     while($rowDisplay = mysqli_fetch_assoc($resDisplay)) {
+                        $iID = $rowDisplay["itemID"];
                 ?>
                     <tr>
                         <td style="width: 10%;">
-                            <form action="order.php?action=delete&itemID=<?php echo $rowDisplay["itemID"] ?>" method="post">
+                            <form action="order.php?action=delete&itemID=<?php echo $iID ?>" method="post">
                                 <input type="image" src="icon-delete.png" />
                             </form>
                         </td>
                         <td style="width: 33%;"> <?php echo $rowDisplay["itemName"] ?> </td>
-                        <td style="width: 15%;"> <?php echo $rowDisplay["quantity"] ?> </td>
+                        <td style="width: 15%;">
+                            <form action="" method="post">
+                                <select name="qty" class="select" onchange="changeQty('<?php echo $iID ?>', this.value);">
+                                    <option value="<?php echo $rowDisplay['quantity'] ?>" selected> <?php echo $rowDisplay['quantity'] ?> </option>
+                                    <option value="1"> 1 </option>
+                                    <option value="2"> 2 </option>
+                                    <option value="3"> 3 </option>
+                                    <option value="4"> 4 </option>
+                                    <option value="5"> 5 </option>
+                                </select>
+                            </form>
+                        </td>
                         <td style="width: 20%;"> <?php echo $rowDisplay["itemPrice"] ?> </td>
-                        <td style="width: 22%;"> <?php echo $rowDisplay["itemTotalP"] ?> </td>
+                        <td style="width: 22%;">
+                            <p id="itemTotal-<?php echo $iID ?>">
+                                <?php echo $rowDisplay["itemTotalP"] ?>
+                            </p>
+                        </td>
                     </tr>
                 <?php  
                         $totalPrice += $rowDisplay["itemTotalP"];
                     }
                 ?>
+                    <tr>
+                        <td colspan="4" style="text-align: right"> Total: </td>
+                        <td>
+                            <p id="total" style="font-weight: bold">
+                                <?php echo $totalPrice ?>.00
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="5">
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#receipt">
+                            Order
+                            </button>
+                        </td>
+                    </tr>
             </table>
+
+            
+
+            <!-- Modal -->
+            <div class="modal fade bd-example-modal-lg" id="receipt" tabindex="-1" role="dialog" aria-labelledby="receiptLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="receiptLabel">Receipt</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row w-100 m-0">
+                            <div class="col pl-0">
+                                <div clas="container">
+                                <?php
+                                    $sqlCart = "SELECT * FROM cart";
+                                    $resCart = mysqli_query($conn, $sqlCart);
+                                    $i = 0;
+
+                                    while($rowCart = mysqli_fetch_assoc($resCart)) {
+                                        if($i != 0){ //check if first in array
+                                            $margin = "mt-3";
+                                        } else {
+                                            $margin = "";
+                                        }
+                                ?>
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <h6 class="fs-5 mb-0 <?php echo $margin ?>"> <?php echo $rowCart["itemName"] ?> </h6>
+                                            <small class="text-muted mb-2"> <?php echo $rowCart["itemPrice"]?>.00 x <?php echo $rowCart["quantity"] ?></small>
+                                        </div>
+                                        <div class="col">
+                                            <h6 class="fs-5 fw-bold mb-3 float-right <?php echo $margin ?>"> <?php echo $rowCart["itemTotalP"] ?>.00 </h6>
+                                        </div>
+                                    </div>
+                                <?php
+                                        $i++;
+                                    }
+                                ?>
+                                </div>
+                            </div>
+                            <div class="col border-left pr-0">
+                            <form class="">
+                                <div class="form-floating mb-3 row">
+                                    <label for="total" class="col-sm-2 col-form-label">Total</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" readonly class="form-control-plaintext h2" id="totalOrder" value="<?php echo $totalPrice.'.00' ?>">
+                                    </div>
+                                </div>
+                                <div class="form-floating mb-3 row">
+                                    <label for="moneyInput" class="col-sm-2 col-form-label">Money</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control border font-weight-bold" id="moneyInput" placeholder=".00" onkeyup="calculateChange(this.value)">
+                                    </div>
+                                </div>
+                                <div class="form-floating mb-3 row">
+                                    <label for="change" class="col-sm-2 col-form-label">Change</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" readonly class="form-control-plaintext font-weight-bold" id="change" value="">
+                                    </div>
+                                </div>
+                                <button class="w-100 mb-2 btn btn-lg rounded-4 btn-primary" type="submit">Pay</button>
+                                <button type="button" class="w-100 py-2 mb-2 btn btn-outline-primary rounded-4" data-dismiss="modal">Close</button>
+                            </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
         </div>
     </div>
 </body>
