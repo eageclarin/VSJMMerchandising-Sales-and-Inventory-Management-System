@@ -37,13 +37,13 @@
 
 	<div class="header">
 		<div class="navbar">
-			<img src="logo.png" width="30%" height="20%">
+			<img src="img/logo.png" width="30%" height="20%">
 			<ul>
 				<li><a href="index.php"><i class="fa fa-home"></i> Home </a></li>
-				<li><a href="orders.php"><i class="fa fa-file"></i> Orders </a></li>
-				<li><a href="salesReport.php"><i class="fa fa-book"></i> Sales </a></li>
-				<li><a href="inventory.php"><i class="fa fa-pencil"></i> Inventory </a></li>
-				<li><a href="suppliers.php"><i class="fa fa-wrench"></i> Suppliers </a></li>
+				<li><a href="pages/orders.php"><i class="fa fa-file"></i> Orders </a></li>
+				<li><a href="pages/salesReport.php"><i class="fa fa-book"></i> Sales </a></li>
+				<li><a href="pages/inventory.php"><i class="fa fa-pencil"></i> Inventory </a></li>
+				<li><a href="pages/suppliers.php"><i class="fa fa-wrench"></i> Suppliers </a></li>
 				
 			</ul>
 		</div>
