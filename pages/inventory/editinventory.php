@@ -1,4 +1,5 @@
 <?php
+	error_reporting(0);
 	include_once '../../env/conn.php';
 	$itemID = $_SESSION['itemID'];
 	echo $itemID;
