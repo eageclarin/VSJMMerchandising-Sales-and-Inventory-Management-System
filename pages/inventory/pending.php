@@ -73,7 +73,7 @@ if(isset($_POST['order'])){
 <body >
 <ul class="nav nav-tabs">
   <li class="nav-item">
-    <a class="nav-link " aria-current="page" href="inventory.php">Active</a>
+    <a class="nav-link " aria-current="page" href="inventory.php">Inventory</a>
   </li>
   <li class="nav-item">
     <a class="nav-link active" href="pending.php">Pending</a>

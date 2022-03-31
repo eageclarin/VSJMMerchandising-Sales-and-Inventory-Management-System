@@ -39,7 +39,7 @@ if(isset($_POST['edit'])){
 <body >
 <ul class="nav nav-tabs">
   <li class="nav-item">
-    <a class="nav-link active" aria-current="page" href="inventory.php">Active</a>
+    <a class="nav-link active" aria-current="page" href="inventory.php">Inventory</a>
   </li>
   <li class="nav-item">
     <a class="nav-link " href="pending.php">Pending</a>
@@ -95,7 +95,6 @@ if(isset($_POST['edit'])){
                     //ADDING IN PENDING ORDERS===================================================================
                     if ($row['in_pending']==0) {
                         $_SESSION['pending_ItemID'] = $row['item_ID'];
-                        echo $_SESSION['pending_ItemID'];
                         include 'addpending.php';
                     }   // END OF ADDING IN PENDING ORDERS =====================================================
                     
