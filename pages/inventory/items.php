@@ -19,6 +19,9 @@ include_once '../../env/conn.php';
     <a class="nav-link " href="pending.php">Pending</a>
   </li>
   <li class="nav-item">
+    <a class="nav-link " href="transactions.php">Transactions</a>
+  </li>
+  <li class="nav-item">
     <a class="nav-link active" aria-current="page" href="items.php">Items</a>
   </li>
   <li class="nav-item active">

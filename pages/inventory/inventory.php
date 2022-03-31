@@ -3,7 +3,7 @@ include_once '../../env/conn.php';
 
 if (isset($_POST['delete'])) {
   $itemID = $_POST['itemID'];
-  $deleteItem = "DELETE FROM inventory WHERE item_ID = '$itemID';";
+  $deleteItem = "DELETE FROM inventory WHERE branch_ID =1 AND item_ID = '$itemID';";
   $sqlDelete = mysqli_query($conn,$deleteItem);
   if ($sqlDelete) {
     echo "deleted";
@@ -45,6 +45,9 @@ if(isset($_POST['edit'])){
     <a class="nav-link " href="pending.php">Pending</a>
   </li>
   <li class="nav-item">
+    <a class="nav-link " href="transactions.php">Transactions</a>
+  </li>
+  <li class="nav-item">
     <a class="nav-link " href="items.php">Items</a>
   </li>
   <li class="nav-item active">
@@ -67,8 +70,8 @@ if(isset($_POST['edit'])){
     <label for="categ">Category:</label>
     <select name="categ" id="categ" style="height:30px;">
     <option value="All" selected >All</option>
-    <option value="Arch\'l"> Architectural</option>
-    <option value="Elec\'l"> Electrical</option>
+    <option value="Architectural"> Architectural</option>
+    <option value="Electrical"> Electrical</option>
     <option value="Plumbing"> Plumbing</option>
     <option value="Tools">Tools</option>
     <option value="Bolts">Bolts and Nuts</option>
@@ -111,7 +114,7 @@ if(isset($_POST['edit'])){
                     }   // END OF ADDING IN PENDING ORDERS =====================================================
                     
                 } else{   //NOT LOW ON STOCK =================================================
-                    echo '<tr><form action="inventory.php" class="mb-1" method="post">';
+                    echo '<tr>';
                 }   
                 echo "<td>" .$row['item_ID']. "</td>";  
                 echo "<td>". $row['item_Name']. "</td>";  
@@ -125,7 +128,7 @@ if(isset($_POST['edit'])){
                 ?>
                 <!--DELETE BUTTON-->
                   <td>
-                  
+                  <form action="inventory.php" class="mb-1" method="post">
                   <input type=hidden name=itemID value=<?php echo $row['item_ID']?>>
                     <button class="btn-primary" name="delete" type="submit">Delete</button>
                     <a href="editinventory.php"> <button class="btn-primary" name="edit" type="submit">Edit</button></a>

@@ -9,7 +9,7 @@
 			$item_Stock =$_POST['item_Stock'];
 			$item_Category = $_POST['item_Category'];
 
-		$updateStatus = "UPDATE inventory SET in_pending=0, item_Stock = '$item_Stock', item_RetailPrice = '$item_Retail', Item_markup = '$item_Markup', item_category = '$item_Category'   WHERE item_ID = '$itemID';";
+		$updateStatus = "UPDATE inventory SET in_pending=0, item_Stock = '$item_Stock', item_RetailPrice = '$item_Retail', Item_markup = '$item_Markup', item_category = '$item_Category' WHERE item_ID = '$itemID' AND branch_ID=1;";
 		$sqlUpdate = mysqli_query($conn,$updateStatus);
 		if ($sqlUpdate) {
 		  echo "Update in inventory success <br/>";
@@ -79,9 +79,9 @@
 	
 	<select name="item_Category" id="item_Category" style="height:30px;">
 			<option value="<?php echo  $item_Category?>" selected ><?php echo  $item_Category?></option>
-            <option value="Elec\'l" >Elec'l</option>
+            <option value="Electrical" >Electrical</option>
             <option value="Plumbing">Plumbing</option>
-            <option value="Arch\'l"> Arch'l</option>
+            <option value="Architectural"> Architectural</option>
             <option value="Paints">Paints</option>
             <option value="Bolts">Bolts</option>
             <option value="Tools">Tools</option>
