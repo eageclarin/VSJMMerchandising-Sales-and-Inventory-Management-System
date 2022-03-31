@@ -2,6 +2,7 @@
     include_once '../../env/conn.php';
 
     //variables
+    $button = "";
     $sqlCateg = "SELECT DISTINCT item_category FROM inventory";
     $resCateg = mysqli_query($conn, $sqlCateg);
 
@@ -98,6 +99,13 @@
         $(document).ready(function() { //display all items
             var display = document.getElementById('list');
             display.innerHTML = "<object type='text/html' style='width:100%; height:100%' data='getItem.php'></object>";
+        
+            var cash = document.getElementById('moneyInput').value;
+            if (cash == 0 || cash = '') {
+                document.getElementById('pay').disabled = true;
+            } else {
+                document.getElementById('pay').disabled = false;
+            }
         });
     </script>
 </head>
@@ -131,6 +139,13 @@
                     $sqlDisplay = "SELECT * FROM cart";
                     $resDisplay = mysqli_query($conn, $sqlDisplay);
                     $totalPrice = 0;
+
+                    $countRows = mysqli_num_rows($resDisplay);
+                    if ($countRows > 0) {
+                        $button = "";
+                    } else {
+                        $button = "disabled";
+                    }
 
                     while($rowDisplay = mysqli_fetch_assoc($resDisplay)) {
                         $iID = $rowDisplay["itemID"];
@@ -195,11 +210,11 @@
                     <tr>
                         <td colspan="5">
                             <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#receipt">
+                            <button <?php echo $button ?> type="button" class="btn btn-primary" data-toggle="modal" data-target="#receipt">
                             Order
                             </button>
                             <form action="updateItem.php?action=delete" method="post">
-                                <input type="submit" class="btn btn-secondary" value="Clear"/>
+                                <input type="submit" <?php echo $button ?> class="btn btn-secondary" value="Clear"/>
                             </form>
                         </td>
                     </tr>
@@ -250,7 +265,7 @@
                                 </div>
                             </div>
                             <div class="col border-left pr-0">
-                            <form action="updateItem.php?action=order" method="post" onsubmit="return checkMoney()">
+                            <form action="updateItem.php?action=order" method="post">
                                 <div class="form-floating mb-3 row">
                                     <label for="total" class="col-sm-2 col-form-label">Total</label>
                                     <div class="col-sm-10">
@@ -269,7 +284,7 @@
                                         <input type="text" readonly class="form-control-plaintext font-weight-bold" name="change" id="change" value="" placeholder="0.00">
                                     </div>
                                 </div>
-                                <button class="w-100 mb-2 btn btn-lg rounded-4 btn-primary" name="pay" type="submit">Pay</button>
+                                <button class="w-100 mb-2 btn btn-lg rounded-4 btn-primary" name="pay" id="pay" type="submit">Pay</button>
                                 <button type="button" class="w-100 py-2 mb-2 btn btn-outline-primary rounded-4" data-dismiss="modal">Close</button>
                             </form>
                             </div>
