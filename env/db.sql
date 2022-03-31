@@ -33,7 +33,7 @@ CREATE TABLE supplier_item(
 	supplier_ID int NOT NULL,
 	item_ID int NOT NULL,
 	supplierItem_CostPrice int NOT NULL,
-PRIMARY KEY(supplier_ID, item_ID)
+PRIMARY KEY(supplier_ID, item_ID),
 FOREIGN KEY (supplier_ID) REFERENCES supplier(supplier_ID) ON UPDATE CASCADE,
 FOREIGN KEY (item_ID) REFERENCES item(item_ID) ON UPDATE CASCADE
 );
