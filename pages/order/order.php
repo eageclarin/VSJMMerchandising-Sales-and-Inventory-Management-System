@@ -227,26 +227,26 @@
                                 </div>
                             </div>
                             <div class="col border-left pr-0">
-                            <form class="">
+                            <form action="updateItem.php?action=order" method="post">
                                 <div class="form-floating mb-3 row">
                                     <label for="total" class="col-sm-2 col-form-label">Total</label>
                                     <div class="col-sm-10">
-                                        <input type="text" readonly class="form-control-plaintext h2" id="totalOrder" value="<?php echo $totalPrice.'.00' ?>">
+                                        <input type="text" readonly class="form-control-plaintext h2" id="totalOrder" name="total" value="<?php echo $totalPrice.'.00' ?>">
                                     </div>
                                 </div>
                                 <div class="form-floating mb-3 row">
                                     <label for="moneyInput" class="col-sm-2 col-form-label">Money</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control border font-weight-bold" id="moneyInput" placeholder=".00" onkeyup="calculateChange(this.value)">
+                                        <input type="text" class="form-control border font-weight-bold" id="moneyInput" placeholder="0.00" onkeyup="calculateChange(this.value)">
                                     </div>
                                 </div>
                                 <div class="form-floating mb-3 row">
                                     <label for="change" class="col-sm-2 col-form-label">Change</label>
                                     <div class="col-sm-10">
-                                        <input type="text" readonly class="form-control-plaintext font-weight-bold" id="change" value="">
+                                        <input type="text" readonly class="form-control-plaintext font-weight-bold" id="change" value="" placeholder="0.00">
                                     </div>
                                 </div>
-                                <button class="w-100 mb-2 btn btn-lg rounded-4 btn-primary" type="submit">Pay</button>
+                                <button class="w-100 mb-2 btn btn-lg rounded-4 btn-primary" name="pay" type="submit">Pay</button>
                                 <button type="button" class="w-100 py-2 mb-2 btn btn-outline-primary rounded-4" data-dismiss="modal">Close</button>
                             </form>
                             </div>

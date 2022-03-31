@@ -36,7 +36,7 @@ function totalPrice() {
       data: dataString,
       success: function(data){
         $("#total").html(data+".00");
-        //$(".receipt #total").val(data+".00");
+        $("#totalOrder").val(data+".00");
       }
     });
 }

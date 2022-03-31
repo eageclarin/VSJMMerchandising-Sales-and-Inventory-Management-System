@@ -1,7 +1,7 @@
 <?php
     include_once '../../env/conn.php';
 
-    $id = $qty = $price = $total = $totalPrice = "";
+    $id = $qty = $price = $total = $totalPrice = $recentID = "";
     if (isset($_GET['action'])) {
         $action = $_GET['action'];
         switch($action) {
@@ -39,6 +39,46 @@
                     echo $totalPrice;
                 }
     
+                break;
+            case "order":
+                    $date = date('Y-m-d');
+                    $totalPrice = $_POST['total'];
+                    
+                    //insert into orders
+                    $sqlOrder = "INSERT INTO orders (order_Date, order_Total)
+                                VALUES ('$date','$totalPrice')";
+                    $resOrder = mysqli_query($conn, $sqlOrder); 
+
+                    //if isnerted
+                    if ($resOrder){
+                         //get recent id
+                        $sqlID = "SELECT order_ID AS id FROM orders WHERE order_ID = @@Identity";
+                        $resID = mysqli_query($conn, $sqlID);
+                        $rowID = mysqli_fetch_assoc($resID);
+                        $recentID = $rowID['id'];
+
+                        //retrieve items from cart
+                        $sqlItems = "SELECT * FROM cart";
+                        $resItems = mysqli_query($conn, $sqlItems);
+
+                        //transfer items from cart to order_items
+                        while($rowItems = mysqli_fetch_assoc($resItems)) {
+                            $id = $rowItems['itemID'];
+                            $qty = $rowItems['quantity'];
+  
+                            //store to order_items
+                            $sqlOrderItems = "INSERT INTO order_items (item_ID, order_ID, orderItems_Quantity, orderItems_TotalPrice)
+                            VALUES ('$id','$recentID', '$qty', '$totalPrice')";
+                            $resOrderItems = mysqli_query($conn, $sqlOrderItems);
+                        }
+
+                        $sqlEmpty = "TRUNCATE TABLE cart";
+                        if(mysqli_query($conn, $sqlEmpty)) {
+                            header("location: order.php");
+                        }
+                    }
+                
+
                 break;
         }
     }
