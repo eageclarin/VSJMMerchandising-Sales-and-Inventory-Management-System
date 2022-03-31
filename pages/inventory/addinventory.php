@@ -73,9 +73,9 @@ mysqli_close($conn); // Close connection
         Item Category:
         
         <select name="item_category" id="item_category" style="height:30px;">
-            <option value="Elec\'l" >Elec'l</option>
+            <option value="Electirical" >Electrical</option>
             <option value="Plumbing">Plumbing</option>
-            <option value="Arch\'l"> Arch'l</option>
+            <option value="Architectural"> Architectural</option>
             <option value="Paints">Paints</option>
             <option value="Bolts">Bolts</option>
             <option value="Tools">Tools</option>
