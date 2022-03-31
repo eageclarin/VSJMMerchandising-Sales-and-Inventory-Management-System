@@ -88,6 +88,15 @@ FOREIGN KEY(item_ID) REFERENCES item(item_ID) ON UPDATE CASCADE,
 FOREIGN KEY(order_ID) REFERENCES orders(order_ID) ON UPDATE CASCADE
 );
 
+CREATE TABLE cart (
+	cart_ID int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	itemID int(11) NOT NULL,
+	itemName varchar(100) NOT NULL,
+	itemPrice varchar(50) NOT NULL,
+	quantity varchar(10) NOT NULL,
+	itemTotalP varchar(100) NOT NULL
+);
+
 INSERT INTO branch (
 	branch_Name, branch_Address
 ) VALUES (

@@ -1,0 +1,15 @@
+body {
+    height: 100%;
+}
+.container {
+    display: flex;
+    height: 100%;
+}
+
+.left .right {
+    flex: 1;
+}
+
+input[type=text] {
+    border: none;
+}
