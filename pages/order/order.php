@@ -101,12 +101,13 @@
             display.innerHTML = "<object type='text/html' style='width:100%; height:100%' data='getItem.php'></object>";
         
             var cash = document.getElementById('moneyInput').value;
-            if (cash == 0 || cash = '') {
+            if (cash == 0 || cash == '') {
                 document.getElementById('pay').disabled = true;
             } else {
                 document.getElementById('pay').disabled = false;
             }
         });
+        
     </script>
 </head>
 <body>
