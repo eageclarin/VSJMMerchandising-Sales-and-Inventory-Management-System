@@ -11,6 +11,29 @@ if (isset($_POST['delete'])) {
   } else {
     echo mysqli_error($conn);
   }
+  $sql1 = "SELECT * FROM transaction_Items INNER JOIN supplier_transactions ON (transaction_Items.transaction_ID = supplier_transactions.transaction_ID) WHERE transaction_Status = 0 ;";   
+  $result1 = mysqli_query($conn,$sql1);
+  $resultCheck1 = mysqli_num_rows($result1);
+  if ($resultCheck1>0){
+    while ($row1 = mysqli_fetch_assoc($result1)) {
+      $transaction_ID = $row1['transaction_ID'];
+      $deleteItem = "DELETE FROM transaction_items WHERE transaction_ID = '$transaction_ID' AND item_ID = '$itemID';";
+      $sqlDelete = mysqli_query($conn,$deleteItem);
+
+      $sql2 = "SELECT * FROM transaction_Items WHERE transaction_ID = '$transaction_ID';";   
+      $result2 = mysqli_query($conn,$sql2);
+      $resultCheck2 = mysqli_num_rows($result2);
+      if ($resultCheck2==0){
+        $deleteItem = "DELETE FROM supplier_transactions WHERE transaction_ID = '$transaction_ID';";
+        $sqlDelete = mysqli_query($conn,$deleteItem);
+      }
+
+    }
+  }
+  
+
+
+
   unset($_SESSION['delete']);
 }
 

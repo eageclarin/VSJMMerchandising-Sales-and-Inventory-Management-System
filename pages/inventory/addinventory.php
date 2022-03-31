@@ -18,7 +18,7 @@ include_once '../../env/conn.php';
     $resultCheckSupplier = mysqli_num_rows($resultSupplier);
         if ($resultCheckSupplier>0){
           while ($rowitems = mysqli_fetch_assoc($resultSupplier)) {
-            $item_RetailPrice = $rowitems['supplierItem_CostPrice'];
+            $item_CostPrice = $rowitems['supplierItem_CostPrice'];
                     ?>
                     <h2><?php echo $rowitems['item_Name']; ?> </h2>
                     <p><?php echo $rowitems['item_Brand']; ?> </p>
@@ -34,11 +34,68 @@ include_once '../../env/conn.php';
 if(isset($_POST['submit']))
 {		
 	$Item_markup= $_POST['Item_markup'];
+    $_SESSION['addInventory_markup'] = $Item_markup;
 	$item_Stock= $_POST['item_Stock'];
 	$item_category= $_POST['item_category'];
-	$item_RetailPrice = $item_RetailPrice+($item_RetailPrice*$Item_markup/100);
+	$item_RetailPrice = $item_CostPrice+($item_CostPrice*$Item_markup/100);
     echo $item_RetailPrice;
-    $insert = mysqli_query($conn,"INSERT INTO inventory ". "(branch_ID,item_ID, item_Stock, item_RetailPrice, item_category, Item_markup,  in_pending) ". "
+
+    //see if item already pending in supplier transactions
+    $sql2 = "SELECT * FROM supplier_Transactions WHERE supplier_ID = '$orderItemSupp' AND transaction_Status = 0;";   
+    $result2 = mysqli_query($conn,$sql2);
+    $resultCheck2 = mysqli_num_rows($result2);
+        
+    if ($resultCheck2>0){
+        while ($row2 = mysqli_fetch_assoc($result2)) {
+              $Transaction = $row2['transaction_ID'];
+        }
+    } else {
+        $timestamp = date('Y-m-d H:i:s');
+        $insert = "INSERT INTO supplier_Transactions (supplier_ID, transaction_Date, transaction_Status, transaction_TotalPrice)
+        VALUES ('$orderItemSupp', '$timestamp', 0, 0 );";
+        $sqlInsert = mysqli_query($conn, $insert);
+        if ($sqlInsert) {
+            $last_id = mysqli_insert_id($conn);
+            $Transaction = $last_id;
+            echo "New Transaction Added";
+        } else {
+            echo mysqli_error($conn);
+        }
+    }
+    
+    //insert in transaction items
+    $items_total = $item_CostPrice*$item_Stock;
+
+    $sql2 = "SELECT * FROM transaction_Items WHERE transaction_ID = '$Transaction' AND item_ID = '$orderItemID';";   
+    $result2 = mysqli_query($conn,$sql2);
+    $resultCheck2 = mysqli_num_rows($result2);
+        
+    if ($resultCheck2>0){
+        while ($row2 = mysqli_fetch_assoc($result2)) {
+            echo "item already in transaction ID: " . $Transaction. ". Quantity will be added to pending quantity. <br/>";
+            $updatePendingItem = "UPDATE transaction_Items SET transactionItems_Quantity =transactionItems_Quantity+'$item_Stock', transactionItems_CostPrice = $item_CostPrice, transactionItems_TotalPrice = '$items_total' WHERE transaction_ID = '$Transaction' AND item_ID = '$orderItemID';";
+             $sqlUpdatePendingItem = mysqli_query($conn,$updatePendingItem);
+             if ($sqlUpdatePendingItem) {
+                echo 'updated pending item';
+            } else {
+                echo mysqli_error($conn);
+            }
+        }
+    } else {
+        $insert = "INSERT INTO transaction_items(transaction_ID, item_ID, transactionItems_Quantity, transactionItems_CostPrice, transactionItems_TotalPrice)
+        VALUES ('$Transaction', '$orderItemID', '$item_Stock', '$item_CostPrice' , '$items_total');";
+        $sqlInsert = mysqli_query($conn, $insert);
+        if ($sqlInsert) {
+            echo 'added in pending orders';
+        } else {
+            echo mysqli_error($conn);
+        }
+        
+    }
+
+    
+
+    /*$insert = mysqli_query($conn,"INSERT INTO inventory ". "(branch_ID,item_ID, item_Stock, item_RetailPrice, item_category, Item_markup,  in_pending) ". "
 			  VALUES(1, '$orderItemID', '$item_Stock', '$item_RetailPrice','$item_category',  '$Item_markup',0 )");
 			
                
@@ -49,7 +106,7 @@ if(isset($_POST['submit']))
     else
     {
         echo "Record added successfully.";
-    }
+    } */
 }
 
 mysqli_close($conn); // Close connection
