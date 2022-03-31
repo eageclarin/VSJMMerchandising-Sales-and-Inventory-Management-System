@@ -40,10 +40,10 @@
 			<img src="img/logo.png" width="30%" height="20%">
 			<ul>
 				<li><a href="index.php"><i class="fa fa-home"></i> Home </a></li>
-				<li><a href="pages/orders.php"><i class="fa fa-file"></i> Orders </a></li>
-				<li><a href="pages/salesReport.php"><i class="fa fa-book"></i> Sales </a></li>
-				<li><a href="pages/inventory.php"><i class="fa fa-pencil"></i> Inventory </a></li>
-				<li><a href="pages/suppliers.php"><i class="fa fa-wrench"></i> Suppliers </a></li>
+				<li><a href="pages/orders/orders.php"><i class="fa fa-file"></i> Orders </a></li>
+				<li><a href="pages/sales/salesReport.php"><i class="fa fa-book"></i> Sales </a></li>
+				<li><a href="pages/inventory/inventory.php"><i class="fa fa-pencil"></i> Inventory </a></li>
+				<li><a href="pages/supplier/suppliers.php"><i class="fa fa-wrench"></i> Suppliers </a></li>
 				
 			</ul>
 		</div>
