@@ -133,6 +133,19 @@
 
                     while($rowDisplay = mysqli_fetch_assoc($resDisplay)) {
                         $iID = $rowDisplay["itemID"];
+
+                        $sqlStock = "SELECT item_Stock FROM inventory i
+                        INNER JOIN cart c ON (i.item_ID = c.itemID)
+                        WHERE i.item_ID = $iID";
+                        $resStock = mysqli_query($conn, $sqlStock);
+                        $rowStock = mysqli_fetch_assoc($resStock);
+                        $itemStock = $rowStock['item_Stock'];
+
+                        if ($itemStock <= 0) {
+                            $disable = "disabled";
+                        } else {
+                            $disable = "";
+                        }
                 ?>
                     <tr>
                         <td style="width: 10%;">
@@ -143,13 +156,19 @@
                         <td style="width: 33%;"> <?php echo $rowDisplay["itemName"] ?> </td>
                         <td style="width: 15%;">
                             <form action="" method="post">
-                                <select name="qty" class="select" onchange="changeQty('<?php echo $iID ?>', this.value);">
-                                    <option value="<?php echo $rowDisplay['quantity'] ?>" selected> <?php echo $rowDisplay['quantity'] ?> </option>
-                                    <option value="1"> 1 </option>
-                                    <option value="2"> 2 </option>
-                                    <option value="3"> 3 </option>
-                                    <option value="4"> 4 </option>
-                                    <option value="5"> 5 </option>
+                                <select <?php echo $disable ?>  name="qty" class="select" onchange="changeQty('<?php echo $iID ?>', this.value);">
+                                    <?php
+                                        echo '<option value="'.$rowDisplay['quantity'].'" selected>'.$rowDisplay['quantity'].' </option>';
+                                        $i = 1;
+                                        while ($i <= $itemStock) {
+                                            echo "<option value=".$i.">".$i."</option>";
+                                            $i++;
+
+                                            if ($i > 20) {
+                                                break;
+                                            }
+                                        }
+                                    ?> 
                                 </select>
                             </form>
                         </td>
@@ -227,7 +246,7 @@
                                 </div>
                             </div>
                             <div class="col border-left pr-0">
-                            <form action="updateItem.php?action=order" method="post">
+                            <form action="updateItem.php?action=order" method="post" onsubmit="return checkMoney()">
                                 <div class="form-floating mb-3 row">
                                     <label for="total" class="col-sm-2 col-form-label">Total</label>
                                     <div class="col-sm-10">
@@ -237,13 +256,13 @@
                                 <div class="form-floating mb-3 row">
                                     <label for="moneyInput" class="col-sm-2 col-form-label">Money</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control border font-weight-bold" id="moneyInput" placeholder="0.00" onkeyup="calculateChange(this.value)">
+                                        <input type="text" class="form-control border font-weight-bold" name="money" id="moneyInput" placeholder="0.00" onkeyup="calculateChange(this.value)">
                                     </div>
                                 </div>
                                 <div class="form-floating mb-3 row">
                                     <label for="change" class="col-sm-2 col-form-label">Change</label>
                                     <div class="col-sm-10">
-                                        <input type="text" readonly class="form-control-plaintext font-weight-bold" id="change" value="" placeholder="0.00">
+                                        <input type="text" readonly class="form-control-plaintext font-weight-bold" name="change" id="change" value="" placeholder="0.00">
                                     </div>
                                 </div>
                                 <button class="w-100 mb-2 btn btn-lg rounded-4 btn-primary" name="pay" type="submit">Pay</button>

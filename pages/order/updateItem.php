@@ -58,7 +58,8 @@
                         $recentID = $rowID['id'];
 
                         //retrieve items from cart
-                        $sqlItems = "SELECT * FROM cart";
+                        $sqlItems = "SELECT * FROM cart c
+                                INNER JOIN inventory i ON (c.itemID = i.item_ID)";
                         $resItems = mysqli_query($conn, $sqlItems);
 
                         //transfer items from cart to order_items
@@ -70,8 +71,14 @@
                             $sqlOrderItems = "INSERT INTO order_items (item_ID, order_ID, orderItems_Quantity, orderItems_TotalPrice)
                             VALUES ('$id','$recentID', '$qty', '$totalPrice')";
                             $resOrderItems = mysqli_query($conn, $sqlOrderItems);
-                        }
 
+                            $stock = $rowItems['item_Stock'] - $qty;
+                            $sqlStock = "UPDATE inventory SET item_Stock = '$stock' WHERE item_ID = '$id'";
+                            $resStock = mysqli_query($conn, $sqlStock);
+                        }
+                        
+
+                        
                         $sqlEmpty = "TRUNCATE TABLE cart";
                         if(mysqli_query($conn, $sqlEmpty)) {
                             header("location: order.php");
