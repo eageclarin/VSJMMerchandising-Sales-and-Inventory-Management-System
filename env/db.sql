@@ -16,7 +16,7 @@ supplier_Name varchar(75) NOT NULL,
 supplier_ContactPerson varchar(75) NOT NULL,
 supplier_ContactNum varchar(11) NOT NULL,
 supplier_Address varchar(100) NOT NULL,
-supplier_Status TINYINT NOT NULL
+supplier_Status TINYINT NOT NULL DEFAULT '1'
 ); 
 
 
