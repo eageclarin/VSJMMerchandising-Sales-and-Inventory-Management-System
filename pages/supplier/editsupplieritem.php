@@ -7,6 +7,10 @@
 	<body>
 
 		<?php
+
+			if(isset($_GET['item_ID'])){
+					$item_ID=$_GET['item_ID'];
+			}
 			if(isset($_GET['supplier_ID'])){
 				$supplier_ID=$_GET['supplier_ID'];
 			}
@@ -27,9 +31,7 @@
 				exit();
 			}
 
-			$item_ID = $_GET['item_ID'];
-
-			$result = mysqli_query($conn, "SELECT * from item inner join supplier_item on item.item_ID=supplier_item.item_ID where supplier_ID = ".$supplier_ID."") or die( mysqli_error($conn));
+			$result = mysqli_query($conn, "SELECT * from item inner join supplier_item on item.item_ID=supplier_item.item_ID where supplier_ID = ".$supplier_ID." and item.item_ID=".$item_ID."") or die( mysqli_error($conn));
 			$orig=mysqli_fetch_array($result);
 		?>
 		<div id ="supplieritemform">
@@ -39,7 +41,7 @@
 
 			<form action = "./editsupplieritem.php" method="post" id="myForm">
 				
-				<input type="hidden" name="item_ID" value="<?php echo $orig['item_ID']; ?>">
+				<input type="hidden" name="item_ID" value="<?php echo $item_ID; ?>">
 
 				<p> Name
 				<input type="text" name="item_Name" value="<?php echo $orig['item_Name']; ?>">
