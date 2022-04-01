@@ -43,6 +43,8 @@ error_reporting(0);
             $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) ORDER BY  item_category,item_Name ASC;"; 
         } else if ($k == "ID"){
             $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) ORDER BY inventory.item_ID;"; 
+        } else if ($k == "Salability"){
+            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) INNER JOIN (SELECT SUM(orderItems_Quantity) as sales_sum, item_ID as order_itemID FROM order_items GROUP BY item_ID) as orders ON (inventory.item_ID = orders.order_itemID) ORDER BY sales_sum DESC;"; 
         } else {
             $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID);"; 
         }
@@ -73,7 +75,12 @@ echo "<table class='table'>
             <th> Markup </th>
             <th> Stock </th>
             <th> Category </th>
-        </tr>";
+            ";
+            if ($k == "Salability"){
+                echo "<th> Total Sales</th>"; 
+            }  
+        echo "<th> </th>
+                </tr>";
 
 if ($resultCheck>0){
     while ($row = mysqli_fetch_assoc($result)) {
@@ -98,7 +105,10 @@ if ($resultCheck>0){
             echo "<td>" .$row['Item_markup']. "</td>";
         // echo "<td> <input type=number name=itemStock id='itemStock' min=1 value=" .$row['item_Stock']." style='width:70px;'/> </td>";  
         echo "<td>" .$row['item_Stock']. "</td>"; 
-        echo "<td>" .$row['item_category']. "</td>";      
+        echo "<td>" .$row['item_category']. "</td>";   
+        if ($k == "Salability"){
+            echo "<td>" .$row['sales_sum']. "</td>"; 
+        }   
             ?>
             <!--DELETE BUTTON-->
             <td>
