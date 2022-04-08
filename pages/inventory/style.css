@@ -1,0 +1,47 @@
+.navbar{
+    width:250px;
+    height: 100vh;
+    position:fixed;
+    background-color: #2b3a3d;
+    transition: 0.4s;
+}
+.navbar .nav-link {
+    font-size: 1.25em;
+}
+
+.navbar .nav-link:active,
+.navbar .nav-link:focus,
+.navbar .nav-link:hover {
+    background-color: #4e666a;
+}
+
+.nav {
+    background-color: #202c2f;
+    border: none;
+    height: auto;
+}
+
+.nav .nav-link {
+    text-align: center;
+    margin: auto;
+    padding-top: 10px;
+    margin: 5px;
+}
+
+.nav .nav-link:active,
+.nav .nav-link:focus,
+.nav .nav-link:active,
+.nav .nav-link::after,
+.nav .nav-link:hover {
+    background-color: #2d3d42;
+    border: none;
+}
+
+.dropdown-menu {
+    background-color: #202c2f;
+}
+
+#content{
+    margin-left: 260px;
+    padding: 20px;
+}
