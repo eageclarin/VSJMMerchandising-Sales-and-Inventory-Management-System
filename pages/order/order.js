@@ -45,15 +45,10 @@ function totalPrice() {
 function calculateChange(money) {
     var change = money - document.getElementById("totalOrder").value;
     document.getElementById("change").value = change + ".00";
-}
 
-function checkMoney() {
-    var money = form.money.value;
-    var change = form.change.value;
-  
-    if (change < 0 || money == "" || money == 0) {
-      return false;
+    if (change < 0) {
+        document.getElementById('pay').disabled = true;
+    } else {
+        document.getElementById('pay').disabled = false;
     }
-
-    return true;
 }
