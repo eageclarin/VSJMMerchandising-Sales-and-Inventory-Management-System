@@ -5,7 +5,8 @@ include_once '../../env/conn.php';
 // Delete an item from the inventory 
 if (isset($_POST['delete'])) {
   $itemID = $_POST['itemID'];
-  $deleteItem = "DELETE FROM inventory WHERE branch_ID =1 AND item_ID = '$itemID';";
+  //$deleteItem = "DELETE FROM inventory WHERE branch_ID =1 AND item_ID = '$itemID';";
+  $deleteItem = "UPDATE inventory SET inventoryItem_Status = 0 WHERE branch_ID =1 AND item_ID = '$itemID';";
   $sqlDelete = mysqli_query($conn,$deleteItem);
   if ($sqlDelete) {
     echo "deleted";
@@ -52,6 +53,7 @@ if(isset($_POST['edit'])){
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" src="inventory.js"></script> 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    
     <link rel="stylesheet" href="style.css">
   </head>
 
@@ -65,7 +67,7 @@ if(isset($_POST['edit'])){
         <a class="nav-link text-light" href="../../index.php">Home</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-light" aria-current="page" href="inventory.php">Inventory</a>
+        <a class="nav-link active text-light" href="inventory.php">Inventory</a>
       </li>
       <li class="nav-item">
         <a class="nav-link text-light" href="../supplier/suppliers.php">Suppliers</a>
@@ -113,7 +115,7 @@ if(isset($_POST['edit'])){
               <a href="#" class="nav-link text-light pl-4">Salability </a>
           </li>
           <li clas="nav-item w-100">
-              <a href="transactions.php" class="nav-link text-light pl-4"> All Items </a>
+              <a href="items.php" class="nav-link text-light pl-4"> All Items </a>
           </li>
           <li clas="nav-item w-100">
               <a href="transactions.php" class="nav-link text-light pl-4"> Returns </a>
@@ -125,8 +127,36 @@ if(isset($_POST['edit'])){
     <!-- END OF SIDE BAR -->
 
     <div id="content">
-    <h1> Inventory </h1>
+    
+      <h1 style="float:left;"> Inventory </h1>
+      <div class="card float-right" style="width:400px; float:right;">
+        <div class="card-body">
+          <h4>Total items: N </h4>
+          <h4>Total Value: 10,000.00</h4></div>
+      </div>
+      <br/> <br/> <br/> <br/> <br/>
+    
     <div class="container-fluid" >
+        
+        <div id="categoryContainer">
+          <!-- CHOOSING CATEGORY -->
+          <label for="categ">Category:</label>
+          <select name="categ" id="categ" style="height:30px;">
+            <option value="All" selected >All</option>
+            <option value="Architectural"> Architectural</option>
+            <option value="Electrical"> Electrical</option>
+            <option value="Plumbing"> Plumbing</option>
+            <option value="Tools">Tools</option>
+            <option value="Bolts">Bolts and Nuts</option>
+            <option value="Paints">Paints and Accessories</option>
+          </select> <!-- END OF CHOOSING CATEGORY -->
+          N items
+        </div>
+        
+        <div id="searchSortContainer">
+        <!-- SEARCH TAB -->
+        <input type="text" id="search" autocomplete="off" placeholder="Search for items, brand, category..." style="height:30px;">
+        
         <!-- SORTING -->
         <label for="sort">Sort by:</label>
         <select name="sort" id="sort" style="height:30px;">
@@ -137,30 +167,14 @@ if(isset($_POST['edit'])){
           <option value="Stocks">Stocks</option>
           <option value="Salability">Salability</option>
         </select> <!-- END OF SORTING -->
-        
-        <!-- CHOOSING CATEGORY -->
-        <label for="categ">Category:</label>
-        <select name="categ" id="categ" style="height:30px;">
-          <option value="All" selected >All</option>
-          <option value="Architectural"> Architectural</option>
-          <option value="Electrical"> Electrical</option>
-          <option value="Plumbing"> Plumbing</option>
-          <option value="Tools">Tools</option>
-          <option value="Bolts">Bolts and Nuts</option>
-          <option value="Paints">Paints and Accessories</option>
-        </select> <!-- END OF CHOOSING CATEGORY -->
-
-        <!-- SEARCH TAB -->
-        <input type="text" id="search" autocomplete="off" placeholder="Search for items, brand, category..." style="height:30px;">
-        <!-- ADD NEW ITEM IN INVENTORY BUTTON -->
-        <button type="button" onclick="location.href='../supplier/suppliers.php'">New Item</button>
+        </div>
       </div>
-
+    
     <!-- DISPLAY LIST OF ITEMS IN INVENTORY -->
     <div id="display">
         <?php
             // SELECT ALL ITEMS FROM INVENTORY ORDER BY ITEM ID
-            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) ORDER BY inventory.item_ID;";   
+            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) WHERE inventoryItem_Status = 1 ORDER BY inventory.item_ID;";   
             $result = mysqli_query($conn,$sql);
             $resultCheck = mysqli_num_rows($result);
                 
@@ -190,14 +204,14 @@ if(isset($_POST['edit'])){
                         echo '<tr>'; // NORMAL ROW
                     }   
                     echo "<td>" .$row['item_ID']. "</td>";  
-                    echo "<td>". $row['item_Name']. "</td>";  
+                    echo "<td>". $row['item_Name']."</td>";  
                     echo "<td>" .$row['item_unit']. "</td>";  
                     echo "<td>" . $row['item_Brand'] . "</td>";  
                     echo "<td>" . $row['item_RetailPrice']. "</td>"; 
                     echo "<td>" .$row['Item_markup']. "</td>";
                     // echo "<td> <input type=number name=itemStock id='itemStock' min=1 value=" .$row['item_Stock']." style='width:70px;'/> </td>";  
                     echo "<td>" .$row['item_Stock']. "</td>"; 
-                    echo "<td>" .$row['item_category']. "</td>";      
+                    echo "<td>" .$row['item_Category']. "</td>";      
                     ?>
                     <!--DELETE AND EDIT AN ITEM BUTTON-->
                       <td>
@@ -215,6 +229,10 @@ if(isset($_POST['edit'])){
             echo "</table>";
           ?>
       </div> <!-- END OF DISPLAY -->
+
+      <p class="float-left"> Legend: --------- </p>
+      <!-- ADD NEW ITEM IN INVENTORY BUTTON -->
+      <button style="float:right;" type="button" onclick="location.href='../supplier/suppliers.php'">New Item</button>
     </div> <!-- END OF CONTENT -->
   </body>
 </html>

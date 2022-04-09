@@ -107,7 +107,7 @@
                 echo "<td>" .$row['Item_markup']. "</td>";
                 // echo "<td> <input type=number name=itemStock id='itemStock' min=1 value=" .$row['item_Stock']." style='width:70px;'/> </td>";  
                 echo "<td>" .$row['item_Stock']. "</td>"; 
-                echo "<td>" .$row['item_category']. "</td>";   
+                echo "<td>" .$row['item_Category']. "</td>";   
                 if ($k == "Salability"){
                     echo "<td>" .$row['sales_sum']. "</td>"; 
                 }   

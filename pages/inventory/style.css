@@ -30,8 +30,6 @@
 
 .nav .nav-link:active,
 .nav .nav-link:focus,
-.nav .nav-link:active,
-.nav .nav-link::after,
 .nav .nav-link:hover {
     background-color: #2d3d42;
     border: none;
@@ -43,5 +41,12 @@
 
 #content{
     margin-left: 260px;
-    padding: 20px;
+    padding: 50px;
+    margin-right: 30px;
+}
+#categoryContainer{
+    float: left;
+}
+#searchSortContainer{
+    float: right;
 }
