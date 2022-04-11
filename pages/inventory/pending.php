@@ -40,7 +40,7 @@ if(isset($_POST['deliver'])){
                 } 
               } // END OF SETTING NEW PRICE
               // IF ITEM IS ALREADY IN INVENTORY
-              $updateStatus = "UPDATE inventory SET in_pending=0, item_Stock = item_Stock + '$transQuant', item_RetailPrice = '$newPrice'   WHERE item_ID = '$transItem';";
+              $updateStatus = "UPDATE inventory SET in_pending=0, inventoryItem_Status=1, item_Stock = item_Stock + '$transQuant', item_RetailPrice = '$newPrice'   WHERE item_ID = '$transItem';";
                $sqlUpdate = mysqli_query($conn,$updateStatus);
                if ($sqlUpdate) {
                  echo "Update in inventory success <br/>";

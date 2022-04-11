@@ -95,11 +95,11 @@
             if ($row['item_Stock']<=10){ //LOW ON STOCK ======================================
                 echo "<tr class='table-danger'>";
                 //ADDING IN PENDING ORDERS===================================================================
-                if ($row['in_pending']==0) {
+                //if ($row['in_pending']==0) {
                     $_SESSION['pending_ItemID'] = $row['item_ID'];
-                    echo $_SESSION['pending_ItemID'];
+                    echo "<td> hello ".$_SESSION['pending_ItemID']. "</td>";
                     include 'addpending.php';
-                }   // END OF ADDING IN PENDING ORDERS =====================================================
+                //}   // END OF ADDING IN PENDING ORDERS =====================================================
                 } else{   //NOT LOW ON STOCK =================================================
                     echo '<tr>';
                 }   
