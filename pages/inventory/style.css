@@ -4,6 +4,7 @@
     position:fixed;
     background-color: #2b3a3d;
     transition: 0.4s;
+    box-shadow: inset;
 }
 .navbar .nav-link {
     font-size: 1.25em;
@@ -19,6 +20,7 @@
     background-color: #202c2f;
     border: none;
     height: auto;
+    position: sticky;
 }
 
 .nav .nav-link {
@@ -63,12 +65,28 @@
 
 #inventoryHead{
     width: 100%;
-    min-width: 500px;
+    min-width: 800px;
     border: 1;
     border-radius: 1mm;
 }
 
 #filters{
-    width: auto;
+    width: 100%;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    min-width: 800px;
     float: left;
+}
+
+.table-wrapper{
+    width: 100%;
+    height:450px;
+    overflow-y: scroll;
+    display: block;
+    border-bottom: solid;
+}
+
+.table-wrapper thead,th {
+    position: sticky;
+
 }

@@ -1,17 +1,22 @@
 <?php
 error_reporting(0);
 include_once '../../env/conn.php';
+$result = mysqli_query($conn, "SELECT SUM(item_Stock) AS totalItems, SUM(item_RetailPrice*item_Stock) AS totalValue FROM inventory WHERE inventoryItem_Status = 1");
+$row = mysqli_fetch_array($result);
+
+$totalItems = $row['totalItems'];
+$totalValue = $row['totalValue'];
 ?>
 
 <!DOCTYPE html>
 <html>
   <head>
     <title> Inventory </title>
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./style.css?ts=<?=time()?>">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" src="inventory.js"></script> 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
@@ -88,21 +93,20 @@ include_once '../../env/conn.php';
       <!-- EDIT MODAL ############################################################################ -->
 
 
-      <div id="inventoryHead" style="float:left; width:100%;">
+      <div id="inventoryHead"> 
         <h1 style="float:left;"> Inventory </h1>
           
         <div class="card float-right" style="width:400px; float:right;">
           <div class="card-body">
-            <h4>Total items: N </h4>
-            <h4>Total Value: 10,000.00</h4>
+            <h5>Total items: <?php echo number_format($totalItems) ?> </h5>
+            <h5>Total Value (in Pesos): <?php echo number_format($totalValue,2) ?></h5>
           </div>
         </div>
-      </div> 
+      </div> <!-- END OF INVENTORY HEAD -->
       
-      <div id="filters" >
-          
-          <div id="categoryContainer">
-            <!-- CHOOSING CATEGORY -->
+        <div id="filters" >
+          <!-- CHOOSING CATEGORY -->
+          <div id="categoryContainer"> 
             <label for="categ">Category:</label>
             <select name="categ" id="categ" style="height:30px;">
               <option value="All" selected >All</option>
@@ -112,26 +116,26 @@ include_once '../../env/conn.php';
               <option value="Tools">Tools</option>
               <option value="bolts and nuts">Bolts and Nuts</option>
               <option value="Paints">Paints and Accessories</option>
-            </select> <!-- END OF CHOOSING CATEGORY -->
+            </select> 
             N items
-          </div>
-          
-          <div id="searchSortContainer">
+          </div><!-- END OF CATEGORY CONTAINER -->
+            
           <!-- SEARCH TAB -->
-          <input type="text" id="search" autocomplete="off" placeholder="Search for items, brand, category..." style="height:30px;">
+          <div id="searchSortContainer">
+            <input type="text" id="search" autocomplete="off" placeholder="Search for items, brand, category..." style="height:30px;">
           
-          <!-- SORTING -->
-          <label for="sort">Sort by:</label>
-          <select name="sort" id="sort" style="height:30px;">
-            <option value="ID" selected >ID</option>
-            <option value="Category">Category</option>
-            <option value="PriceAsc"> <span>&#8593;</span>Price</option>
-            <option value="PriceDesc"> <span>&#8595;</span>Price</option>
-            <option value="item_Stock">Stocks</option>
-            <option value="Salability">Salability</option>
-          </select> <!-- END OF SORTING -->
-          </div>
-        </div>
+            <!-- SORTING -->
+            <label for="sort">Sort by:</label>
+            <select name="sort" id="sort" style="height:30px;">
+              <option value="ID" selected >ID</option>
+              <option value="Category">Category</option>
+              <option value="PriceAsc"> <span>&#8593;</span>Price</option>
+              <option value="PriceDesc"> <span>&#8595;</span>Price</option>
+              <option value="item_Stock">Stocks</option>
+              <option value="Salability">Salability</option>
+            </select> <!-- END OF SORTING -->
+          </div> <!-- END OF SEARCHSORT CONTAINER -->
+        </div> <!-- END OF FILTERS -->
       
         <!-- DISPLAY LIST OF ITEMS IN INVENTORY -->
         <div id="display">
@@ -139,9 +143,11 @@ include_once '../../env/conn.php';
         
         </div> <!-- END OF DISPLAY -->
 
-        <p class="float-left"> Legend: --------- </p>
-        <!-- ADD NEW ITEM IN INVENTORY BUTTON -->
-        <button style="float:right;" type="button" onclick="location.href='../supplier/suppliers.php'">New Item</button>
+        <div id="filters">
+          <div style="color:red; float:left;">*Items highlighted are Low on Stocks</div> 
+          <!-- ADD NEW ITEM IN INVENTORY BUTTON -->
+          <button class="btn btn-dark"style="float:right;" type="button" onclick="location.href='../supplier/suppliers.php'">New Item</button>
+        </div>
 
     </div> <!-- END OF CONTENT -->
 

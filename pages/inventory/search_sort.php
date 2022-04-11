@@ -1,7 +1,7 @@
 <?php
     error_reporting(0);
     include_once '../../env/conn.php';
-
+    
     // DELETE ITEM FROM INVENTORY
     if (isset($_POST['delete1'])) {
         echo "delete clicked";
@@ -70,7 +70,8 @@
     $result = mysqli_query($conn,$sql);
     $resultCheck = mysqli_num_rows($result);
         
-    echo "<table class='table'> 
+    echo "<div class='table-wrapper'><table class='table table-hover'> 
+           <thead> 
             <tr>
                 <th> ID </th>
                 <th> Item </th>
@@ -85,8 +86,10 @@
                     echo "<th> Total Sales</th>"; 
                 }  
             echo "<th> </th>
-                    </tr>";
-
+                    </tr>
+                    </thead>
+                     <tbody>";
+            
     if ($resultCheck>0){
         while ($row = mysqli_fetch_assoc($result)) {
             if ($row['item_Stock']<=10){ //LOW ON STOCK ======================================
@@ -100,6 +103,7 @@
                 } else{   //NOT LOW ON STOCK =================================================
                     echo '<tr>';
                 }   
+
                 echo "<td>" .$row['item_ID']. "</td>";  
                 echo "<td>". $row['item_Name']. "</td>";  
                 echo "<td>" .$row['item_unit']. "</td>";  
@@ -111,7 +115,7 @@
                 echo "<td>" .$row['item_Category']. "</td>";   
                 if ($k == "Salability"){
                     echo "<td>" .$row['sales_sum']. "</td>"; 
-                }   
+                }  
                 ?>
                 <!--DELETE AND EDIT BUTTON-->
                 <td style="width:100px;"> <button type="button" class="btn editbtn" style="float:left;"> <i class='fas fa-edit'></i> </button>
@@ -122,10 +126,12 @@
                     </form>
                 </td>    
             </tr>
+            
         <?php  
         } // END OF WHILE
     } // END OF RESULTCHECK
-    echo "</table>";
+    
+    echo "</tbody></table></div>";
 ?>
 <script>
            $(document).ready(function(){
