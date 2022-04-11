@@ -16,8 +16,32 @@ function add(){
         }
     });
 }
+
+function edit(){
+    $('#staticBackdrop').modal('show');
+    alert("hi");
+}
     
 $(document).ready(function(){
+    /**$("form").submit(function (event) {
+        var formData = {
+          name: $("#itemID").val(),
+        };
+    
+        $.ajax({
+          type: "POST",
+          url: "inventory.php",
+          data: formData,
+          dataType: "json",
+          encode: true,
+        }).done(function (data) {
+          console.log(data);
+        });
+    
+        event.preventDefault();
+      });**/
+
+
         $("#search").keyup(function() {
         var input = $(this).val();
         //alert(input);

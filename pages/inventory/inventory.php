@@ -38,11 +38,19 @@ if (isset($_POST['delete'])) {
 }
 
 // Edit an item from the inventory
-if(isset($_POST['edit'])){
+/**if(isset($_POST['edit'])){
     $_SESSION['itemID'] = $_POST['itemID'];
-		header("Location: ./editinventory.php");
+    $itemID = $_POST['itemID'];
+		//header("Location: ./editinventory.php");
+    $showModal  ="true";
+    echo '<script type="text/javascript">
+			$(document).ready(function(){
+				$("#staticBackdrop").modal("show");
+			});
+		</script>';
     unset($_POST['edit']);
-	}
+    $showModal = true;
+	}**/
 
 ?>
 
@@ -53,82 +61,92 @@ if(isset($_POST['edit'])){
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" src="inventory.js"></script> 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    
+    <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+  <script src="assets/js/jquery.js"></script>
     <link rel="stylesheet" href="style.css">
   </head>
 
   
   <body >
     
-
-    <!-- NAV BAR -->
-    <ul class="nav nav-tabs">
-      <li class="nav-item">
-        <a class="nav-link text-light" href="../../index.php">Home</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link active text-light" href="inventory.php">Inventory</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link text-light" href="../supplier/suppliers.php">Suppliers</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link text-light" href="../sales/salesReport.php">Report</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link text-light" href="../order/order.php">Sales</a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link disabled text-light" href="#" tabindex="-1" aria-disabled="true">Others</a>
-      </li>
-    </ul>
-    <!-- END OF NAV BAR -->
-
-    <!-- SIDE BAR -->
-    <nav class="navbar navbar-expand d-flex flex-column align-item-start" id="sidebar">
-      <ul class="navbar-nav d-flex flex-column mt-5 w-100">
-          <li clas="nav-item w-100">
-              <a href="inventory.php" class="nav-link active text-light pl-4"> <h3>Inventory</h3> </a>
-          </li>
-          <li clas="nav-item w-100">
-              <a href="#" class="nav-link active text-light pl-4"> Categories </a>
-          </li>
-          <li clas="nav-item w-100">
-              <a href="#" class="nav-link active text-light pl-4"> Brands </a>
-          </li>
-          <li clas="nav-item dropdown w-100">
-              <a href="#" class="nav-link dropdown-toggle text-light pl-4" id="navbarDropDown" role="button" data-bs-toggle="dropdown" > Pending </a>
-
-              <ul class="dropdown-menu w-100" aria-labelledby="navbarDropdown">
-                <li><a href="#" class="dropdown-item text-light pl-4 p-2"> Orders </a> </li>
-                <li><a href="#" class="dropdown-item text-light pl-4 p-2"> Deliveries </a> </li>
-              </ul>
-          </li>
-
-          <li clas="nav-item w-100">
-              <a href="transactions.php" class="nav-link text-light pl-4"> Transactions </a>
-          </li>
-          <li clas="nav-item w-100">
-              <a href="#" class="nav-link text-light pl-4"> Low on Stock </a>
-          </li>
-          <li clas="nav-item w-100">
-              <a href="#" class="nav-link text-light pl-4">Salability </a>
-          </li>
-          <li clas="nav-item w-100">
-              <a href="items.php" class="nav-link text-light pl-4"> All Items </a>
-          </li>
-          <li clas="nav-item w-100">
-              <a href="transactions.php" class="nav-link text-light pl-4"> Returns </a>
-          </li>
-      </ul>
-      <br/><h3 class="text-light" style="float:left;"> Reminders </h3>
-
-    </nav>
-    <!-- END OF SIDE BAR -->
+  <?php include 'navbar.html'; ?>
 
     <div id="content">
-    
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Edit Item</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          
+          <form id="newform" action="editinventory.php" method="post" class="form-inline" > 
+            <div class="modal-body mb-2">   
+            <input type="hidden"  id="editID" name="editID" placeholder="Enter"> 
+              <label for="editID" id="labelID" style="border:0; background-color: transparent; font-size: 1.25em; color:black; font-weight: 500;">Item ID: </label>
+             <!-- <input type="text"  id="editID" name="editID" placeholder="Enter" disabled style="border:0; background-color: transparent;padding-left: 5px; font-size: 1.25em; color:black; font-weight: 500;}">-->
+             
+
+              <div class="mb-1 mt-1"> 
+                <label for="editName" >Item Name: </label>
+                <div>
+                  <input type="text" class="form-control"  id="editName" name="editName" placeholder="Enter">
+                </div> 
+                <label for="editUnit" >Item Unit: </label>
+                <div>
+                  <input type="text" class="form-control"  id="editUnit" name="editUnit" placeholder="Enter">
+                </div> 
+                <label for="editBrand" >Brand: </label>
+                <div>
+                  <input type="text" class="form-control"  id="editBrand" name="editBrand" placeholder="Enter">
+                </div> 
+                <label for="editRetail" >Retail Price: </label>
+                <div>
+                  <input type="number" step="any" class="form-control"  id="editRetail" name="editRetail" placeholder="Enter">
+                </div> 
+                <label for="editMarkup" >Markup: </label>
+                <div>
+                  <input type="number" step="any" class="form-control"  id="editMarkup" name="editMarkup" placeholder="Enter">
+                </div> 
+                <label for="editStock" >Number of Stocks: </label>
+                <div>
+                  <input type="number" step="any" class="form-control"  id="editStock" name="editStock" placeholder="Enter">
+                </div> 
+                <label for="item_Category" >Category: </label>
+                <div>
+                <select name="item_Category" id="item_Category" style="height:30px;" >
+                          <option value="Electrical" >Electrical</option>
+                          <option value="Plumbing">Plumbing</option>
+                          <option value="Architectural"> Architectural</option>
+                          <option value="Paints">Paints</option>
+                          <option value="bolts and nuts">Bolts and Nuts</option>
+                          <option value="Tools">Tools</option>
+                      </select>
+                </div> 
+
+              </div>
+
+              </div>
+
+
+              <div class="modal-footer pb-0">
+                <input  type="submit" value="update" name="edit" class="form-control btn btn-primary" style="width:150px" > 
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!--end modal-->
+
+
       <h1 style="float:left;"> Inventory </h1>
+      
       <div class="card float-right" style="width:400px; float:right;">
         <div class="card-body">
           <h4>Total items: N </h4>
@@ -147,7 +165,7 @@ if(isset($_POST['edit'])){
             <option value="Electrical"> Electrical</option>
             <option value="Plumbing"> Plumbing</option>
             <option value="Tools">Tools</option>
-            <option value="Bolts">Bolts and Nuts</option>
+            <option value="bolts and nuts">Bolts and Nuts</option>
             <option value="Paints">Paints and Accessories</option>
           </select> <!-- END OF CHOOSING CATEGORY -->
           N items
@@ -164,7 +182,7 @@ if(isset($_POST['edit'])){
           <option value="Category">Category</option>
           <option value="PriceAsc"> <span>&#8593;</span>Price</option>
           <option value="PriceDesc"> <span>&#8595;</span>Price</option>
-          <option value="Stocks">Stocks</option>
+          <option value="item_Stock">Stocks</option>
           <option value="Salability">Salability</option>
         </select> <!-- END OF SORTING -->
         </div>
@@ -188,12 +206,13 @@ if(isset($_POST['edit'])){
                         <th> Markup </th>
                         <th> Stock </th>
                         <th> Category </th>
+                        <th> modal </th>
                         <th> </th>
                     </tr>";
 
             if ($resultCheck>0){
                 while ($row = mysqli_fetch_assoc($result)) {
-                    if ($row['item_Stock']<=5){ //LOW ON STOCK ======================================
+                    if ($row['item_Stock']<=10){ //LOW ON STOCK ======================================
                         echo "<tr class='table-danger'>"; // ROW WILL BE RED
                         //ADDING IN PENDING ORDERS===================================================
                         if ($row['in_pending']==0) { // IF NOT YET IN PENDING ORDERS
@@ -214,13 +233,20 @@ if(isset($_POST['edit'])){
                     echo "<td>" .$row['item_Category']. "</td>";      
                     ?>
                     <!--DELETE AND EDIT AN ITEM BUTTON-->
+                      <td> <button type="button" class="btn btn-success editbtn"> EDIT </button></td>
                       <td>
-                      <form action="inventory.php" class="mb-1" method="post">
-                        <input type=hidden name=itemID value=<?php echo $row['item_ID']?>>
+                        
+                      <form action="editinventory.php" class="mb-1" method="post" name="editDelete">
+                        <input type=hidden id="itemID" name=itemID value=<?php echo $row['item_ID']?>>
                         <button class="btn-primary" name="delete" type="submit">Delete</button>
-                        <a href="editinventory.php"> <button class="btn-primary" name="edit" type="submit">Edit</button></a>                      
-                      </td>
+                        <button class="btn-primary" name="edit" type="submit">Edit</button>
+                       
+                        <!--<a href="editinventory.php"> <button class="btn-primary" name="edit" type="submit">Edit</button></a>-->                     
                       </form>
+                      
+                      </td>
+                      
+
                   </tr>
                     <?php
                 } // END OF WHILE($ROW)
@@ -233,6 +259,35 @@ if(isset($_POST['edit'])){
       <p class="float-left"> Legend: --------- </p>
       <!-- ADD NEW ITEM IN INVENTORY BUTTON -->
       <button style="float:right;" type="button" onclick="location.href='../supplier/suppliers.php'">New Item</button>
+
     </div> <!-- END OF CONTENT -->
+
+         <script>
+           $(document).ready(function(){
+              $('.editbtn').on('click',function(){
+                $('#staticBackdrop').modal('show');
+                $tr = $(this).closest('tr');
+
+                var data = $tr.children("td").map(function () {
+                    return $(this).text();
+                }).get();
+
+                console.log(data);
+
+                $('#editID').val(data[0]);
+                $('#editName').val(data[1]);
+                $('#editUnit').val(data[2]);
+                $('#editBrand').val(data[3]);
+                $('#editRetail').val(data[4]);
+                $('#editMarkup').val(data[5]);
+                $('#editStock').val(data[6]);
+                $('#editCategory').val(data[7]);
+                const $select = document.querySelector('#item_Category');
+                $select.value = data[7];
+                document.getElementById("labelID").innerHTML = "Item ID: " + data[0];
+              });
+           });
+         </script>   
+
   </body>
 </html>

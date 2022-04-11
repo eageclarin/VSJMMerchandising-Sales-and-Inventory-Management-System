@@ -84,26 +84,8 @@ if(isset($_POST['deliver'])){
        
 </head>
 <body >
-<ul class="nav nav-tabs">
-  <li class="nav-item">
-    <a class="nav-link" href="../../index.php">Home</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link " aria-current="page" href="inventory.php">Inventory</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link active" href="pending.php">Pending</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link " href="transactions.php">Transactions</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link " href="items.php">Items</a>
-  </li>
-  <li class="nav-item active">
-    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Others</a>
-  </li>
-</ul>
+<?php include 'navbar.html'; ?>
+<div id="content">
 <h1> Pending Orders</h1>
 
 <?php
@@ -249,6 +231,6 @@ if(isset($_POST['deliver'])){
       }
   } 
 ?>
-
+</div>
 </body>
 </html>

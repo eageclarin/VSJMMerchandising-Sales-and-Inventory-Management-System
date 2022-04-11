@@ -6,7 +6,7 @@
     if (isset($_POST['delete1'])) {
         echo "delete clicked";
         $itemID = $_POST['itemID1'];
-        $deleteItem = "DELETE FROM inventory WHERE item_ID = '$itemID';";
+        $deleteItem = "UPDATE inventory SET inventoryItem_Status = 0 WHERE branch_ID =1 AND item_ID = '$itemID';";
         $sqlDelete = mysqli_query($conn,$deleteItem);
         if ($sqlDelete) {
           echo "deleted";
@@ -27,41 +27,42 @@
     if (isset($_POST['search'])) {
         $Name = $_POST['search'];
         if ($Name!="") {    
-            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) WHERE item_Name LIKE '%$Name%' OR item_Brand LIKE '%$Name%' OR item_category LIKE '%$Name%' ";
+            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) WHERE  inventoryItem_Status = 1 AND (item_Name LIKE '%$Name%' OR item_Brand LIKE '%$Name%' OR item_category LIKE '%$Name%'); ";
         } else {
-            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID);"; 
+            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) WHERE  inventoryItem_Status = 1;"; 
         }
     // FROM SORT
     } else if (isset($_POST['selected'])) {
         $k = $_POST['selected'];
         $_SESSION['option'] = $_POST['selected'];
+        
         if ($k == "PriceAsc") {
-            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) ORDER BY item_RetailPrice ASC;"; 
+            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) WHERE  inventoryItem_Status = 1 ORDER BY item_RetailPrice ASC;"; 
         } else if ($k == "PriceDesc") {
-            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) ORDER BY item_RetailPrice DESC;"; 
-        } else if ($k == "Stocks") {
-            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) ORDER BY item_Stock ASC;"; 
+            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) WHERE  inventoryItem_Status = 1 ORDER BY item_RetailPrice DESC;"; 
+        } else if ($k == "item_Stock") {
+            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) WHERE  inventoryItem_Status = 1 ORDER BY $k ASC;"; 
         } else if ($k == "Category") {
-            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) ORDER BY  item_category,item_Name ASC;"; 
+            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) WHERE  inventoryItem_Status = 1 ORDER BY  item_category,item_Name ASC;"; 
         } else if ($k == "ID"){
-            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) ORDER BY inventory.item_ID;"; 
+            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) WHERE  inventoryItem_Status = 1 ORDER BY inventory.item_ID;"; 
         } else if ($k == "Salability"){
-            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) INNER JOIN (SELECT SUM(orderItems_Quantity) as sales_sum, item_ID as order_itemID FROM order_items GROUP BY item_ID) as orders ON (inventory.item_ID = orders.order_itemID) ORDER BY sales_sum DESC;"; 
+            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) INNER JOIN (SELECT SUM(orderItems_Quantity) as sales_sum, item_ID as order_itemID FROM order_items GROUP BY item_ID) as orders ON (inventory.item_ID = orders.order_itemID) WHERE  inventoryItem_Status = 1 ORDER BY sales_sum DESC;"; 
         } else {
-            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID);"; 
+            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) WHERE  inventoryItem_Status = 1;"; 
         }
     // FROM CATEGORY  
     } else if (isset($_POST['category'])) {
         $category= $_POST['category'];
         echo "<h4> ".$category . "</h4>";
         if ($category=='All') {
-            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID)";
+            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) WHERE  inventoryItem_Status = 1 ";
         } else {
-            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) WHERE  item_category = '$category' ";
+            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) WHERE  item_category = '$category' AND  inventoryItem_Status = 1";
         }
     // DEFAULT: BY ID    
     }  else {
-            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) ORDER BY inventory.item_ID;"; 
+            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) WHERE  inventoryItem_Status = 1 ORDER BY inventory.item_ID;"; 
     }  
     // END OF SQL QUERIES ==========================================================================================
     
@@ -88,7 +89,7 @@
 
     if ($resultCheck>0){
         while ($row = mysqli_fetch_assoc($result)) {
-            if ($row['item_Stock']<=5){ //LOW ON STOCK ======================================
+            if ($row['item_Stock']<=10){ //LOW ON STOCK ======================================
                 echo "<tr class='table-danger'>";
                 //ADDING IN PENDING ORDERS===================================================================
                 if ($row['in_pending']==0) {
@@ -114,10 +115,10 @@
                 ?>
                 <!--DELETE AND EDIT BUTTON-->
                 <td>
-                    <form action="search_sort.php" class="mb-1" method="post">
+                    <form action="editinventory.php" class="mb-1" method="post">
                         <input type=hidden name=itemID1 value=<?php echo $row['item_ID']?>>
                         <button class="btn-primary" name="delete1" type="submit">Delete</button>
-                        <a href="editinventory.php"> <button class="btn-primary" name="edit" type="submit">Edit</button></a>
+                        <button class="btn-primary" name="edit" type="submit">Edit</button>
                     </form>
                 </td>    
             </tr>

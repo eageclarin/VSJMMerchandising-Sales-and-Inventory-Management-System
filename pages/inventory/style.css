@@ -50,3 +50,13 @@
 #searchSortContainer{
     float: right;
 }
+
+#editID {
+    border:0;
+    color: white;
+    background-color: transparent;
+    padding-left: 20px;
+    font-size: 1.25em;
+    color:black;
+    font-weight:500;
+}
