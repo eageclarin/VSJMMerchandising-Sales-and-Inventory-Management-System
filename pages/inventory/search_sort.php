@@ -114,11 +114,11 @@
                 }   
                 ?>
                 <!--DELETE AND EDIT BUTTON-->
-                <td>
-                    <form action="editinventory.php" class="mb-1" method="post">
+                <td style="width:100px;"> <button type="button" class="btn editbtn" style="float:left;"> <i class='fas fa-edit'></i> </button>
+                    <form action="search_sort.php" class="mb-1" method="post">
+                        <button class="btn" name="delete1" type="submit" style="float:right; padding-left:0px;"><i class='fas fa-trash'></i></button>
                         <input type=hidden name=itemID1 value=<?php echo $row['item_ID']?>>
-                        <button class="btn-primary" name="delete1" type="submit">Delete</button>
-                        <button class="btn-primary" name="edit" type="submit">Edit</button>
+                        
                     </form>
                 </td>    
             </tr>
@@ -127,3 +127,29 @@
     } // END OF RESULTCHECK
     echo "</table>";
 ?>
+<script>
+           $(document).ready(function(){
+              $('.editbtn').on('click',function(){
+                $('#staticBackdrop').modal('show');
+                $tr = $(this).closest('tr');
+
+                var data = $tr.children("td").map(function () {
+                    return $(this).text();
+                }).get();
+
+                console.log(data);
+
+                $('#editID').val(data[0]);
+                $('#editName').val(data[1]);
+                $('#editUnit').val(data[2]);
+                $('#editBrand').val(data[3]);
+                $('#editRetail').val(data[4]);
+                $('#editMarkup').val(data[5]);
+                $('#editStock').val(data[6]);
+                $('#editCategory').val(data[7]);
+                const $select = document.querySelector('#item_Category');
+                $select.value = data[7];
+                document.getElementById("labelID").innerHTML = "Item ID: " + data[0];
+              });
+           });
+         </script>
