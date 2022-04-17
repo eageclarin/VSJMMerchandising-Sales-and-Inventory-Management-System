@@ -2,7 +2,7 @@
     include_once '../../env/conn.php';
 
     /*-------- VARIABLES --------*/
-    $button = $updateStyle = "";
+    $button = $updateStyle = $undo = "";
     $update = "-";
 
     /*-------- STORE ITEMS INTO ARRAY --------*/
@@ -208,7 +208,7 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav me-auto mb-2 mb-md-0">
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="../../index.php">Home</a>
+                <a class="nav-link" aria-current="page" href="../../index.php">Home</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="../inventory/inventory.php">Inventory</a>
@@ -298,7 +298,7 @@
                         <div class="col-2">
                             <form action="updateItem.php?action=update&itemID=<?php echo $iID ?>" method="post" class="mb-0">
                                 <div class="input-group mb-0">
-                                    <input type="number" name="qty" id="qty" class="form-control" value="<?php echo $iQty ?>" max="<?php echo $itemStock ?>" aria-describedby="button-addon2">
+                                    <input type="number" name="qty" id="qty" class="form-control bg-dark text-light" value="<?php echo $iQty ?>" max="<?php echo $itemStock ?>" aria-describedby="button-addon2">
                                     <button class="btn btn-outline-secondary" type="submit" id="qtyUpdate">&#8635;</button>
                                 </div>
                             </form>
@@ -363,8 +363,7 @@
                         <button type="submit" <?php echo $button ?> form="emptyForm" class="btn btn-lg btn-outline-danger">
                             Empty Cart
                         </button>
-                        <form action="updateItem.php?action=delete" method="post" id="emptyForm">
-                        </form>
+                        <form action="updateItem.php?action=delete" method="post" id="emptyForm"></form>
                     </div>
                 </div>
                 <!-- end of buttons -->
