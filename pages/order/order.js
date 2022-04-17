@@ -8,6 +8,27 @@ function showItems(categ) { //display items by categ
     });
 };
 
+function showResult(str) {
+  $.ajax({
+      url: 'getItem.php?q='+str,
+      success: function(html) {
+          var search = document.getElementById('livesearch');
+          search.innerHTML=html;
+          search.style.border="1px solid #A5ACB2"; 
+      }
+  });
+};
+
+function showResult(str) {
+  $.ajax({
+    url: 'getItem.php?q='+str,
+    success: function(html) {
+      var search = document.getElementById('datalistOptions');
+      search.append(html);
+    }
+  });
+};
+
 //change qty
 function changeQty(getID, getQty) {
     var dataString = "action=update&itemID="+getID+"&qty="+getQty;
@@ -18,7 +39,7 @@ function changeQty(getID, getQty) {
       data: dataString,
       success: function(data) {
         $("#itemTotal-"+getID).html(data);
-  
+        $("#update").innerHTML("Item quantity update.");
         totalPrice();
       }
     });
@@ -35,8 +56,8 @@ function totalPrice() {
       url: "updateItem.php",
       data: dataString,
       success: function(data){
-        $("#total").html(data+".00");
-        $("#totalOrder").val(data+".00");
+        $("#total").html(data);
+        $("#totalOrder").val(data);
       }
     });
 }

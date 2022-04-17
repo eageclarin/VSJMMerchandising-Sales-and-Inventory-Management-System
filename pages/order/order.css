@@ -1,15 +1,34 @@
 body {
     height: 100%;
 }
-.container {
-    display: flex;
-    height: 100%;
-}
-
-.left .right {
-    flex: 1;
-}
 
 input[type=text] {
     border: none;
+}
+
+button#delItem:hover {
+    color: #dc3545;
+    border-color: #dc3545;
+    background-color: white;
+}
+
+button#addItem:hover {
+    color: #198754;
+    border-color: #198754;
+    background-color: white;
+}
+
+button#order:hover {
+    color: #0d6efd;
+    border-color: #0d6efd;
+    background-color: white;
+}
+
+#update {
+    color: #198754;
+    font-size: 0.8em;
+}
+
+#stocks {
+    font-size: 0.65em;
 }

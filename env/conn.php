@@ -10,7 +10,7 @@
     if($conn -> connect_errno){
 		die("ERROR: Could not connect. " . mysqli_connect_error());
 		exit();
-	}
+	  }
 
 
 ?>
