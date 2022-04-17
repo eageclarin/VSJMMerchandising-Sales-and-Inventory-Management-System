@@ -174,7 +174,11 @@
 
             /*------ SEARCH ITEM ------*/  
             $("#searchItem").autocomplete({
-                source: plang.slice(0,5),
+                source: function(request, response) {
+                    var results = $.ui.autocomplete.filter(plang, request.term);
+
+                    response(results.slice(0,5));
+                }
             });
 
             /*------ ENTER KEY - SUBMIT ------*/  

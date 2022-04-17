@@ -121,8 +121,12 @@ INSERT INTO `inventory` ( `branch_ID`, `item_ID`, `item_Stock`, `item_RetailPric
 VALUES	(1,1,5,25,'Tools',1.28,0),
 	(1,2,4,30,"Architectural",1.5,0),
 	(1,3,10,20,"Electrical",1.2,0),
-	(1,5,100,10,'Bolts',1.15,0),
+	(1,4,12,20,"Architectural",1.2,0),
+	(1,5,3,10,'Bolts',1.15,0),
+	(1,6,15,10,'Plumbing',1.15,0),
+	(1,7,21,10,'Bolts',1.15,0),
 	(1,8,12,1,"Architectural",0.5,0),
+	(1,9,14,1,"Architectural",0.5,0),
 	(1,10,20,200,'Plumbing',3,0);
 
 INSERT INTO `supplier` (`supplier_ID`, `supplier_Name`, `supplier_ContactPerson`, `supplier_ContactNum`, `supplier_Address`) VALUES (NULL, 'supplier-01', 'contact-01', '0123456789`', 'address-01'), (NULL, 'supplier-02', 'contact-02', '0123456789', 'address-02'), (NULL, 'supplier-03', 'contact-03', '0123456789', 'address-03');
