@@ -296,7 +296,7 @@ if(isset($_POST['deliver'])){
 
             <div class="panel-heading">
               <h4 class="panel-title">
-                <a class="colpsible-panel" data-toggle="collapse" data-parent="#accordion"  href="#collapse<?php echo $k?>">
+                <a class="colpsible-panel" data-toggle="collapse" data-parent="#accordion"  href="#collapseDeli<?php echo $k?>">
                   <?php echo "<h4> Transaction ID: ".$ID. "</h4>"; ?> 
                 </a>
                 <!--ORDER BUTTON-->
@@ -318,7 +318,7 @@ if(isset($_POST['deliver'])){
                   //echo "<a href='../supplier/suppliertable.php?supplier_ID=".$supplier."'>Add Items</a>";?>
             </div>
 
-            <div id="collapse<?php echo $k?>" class="panel-collapse collapse">
+            <div id="collapseDeli<?php echo $k?>" class="panel-collapse collapse">
             <div class="panel-body">
             <?php
               //echo "<a href='../supplier/suppliertable.php?supplier_ID=".$supplier."'>Add Items</a>";
