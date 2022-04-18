@@ -74,6 +74,8 @@
 		<span class="fs-5"> VSJM Merchandising</span>
 		</a>
 		<hr>
+
+		<!------ REMINDER ------>
 		<ul class="nav nav-pills flex-column mb-auto">
 			<li class="nav-item">
 				<p class="fw-bold fs-4 fst-italic mb-0"> Reminder </p>
@@ -86,6 +88,9 @@
 				</ul>
 			</li>
 		</ul>
+		<!------ END OF REMINDER ------>
+
+		<!------ USER FUNCTIONS ------>
 		<hr>
 		<div class="dropdown">
 			<a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -99,6 +104,7 @@
 				<li><a class="dropdown-item" href="#">Sign out</a></li>
 			</ul>
 		</div>
+		<!------ END OF USER FUNCTIONS ------>
 	</div>
 	<!------------ END OF SIDEBAR ----------->
 
@@ -107,21 +113,28 @@
 		<!------ MAIN PAGES ------>
 		<div class="row navbar-expand-md px-3 mt-3" style="height:20%">
 			<ul class="navbar-nav d-flex">
+				<!-- INVENTORY -->
 				<li class="nav-item flex-fill">
 					<a class="nav-link d-grid h-75" href="pages/inventory/inventory.php">
 						<button class="btn btn-primary fs-5 shadow-sm"><i class="bi bi-archive-fill"></i><br>Inventory</button>
 					</a>
 				</li>
+
+				<!-- SUPPLIERS -->
 				<li class="nav-item flex-fill">
 					<a class="nav-link d-grid h-75" href="pages/supplier/suppliers.php">
 						<button class="btn btn-success fs-5 shadow-sm"><i class="bi bi-people-fill"></i><br>Suppliers</button>
 					</a>
 				</li>
+
+				<!-- SALES -->
 				<li class="nav-item flex-fill">
 					<a class="nav-link d-grid h-75" href="pages/sales/sales.php">
 						<button class="btn btn-danger fs-5 shadow-sm"><i class="bi bi-table"></i><br>Summary of Sales</button>
 					</a>
 				</li>
+
+				<!-- ORDER -->
 				<li class="nav-item flex-fill">
 					<a class="nav-link d-grid h-75" href="pages/order/order.php">
 						<button class="btn btn-warning fs-5 shadow-sm"><i class="bi bi-cart-fill"></i><br>Order</button>
@@ -144,18 +157,19 @@
 						<div class="col-3">To be Paid</div>
 					</div>
 					<div style="overflow-y:scroll; overflow-x:hidden; max-height: 65%">
-					<?php
+					<?php /****** palagay na lang po query dito. wala pa yung connect connect sa taas ******/
 					$i = 0;
 					while($i < 10) {
-					?>
+					?>	
+						<!-- ***** pachange na langp o values ***** -->
 						<div class="row bg-white text-center border-bottom p-2">
-							<div class="col-4 fw-bold fs-5">name <?php echo $i ?></div>
+							<div class="col-4 fw-bold fs-5">name <?php echo $i ?></div> 
 							<div class="col-2 fs-5">Stocks <?php echo $i ?></div>
 							<div class="col-3 fs-5">Date <?php echo $i ?></div>
 							<div class="col-3 fs-5">Pay <?php echo $i ?></div>
 						</div>
 					<?php
-						$i++;
+						$i++; //eme lang
 					}
 					?>
 					</div>
@@ -166,6 +180,7 @@
 
 		<!------ BOTTOM ------>
 		<div class="row px-3" style="height:25%">
+			<!-- SALES -->
 			<div class="col-7">
 				<span class="fs-5 pb-1 fw-bold"> Sales </span>
 				<hr class="mt-1">
@@ -176,11 +191,15 @@
 					</div>
 				</div>
 			</div>
+			<!-- END OF SALES -->
+
+			<!-- TIME AND DATE -->
 			<div class="col text-end align-self-center">
 				<div class="clock fw-bold fs-1 text-danger">00:00:00</div>
 				<div class="day fs-3 fst-italic"> Day </div>
 				<div class="date fs-3"> Date </div>
 			</div>
+			<!-- END OF TIME AND DATE -->
 		</div>
 		<!------ END OF BOTTOM ------>
 	</div>

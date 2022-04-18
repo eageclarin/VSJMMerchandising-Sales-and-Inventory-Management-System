@@ -93,7 +93,7 @@
                         $resUpdate = mysqli_query($conn, $sqlUpdate);
 
                         //update total
-                        //decreae stock
+                        //decrease stock??
                         if ($resUpdate) {
                             header('location: order.php?update=u'); //item in cart. updated item quantity
                         } else {
@@ -107,7 +107,7 @@
                         $resInsert = mysqli_query($conn, $sqlInsert);
 
                         //update total
-                        //decrease stock
+                        //decrease stock??
                         if ($resInsert) {
                             header("location: order.php?update=i"); //item added to cart
                         } else {
@@ -453,8 +453,12 @@
                 </div>
                 </div>
                 <!------ END OF MODAL ------>
+
             </div>
+            <!------ END OF ORDER ------>
+
         </div>
+        <!------ END OF ORDER FUNCTIONS ------>
     </main>
 </body>
 </html>
