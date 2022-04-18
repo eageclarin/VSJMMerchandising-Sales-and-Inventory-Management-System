@@ -35,7 +35,7 @@ FOREIGN KEY(supplier_ID) REFERENCES supplier(supplier_ID) ON UPDATE CASCADE
 CREATE TABLE supplier_item(
 	supplier_ID int NOT NULL,
 	item_ID int NOT NULL,
-	supplierItem_CostPrice int NOT NULL,
+	supplierItem_CostPrice float(53) NOT NULL,
 	supplierItem_Status  TINYINT NOT NULL DEFAULT '1',
 PRIMARY KEY(supplier_ID, item_ID),
 FOREIGN KEY (supplier_ID) REFERENCES supplier(supplier_ID) ON UPDATE CASCADE,

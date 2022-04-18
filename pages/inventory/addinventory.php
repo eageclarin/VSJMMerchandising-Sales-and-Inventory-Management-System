@@ -19,20 +19,23 @@ include_once '../../env/conn.php';
         if ($resultCheckSupplier>0){
           while ($rowitems = mysqli_fetch_assoc($resultSupplier)) {
             $item_CostPrice = $rowitems['supplierItem_CostPrice'];
+            
                     ?>
                     <h2><?php echo $rowitems['item_Name']; ?> </h2>
                     <p><?php echo $rowitems['item_Brand']; ?> </p>
                     <p><?php echo $rowitems['supplierItem_CostPrice']. " pesos/".$rowitems['item_unit']; ?> </p>
-                    <a href='../supplier/suppliertable.php?supplier_ID=<?php  echo$rowitems['supplier_ID']?>' > <?php echo $rowitems['supplier_Name']?> </a> <br/>
+                    <p> Supplier: <a href='../supplier/suppliertable.php?supplier_ID=<?php  echo$rowitems['supplier_ID']?>' > <?php echo $rowitems['supplier_Name']?> </a> </p> <br/>
 
                     <?php 
+                    $item_category = $rowitems['item_Category'];
           } 
         } 
-        
+        $dummyRetail = $item_CostPrice + $item_CostPrice*0.5;
 //}
 
 if(isset($_POST['submit']))
 {		
+    
 	$Item_markup= $_POST['Item_markup'];
     $_SESSION['addInventory_markup'] = $Item_markup;
 	$item_Stock= $_POST['item_Stock'];
@@ -41,6 +44,14 @@ if(isset($_POST['submit']))
 	$item_RetailPrice = $item_CostPrice+($item_CostPrice*$Item_markup/100);
     echo $item_RetailPrice;
 
+    $updateCateg = "UPDATE item set item_Category = '$item_category' WHERE item_ID = '$orderItemID'";
+
+    $sqlupdateCateg = mysqli_query($conn,$updateCateg);
+    if ($sqlupdateCateg) {
+        echo "categ changes";
+    } else {
+        echo mysqli_error($conn);
+    }
     //see if item already pending in supplier transactions
     $sql2 = "SELECT * FROM supplier_Transactions WHERE supplier_ID = '$orderItemSupp' AND transaction_Status = 0;";   
     $result2 = mysqli_query($conn,$sql2);
@@ -111,27 +122,30 @@ if(isset($_POST['submit']))
 }
 
 mysqli_close($conn); // Close connection
+
 ?>
 
 
 
-<form action="./addinventory.php" method="post">
+<form action="./addinventory.php" method="post" >
         Item Retail Price:
-        <input type="text" name="item_RetailPrice" id="item_RetailPrice" disabled>
+        <input type="number" type="number" step="0.01" value="<?php echo $dummyRetail?>" name="item_RetailPrice" id="item_RetailPrice" > 
     </p>  
 	<p>
         Item Markup:
-        <input type="text" name="Item_markup" id="Item_markup" required>
+        <input type="number" step="0.01" name="Item_markup" id="Item_markup" value="0.5" required>
     </p>  
 	<p>
         Item Stock:
         <input type="text" name="item_Stock" id="item_Stock" required>
     </p>  
+    
 	<p>
         Item Category:
         
         <select name="item_category" id="item_category" style="height:30px;">
-            <option value="Electirical" >Electrical</option>
+        <option value="<?php echo $item_category?>" ><?php echo $item_category?></option>
+            <option value="Electrical" >Electrical</option>
             <option value="Plumbing">Plumbing</option>
             <option value="Architectural"> Architectural</option>
             <option value="Paints">Paints</option>
@@ -143,6 +157,20 @@ mysqli_close($conn); // Close connection
   <input type="submit" name="submit" value="Submit">
   <button type="button" onclick="location.href='inventory.php'">Go back </button>
 </form>
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script>
+
+    $('#Item_markup').change(function() {
+        var costPrice = <?php echo $item_CostPrice; ?>;
+        $('#item_RetailPrice').val( (costPrice + costPrice*$('#Item_markup').val()).toFixed(1));
+    });
+
+    $('#item_RetailPrice').keyup(function() {
+        var costPrice = <?php echo $item_CostPrice; ?>;
+        $('#Item_markup').val(($('item_RetailPrice').val() - costPrice)/costPrice);
+    });
+  </script>
 
 </body>
 </html>
