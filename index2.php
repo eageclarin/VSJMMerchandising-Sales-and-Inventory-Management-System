@@ -77,35 +77,30 @@
 		<ul class="nav nav-pills flex-column mb-auto">
 			<li class="nav-item">
 				<a href="#" class="nav-link active" aria-current="page">
-				<i class="bi bi-house-door"></i>
-				Home
+				<i class="bi bi-archive"></i> Inventory
 				</a>
 			</li>
 			<li>
 				<a href="#" class="nav-link text-white">
-				<i class="bi bi-speedometer2"></i>
-				Dashboard
+				<i class="bi bi-people"></i> Suppliers
 				</a>
 			</li>
 			<li>
 				<a href="#" class="nav-link text-white">
-				<i class="bi bi-table"></i>
-				Orders
+				<i class="bi bi-table"></i> Summary of Sales
 				</a>
 			</li>
 			<li>
 				<a href="#" class="nav-link text-white">
-				<i class="bi bi-grid"></i>
-				Products
-				</a>
-			</li>
-			<li>
-				<a href="#" class="nav-link text-white">
-				<i class="bi bi-person-circle"></i>
-				Customers
-				</a>
+				<i class="bi bi-cart"></i> Order
 			</li>
 		</ul>
+        <div class="col align-self-top">
+                <div > Time & Date </div>
+				<div class="clock fw-bold fs-2 text-light">00:00:00</div>
+				<div class="date fs-4"> Date </div>
+                <div class="day fs-5 fst-italic"> Day </div>
+		</div>
 		<hr>
 		<div class="dropdown">
 			<a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -124,85 +119,75 @@
 
 	<!----------- RIGHT SIDE ------------>
 	<div class="container-fluid bg-light">
-		<!------ MAIN PAGES ------>
-		<div class="row navbar-expand-md px-3 mt-3" style="height:20%">
-			<ul class="navbar-nav d-flex">
-				<li class="nav-item flex-fill">
-					<a class="nav-link d-grid h-75" href="pages/inventory/inventory.php">
-						<button class="btn btn-primary fs-5 shadow-sm"><i class="bi bi-archive-fill"></i><br>Inventory</button>
-					</a>
-				</li>
-				<li class="nav-item flex-fill">
-					<a class="nav-link d-grid h-75" href="pages/supplier/suppliers.php">
-						<button class="btn btn-success fs-5 shadow-sm"><i class="bi bi-people-fill"></i><br>Suppliers</button>
-					</a>
-				</li>
-				<li class="nav-item flex-fill">
-					<a class="nav-link d-grid h-75" href="pages/sales/sales.php">
-						<button class="btn btn-danger fs-5 shadow-sm"><i class="bi bi-table"></i><br>Summary of Sales</button>
-					</a>
-				</li>
-				<li class="nav-item flex-fill">
-					<a class="nav-link d-grid h-75" href="pages/order/order.php">
-						<button class="btn btn-warning fs-5 shadow-sm"><i class="bi bi-cart-fill"></i><br>Order</button>
-					</a>
-				</li>
-			</ul>
-		</div>
-		<!------ END OF MAIN PAGES ------>
-
 		<!------ ORDERED FROM SUPPLIERS ------>
-		<div class="row px-3 h-50">
-			<div class="col">
-				<span class="fs-5 pb-1 fw-bold"> Suppliers </span>
-				<hr class="mt-1 ">
-				<div class="bg-dark mt-2 rounded shadow-sm">
-					<div class="row text-center text-light border-bottom p-2">
-						<div class="col-4">Item Name</div>
-						<div class="col-2">Stocks Ordered</div>
-						<div class="col-3">Date Ordered</div>
-						<div class="col-3">To be Paid</div>
-					</div>
-					<div style="overflow-y:scroll; overflow-x:hidden; max-height: 65%">
-					<?php
-					$i = 0;
-					while($i < 10) {
-					?>
-						<div class="row bg-white text-center border-bottom p-2">
-							<div class="col-4 fw-bold fs-5">name <?php echo $i ?></div>
-							<div class="col-2 fs-5">Stocks <?php echo $i ?></div>
-							<div class="col-3 fs-5">Date <?php echo $i ?></div>
-							<div class="col-3 fs-5">Paid <?php echo $i ?></div>
-						</div>
-					<?php
-						$i++;
-					}
-					?>
-					</div>
-				</div>
+		<div class="row px-3 mt-3 d-flex justify-content-between">
+			<div class="col-7 h-100">
+                <div class="conainer-fluid">
+                    <div class="row">
+                        <div class="col">
+                            <span class="fs-5 pb-1 fw-bold"> Suppliers </span>
+                        </div>
+                    </div>
+                    <div class="row" style="height:95%;max-height:95%;">
+                        <div class="col mh-100 mt-2 px-0 rounded shadow-sm">
+                            <div class="row w-100 text-center bg-dark text-light border-bottom px-0 py-2 mx-0">
+                                <div class="col-4 p-0">Item Name</div>
+                                <div class="col-2 p-0">Stocks Ordered</div>
+                                <div class="col-3 p-0">Date Ordered</div>
+                                <div class="col-3 p-0">To be Paid</div>
+                            </div>
+                            <div class="row bg-white m-0" style="overflow-y:scroll">
+                            <?php
+                                $i = 0;
+                                while($i < 15) {
+                            ?>
+                                    <div class="row text-center border-bottom p-2">
+                                        <div class="col-4 fw-bold fs-5 pl-5">name <?php echo $i ?></div>
+                                        <div class="col-2 fs-5">Stocks <?php echo $i ?></div>
+                                        <div class="col-3 fs-5">Date <?php echo $i ?></div>
+                                        <div class="col-3 fs-5">Paid <?php echo $i ?></div>
+                                    </div>
+                            <?php
+                                    $i++;
+                                }
+                            ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row px-3 h-25 mt-4">
+                        <div class="col-7">
+                            <span class="fs-5 pb-1 fw-bold"> Sales </span>
+                            <hr class="mt-1">
+                            <div class="bg-white text-center mt-2 rounded shadow-sm">
+                                <div class="row h-50">
+                                    <span class="align-middle fs-1 text-success fw-bold"> 0.00 PHP</span>
+                                    <span> No. of Orders: 0 </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+			</div>
+            <div class="col h-100 border">
+                <span class="fs-5 pb-1 fw-bold pl-5"> Reminder </span>
+                <hr class="mt-1">
+
+                        <div class="row m-0 mh-100" style="overflow-y:scroll;">
+                        <?php
+                            $i = 0;
+                            while($i < 20) {
+                        ?>
+                                <div class="row text-center p-2">
+                                    <div class="col-4 pl-5">name <?php echo $i ?></div>
+                                </div>
+                        <?php
+                                $i++;
+                            }
+                        ?>
+                        </div>
 			</div>
 		</div>
 		<!------ END OF SUPPLIERS ------>
-
-		<!------ BOTTOM ------>
-		<div class="row px-3" style="height:25%">
-			<div class="col-7">
-				<span class="fs-5 pb-1 fw-bold"> Sales </span>
-				<hr class="mt-1">
-				<div class="bg-white text-center mt-2 rounded shadow-sm">
-					<div class="row h-50">
-						<span class="align-middle fs-1 text-success fw-bold"> 0.00 PHP</span>
-						<span> No. of Orders: 0 </span>
-					</div>
-				</div>
-			</div>
-			<div class="col text-end align-self-center">
-				<div class="clock fw-bold fs-1 text-danger">00:00:00</div>
-				<div class="day fs-3 fst-italic"> Day </div>
-				<div class="date fs-3"> Date </div>
-			</div>
-		</div>
-		<!------ END OF BOTTOM ------>
 	</div>
 	</main>
 </body>
