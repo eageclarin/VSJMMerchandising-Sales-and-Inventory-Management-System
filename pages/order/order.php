@@ -298,7 +298,7 @@
                         <div class="col-2">
                             <form action="updateItem.php?action=update&itemID=<?php echo $iID ?>" method="post" class="mb-0">
                                 <div class="input-group mb-0">
-                                    <input type="number" name="qty" id="qty" class="form-control bg-dark text-light" value="<?php echo $iQty ?>" max="<?php echo $itemStock ?>" aria-describedby="button-addon2">
+                                    <input type="number" name="qty" id="qty-<?php echo $iID ?>" class="form-control bg-dark text-light" value="<?php echo $iQty ?>" max="<?php echo $itemStock ?>" aria-describedby="button-addon2" onkeyup="checkStock(this.value,'<?php echo $itemStock ?>','<?php echo $iID ?>')">
                                     <button class="btn btn-outline-secondary" type="submit" id="qtyUpdate">&#8635;</button>
                                 </div>
                             </form>
@@ -334,7 +334,7 @@
                     <input type="text" name="item" autcomplete="off" class="form-control form-control-lg me-2 ui-autocomplete-input border" id="searchItem" placeholder="Search Item...">
                     <button class="btn btn-success" id="addItem" type="submit"><i class="fa fa-check btn-icon-prepend"></i>Add</button>
                 </form>
-                <p id="update" <?php echo $updateStyle ?>><?php echo $update ?></p>
+                <p id="update" class="mt-2" <?php echo $updateStyle ?>><?php echo $update ?></p>
                 <!-- end of search item -->
 
                 <!-- order total -->

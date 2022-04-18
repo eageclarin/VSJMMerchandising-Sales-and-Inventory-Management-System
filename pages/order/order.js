@@ -42,3 +42,12 @@ function calculateChange(money) {
         document.getElementById('pay').disabled = false;
     }
 }
+
+function checkStock(input, stock, item) {
+  var qtyInput = document.getElementById('qty-'+item);
+
+  if (input > stock || input.length > stock.length) {
+    //qtyInput.html = stock;
+    qtyInput.value = stock;
+  }
+}

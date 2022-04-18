@@ -76,34 +76,14 @@
 		<hr>
 		<ul class="nav nav-pills flex-column mb-auto">
 			<li class="nav-item">
-				<a href="#" class="nav-link active" aria-current="page">
-				<i class="bi bi-house-door"></i>
-				Home
-				</a>
-			</li>
-			<li>
-				<a href="#" class="nav-link text-white">
-				<i class="bi bi-speedometer2"></i>
-				Dashboard
-				</a>
-			</li>
-			<li>
-				<a href="#" class="nav-link text-white">
-				<i class="bi bi-table"></i>
-				Orders
-				</a>
-			</li>
-			<li>
-				<a href="#" class="nav-link text-white">
-				<i class="bi bi-grid"></i>
-				Products
-				</a>
-			</li>
-			<li>
-				<a href="#" class="nav-link text-white">
-				<i class="bi bi-person-circle"></i>
-				Customers
-				</a>
+				<p class="fw-bold fs-4 fst-italic mb-0"> Reminder </p>
+				<ul class="text-wrap nav nav-pills flex-column mb-auto gap-2">
+					<li class="rounded nav-item p-2 py-1" style="background-color: #343a40;">Reminder 1</li>
+					<li class="rounded nav-item p-2 py-1" style="background-color: #343a40;">Reminder 2</li>
+					<li class="rounded nav-item p-2 py-1" style="background-color: #343a40;">Reminder 3</li>
+					<li class="rounded nav-item p-2 py-1" style="background-color: #343a40;">Reminder 4</li>
+					<li class="rounded nav-item p-2 py-1" style="background-color: #343a40;">Reminder 5</li>
+				</ul>
 			</li>
 		</ul>
 		<hr>
@@ -172,7 +152,7 @@
 							<div class="col-4 fw-bold fs-5">name <?php echo $i ?></div>
 							<div class="col-2 fs-5">Stocks <?php echo $i ?></div>
 							<div class="col-3 fs-5">Date <?php echo $i ?></div>
-							<div class="col-3 fs-5">Paid <?php echo $i ?></div>
+							<div class="col-3 fs-5">Pay <?php echo $i ?></div>
 						</div>
 					<?php
 						$i++;
