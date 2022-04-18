@@ -178,6 +178,19 @@ $totalValue = $row['totalValue'];
                 document.getElementById("labelID").innerHTML = "Item ID: " + data[0];
               });
            });
+
+           $('#editMarkup').change(function() {
+                var markup = $('#editMarkup').val();
+                var retail = $('editRetail').val();
+                var costPrice = retail/(1+markup);
+                $('#editRetail').val( (costPrice + costPrice*$('#editMarkup').val()).toFixed(1));
+            });
+
+            $('#editRetail').keyup(function() {
+                var costPrice = <?php echo $item_CostPrice; ?>;
+                $('#editMarkup').val(($('editRetail').val() - costPrice)/costPrice);
+            });
+
          </script>   
 
   </body>

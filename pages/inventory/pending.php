@@ -115,6 +115,11 @@ if(isset($_POST['deliver'])){
         <button class="btn-primary" name="order" type="submit">Order</button>
         
       </form>
+      <form action="export.php" method="post">
+            <input type=hidden name=ExportTransactionID value=<?php echo $ID?>>
+            <input type=hidden name=ExportTransactionSupp value=<?php echo $supplier?>>
+              <button class="btn btn-success" name="export" type="submit">Export</button>
+            </form>
 
         <?php
           echo "<a href='../supplier/suppliertable.php?supplier_ID=".$supplier."'>Add Items</a>";

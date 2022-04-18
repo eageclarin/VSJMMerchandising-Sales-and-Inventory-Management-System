@@ -2,7 +2,7 @@
 include_once '../../env/conn.php';
 $n=0;
 
-  $sql = "SELECT * FROM supplier_transactions WHERE transaction_Status !=0 ;";   
+  $sql = "SELECT * FROM supplier_transactions INNER JOIN supplier ON (supplier_transactions.supplier_ID = supplier.supplier_ID) WHERE transaction_Status !=0 ;";   
   $result = mysqli_query($conn,$sql);
   $resultCheck = mysqli_num_rows($result);
 ?>
@@ -43,6 +43,7 @@ $n=0;
                 $n++;
                 $ID = $row['transaction_ID'];  
                 $supplier = $row['supplier_ID'];
+                $supplierName = $row['supplier_Name'];
                 $transacDate = $row['transaction_Date'];   
                 $total = $row['transaction_TotalPrice'];
                 $status = $row['transaction_Status'];
@@ -62,6 +63,11 @@ $n=0;
             <a class="colpsible-panel" data-toggle="collapse" data-parent="#accordion" href="#collapse<?php echo $n?>">
               <?php echo "<h4> Transaction ID: ".$ID. "</h4>"; ?> 
             </a>
+            <form action="export.php" method="post">
+            <input type=hidden name=ExportTransactionID value=<?php echo $ID?>>
+            <input type=hidden name=ExportTransactionSupp value=<?php echo $supplier?>>
+              <button class="btn btn-success" name="export" type="submit">Export</button>
+            </form>
           </h4>
         </div>
         <div id="collapse<?php echo $n?>" class="panel-collapse collapse">
