@@ -49,12 +49,27 @@ if (isset($_POST['edit'])) {
 
 }
 
+if (isset($_POST['editDeli'])) {
+    $deliQuantity = $_POST['deliQuant'];
+    $deliUpdateItemID=$_POST['deliItemID'];
+    $deliUpdateitemTrans = $_POST['deliTransID'];
+    $deliCost = $_POST['deliCost'];
+    $total = $deliQuantity*$deliCost;
+
+    $updateItem = "UPDATE transaction_Items SET transactionItems_Quantity = '$deliQuantity', transactionItems_CostPrice = '$deliCost', transactionItems_TotalPrice = '$total'  WHERE item_ID = '$deliUpdateItemID' AND transaction_ID = '$deliUpdateitemTrans';";
+    $sqlupdateItem = mysqli_query($conn,$updateItem);
+  
+    if ($sqlupdateItem) {
+      //echo "Update in supplier transactions Success </br>";
+    } else {
+      echo mysqli_error($conn);
+    } //END OF UPDATING TRANSACTION STATUS
+
+}
+
 // IF delivered BUTTON IS SET FOR EACH TRANSACTION
 if(isset($_POST['deliver'])){ 
   //echo "delivered items //insert modal form here";
-  foreach($_POST['check_list'] as $selected){
-    echo $selected."</br>";
-    }
   $transID=$_POST['transaction'];
   //GET ALL ITEMS IN GIVEN TRANSACTION ID
   $getitems = "SELECT * FROM transaction_Items WHERE transaction_ID = '$transID';";
@@ -397,8 +412,8 @@ if(isset($_POST['deliver'])){
                 echo "<td>". $row1['item_Name']. "</td>";  
                 echo "<td>" .$row1['item_Brand']. "</td>";  
                 echo "<td>" . $row1['item_unit'] . "</td>";  
-                echo "<td>" . $row1['transactionItems_Quantity']. "</td>"; 
-                echo "<td>" .$row1['transactionItems_CostPrice']. "</td>";
+                echo "<td><input type=number name=deliQuant value=" . $row1['transactionItems_Quantity']. "></td>"; 
+                echo "<td><input type=number name=deliCost value=" .$row1['transactionItems_CostPrice']. "></td>";
                 echo "<td>" .$row1['transactionItems_TotalPrice']. "</td>";   ?>
                 
                 <!--DELETE BUTTON-->
@@ -408,6 +423,9 @@ if(isset($_POST['deliver'])){
                         <button class="btn-primary" name="delete" type="submit" disabled>Remove</button>
                         <button class="btn-primary" name="edit" type="submit" disabled>Edit</button>
                       </form>-->
+                      <input type=hidden name=deliItemID value=<?php echo $row1['item_ID']?>>
+                      <input type=hidden name=deliTransID value=<?php echo $ID?>>
+                      <button class="btn-primary" name="editDeli" type="submit" >Edit</button>
                       <input type="checkbox" name="check_list[]" value="<?php echo $row1['item_ID']?>"><br/>
                       </td>
                       
