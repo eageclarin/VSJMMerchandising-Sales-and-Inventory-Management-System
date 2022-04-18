@@ -16,6 +16,39 @@ if (isset($_POST['order'])) {
   } //END OF UPDATING TRANSACTION STATUS
 }
 
+if (isset($_POST['delete'])) {
+  $deleteItemID=$_POST['itemID'];
+  $deleteitemTrans = $_POST['transID'];
+  //UPDATE TRANSACTION_STATUS TO 1 (ORDERED ALREADY)
+  $deleteItem = "DELETE FROM transaction_Items WHERE item_ID = '$deleteItemID' AND transaction_ID = '$deleteitemTrans';";
+  $sqldeleteItem = mysqli_query($conn,$deleteItem);
+
+  $deleteItem = "UPDATE inventory SET in_pending=0 WHERE item_ID='$deleteItemID';";
+  $sqldeleteItem = mysqli_query($conn,$deleteItem);
+
+  if ($sqldeleteItem) {
+    //echo "Update in supplier transactions Success </br>";
+  } else {
+    echo mysqli_error($conn);
+  } //END OF UPDATING TRANSACTION STATUS
+}
+
+if (isset($_POST['edit'])) {
+  $quantity = $_POST['quant'];
+  $updateItemID=$_POST['itemID'];
+  $updateitemTrans = $_POST['transID'];
+
+  $updateItem = "UPDATE transaction_Items SET transactionItems_Quantity = '$quantity' WHERE item_ID = '$updateItemID' AND transaction_ID = '$updateitemTrans';";
+  $sqlupdateItem = mysqli_query($conn,$updateItem);
+
+  if ($sqlupdateItem) {
+    //echo "Update in supplier transactions Success </br>";
+  } else {
+    echo mysqli_error($conn);
+  } //END OF UPDATING TRANSACTION STATUS
+
+}
+
 // IF delivered BUTTON IS SET FOR EACH TRANSACTION
 if(isset($_POST['deliver'])){ 
   //echo "delivered items //insert modal form here";
@@ -229,26 +262,28 @@ if(isset($_POST['deliver'])){
             
             if ($resultCheck1>0){
               while ($row1 = mysqli_fetch_assoc($result1)) {
+                echo '<form action="pending.php" class="mb-1" method="post">';
                 echo "<tr>"; 
                 echo "<td>" .$row1['item_ID']. "</td>";  
                 echo "<td>". $row1['item_Name']. "</td>";  
                 echo "<td>" .$row1['item_Brand']. "</td>";  
                 echo "<td>" . $row1['item_unit'] . "</td>";  
-                echo "<td>" . $row1['transactionItems_Quantity']. "</td>"; 
+                echo "<td><input type=number name=quant value=" . $row1['transactionItems_Quantity']. "></td>"; 
                 echo "<td>" .$row1['transactionItems_CostPrice']. "</td>";
                 echo "<td>" .$row1['transactionItems_TotalPrice']. "</td>";   ?>
                 
                 <!--DELETE BUTTON-->
                 <td>
-                      <form action="addpending.php" class="mb-1" method="post">
+                      <!--<form action="pending.php" class="mb-1" method="post">-->
                       <input type=hidden name=itemID value=<?php echo $row1['item_ID']?>>
-                        <button class="btn-primary" name="delete" type="submit" disabled>Remove</button>
-                        <button class="btn-primary" name="edit" type="submit" disabled>Edit</button>
+                      <input type=hidden name=transID value=<?php echo $ID?>>
+                        <button class="btn-primary" name="delete" type="submit" >Remove</button>
+                        <button class="btn-primary" name="edit" type="submit" >Edit</button>
                       
                       </td>
-                      </form>
+                      
                   </tr>
-                
+                </form>
 
                 <?php
                 echo "</tr>"; 
