@@ -1,6 +1,8 @@
 <?php
 
 include_once '../../env/conn.php';
+$n=0;
+$k=0;
 
 if (isset($_POST['order'])) {
   $transID=$_POST['transaction'];
@@ -78,167 +80,383 @@ if(isset($_POST['deliver'])){
 <html>
 <head>
 <title> Pending </title>
-<!-- ajax -->
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <!-- jquery -->
-     <!--   <script src="jquery-3.5.1.min.js"></script>-->
 <script type="text/javascript" src="inventory.js"></script> 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-       
+    
+<link rel="stylesheet" href="./style.css?ts=<?=time()?>">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+<style>
+
+.panel-heading .colpsible-panel:after {
+    
+    font-family: 'Glyphicons Halflings'; 
+    content: "\e114";    
+    float: right;        
+    color: #408080;         
+}
+.panel-heading .colpsible-panel.collapsed:after {
+    content: "\e080"; 
+}
+
+
+</style>
+
 </head>
 <body >
-<?php include 'navbar.html'; ?>
+<!------------------------------>
+      <!-- NAV BAR -->
+      <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link text-light" href="../../index.php">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-light" href="inventory.php">Inventory</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-light" href="../supplier/suppliers.php">Suppliers</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-light" href="../sales/salesReport.php">Report</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-light" href="../order/order.php">Sales</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link disabled text-light" href="#" tabindex="-1" aria-disabled="true">Others</a>
+      </li>
+    </ul>
+    <!-- END OF NAV BAR -->
+
+  <!------------------------------>
 <div id="content">
 <h1> Pending Orders</h1>
 
-<?php
-  echo "=============== TO BE PURCHASED ============== <br/>";
-  $sql = "SELECT * FROM supplier_transactions WHERE transaction_Status =0 ;";   
-  $result = mysqli_query($conn,$sql);
-  $resultCheck = mysqli_num_rows($result);
-        
-  if ($resultCheck>0){
-      while ($row = mysqli_fetch_assoc($result)) {
-        $ID = $row['transaction_ID'];  
-        $supplier = $row['supplier_ID'];
-        $transacDate = $row['transaction_Date'];   
-        $total = $row['transaction_TotalPrice'];
-       
-        echo "<h4> Transaction ID: ".$ID. "</h4>"; 
-        echo "Supplier ID: ".$supplier. "<br/>";
-        echo "Date: ".$transacDate. "<br/>";
-        echo "Total: ".$total. "<br/>";?>
 
-      <!--ORDER BUTTON-->
-      <form action="pending.php" class="mb-1" method="post">
-        <input type=hidden name=transaction value=<?php echo $ID?>>
-        <button class="btn-primary" name="order" type="submit">Order</button>
-        
-      </form>
-      <form action="export.php" method="post">
-            <input type=hidden name=ExportTransactionID value=<?php echo $ID?>>
-            <input type=hidden name=ExportTransactionSupp value=<?php echo $supplier?>>
-              <button class="btn btn-success" name="export" type="submit">Export</button>
-            </form>
 
-        <?php
-          echo "<a href='../supplier/suppliertable.php?supplier_ID=".$supplier."'>Add Items</a>";
-        
-        echo "<table class='table'> 
-                <tr> 
-                    <th> ID </th>
-                    <th> Item </th>
-                    <th> Brand </th>
-                    <th> unit </th>
-                    <th> Quantity </th>
-                    <th> Unit Price </th>
-                    <th> Total Price </th>
-                    <th> </th>
-                </tr>";
+<div class="card" style="width: 49%; min-height:80%; float:left;">
+  <div class="card-header">
+    <h3 class="card-title">To be Purchased</h3>
+  </div>
+  <div class="card-body">
+    <p class="card-text">Items that are not yet ordered</p>
 
-        $sql1 = "SELECT * FROM transaction_Items INNER JOIN item ON (transaction_Items.item_ID = item.item_ID) WHERE transaction_ID = '$ID' ;";   
-        $result1 = mysqli_query($conn,$sql1);
-        $resultCheck1 = mysqli_num_rows($result1);
-        
-        if ($resultCheck1>0){
-          while ($row1 = mysqli_fetch_assoc($result1)) {
-            echo "<tr>"; 
-            echo "<td>" .$row1['item_ID']. "</td>";  
-            echo "<td>". $row1['item_Name']. "</td>";  
-            echo "<td>" .$row1['item_Brand']. "</td>";  
-            echo "<td>" . $row1['item_unit'] . "</td>";  
-            echo "<td>" . $row1['transactionItems_Quantity']. "</td>"; 
-            echo "<td>" .$row1['transactionItems_CostPrice']. "</td>";
-            echo "<td>" .$row1['transactionItems_TotalPrice']. "</td>";   ?>
+    <?php
+      $sql = "SELECT * FROM supplier_transactions WHERE transaction_Status =0 ;";   
+      $result = mysqli_query($conn,$sql);
+      $resultCheck = mysqli_num_rows($result); ?>
+
+      <div class = "container" style="width: 100%;">
+        <div class="panel-group" id="accordion">
+      <?php 
+      
+
+      if ($resultCheck>0){
+          while ($row = mysqli_fetch_assoc($result)) {
+            $n++;
+            $ID = $row['transaction_ID'];  
+            $supplier = $row['supplier_ID'];
+            $transacDate = $row['transaction_Date'];   
+            $total = $row['transaction_TotalPrice'];
             
-            <!--DELETE BUTTON-->
-            <td>
-                  <form action="addpending.php" class="mb-1" method="post">
-                  <input type=hidden name=itemID value=<?php echo $row1['item_ID']?>>
-                    <button class="btn-primary" name="delete" type="submit" disabled>Remove</button>
-                    <button class="btn-primary" name="edit" type="submit" disabled>Edit</button>
-                  
-                  </td>
-                  </form>
-              </tr>
+            echo "<div class='panel panel-info'>";
+            //echo "<h4> Transaction ID: ".$ID. "</h4>"; 
+            //echo "Supplier ID: ".$supplier. "<br/>";
+            //echo "Date: ".$transacDate. "<br/>";
+          // echo "Total: ".$total. "<br/>";?>
+
+            <div class="panel-heading">
+              <h4 class="panel-title">
+                <a class="colpsible-panel" data-toggle="collapse" data-parent="#accordion"  href="#collapse<?php echo $n?>">
+                  <?php echo "<h4> Transaction ID: ".$ID. "</h4>"; ?> 
+                </a>
+                <!--ORDER BUTTON-->
+                <form action="pending.php" class="mb-1" method="post">
+                  <input type=hidden name=transaction value=<?php echo $ID?>>
+                  <button class="btn btn-primary" name="order" type="submit" style="float:left;">Order</button>
+                <!-- EXPORT BUTTON -->
+                </form>
+                <form action="export.php" method="post">
+                  <input type=hidden name=ExportTransactionID value=<?php echo $ID?>>
+                  <input type=hidden name=ExportTransactionSupp value=<?php echo $supplier?>>
+                  <button class="btn btn-success" name="export" type="submit" style="float:left;">Export</button>
+                </form>
+              </h4>
+                <?php 
+                  echo "Supplier ID: ".$supplier. "<br/>";
+                  echo "Date: ".$transacDate. "<br/>";
+                  echo "Total: ".$total. "<br/>";
+                  //echo "<a href='../supplier/suppliertable.php?supplier_ID=".$supplier."'>Add Items</a>";?>
+            </div>
+
+            <div id="collapse<?php echo $n?>" class="panel-collapse collapse">
+            <div class="panel-body">
+            <?php
+              //echo "<a href='../supplier/suppliertable.php?supplier_ID=".$supplier."'>Add Items</a>";
             
+            echo "<table class='table'> 
+                    <tr> 
+                        <th> ID </th>
+                        <th> Item </th>
+                        <th> Brand </th>
+                        <th> unit </th>
+                        <th> Quantity </th>
+                        <th> Unit Price </th>
+                        <th> Total Price </th>
+                        <th> </th>
+                    </tr>";
+
+            $sql1 = "SELECT * FROM transaction_Items INNER JOIN item ON (transaction_Items.item_ID = item.item_ID) WHERE transaction_ID = '$ID' ;";   
+            $result1 = mysqli_query($conn,$sql1);
+            $resultCheck1 = mysqli_num_rows($result1);
+            
+            if ($resultCheck1>0){
+              while ($row1 = mysqli_fetch_assoc($result1)) {
+                echo "<tr>"; 
+                echo "<td>" .$row1['item_ID']. "</td>";  
+                echo "<td>". $row1['item_Name']. "</td>";  
+                echo "<td>" .$row1['item_Brand']. "</td>";  
+                echo "<td>" . $row1['item_unit'] . "</td>";  
+                echo "<td>" . $row1['transactionItems_Quantity']. "</td>"; 
+                echo "<td>" .$row1['transactionItems_CostPrice']. "</td>";
+                echo "<td>" .$row1['transactionItems_TotalPrice']. "</td>";   ?>
+                
+                <!--DELETE BUTTON-->
+                <td>
+                      <form action="addpending.php" class="mb-1" method="post">
+                      <input type=hidden name=itemID value=<?php echo $row1['item_ID']?>>
+                        <button class="btn-primary" name="delete" type="submit" disabled>Remove</button>
+                        <button class="btn-primary" name="edit" type="submit" disabled>Edit</button>
+                      
+                      </td>
+                      </form>
+                  </tr>
+                
+
+                <?php
+                echo "</tr>"; 
+
+              }
+            } 
+
+            echo "</table>";
+            echo "<a href='../supplier/suppliertable.php?supplier_ID=".$supplier."'>Add Items</a>";?>
+            
+            </div>
+          </div>
+
+          
+        </div>
+        <?php } 
+        }?>
+      </div><!-- end accordion -->
+    </div> <!-- end container -->
+
+    
+  </div>
+</div>
+
+<!-------------DELIVERED CARD --------------->
+<!-------------DELIVERED CARD --------------->
+<!-------------DELIVERED CARD --------------->
+<div class="card" style="width: 49%; float:right;">
+  <div class="card-header">
+    <h3 class="card-title">To be Delivered</h3>
+  </div>
+  <div class="card-body">
+    <p class="card-text">pending deliveries..</p>
+    <?php
+      $sql = "SELECT * FROM supplier_transactions WHERE transaction_Status =1 ;";   
+      $result = mysqli_query($conn,$sql);
+      $resultCheck = mysqli_num_rows($result); ?>
+
+
+        
+
+        <div class = "container" style="width: 100%;">
+        <div class="panel-group" id="accordion">
+      <?php 
+      
+
+      if ($resultCheck>0){
+          while ($row = mysqli_fetch_assoc($result)) {
+            $k++;
+            $ID = $row['transaction_ID'];  
+            $supplier = $row['supplier_ID'];
+            $transacDate = $row['transaction_Date'];   
+            $total = $row['transaction_TotalPrice'];
+            
+            echo "<div class='panel panel-info'>";
+            //echo "<h4> Transaction ID: ".$ID. "</h4>"; 
+            //echo "Supplier ID: ".$supplier. "<br/>";
+            //echo "Date: ".$transacDate. "<br/>";
+          // echo "Total: ".$total. "<br/>";?>
+
+            <div class="panel-heading">
+              <h4 class="panel-title">
+                <a class="colpsible-panel" data-toggle="collapse" data-parent="#accordion"  href="#collapse<?php echo $k?>">
+                  <?php echo "<h4> Transaction ID: ".$ID. "</h4>"; ?> 
+                </a>
+                <!--ORDER BUTTON-->
+                <!--DELIVERED BUTTON-->
+                <form action="pending.php" class="mb-1" method="post">
+                  <input type=hidden name=transaction value=<?php echo $ID?>>
+                  <button class="btn-primary" name="deliver" type="submit">Delivered</button>
+                </form>
+                <form action="export.php" method="post">
+                  <input type=hidden name=ExportTransactionID value=<?php echo $ID?>>
+                  <input type=hidden name=ExportTransactionSupp value=<?php echo $supplier?>>
+                  <button class="btn btn-success" name="export" type="submit" style="float:left;">Export</button>
+                </form>
+              </h4>
+                <?php 
+                  echo "Supplier ID: ".$supplier. "<br/>";
+                  echo "Date: ".$transacDate. "<br/>";
+                  echo "Total: ".$total. "<br/>";
+                  //echo "<a href='../supplier/suppliertable.php?supplier_ID=".$supplier."'>Add Items</a>";?>
+            </div>
+
+            <div id="collapse<?php echo $k?>" class="panel-collapse collapse">
+            <div class="panel-body">
+            <?php
+              //echo "<a href='../supplier/suppliertable.php?supplier_ID=".$supplier."'>Add Items</a>";
+            
+            echo "<table class='table'> 
+                    <tr> 
+                        <th> ID </th>
+                        <th> Item </th>
+                        <th> Brand </th>
+                        <th> unit </th>
+                        <th> Quantity </th>
+                        <th> Unit Price </th>
+                        <th> Total Price </th>
+                        <th> </th>
+                    </tr>";
+
+            $sql1 = "SELECT * FROM transaction_Items INNER JOIN item ON (transaction_Items.item_ID = item.item_ID) WHERE transaction_ID = '$ID' ;";   
+            $result1 = mysqli_query($conn,$sql1);
+            $resultCheck1 = mysqli_num_rows($result1);
+            
+            if ($resultCheck1>0){
+              while ($row1 = mysqli_fetch_assoc($result1)) {
+                echo "<tr>"; 
+                echo "<td>" .$row1['item_ID']. "</td>";  
+                echo "<td>". $row1['item_Name']. "</td>";  
+                echo "<td>" .$row1['item_Brand']. "</td>";  
+                echo "<td>" . $row1['item_unit'] . "</td>";  
+                echo "<td>" . $row1['transactionItems_Quantity']. "</td>"; 
+                echo "<td>" .$row1['transactionItems_CostPrice']. "</td>";
+                echo "<td>" .$row1['transactionItems_TotalPrice']. "</td>";   ?>
+                
+                <!--DELETE BUTTON-->
+                <td>
+                      <form action="addpending.php" class="mb-1" method="post">
+                      <input type=hidden name=itemID value=<?php echo $row1['item_ID']?>>
+                        <button class="btn-primary" name="delete" type="submit" disabled>Remove</button>
+                        <button class="btn-primary" name="edit" type="submit" disabled>Edit</button>
+                      
+                      </td>
+                      </form>
+                  </tr>
+                
+
+                <?php
+                echo "</tr>"; 
+
+              }
+            } 
+
+            echo "</table>";
+            ?>
+            
+            </div>
+          </div>
+
+          
+        </div>
+        <?php } 
+        }?>
+      </div><!-- end accordion -->
+    </div> <!-- end container -->
+
+
+
+      <?php
+        /*
+            
+      if ($resultCheck>0){
+          while ($row = mysqli_fetch_assoc($result)) {
+            $ID = $row['transaction_ID'];  
+            $supplier = $row['supplier_ID'];
+            $transacDate = $row['transaction_Date'];   
+            $total = $row['transaction_TotalPrice'];
+          
+            echo "<h4> Transaction ID: ".$ID. "</h4>"; 
+            echo "Supplier ID: ".$supplier. "<br/>";
+            echo "Date: ".$transacDate. "<br/>";
+            echo "Total: ".$total. "<br/>";?>
+
+          <!--DELIVERED BUTTON-->
+          <form action="pending.php" class="mb-1" method="post">
+            <input type=hidden name=transaction value=<?php echo $ID?>>
+            <button class="btn-primary" name="deliver" type="submit">Delivered</button>
+          </form>
 
             <?php
-            echo "</tr>"; 
+              
+            
+            echo "<table class='table'> 
+                    <tr> 
+                        <th> ID </th>
+                        <th> Item </th>
+                        <th> Brand </th>
+                        <th> unit </th>
+                        <th> Quantity </th>
+                        <th> Unit Price </th>
+                        <th> Total Price </th>
+                    </tr>";
+
+            $sql1 = "SELECT * FROM transaction_Items INNER JOIN item ON (transaction_Items.item_ID = item.item_ID) WHERE transaction_ID = '$ID' ;";   
+            $result1 = mysqli_query($conn,$sql1);
+            $resultCheck1 = mysqli_num_rows($result1);
+            
+            if ($resultCheck1>0){
+              while ($row1 = mysqli_fetch_assoc($result1)) {
+                echo "<tr>"; 
+                echo "<td>" .$row1['item_ID']. "</td>";  
+                echo "<td>". $row1['item_Name']. "</td>";  
+                echo "<td>" .$row1['item_Brand']. "</td>";  
+                echo "<td>" . $row1['item_unit'] . "</td>";  
+                echo "<td>" . $row1['transactionItems_Quantity']. "</td>"; 
+                echo "<td>" .$row1['transactionItems_CostPrice']. "</td>";
+                echo "<td>" .$row1['transactionItems_TotalPrice']. "</td>";       
+                echo "</tr>"; 
+
+              }
+            } 
+
+            echo "</table>";
+
 
           }
-        } 
+      } */
+    ?>
 
-        echo "</table>";
+    </div>
 
-
-      }
-  } 
-?>
-
-<?php
-  echo "=============== UNDELIVERED PURCHASES ==============<br/>";
-  $sql = "SELECT * FROM supplier_transactions WHERE transaction_Status =1 ;";   
-  $result = mysqli_query($conn,$sql);
-  $resultCheck = mysqli_num_rows($result);
-        
-  if ($resultCheck>0){
-      while ($row = mysqli_fetch_assoc($result)) {
-        $ID = $row['transaction_ID'];  
-        $supplier = $row['supplier_ID'];
-        $transacDate = $row['transaction_Date'];   
-        $total = $row['transaction_TotalPrice'];
-       
-        echo "<h4> Transaction ID: ".$ID. "</h4>"; 
-        echo "Supplier ID: ".$supplier. "<br/>";
-        echo "Date: ".$transacDate. "<br/>";
-        echo "Total: ".$total. "<br/>";?>
-
-      <!--DELIVERED BUTTON-->
-      <form action="pending.php" class="mb-1" method="post">
-        <input type=hidden name=transaction value=<?php echo $ID?>>
-        <button class="btn-primary" name="deliver" type="submit">Delivered</button>
-      </form>
-
-        <?php
-          
-        
-        echo "<table class='table'> 
-                <tr> 
-                    <th> ID </th>
-                    <th> Item </th>
-                    <th> Brand </th>
-                    <th> unit </th>
-                    <th> Quantity </th>
-                    <th> Unit Price </th>
-                    <th> Total Price </th>
-                </tr>";
-
-        $sql1 = "SELECT * FROM transaction_Items INNER JOIN item ON (transaction_Items.item_ID = item.item_ID) WHERE transaction_ID = '$ID' ;";   
-        $result1 = mysqli_query($conn,$sql1);
-        $resultCheck1 = mysqli_num_rows($result1);
-        
-        if ($resultCheck1>0){
-          while ($row1 = mysqli_fetch_assoc($result1)) {
-            echo "<tr>"; 
-            echo "<td>" .$row1['item_ID']. "</td>";  
-            echo "<td>". $row1['item_Name']. "</td>";  
-            echo "<td>" .$row1['item_Brand']. "</td>";  
-            echo "<td>" . $row1['item_unit'] . "</td>";  
-            echo "<td>" . $row1['transactionItems_Quantity']. "</td>"; 
-            echo "<td>" .$row1['transactionItems_CostPrice']. "</td>";
-            echo "<td>" .$row1['transactionItems_TotalPrice']. "</td>";       
-            echo "</tr>"; 
-
-          }
-        } 
-
-        echo "</table>";
-
-
-      }
-  } 
-?>
+  </div>
 </div>
+
+
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
 </body>
 </html>

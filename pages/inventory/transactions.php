@@ -8,6 +8,10 @@ $n=0;
 ?>
 <!DOCTYPE html><html class=''>
 <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="inventory.js"></script> 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    
 <link rel="stylesheet" href="./style.css?ts=<?=time()?>">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 <style>
@@ -27,7 +31,32 @@ $n=0;
 </style>
 </head>
 <body>
-  
+  <!------------------------------>
+      <!-- NAV BAR -->
+      <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link text-light" href="../../index.php">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-light" href="inventory.php">Inventory</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-light" href="../supplier/suppliers.php">Suppliers</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-light" href="../sales/salesReport.php">Report</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-light" href="../order/order.php">Sales</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link disabled text-light" href="#" tabindex="-1" aria-disabled="true">Others</a>
+      </li>
+    </ul>
+    <!-- END OF NAV BAR -->
+
+
+  <!------------------------------>
   <div id="content">
     <h1> Transactions </h1>
     <p> Completed and undelivered transactions are shown here</p>
