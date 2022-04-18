@@ -139,7 +139,9 @@ $totalValue = $row['totalValue'];
       
         <!-- DISPLAY LIST OF ITEMS IN INVENTORY -->
         <div id="display">
-            <?php include "search_sort.php";?>
+            <?php include "search_sort.php";
+                  include 'addpending.php';
+                  ?>
         
         </div> <!-- END OF DISPLAY -->
 

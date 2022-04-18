@@ -97,9 +97,8 @@
                 //ADDING IN PENDING ORDERS===================================================================
                 //if ($row['in_pending']==0) {
                     $_SESSION['pending_ItemID'] = $row['item_ID'];
-                    echo "<td> hello ".$_SESSION['pending_ItemID']. "</td>";
                     include 'addpending.php';
-                //}   // END OF ADDING IN PENDING ORDERS =====================================================
+               // }   // END OF ADDING IN PENDING ORDERS =====================================================
                 } else{   //NOT LOW ON STOCK =================================================
                     echo '<tr>';
                 }   

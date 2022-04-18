@@ -1,4 +1,5 @@
 <?php
+
 include_once '../../env/conn.php';
 
 if (isset($_POST['order'])) {
@@ -7,7 +8,7 @@ if (isset($_POST['order'])) {
   $updateStatusTrans = "UPDATE supplier_transactions SET transaction_Status=1 WHERE transaction_ID = '$transID';";
   $sqlUpdateTrans = mysqli_query($conn,$updateStatusTrans);
   if ($sqlUpdateTrans) {
-    echo "Update in supplier transactions Success </br>";
+    //echo "Update in supplier transactions Success </br>";
   } else {
     echo mysqli_error($conn);
   } //END OF UPDATING TRANSACTION STATUS
@@ -15,7 +16,8 @@ if (isset($_POST['order'])) {
 
 // IF delivered BUTTON IS SET FOR EACH TRANSACTION
 if(isset($_POST['deliver'])){ 
-  echo "delivered items //insert modal form here";
+  //echo "delivered items //insert modal form here";
+  
   $transID=$_POST['transaction'];
   //GET ALL ITEMS IN GIVEN TRANSACTION ID
   $getitems = "SELECT * FROM transaction_Items WHERE transaction_ID = '$transID';";
@@ -43,7 +45,7 @@ if(isset($_POST['deliver'])){
               $updateStatus = "UPDATE inventory SET in_pending=0, inventoryItem_Status=1, item_Stock = item_Stock + '$transQuant', item_RetailPrice = '$newPrice'   WHERE item_ID = '$transItem';";
                $sqlUpdate = mysqli_query($conn,$updateStatus);
                if ($sqlUpdate) {
-                 echo "Update in inventory success <br/>";
+                 //echo "Update in inventory success <br/>";
                } else {
                  echo mysqli_error($conn);
                } //END OF ITEM IS ALREADY IN INVENTORY
@@ -62,7 +64,8 @@ if(isset($_POST['deliver'])){
         $updateStatusTrans = "UPDATE supplier_transactions SET transaction_Status=2 WHERE transaction_ID = '$transID';";
         $sqlUpdateTrans = mysqli_query($conn,$updateStatusTrans);
         if ($sqlUpdateTrans) {
-          echo "Update in supplier transactions Success </br>";
+          //echo "Update in supplier transactions Success </br>";
+          
         } else {
           echo mysqli_error($conn);
         } //END OF UPDATING TRANSACTION STATUS

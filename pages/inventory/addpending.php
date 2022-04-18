@@ -2,7 +2,8 @@
 error_reporting(0);
 include_once '../../env/conn.php';
 //ADDING IN PENDING ORDERS===================================================================
-if ($row['in_pending']==0) {
+if ($row['in_pending']==0 && isset($_SESSION['pending_ItemID'])) {
+    //if (isset($_SESSION['pending_ItemID'])) {
    // $_SESSION['pending_ItemID'] = $row['item_ID'];
     $pending = $_SESSION['pending_ItemID'];
     echo "pending id: ".$pending;
@@ -42,6 +43,14 @@ if ($row['in_pending']==0) {
     }
     
     //insert in transaction items
+    $sql3 = "SELECT * FROM transaction_items WHERE transaction_ID = '$Transaction' AND item_ID = '$pending';";   
+    $result3 = mysqli_query($conn,$sql3);
+    $resultCheck3 = mysqli_num_rows($result3);
+
+    if ($resultCheck3==0) {
+        # code...
+    
+
     $quantity = 20; //to edit
     $items_total = $CostPrice*$quantity;
     $insert = "INSERT INTO transaction_items(transaction_ID, item_ID, transactionItems_Quantity, transactionItems_CostPrice, transactionItems_TotalPrice)
@@ -57,7 +66,8 @@ if ($row['in_pending']==0) {
             echo mysqli_error($conn);
         }
 
-
+    }
+        unset($_SESSION['pending_ItemID']);
 }   // END OF ADDING IN PENDING ORDERS =====================================================
 
 
