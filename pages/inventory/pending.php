@@ -19,7 +19,9 @@ if (isset($_POST['order'])) {
 // IF delivered BUTTON IS SET FOR EACH TRANSACTION
 if(isset($_POST['deliver'])){ 
   //echo "delivered items //insert modal form here";
-  
+  foreach($_POST['check_list'] as $selected){
+    echo $selected."</br>";
+    }
   $transID=$_POST['transaction'];
   //GET ALL ITEMS IN GIVEN TRANSACTION ID
   $getitems = "SELECT * FROM transaction_Items WHERE transaction_ID = '$transID';";
@@ -28,6 +30,19 @@ if(isset($_POST['deliver'])){
         if ($resultCheckItems>0){
           while ($rowitems = mysqli_fetch_assoc($resultItems)) {
             $transItem = $rowitems["item_ID"];
+            if(!empty($_POST['check_list'])){
+              
+              if (!in_array($transItem, $_POST['check_list'])) {
+                echo $transItem." not checked";
+                $unchecked = "DELETE FROM transaction_Items WHERE item_ID='$transItem' AND transaction_ID = '$transID';";
+               $sqlunchecked = mysqli_query($conn,$unchecked);
+               $unchecked = "UPDATE inventory SET in_pending=0 WHERE item_ID='$transItem';";
+               $sqlunchecked = mysqli_query($conn,$unchecked);
+                break;
+              }
+            }
+      
+            
             $transQuant = $rowitems["transactionItems_Quantity"];
             $CostTrans =$rowitems["transactionItems_CostPrice"];
             //UPDATING ITEMS IN INVENTORY
@@ -292,8 +307,8 @@ if(isset($_POST['deliver'])){
             //echo "<h4> Transaction ID: ".$ID. "</h4>"; 
             //echo "Supplier ID: ".$supplier. "<br/>";
             //echo "Date: ".$transacDate. "<br/>";
-          // echo "Total: ".$total. "<br/>";?>
-
+            // echo "Total: ".$total. "<br/>";?>
+            <form action="pending.php" class="mb-1" method="post">
             <div class="panel-heading">
               <h4 class="panel-title">
                 <a class="colpsible-panel" data-toggle="collapse" data-parent="#accordion"  href="#collapseDeli<?php echo $k?>">
@@ -301,15 +316,16 @@ if(isset($_POST['deliver'])){
                 </a>
                 <!--ORDER BUTTON-->
                 <!--DELIVERED BUTTON-->
-                <form action="pending.php" class="mb-1" method="post">
+                <!--<form action="pending.php" class="mb-1" method="post">-->
                   <input type=hidden name=transaction value=<?php echo $ID?>>
                   <button class="btn-primary" name="deliver" type="submit">Delivered</button>
-                </form>
+                <!--</form>-->
+                <!--
                 <form action="export.php" method="post">
                   <input type=hidden name=ExportTransactionID value=<?php echo $ID?>>
                   <input type=hidden name=ExportTransactionSupp value=<?php echo $supplier?>>
                   <button class="btn btn-success" name="export" type="submit" style="float:left;">Export</button>
-                </form>
+                </form>-->
               </h4>
                 <?php 
                   echo "Supplier ID: ".$supplier. "<br/>";
@@ -352,13 +368,14 @@ if(isset($_POST['deliver'])){
                 
                 <!--DELETE BUTTON-->
                 <td>
-                      <form action="addpending.php" class="mb-1" method="post">
-                      <input type=hidden name=itemID value=<?php echo $row1['item_ID']?>>
+                      <!--<form action="addpending.php" class="mb-1" method="post">
+                      <input type=hidden name=itemID value=<?php //echo $row1['item_ID']?>>
                         <button class="btn-primary" name="delete" type="submit" disabled>Remove</button>
                         <button class="btn-primary" name="edit" type="submit" disabled>Edit</button>
-                      
+                      </form>-->
+                      <input type="checkbox" name="check_list[]" value="<?php echo $row1['item_ID']?>"><br/>
                       </td>
-                      </form>
+                      
                   </tr>
                 
 
@@ -374,7 +391,7 @@ if(isset($_POST['deliver'])){
             </div>
           </div>
 
-          
+          </form>
         </div>
         <?php } 
         }?>
