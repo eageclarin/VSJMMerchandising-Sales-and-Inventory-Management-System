@@ -4,6 +4,7 @@ include_once '../../env/conn.php';
 $n=0;
 $k=0;
 
+//ORDER BUTTON IN PENDING ORDERS
 if (isset($_POST['order'])) {
   $transID=$_POST['transaction'];
   //UPDATE TRANSACTION_STATUS TO 1 (ORDERED ALREADY)
@@ -16,23 +17,24 @@ if (isset($_POST['order'])) {
   } //END OF UPDATING TRANSACTION STATUS
 }
 
+//REMOVE BUTTON IN PENDING ORDERS
 if (isset($_POST['delete'])) {
   $deleteItemID=$_POST['itemID'];
   $deleteitemTrans = $_POST['transID'];
-  //UPDATE TRANSACTION_STATUS TO 1 (ORDERED ALREADY)
+  //DELETE ITEM FROM PENDING TRANSACTION
   $deleteItem = "DELETE FROM transaction_Items WHERE item_ID = '$deleteItemID' AND transaction_ID = '$deleteitemTrans';";
   $sqldeleteItem = mysqli_query($conn,$deleteItem);
-
+  //SET ITEM TO BE NOT IN PENDING ORDERS
   $deleteItem = "UPDATE inventory SET in_pending=0 WHERE item_ID='$deleteItemID';";
   $sqldeleteItem = mysqli_query($conn,$deleteItem);
-
   if ($sqldeleteItem) {
     //echo "Update in supplier transactions Success </br>";
   } else {
     echo mysqli_error($conn);
-  } //END OF UPDATING TRANSACTION STATUS
+  } 
 }
 
+//EDIT BUTTON IN PENDING ORDERS
 if (isset($_POST['edit'])) {
   $quantity = $_POST['quant'];
   $updateItemID=$_POST['itemID'];
@@ -45,8 +47,7 @@ if (isset($_POST['edit'])) {
     //echo "Update in supplier transactions Success </br>";
   } else {
     echo mysqli_error($conn);
-  } //END OF UPDATING TRANSACTION STATUS
-
+  } 
 }
 
 if (isset($_POST['editDeli'])) {
