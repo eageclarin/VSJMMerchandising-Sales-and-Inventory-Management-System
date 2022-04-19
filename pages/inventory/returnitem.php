@@ -21,12 +21,11 @@ if(!$db)
 }
 if(isset($_POST['submit'])){
 	$item_ID = $_POST['item_ID'];
-	$item_Name = $_POST['item_Name'];
-	$item_ReturnedStock = $_POST['item_ReturnedStock'];
+	$item_ReturnedQuan = $_POST['item_ReturnedQuan'];
 	$item_Reason = $_POST['item_Reason'];
 	
-	$insert = mysqli_query($db,"INSERT INTO return_item ". "(item_ID, item_Name, item_ReturnedStock, item_Reason) ". "
-			  VALUES('$item_ID', '$item_Name', '$item_ReturnedStock', '$item_Reason')");
+	$insert = mysqli_query($db,"INSERT INTO return_item ". "(item_ID, item_ReturnedQuan, item_Reason) ". "
+			  VALUES('$item_ID', '$item_ReturnedQuan', '$item_Reason')");
 			  
 	if(!$insert)
     {
@@ -64,12 +63,8 @@ if(isset($_POST['submit'])){
 				?>
 		</p>
 		<p>
-			Item Name:
-			<input type = "text" name = "item_Name" id="item_Name">
-		</p>
-		<p>
 			Returned Item Quantity:
-			<input type = "text" name = "item_ReturnedStock" id="item_ReturnedStock">
+			<input type = "text" name = "item_ReturnedQuan" id="item_ReturnedQuan">
 		</p>
 		<p>
 			Reason:
@@ -80,7 +75,7 @@ if(isset($_POST['submit'])){
         </select>
 		</p>
 		<input type="submit" name="submit" value="submit">
-		<button type="button" onclick="location.href='transactions.php'">Go back </button>
+		<button type="button" onclick="location.href='inventory.php'">Go back </button>
 	</form>
 </div>
 
@@ -99,7 +94,6 @@ $resultCheck = mysqli_num_rows($result);
 echo "<table> 
         <tr>
             <th> ID </th>
-            <th> Item  </th>
             <th> Returned Quantity </th>
             <th> Reason </th>
         </tr>";
@@ -108,9 +102,8 @@ if ($resultCheck>0){
     while ($row = mysqli_fetch_assoc($result)) {
             echo "
 			<tr>
-            <td>" .$row['item_ID']. "</td>  
-            <td>". $row['item_Name']. "</td>  
-            <td>" .$row['item_ReturnedStock']. "</td>  
+            <td>" .$row['item_ID']. "</td>   
+            <td>" .$row['item_ReturnedQuan']. "</td>  
             <td>" .$row['item_Reason'] . "</td> 
 			</tr>
 			";
