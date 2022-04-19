@@ -17,6 +17,19 @@
 
 <!DOCTYPE html>
 <html>
+	<head> 
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Edit Supplier Information</title>
+		<link href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round" rel="stylesheet">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
 <body>
 <?php
 	// Redirects back to main if GET and POST variables are not set
@@ -54,14 +67,32 @@
 			<input type="text" name="item_Brand" value="<?php echo $row['item_Brand']; ?>"required>
 			</p>	
 		</div>
-
-		<input class="button" type="submit" name="edit" value= "Submit" class="button">
-		<button class="button" type="button" onclick="location.href='./items.php'">Cancel</button>
 		
-			
-			
-	</form>
+		<button type="button" class="trigger-btn" data-toggle="modal" data-target="#myModal">Update</button>
+		<button class="button" type="button" onclick="location.href='./items.php'">Cancel</button>
 
+	
+		<!-- Modal HTML -->
+		<div id="myModal" class="modal fade">
+		<div class="modal-dialog modal-confirm">
+			<div class="modal-content">
+				<div class="modal-header">			
+					<h4 class="modal-title">Are you sure?</h4>	
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body">
+					<p>Do you really want to update these records? </p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
+					<input type="submit" class="btn btn-danger" name="edit" value= "Update" type="submit">
+					
+				</div>
+				</form>	
+			</div>
+		</div>
+	</div>     
+		
 
 </body>
 </html>
