@@ -1,17 +1,39 @@
 <?php
-include_once 'conn.php';
+include_once '../../env/conn.php';
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
 <script src="myjs.js" type="text/javascript"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+ 
 <title> List of Items </title>
 </head>
 <body>
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.php">Home</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" aria-current="page" href="inventory.php">Inventory</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link " href="pending.php">Pending</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link " href="transactions.php">Transactions</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active" aria-current="page" href="items.php">Items</a>
+  </li>
+  <li class="nav-item active">
+    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Others</a>
+  </li>
+</ul>
 <h1> List of Items </h1>
 <?php
-//TEST CODE ONLY
+
 $sql = "SELECT * FROM item;";                                    
 $result = mysqli_query($conn,$sql);
 $resultCheck = mysqli_num_rows($result);

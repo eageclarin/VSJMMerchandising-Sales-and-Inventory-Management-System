@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 include_once '../../env/conn.php';
 //ADDING IN PENDING ORDERS===================================================================
 if ($row['in_pending']==0) {
