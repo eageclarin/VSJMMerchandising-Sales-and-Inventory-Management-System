@@ -130,6 +130,9 @@ if(isset($_POST['submit']))
                 echo "<option value='other'>Other</option>";
                 echo "</select><br>";
             }
+            else{
+                echo "<select id='supplier_ID' name='supplier_ID'><option value='other'>Other</option></select><br>";
+            }
 
             mysqli_close($db); // Close connection
         ?>
