@@ -1,3 +1,8 @@
+<?php
+error_reporting(0);
+include_once 'env/conn.php';
+?>
+
 <html>
 <head>
 	<meta charset="utf-8">
@@ -79,13 +84,49 @@
 		<ul class="nav nav-pills flex-column mb-auto">
 			<li class="nav-item">
 				<p class="fw-bold fs-4 fst-italic mb-0"> Reminder </p>
-				<ul class="text-wrap nav nav-pills flex-column mb-auto gap-2">
-					<li class="rounded nav-item p-2 py-1" style="background-color: #343a40;">Reminder 1</li>
-					<li class="rounded nav-item p-2 py-1" style="background-color: #343a40;">Reminder 2</li>
-					<li class="rounded nav-item p-2 py-1" style="background-color: #343a40;">Reminder 3</li>
-					<li class="rounded nav-item p-2 py-1" style="background-color: #343a40;">Reminder 4</li>
-					<li class="rounded nav-item p-2 py-1" style="background-color: #343a40;">Reminder 5</li>
-				</ul>
+				<!-- SHOW LOW ON STOCKS ITEMS AND PENDING DELIVERIES-->
+				<?php
+					//LOW ON STOCKS
+					echo 'Low on Stocks';
+					$sql = "SELECT * FROM inventory INNER JOIN item ON (inventory.item_ID = item.item_ID) WHERE inventoryItem_Status = 1 AND item_Stock<=10";
+					$result = mysqli_query($conn,$sql);
+					$resultCheck = mysqli_num_rows($result);
+					if ($resultCheck>0){ 
+						echo '<ul class="text-wrap nav nav-pills flex-column mb-auto gap-2">';
+					  	while ($row = mysqli_fetch_assoc($result)) {	
+						  	echo '<li class="rounded nav-item p-2 py-1" style="background-color: #343a40;">';
+							echo	'<div style="float:left; width:85%;">'
+										.$row['item_ID'] .': ' .$row['item_Name']
+									.'</div>
+									<div style="float:right;width:12%; padding-right:3px; color:#D8172B;">'
+										.$row['item_Stock'] .$row['item_unit']
+									.'</div>
+								</li>';
+					  	}
+						echo '</ul>';
+					}
+
+					//PENDING DELIVERIES 
+					echo 'Deliveries';
+					$sql1 = "SELECT * FROM supplier_Transactions INNER JOIN transaction_items ON (supplier_Transactions.transaction_ID = transaction_Items.transaction_ID) INNER JOIN supplier ON (supplier.supplier_ID = supplier_Transactions.supplier_ID ) WHERE transaction_Status = 1";
+					$result1 = mysqli_query($conn,$sql1);
+					$resultCheck1 = mysqli_num_rows($result1);
+					if ($resultCheck1>0){ 
+						echo '<ul class="text-wrap nav nav-pills flex-column mb-auto gap-2">';
+					  	while ($row1 = mysqli_fetch_assoc($result1)) {	
+						  	echo '<li class="rounded nav-item p-2 py-1" style="background-color: #343a40;">';
+							echo	'<div style="float:left; width:85%;">'
+										.$row1['transaction_ID'] .': ' .$row1['supplier_Name']
+									.'</div>
+									<div style="float:right;width:12%; padding-right:3px; color:#D8172B;">'
+										.$row1['transaction_TotalPrice']
+									.'</div>
+								</li>';
+					  	}
+						echo '</ul>';
+					}
+				?>
+				
 			</li>
 		</ul>
 		<!------ END OF REMINDER ------>

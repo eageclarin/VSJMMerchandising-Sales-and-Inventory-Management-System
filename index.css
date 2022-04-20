@@ -23,7 +23,10 @@ main {
 .row {
     max-height: 100%;
 }
-  
+
+.links a {
+    text-decoration: none;
+  }
 
 
 
