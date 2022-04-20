@@ -115,11 +115,11 @@ include_once 'env/conn.php';
 						echo '<ul class="text-wrap nav nav-pills flex-column mb-auto gap-2">';
 					  	while ($row1 = mysqli_fetch_assoc($result1)) {	
 						  	echo '<li class="rounded nav-item p-2 py-1" style="background-color: #343a40;">';
-							echo	'<div style="float:left; width:85%;">'
+							echo	'<div style="float:left; width:80%;">'
 										.$row1['transaction_ID'] .': ' .$row1['supplier_Name']
 									.'</div>
-									<div style="float:right;width:12%; padding-right:3px; color:#D8172B;">'
-										.$row1['transaction_TotalPrice']
+									<div style="float:right;width:20%; padding-right:3px; color:#D8172B;">'
+										.number_format($row1['transaction_TotalPrice'],2)
 									.'</div>
 								</li>';
 					  	}
