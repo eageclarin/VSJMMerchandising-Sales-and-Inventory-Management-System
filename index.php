@@ -106,12 +106,32 @@ include_once 'env/conn.php';
 						echo '</ul>';
 					}
 
-					//PENDING DELIVERIES 
-					echo 'Deliveries';
+					//PENDING ORDERS
+					$sql1 = "SELECT * FROM supplier_Transactions INNER JOIN transaction_items ON (supplier_Transactions.transaction_ID = transaction_Items.transaction_ID) INNER JOIN supplier ON (supplier.supplier_ID = supplier_Transactions.supplier_ID ) WHERE transaction_Status = 0";
+					$result1 = mysqli_query($conn,$sql1);
+					$resultCheck1 = mysqli_num_rows($result1);
+					if ($resultCheck1>0){ 
+						echo 'Pending Orders';
+						echo '<ul class="text-wrap nav nav-pills flex-column mb-auto gap-2">';
+					  	while ($row1 = mysqli_fetch_assoc($result1)) {	
+						  	echo '<li class="rounded nav-item p-2 py-1" style="background-color: #343a40;">';
+							echo	'<div style="float:left; width:80%;">'
+										.$row1['transaction_ID'] .': ' .$row1['supplier_Name']
+									.'</div>
+									<div style="float:right;width:20%; padding-right:3px; color:#D8172B;">'
+										.number_format($row1['transaction_TotalPrice'],2)
+									.'</div>
+								</li>';
+					  	}
+						echo '</ul>';
+					}
+
+					//PENDING DELIVERIES 	
 					$sql1 = "SELECT * FROM supplier_Transactions INNER JOIN transaction_items ON (supplier_Transactions.transaction_ID = transaction_Items.transaction_ID) INNER JOIN supplier ON (supplier.supplier_ID = supplier_Transactions.supplier_ID ) WHERE transaction_Status = 1";
 					$result1 = mysqli_query($conn,$sql1);
 					$resultCheck1 = mysqli_num_rows($result1);
 					if ($resultCheck1>0){ 
+						echo 'Deliveries';
 						echo '<ul class="text-wrap nav nav-pills flex-column mb-auto gap-2">';
 					  	while ($row1 = mysqli_fetch_assoc($result1)) {	
 						  	echo '<li class="rounded nav-item p-2 py-1" style="background-color: #343a40;">';
