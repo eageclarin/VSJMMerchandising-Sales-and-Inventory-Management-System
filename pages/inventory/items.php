@@ -37,6 +37,7 @@ if ($resultCheck>0){
             <td>" .$row['item_unit']. "</td>  
             <td>" .$row['item_Brand'] . "</td> 
             <td><button class='table-see' onclick=\"location.href='edititems.php?item_ID=".$row['item_ID']." ' \">Edit</button></td>
+            <td><button class='table-see' onclick=\"location.href='../supplier/supplieritem.php?item_Name=".$row['item_Name']." ' \">Suppliers</button></td>
 			</tr>
 			";
     }
