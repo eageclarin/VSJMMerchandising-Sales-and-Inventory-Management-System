@@ -14,7 +14,7 @@ include_once '../../env/conn.php';
  
     </head>
     <body>
-        <?php include 'navbar.html';?>
+        <?php include 'navbar.php';?>
         <div id='content'>   
             <h1 style="padding-bottom: 30px;"> Categories </h1>
             <?php

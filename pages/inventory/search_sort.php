@@ -112,9 +112,6 @@
                 // echo "<td> <input type=number name=itemStock id='itemStock' min=1 value=" .$row['item_Stock']." style='width:70px;'/> </td>";  
                 echo "<td>" .$row['item_Stock']. "</td>"; 
                 echo "<td>" .$row['item_Category']. "</td>";   
-                if ($k == "Salability"){
-                    echo "<td>" .$row['sales_sum']. "</td>"; 
-                }  
                 ?>
                 <!--DELETE AND EDIT BUTTON-->
                 <td style="width:100px;"> <button type="button" class="btn editbtn" style="float:left;"> <i class='fas fa-edit'></i> </button>
