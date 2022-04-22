@@ -95,4 +95,50 @@ $(document).ready(function(){
         });
         
     });
+    //categ on salability
+    $("#categ1").change(function(){
+        var categOption = $(this).find(":selected").val();
+        $.ajax({
+            type: "POST",
+            url: "search_sort.php",
+            data: {
+                category1: categOption
+            },
+            success: function(data) { 
+                $("#display").html(data);
+            }
+        });
+        
+    });
+    //sort on salability
+    $("#sort1").change(function(){
+        var option = $(this).find(":selected").val();
+        sessionStorage.setItem("selectedOption", option);
+        var optionValue = $(this).selectedIndex;
+        $.ajax({
+            type: "POST",
+            url: "search_sort.php",
+            data: {
+                selected1: option
+            },
+            success: function(data) { 
+                $("#display").html(data);
+            }
+        });
+        
+    });
+    //search on salability
+    $("#search1").keyup(function() {
+        var input = $(this).val();
+            $.ajax({
+                type: "POST",
+                url: "search_sort.php",
+                data: {
+                    search1: input
+                },
+                success: function(data) {
+                    $("#display").html(data);
+                }
+            });
+    });
 });

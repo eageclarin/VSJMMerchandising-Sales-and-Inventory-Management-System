@@ -64,6 +64,46 @@
     }  else {
             $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) WHERE  inventoryItem_Status = 1 ORDER BY inventory.item_ID;"; 
     }  
+    // ON SALABILITY
+    if (isset($_POST['category1'])) {
+        $category= $_POST['category1'];
+        $onSalability = true;
+        echo "<h4> ".$category . "</h4>";
+        if ($category=='All') {
+            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) INNER JOIN (SELECT SUM(orderItems_Quantity) as sales_sum, item_ID as order_itemID FROM order_items GROUP BY item_ID) as orders ON (inventory.item_ID = orders.order_itemID)  ORDER BY sales_sum DESC;";
+        } else {
+            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) INNER JOIN (SELECT SUM(orderItems_Quantity) as sales_sum, item_ID as order_itemID FROM order_items GROUP BY item_ID) as orders ON (inventory.item_ID = orders.order_itemID) WHERE item_Category = '$category'  ORDER BY sales_sum DESC;";
+        }
+    } elseif (isset($_POST['search1'])) {
+        $Name = $_POST['search1'];
+        $onSalability = true;
+        if ($Name!="") {    
+            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) INNER JOIN (SELECT SUM(orderItems_Quantity) as sales_sum, item_ID as order_itemID FROM order_items GROUP BY item_ID) as orders ON (inventory.item_ID = orders.order_itemID) WHERE  (item_Name LIKE '%$Name%' OR item_Brand LIKE '%$Name%' OR item_category LIKE '%$Name%'); ";
+        } else {
+            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) INNER JOIN (SELECT SUM(orderItems_Quantity) as sales_sum, item_ID as order_itemID FROM order_items GROUP BY item_ID) as orders ON (inventory.item_ID = orders.order_itemID)  ORDER BY sales_sum DESC;"; 
+        
+        }
+    } else if (isset($_POST['selected1'])) {
+        $k = $_POST['selected1'];
+        $onSalability = true;
+        if ($k == "PriceAsc") {
+            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) INNER JOIN (SELECT SUM(orderItems_Quantity) as sales_sum, item_ID as order_itemID FROM order_items GROUP BY item_ID) as orders ON (inventory.item_ID = orders.order_itemID) ORDER BY item_RetailPrice ASC;"; 
+        } else if ($k == "PriceDesc") {
+            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) INNER JOIN (SELECT SUM(orderItems_Quantity) as sales_sum, item_ID as order_itemID FROM order_items GROUP BY item_ID) as orders ON (inventory.item_ID = orders.order_itemID)  ORDER BY item_RetailPrice DESC;"; 
+        } else if ($k == "item_Stock") {
+            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) INNER JOIN (SELECT SUM(orderItems_Quantity) as sales_sum, item_ID as order_itemID FROM order_items GROUP BY item_ID) as orders ON (inventory.item_ID = orders.order_itemID)  ORDER BY $k ASC;"; 
+        } else if ($k == "Category") {
+            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) INNER JOIN (SELECT SUM(orderItems_Quantity) as sales_sum, item_ID as order_itemID FROM order_items GROUP BY item_ID) as orders ON (inventory.item_ID = orders.order_itemID)  ORDER BY  item_category,item_Name ASC;"; 
+        } else if ($k == "ID"){
+            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) INNER JOIN (SELECT SUM(orderItems_Quantity) as sales_sum, item_ID as order_itemID FROM order_items GROUP BY item_ID) as orders ON (inventory.item_ID = orders.order_itemID)  ORDER BY inventory.item_ID;"; 
+        } else if ($k == "Salability"){
+            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) INNER JOIN (SELECT SUM(orderItems_Quantity) as sales_sum, item_ID as order_itemID FROM order_items GROUP BY item_ID) as orders ON (inventory.item_ID = orders.order_itemID)  ORDER BY sales_sum DESC;"; 
+        } else {
+            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) INNER JOIN (SELECT SUM(orderItems_Quantity) as sales_sum, item_ID as order_itemID FROM order_items GROUP BY item_ID) as orders ON (inventory.item_ID = orders.order_itemID)  ORDER BY sales_sum DESC;"; 
+        }
+    }
+
+
     // END OF SQL QUERIES ==========================================================================================
     
     // SHOW RESULT OF QUERY
@@ -82,8 +122,8 @@
                 <th> Stock </th>
                 <th> Category </th>
                 ";
-                if ($k == "Salability"){
-                    echo "<th> Total Sales</th>"; 
+                if ($onSalability==true){
+                    echo "<th> Sales</th>"; 
                 }  
             echo "<th> </th>
                     </tr>
@@ -92,14 +132,17 @@
             
     if ($resultCheck>0){
         while ($row = mysqli_fetch_assoc($result)) {
-            if ($row['item_Stock']<=10){ //LOW ON STOCK ======================================
+            if ($onSalability==true && $row['inventoryItem_Status']==0) {
+                    echo "<tr class = 'table-secondary'>";
+                } elseif ($row['item_Stock']<=10){ //LOW ON STOCK ======================================
                 echo "<tr class='table-danger'>";
                 //ADDING IN PENDING ORDERS===================================================================
                 //if ($row['in_pending']==0) {
                     $_SESSION['pending_ItemID'] = $row['item_ID'];
                     include 'addpending.php';
                // }   // END OF ADDING IN PENDING ORDERS =====================================================
-                } else{   //NOT LOW ON STOCK =================================================
+                }
+                else{   //NOT LOW ON STOCK =================================================
                     echo '<tr>';
                 }   
 
@@ -112,11 +155,14 @@
                 // echo "<td> <input type=number name=itemStock id='itemStock' min=1 value=" .$row['item_Stock']." style='width:70px;'/> </td>";  
                 echo "<td>" .$row['item_Stock']. "</td>"; 
                 echo "<td>" .$row['item_Category']. "</td>";   
+                if ($onSalability == true){
+                    echo "<td>" .$row['sales_sum']. "</td>"; 
+                } 
                 ?>
                 <!--DELETE AND EDIT BUTTON-->
                 <td style="width:100px;"> <button type="button" class="btn editbtn" style="float:left;"> <i class='fas fa-edit'></i> </button>
                     <form action="search_sort.php" class="mb-1" method="post">
-                        <button class="btn" name="delete1" type="submit" style="float:right; padding-left:0px;"><i class='fas fa-trash'></i></button>
+                        <button class="btn" name="delete1" type="submit" style="float:right; padding-left:0px;" <?php if($onSalability==true && $row['inventoryItem_Status']==0){echo 'disabled';} ?>><i class='fas fa-trash'></i></button>
                         <input type=hidden name=itemID1 value=<?php echo $row['item_ID']?>>
                         
                     </form>
@@ -128,6 +174,7 @@
     } // END OF RESULTCHECK
     
     echo "</tbody></table></div>";
+    $onSalability == false;
 ?>
 <script>
            $(document).ready(function(){

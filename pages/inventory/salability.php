@@ -1,17 +1,17 @@
 <?php
 error_reporting(0);
 include_once '../../env/conn.php';
-$result = mysqli_query($conn, "SELECT SUM(item_Stock) AS totalItems, SUM(item_RetailPrice*item_Stock) AS totalValue FROM inventory WHERE inventoryItem_Status = 1");
+$result = mysqli_query($conn, "SELECT SUM(orderItems_Quantity) as salesnum, SUM(orderItems_TotalPrice) as salesvalue FROM order_items;");
 $row = mysqli_fetch_array($result);
 
-$totalItems = $row['totalItems'];
-$totalValue = $row['totalValue'];
+$totalItems = $row['salesnum'];
+$totalValue = $row['salesvalue'];
 ?>
 
 <!DOCTYPE html>
 <html>
   <head>
-    <title> Inventory </title>
+    <title> Salability </title>
     <link rel="stylesheet" href="./style.css?ts=<?=time()?>">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script type="text/javascript" src="inventory.js"></script>
@@ -105,7 +105,7 @@ $totalValue = $row['totalValue'];
 
 
       <div id="inventoryHead"> 
-        <h1 style="float:left;"> Inventory </h1>
+        <h1 style="float:left;"> Salability </h1>
           
         <div class="card float-right" style="width:400px; float:right;">
           <div class="card-body">
@@ -118,8 +118,8 @@ $totalValue = $row['totalValue'];
         <div id="filters" >
           <!-- CHOOSING CATEGORY -->
           <div id="categoryContainer"> 
-            <label for="categ">Category:</label>
-            <select name="categ" id="categ" style="height:30px;">
+            <label for="categ1">Category:</label>
+            <select name="categ1" id="categ1" style="height:30px;">
               <option value="All" selected >All</option>
               <option value="Architectural"> Architectural</option>
               <option value="Electrical"> Electrical</option>
@@ -133,11 +133,11 @@ $totalValue = $row['totalValue'];
             
           <!-- SEARCH TAB -->
           <div id="searchSortContainer">
-            <input type="text" id="search" autocomplete="off" placeholder="Search for items, brand, category..." style="height:30px;">
+            <input type="text" id="search1" autocomplete="off" placeholder="Search for items, brand, category..." style="height:30px;">
           
             <!-- SORTING -->
-            <label for="sort">Sort by:</label>
-            <select name="sort" id="sort" style="height:30px;">
+            <label for="sort1">Sort by:</label>
+            <select name="sort1" id="sort1" style="height:30px;">
               <option value="ID" selected >ID</option>
               <option value="Category">Category</option>
               <option value="PriceAsc"> <span>&#8593;</span>Price</option>
@@ -173,15 +173,14 @@ $totalValue = $row['totalValue'];
     }
     // SQL QUERIES ==========================================================================================
     // FROM SEARCH TAB
-    if (isset($_POST['search'])) {
-        $Name = $_POST['search'];
+    if (isset($_POST['search1'])) {
+        $Name = $_POST['search1'];
         if ($Name!="") {    
-            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) WHERE  inventoryItem_Status = 1 AND (item_Name LIKE '%$Name%' OR item_Brand LIKE '%$Name%' OR item_category LIKE '%$Name%'); ";
+            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) INNER JOIN (SELECT SUM(orderItems_Quantity) as sales_sum, item_ID as order_itemID FROM order_items GROUP BY item_ID) as orders ON (inventory.item_ID = orders.order_itemID) WHERE (item_Name LIKE '%$Name%' OR item_Brand LIKE '%$Name%' OR item_category LIKE '%$Name%'); ";
         } else {
-            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) INNER JOIN (SELECT SUM(orderItems_Quantity) as sales_sum, item_ID as order_itemID FROM order_items GROUP BY item_ID) as orders ON (inventory.item_ID = orders.order_itemID) WHERE  inventoryItem_Status = 1 ORDER BY sales_sum DESC;"; 
+            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) INNER JOIN (SELECT SUM(orderItems_Quantity) as sales_sum, item_ID as order_itemID FROM order_items GROUP BY item_ID) as orders ON (inventory.item_ID = orders.order_itemID) ORDER BY sales_sum DESC;"; 
         
         }
-    // FROM SORT
     } 
         
     // FROM CATEGORY  
@@ -189,13 +188,13 @@ $totalValue = $row['totalValue'];
         $category= $_POST['category'];
         echo "<h4> ".$category . "</h4>";
         if ($category=='All') {
-            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) WHERE  inventoryItem_Status = 1 ";
+            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) INNER JOIN (SELECT SUM(orderItems_Quantity) as sales_sum, item_ID as order_itemID FROM order_items GROUP BY item_ID) as orders ON (inventory.item_ID = orders.order_itemID) ORDER BY sales_sum DESC;";
         } else {
-            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) WHERE  item_category = '$category' AND  inventoryItem_Status = 1";
+            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) INNER JOIN (SELECT SUM(orderItems_Quantity) as sales_sum, item_ID as order_itemID FROM order_items GROUP BY item_ID) as orders ON (inventory.item_ID = orders.order_itemID) WHERE item_Category = '$category' ORDER BY sales_sum DESC;";
         }
     // DEFAULT: BY ID    
     }  else {
-        $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) INNER JOIN (SELECT SUM(orderItems_Quantity) as sales_sum, item_ID as order_itemID FROM order_items GROUP BY item_ID) as orders ON (inventory.item_ID = orders.order_itemID) WHERE  inventoryItem_Status = 1 ORDER BY sales_sum DESC;"; 
+        $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) INNER JOIN (SELECT SUM(orderItems_Quantity) as sales_sum, item_ID as order_itemID FROM order_items GROUP BY item_ID) as orders ON (inventory.item_ID = orders.order_itemID) ORDER BY sales_sum DESC;"; 
         
     }  
     // END OF SQL QUERIES ==========================================================================================
@@ -215,6 +214,7 @@ $totalValue = $row['totalValue'];
                 <th> Markup </th>
                 <th> Stock </th>
                 <th> Category </th>
+                <th> Sales </th>
                 ";
                 if ($k == "Salability"){
                     echo "<th> Total Sales</th>"; 
@@ -226,7 +226,11 @@ $totalValue = $row['totalValue'];
             
     if ($resultCheck>0){
         while ($row = mysqli_fetch_assoc($result)) {
-            if ($row['item_Stock']<=10){ //LOW ON STOCK ======================================
+          if ( $row['inventoryItem_Status']==0) {
+                    echo "<tr class = 'table-secondary'>";
+                }   
+            
+                 else if ($row['item_Stock']<=10){ //LOW ON STOCK ======================================
                 echo "<tr class='table-danger'>";
                 //ADDING IN PENDING ORDERS===================================================================
                 //if ($row['in_pending']==0) {
@@ -245,12 +249,13 @@ $totalValue = $row['totalValue'];
                 echo "<td>" .$row['Item_markup']. "</td>";
                 // echo "<td> <input type=number name=itemStock id='itemStock' min=1 value=" .$row['item_Stock']." style='width:70px;'/> </td>";  
                 echo "<td>" .$row['item_Stock']. "</td>"; 
-                echo "<td>" .$row['item_Category']. "</td>";   
+                echo "<td>" .$row['item_Category']. "</td>";  
+                echo "<td>" .$row['sales_sum']. "</td>";  
                 ?>
                 <!--DELETE AND EDIT BUTTON-->
                 <td style="width:100px;"> <button type="button" class="btn editbtn" style="float:left;"> <i class='fas fa-edit'></i> </button>
                     <form action="search_sort.php" class="mb-1" method="post">
-                        <button class="btn" name="delete1" type="submit" style="float:right; padding-left:0px;"><i class='fas fa-trash'></i></button>
+                        <button class="btn" name="delete1" type="submit" style="float:right; padding-left:0px;" <?php if($row['inventoryItem_Status']==0){echo 'disabled';} ?>><i class='fas fa-trash'></i></button>
                         <input type=hidden name=itemID1 value=<?php echo $row['item_ID']?>>
                         
                     </form>
@@ -259,7 +264,9 @@ $totalValue = $row['totalValue'];
             
         <?php  
         } // END OF WHILE
-    } // END OF RESULTCHECK
+    } else {
+        echo mysqli_error($conn);
+    }// END OF RESULTCHECK
     
     echo "</tbody></table></div>";
 
@@ -272,8 +279,7 @@ $totalValue = $row['totalValue'];
 
         <div id="filters">
           <div style="color:red; float:left;">*Items highlighted are Low on Stocks</div> 
-          <!-- ADD NEW ITEM IN INVENTORY BUTTON -->
-          <button class="btn btn-dark"style="float:right;" type="button" onclick="location.href='../supplier/suppliers.php'">New Item</button>
+          
         </div>
 
     </div> <!-- END OF CONTENT -->
@@ -320,3 +326,30 @@ $totalValue = $row['totalValue'];
 
   </body>
 </html>
+
+<script>
+           $(document).ready(function(){
+              $('.editbtn').on('click',function(){
+                $('#staticBackdrop').modal('show');
+                $tr = $(this).closest('tr');
+
+                var data = $tr.children("td").map(function () {
+                    return $(this).text();
+                }).get();
+
+                console.log(data);
+
+                $('#editID').val(data[0]);
+                $('#editName').val(data[1]);
+                $('#editUnit').val(data[2]);
+                $('#editBrand').val(data[3]);
+                $('#editRetail').val(data[4]);
+                $('#editMarkup').val(data[5]);
+                $('#editStock').val(data[6]);
+                $('#editCategory').val(data[7]);
+                const $select = document.querySelector('#item_Category');
+                $select.value = data[7];
+                document.getElementById("labelID").innerHTML = "Item ID: " + data[0];
+              });
+           });
+         </script>
