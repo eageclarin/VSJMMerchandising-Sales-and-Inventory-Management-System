@@ -102,7 +102,10 @@
             $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) INNER JOIN (SELECT SUM(orderItems_Quantity) as sales_sum, item_ID as order_itemID FROM order_items GROUP BY item_ID) as orders ON (inventory.item_ID = orders.order_itemID)  ORDER BY sales_sum DESC;"; 
         }
     }
-
+    //LOW ON STOCK -- not yet working
+    if (isset($_POST['stock'])) {
+        $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) INNER JOIN (SELECT SUM(orderItems_Quantity) as sales_sum, item_ID as order_itemID FROM order_items GROUP BY item_ID) as orders ON (inventory.item_ID = orders.order_itemID)  ORDER BY sales_sum DESC;";
+    }
 
     // END OF SQL QUERIES ==========================================================================================
     
@@ -167,7 +170,8 @@
                         
                         
                     </form>
-                    <button class='table-see' onclick="location.href='../supplier/supplieritem.php?item_Name='<?php echo $row['item_Name']?>' ">Suppliers</button>
+                    <!--<button class='table-see' onclick="location.href='../supplier/supplieritem.php?item_Name='<?php echo $row['item_Name']?>' ">Suppliers</button>-->
+                    <button><a href="../supplier/supplieritem.php?item_Name='<?php echo $row['item_Name']?>" >Suppliers</a></button>
                 </td>    
             </tr>
             

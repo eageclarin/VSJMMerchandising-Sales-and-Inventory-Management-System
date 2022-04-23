@@ -11,7 +11,7 @@ include_once '../../env/conn.php';
 <title> List of Items </title>
 </head>
 <body>
-    <?php include 'navbar.html'; ?>
+<?php include 'navbar.php';?>
     <div id="content">
 <h1> List of Items </h1>
 <?php
