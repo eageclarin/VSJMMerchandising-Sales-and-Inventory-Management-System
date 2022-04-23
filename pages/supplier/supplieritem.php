@@ -8,8 +8,8 @@ include_once '../../env/conn.php';
   <head>
     <title> Suppliers </title>
     <link rel="stylesheet" href="./style.css?ts=<?=time()?>">
+    <script type="text/javascript" src="supplier.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script type="text/javascript" src="inventory.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
@@ -145,9 +145,85 @@ include_once '../../env/conn.php';
                 const $select = document.querySelector('#editstatus');
                 $select.value = data[5];
                 
-
+                
               });
            });
+
+           function fill(Value) {
+              $('#search').val(Value);
+              $('#display').hide();
+           }
+
+
+          function edit(){
+              $('#staticBackdrop').modal('show');
+              alert("hi");
+          }
+
+
+          //CHECK SUPPLIERS FROM THE ITEM LIST IN INVENTORY
+          $(window).on('load', function() {
+                  var input = $("#search").val();
+                  var option = $("#sort").find(":selected").val();
+                  sessionStorage.setItem("selectedOption", option);
+                  var optionValue = $("#sort").selectedIndex;
+
+                      $.ajax({
+                          type: "POST",
+                          url: "search_sort_item.php",
+                          data: {
+                              search: input,
+                              selected: option
+                          },
+                          success: function(data) {
+                              $("#display").html(data);
+                          }
+                      });
+          });
+
+          //SEARCH AND SORT BY
+          $(document).ready(function(){
+
+              $("#search").keyup(function() {
+                  var input = $("#search").val();
+                  var option = $("#sort").find(":selected").val();
+                  sessionStorage.setItem("selectedOption", option);
+                  var optionValue = $("#sort").selectedIndex;
+
+                      $.ajax({
+                          type: "POST",
+                          url: "search_sort_item.php",
+                          data: {
+                              search: input,
+                              selected: option
+                          },
+                          success: function(data) {
+                              $("#display").html(data);
+                          }
+                      });
+
+              });
+
+              $("#sort").change(function(){
+                  var input = $("#search").val();
+                  var option = $("#sort").find(":selected").val();
+                  sessionStorage.setItem("selectedOption", option);
+                  var optionValue = $("#sort").selectedIndex;
+                  $.ajax({
+                      type: "POST",
+                      url: "search_sort_item.php",
+                      data: {
+                          search: input,
+                          selected: option
+                      },
+                      success: function(data) { 
+                          $("#display").html(data);
+                      }
+                  });
+                  
+              });
+
+          });
 
          </script>   
 
