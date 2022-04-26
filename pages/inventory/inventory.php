@@ -132,52 +132,60 @@ $totalValue = $row['totalValue'];
       <!-- EDIT MODAL ############################################################################ -->
 
 
-      <div id="inventoryHead"> 
-        <span class="fs-1 fw-bold"> INVENTORY </span>
-          
-        <div class="card float-right" style="width:400px; float:right;">
-          <div class="card-body">
+      <div id="inventoryHead" class="row">
+        <div class="col-7">
+          <span class="fs-1 fw-bold"> INVENTORY </span>
+        </div>
+
+        <div class="col-5 py-auto mr-3 align-self-end">
+          <div class="p-3 bg-white rounded border rounded shadow-sm ">
             <h5>Total items: <?php echo number_format($totalItems) ?> </h5>
-            <h5>Total Value (in Pesos): <?php echo number_format($totalValue,2) ?></h5>
+            <h5 class="mb-0">Total Value (in Pesos): <?php echo number_format($totalValue,2) ?></h5>
           </div>
         </div>
       </div> <!-- END OF INVENTORY HEAD -->
       
-        <div id="filters">
+        <div id="filters" class="row mt-3">
           <!-- CHOOSING CATEGORY -->
-          <div id="categoryContainer"> 
-            <label for="categ">Category:</label>
-            <select name="categ" id="categ" class="form-select" onchange="categ()">
-              <option value="All"selected >All</option>
-              <option value="Architectural"> Architectural</option>
-              <option value="Electrical"> Electrical</option>
-              <option value="Plumbing"> Plumbing</option>
-              <option value="Tools">Tools</option>
-              <option value="bolts and nuts">Bolts and Nuts</option>
-              <option value="Paints">Paints and Accessories</option>
-            </select> 
-            
-          </div><!-- END OF CATEGORY CONTAINER -->
+          <div id="categoryContainer" class="col-7"> 
+            <div class="form-group row">
+              <label for="categ" class="col-auto col-form-label">Category:</label>
+              <select name="categ" id="categ" class="col-sm-10 form-select w-25" onchange="categ()">
+                <option value="All"selected >All</option>
+                <option value="Architectural"> Architectural</option>
+                <option value="Electrical"> Electrical</option>
+                <option value="Plumbing"> Plumbing</option>
+                <option value="Tools">Tools</option>
+                <option value="bolts and nuts">Bolts and Nuts</option>
+                <option value="Paints">Paints and Accessories</option>
+              </select> 
+
+              <label for="sort" class="col-auto col-form-label">Sort by:</label>
+              <select name="sort" id="sort" class="col-sm-10 form-select w-25" onchange="sort()">
+                <option value="ID" selected >ID</option>
+                <option value="Category">Category</option>
+                <option value="PriceAsc"> <span>&#8593;</span>Price</option>
+                <option value="PriceDesc"> <span>&#8595;</span>Price</option>
+                <option value="item_Stock">Stocks</option>
+                <option value="Salability">Salability</option>
+              </select> <!-- END OF SORTING -->
+            </div>
+          </div>
+          <!-- END OF CATEGORY CONTAINER -->
             
           <!-- SEARCH TAB -->
-          <div id="searchSortContainer">
-            <input type="text" id="search" autocomplete="off" onkeyup="search()" placeholder="Search for items, brand, category..." style="height:30px;">
-          
-            <!-- SORTING -->
-            <label for="sort">Sort by:</label>
-            <select name="sort" id="sort" style="height:30px;" onchange="sort()">
-              <option value="ID" selected >ID</option>
-              <option value="Category">Category</option>
-              <option value="PriceAsc"> <span>&#8593;</span>Price</option>
-              <option value="PriceDesc"> <span>&#8595;</span>Price</option>
-              <option value="item_Stock">Stocks</option>
-              <option value="Salability">Salability</option>
-            </select> <!-- END OF SORTING -->
-          </div> <!-- END OF SEARCHSORT CONTAINER -->
+          <div id="searchSortContainer" class="col">
+            <div class="form-group row">
+              <div class="col">
+                <input type="text" id="search" class="form-control w-100" autocomplete="off" onkeyup="search()" placeholder="Search for items, brand, category...">
+              </div>
+              <!-- SORTING -->
+              </div>
+          </div>
         </div> <!-- END OF FILTERS -->
       
         <!-- DISPLAY LIST OF ITEMS IN INVENTORY -->
-        <div id="display">
+        <div id="display" class="mt-3">
             <?php include "search_sort.php";
                   include 'addpending.php';
                   ?>
