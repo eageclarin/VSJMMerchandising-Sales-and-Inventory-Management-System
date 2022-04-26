@@ -54,7 +54,6 @@
     // FROM CATEGORY  
     } else if (isset($_POST['category'])) {
         $category= $_POST['category'];
-        echo "<h4> ".$category . "</h4>";
         if ($category=='All') {
             $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) WHERE  inventoryItem_Status = 1 ";
         } else {
@@ -68,7 +67,6 @@
     if (isset($_POST['category1'])) {
         $category= $_POST['category1'];
         $onSalability = true;
-        echo "<h4> ".$category . "</h4>";
         if ($category=='All') {
             $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) INNER JOIN (SELECT SUM(orderItems_Quantity) as sales_sum, item_ID as order_itemID FROM order_items GROUP BY item_ID) as orders ON (inventory.item_ID = orders.order_itemID)  ORDER BY sales_sum DESC;";
         } else {

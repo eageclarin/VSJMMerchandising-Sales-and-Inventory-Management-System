@@ -21,80 +21,52 @@ function edit(){
     $('#staticBackdrop').modal('show');
     alert("hi");
 }
-    
-$(document).ready(function(){
-    /**$("form").submit(function (event) {
-        var formData = {
-          name: $("#itemID").val(),
-        };
-    
-        $.ajax({
-          type: "POST",
-          url: "inventory.php",
-          data: formData,
-          dataType: "json",
-          encode: true,
-        }).done(function (data) {
-          console.log(data);
-        });
-    
-        event.preventDefault();
-      });**/
 
-
-        $("#search").keyup(function() {
-        var input = $(this).val();
-        //alert(input);
-       // if (input == "") {  
-            //$("#display").html("");
-
-       // }
-       //  else {
-            $.ajax({
-                type: "POST",
-                url: "search_sort.php",
-                data: {
-                    search: input
-                },
-                success: function(data) {
-                    $("#display").html(data);
-                }
-            });
-       // };
+function search(){
+    var input = $('#search').val();
+    $.ajax({
+        type: "POST",
+        url: "search_sort.php",
+        data: {
+            search: input
+        },
+        success: function(data) {
+            $("#display").html(data);
+        }
     });
+}
 
-    $("#sort").change(function(){
-        var option = $(this).find(":selected").val();
-        sessionStorage.setItem("selectedOption", option);
-        var optionValue = $(this).selectedIndex;
-        $.ajax({
-            type: "POST",
-            url: "search_sort.php",
-            data: {
-                selected: option
-            },
-            success: function(data) { 
-                $("#display").html(data);
-            }
-        });
-        
-    });
+function sort(){
+    var option = $('#sort').find(":selected").val();
+    sessionStorage.setItem("selectedOption", option);
+    var optionValue = $(this).selectedIndex;
 
-    //$('#sort').find('option[value='+sessionStorage.getItem('selectedOption')+']').attr('selected','selected');
-    $("#categ").change(function(){
-        var categOption = $(this).find(":selected").val();
-        $.ajax({
-            type: "POST",
-            url: "search_sort.php",
-            data: {
-                category: categOption
-            },
-            success: function(data) { 
-                $("#display").html(data);
-            }
-        });
-        
+    $.ajax({
+        type: "POST",
+        url: "search_sort.php",
+        data: {
+            selected: option
+        },
+        success: function(data) { 
+            $("#display").html(data);
+        }
     });
+}
+
+function categ(){
+    var categOption = $('#categ').find(":selected").val();
+    $.ajax({
+        type: "POST",
+        url: "search_sort.php",
+        data: {
+            category: categOption
+        },
+        success: function(data) { 
+            $("#display").html(data);
+        }
+    });
+}
+
     //categ on salability
     $("#categ1").change(function(){
         var categOption = $(this).find(":selected").val();
@@ -141,4 +113,3 @@ $(document).ready(function(){
                 }
             });
     });
-});
