@@ -20,13 +20,18 @@ $sql = "SELECT * FROM item;";
 $result = mysqli_query($conn,$sql);
 $resultCheck = mysqli_num_rows($result);
        
-echo "<table> 
+echo "<div class='table-wrapper'><table class='table table-hover'> 
+        <thead> 
         <tr>
             <th> ID </th>
             <th> Item </th>
             <th> Unit </th>
             <th> Brand </th>
-        </tr>";
+            <th> Category </th>
+            <th> </th>
+        </tr>
+        </thead>
+        <tbody>";
 
 if ($resultCheck>0){
     while ($row = mysqli_fetch_assoc($result)) {
@@ -36,17 +41,18 @@ if ($resultCheck>0){
             <td>". $row['item_Name']. "</td>  
             <td>" .$row['item_unit']. "</td>  
             <td>" .$row['item_Brand'] . "</td> 
-            <td><button class='table-see' onclick=\"location.href='edititems.php?item_ID=".$row['item_ID']." ' \">Edit</button></td>
-            <td><button class='table-see' onclick=\"location.href='../supplier/supplieritem.php?item_Name=".$row['item_Name']." ' \">Suppliers</button></td>
+            <td>" .$row['item_Category'] . "</td> 
+            <td><button type='button' class='btn editbtn' onclick=\"location.href='edititems.php?item_ID=".$row['item_ID']." ' \"><i class='fas fa-edit'></i></button>
+            <button class='btn btn-link' onclick=\"location.href='../supplier/supplieritem.php?item_Name=".$row['item_Name']." ' \">Suppliers</button></td>
 			</tr>
 			";
     }
 }       
 mysqli_close($conn);
-echo "</table>";
+echo "</tbody></table></div>";
 
 ?>
-<button type="button" onclick="location.href='./additem.php'">Add Item </button> 
+<button class='btn btn-primary p-2 mt-3' type="button" onclick="location.href='./additem.php'">Add Item </button> 
 </div>
 </body>
 </html>
