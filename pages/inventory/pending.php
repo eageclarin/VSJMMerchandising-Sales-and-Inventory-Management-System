@@ -140,11 +140,19 @@ if(isset($_POST['deliver'])){
 <html>
 <head>
 <title> Pending </title>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script type="text/javascript" src="inventory.js"></script> 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">   
-  <link rel="stylesheet" href="./style.css?ts=<?=time()?>">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<link rel="stylesheet" href="./style.css?ts=<?=time()?>">
+  <script type="text/javascript" src="inventory.js"></script>
+  <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+
+    <!-- CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  
+	<!-- JQUERY/BOOTSTRAP -->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
 
   <style>
     .panel-heading .colpsible-panel:after {
@@ -160,37 +168,15 @@ if(isset($_POST['deliver'])){
   </style>
 </head>
 <body >
-<!------------------------------>
-      <!-- NAV BAR -->
-	  <ul class="nav nav-tabs shadow border-0 p-1 text-white bg-dark" >
-      <li class="nav-item">
-        <a class="nav-link text-light" href="../../index.php">Home</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link text-light" href="inventory.php">Inventory</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link text-light" href="../supplier/suppliers.php">Suppliers</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link text-light" href="../sales/salesReport.php">Report</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link text-light" href="../order/order.php">Sales</a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link disabled text-light" href="#" tabindex="-1" aria-disabled="true">Others</a>
-      </li>
-    </ul>
-    <!-- END OF NAV BAR -->
-  <!------------------------------>
-
-  <div id="content">
+    <main class="h-100">
+    <?php include 'navbar.php'; ?>
+        
+    <div class="container-fluid bg-light p-5">
     <h1> Pending Orders</h1>
 
     <!-- TO BE PURCHASED CARD -->
     <div class="card" style="width: 49%; min-height:80%; float:left;">
-      <div class="card-header">
+      <div class="card-header bg-dark text-white">
         <h3 class="card-title">To be Purchased</h3>
       </div>
       <div class="card-body">
@@ -295,7 +281,7 @@ if(isset($_POST['deliver'])){
 
   <!-------------DELIVERED CARD --------------->
   <div class="card" style="width: 49%; float:right;">
-    <div class="card-header">
+    <div class="card-header bg-dark text-white">
       <h3 class="card-title">To be Delivered</h3>
     </div>
     <div class="card-body">
@@ -388,7 +374,7 @@ if(isset($_POST['deliver'])){
       </div> <!-- END CARD BODY -->  
     </div> <!-- END CARD -->
   </div> <!-- END CONTENT -->
-
+</main>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>

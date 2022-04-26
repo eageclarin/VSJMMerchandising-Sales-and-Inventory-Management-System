@@ -1,6 +1,6 @@
 	<?php
 		$url = substr($_SERVER["SCRIPT_NAME"],strrpos($_SERVER["SCRIPT_NAME"],"/")+1);
-		$in = $c = $t = $s = $it = $r = 'text-white';
+		$in = $c = $t = $s = $it = $r = $p = 'text-white';
 		if ($url == 'inventory.php') {
 			$in = 'active';
 		} else if ($url == 'categbrands.php') {
@@ -13,6 +13,8 @@
 			$it = 'active';
 		} else if ($url == 'returnitem.php') {
 			$r = 'active';
+		} else if ($url == 'pending.php') {
+			$p = 'active';
 		}
    ?>
 
@@ -59,10 +61,10 @@
 				</a>
 			</li>
 			<li class="nav-item">
-				<a href="pending.php" class="nav-link text-white"> Pending </a>
+				<a href="pending.php" class="nav-link <?php echo $p ?>"> <i class="bi bi-clock"></i> Pending </a>
 			</li>
 			<li class="nav-item">
-				<a href="transactions.php" class="nav-link text-white"> <i class="bi bi-newspaper"></i> Transactions </a>
+				<a href="transactions.php" class="nav-link <?php echo $t ?>"> <i class="bi bi-newspaper"></i> Transactions </a>
 			</li>
 			<li class="nav-item">
 				<a href="salability.php" class="nav-link <?php echo $s ?>"> <i class="bi bi-graph-up-arrow"></i> Salability </a>
