@@ -161,17 +161,21 @@
                 } 
                 ?>
                 <!--DELETE AND EDIT BUTTON-->
-                <td style="width:100px;">
-                    <button type="button" class="btn editbtn pt-0" style="float:left;">
+                <td>
+                    <button type="button" class="btn editbtn p-0" style="float:left;">
                         <i class='fas fa-edit'></i>
                     </button>
+                </td>
+                <td>
                     <form action="search_sort.php" class="mb-1" method="post">
-                        <button class="btn pt-0" name="delete1" type="submit" style="float:right; padding-left:0px;" <?php if($onSalability==true && $row['inventoryItem_Status']==0){echo 'disabled';} ?>><i class='fas fa-trash'></i></button>
+                        <button class="btn p-0" name="delete1" type="submit" <?php if($onSalability==true && $row['inventoryItem_Status']==0){echo 'disabled';} ?>><i class='fas fa-trash'></i></button>
                         <input type=hidden name=itemID1 value=<?php echo $row['item_ID']?>>
                     </form>
+                </td>
+                <td>
                     <!--<button class='table-see' onclick="location.href='../supplier/supplieritem.php?item_Name='<?php echo $row['item_Name']?>' ">Suppliers</button>-->
                     <a href="../supplier/supplieritem.php?item_Name='<?php echo $row['item_Name']?>" >
-                        <button class="btn btn-success" >Suppliers</button>
+                        <button class="btn p-0"  ><i class='fas fa-shopping-cart'></i></button>
                     </a>
                 </td>    
             </tr>
