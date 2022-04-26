@@ -2,11 +2,15 @@
 
 <html>
 <head>
-<link rel="stylesheet" href="./css/styles.css">
-<script src="myjs.js" type="text/javascript"></script>
-<title>Hardware Suppliers</title>
+	<title> Suppliers </title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<link rel="stylesheet" href="./style.css?ts=<?=time()?>">
+    <script type="text/javascript" src="myjs.js"></script> 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
 <body>
+<?php include 'navbar.php'; ?>
+
 <a href="../../index.php"><button> home </button></a>
 <?php
 	$server = "localhost:3306";
@@ -18,51 +22,70 @@
 	
 ?>
 
-<!-- ------------------------ w/o search bar --------------------------- -->
+<div id="content">
+	<h1> Supplier </h1>
+
+	<div class="container-fluid" >
+
+	 <!-- SORTING -->
+	 <label for="sort">Sort by:</label>
+	        <select name="sort" id="sort" style="height:30px;">
+	          <option value="ID" selected >ID</option>
+	          <option value="SupplierName">Name</option>
+	          <option value="ContactP">Contact Person</option>
+	          <option value="Address">Address</option>
+	        </select> <!-- END OF SORTING -->
+
+	  <!-- SEARCH TAB -->
+	        <input type="text" id="search" autocomplete="off" placeholder="Search for ID, Name, Address..." style="height:30px;">
+	</div>
 
 
-<h3> Suppliers</h3>
-<?php
-	$querySupplier = "select * from supplier";
-	$resultSupplier = mysqli_query($conn,$querySupplier);
-	if(mysqli_num_rows($resultSupplier) > 0){
-		echo "<table>
-		<tr>
-			<th>Supplier ID</th>
-			<th>Supplier Name</th>
-            <th>Supplier Contact Person</th>
-			<th>Supplier Number</th>
-			<th>Supplier Address</th>
-			<th>Status</th>
-		</tr>
-		";
-		while($row = mysqli_fetch_assoc($resultSupplier)){
-			if($row['supplier_Status']==0){
-				$supplier_Status="Inactive";
-			}
-			else{
-				$supplier_Status="Active";
-			}
-			echo "
+	<div id="display">
+	<?php
+		$querySupplier = "select * from supplier";
+		$resultSupplier = mysqli_query($conn,$querySupplier);
+		if(mysqli_num_rows($resultSupplier) > 0){
+			echo "<table class='table'>
 			<tr>
-				<td>".$row['supplier_ID']."</td>
-				<td>".$row['supplier_Name']."</td>
-                <td>".$row['supplier_ContactPerson']."</td>
-				<td>".$row['supplier_ContactNum']."</td>
-                <td>".$row['supplier_Address']."</td>
-                <td>".$supplier_Status."</td>
-				<td><button onclick=\"location.href='editsupplier.php?supplier_ID=".$row['supplier_ID']."'\">Edit</button></td>
-				<td><button onclick=\"location.href='deletesupplier.php?supplier_ID=".$row['supplier_ID']."'\">Change Status</button></td>
-				<!-- <td> <button> <a onclick='return checkdelete()' href='deletesupplier.php?supplier_ID=".$row['supplier_ID']."'> Delete</button></a></td> -->
-				<td> <button onclick=\"location.href='suppliertable.php?supplier_ID=".$row['supplier_ID']."'\">More Information</button></td></tr>";
+				<th>Supplier ID</th>
+				<th>Supplier Name</th>
+	      		<th>Supplier Contact Person</th>
+				<th>Supplier Number</th>
+				<th>Supplier Address</th>
+				<th>Status</th>
+			</tr>
+			";
+			while($row = mysqli_fetch_assoc($resultSupplier)){
+				if($row['supplier_Status']==0){
+					$supplier_Status="Inactive";
+				}
+				else{
+					$supplier_Status="Active";
+				}
+				echo "
+				<tr>
+					<td>".$row['supplier_ID']."</td>
+					<td>".$row['supplier_Name']."</td>
+	        		<td>".$row['supplier_ContactPerson']."</td>
+					<td>".$row['supplier_ContactNum']."</td>
+	        		<td>".$row['supplier_Address']."</td>
+	       		 	<td>".$supplier_Status."</td>
+					<td><button onclick=\"location.href='editsupplier.php?supplier_ID=".$row['supplier_ID']."'\">Edit</button></td>
+					<td><button onclick=\"location.href='deletesupplier.php?supplier_ID=".$row['supplier_ID']."'\">Change Status</button></td>
+					<!-- <td> <button> <a onclick='return checkdelete()' href='deletesupplier.php?supplier_ID=".$row['supplier_ID']."'> Delete</button></a></td> -->
+					<td> <button onclick=\"location.href='suppliertable.php?supplier_ID=".$row['supplier_ID']."'\">More Information</button></td></tr>";
+			}
+			echo "</table>";
 		}
-		echo "</table>";
-	}
-	else echo "No results";
-?>
-<button onclick="location.href='./addsupplier.php'">Add new supplier</button>
-<?php mysqli_close($conn); ?>
+		else echo "No results";
+	?>
+	</div>
+	<button onclick="location.href='./addsupplier.php'">Add new supplier</button>
+	<?php mysqli_close($conn); ?>
 
+	</div>
 </div>
 </body>
 </html>
+
