@@ -1,13 +1,3 @@
-function showItems(categ) { //display items by categ
-    $.ajax({
-        url: 'getItem.php?categ='+categ,
-        success: function(html) {
-        var display = document.getElementById('list');
-        display.innerHTML = html;
-        }
-    });
-};
-
 //change qty
 function changeQty(getID, getQty) {
     var dataString = "action=update&itemID="+getID+"&qty="+getQty;
@@ -18,7 +8,7 @@ function changeQty(getID, getQty) {
       data: dataString,
       success: function(data) {
         $("#itemTotal-"+getID).html(data);
-  
+        $("#update").innerHTML("Item quantity update.");
         totalPrice();
       }
     });
@@ -35,8 +25,8 @@ function totalPrice() {
       url: "updateItem.php",
       data: dataString,
       success: function(data){
-        $("#total").html(data+".00");
-        $("#totalOrder").val(data+".00");
+        $("#total").html(data);
+        $("#totalOrder").val(data);
       }
     });
 }
@@ -44,11 +34,20 @@ function totalPrice() {
 //calculateChange
 function calculateChange(money) {
     var change = money - document.getElementById("totalOrder").value;
-    document.getElementById("change").value = change + ".00";
+    document.getElementById("change").value = change.toFixed(2);
 
     if (change < 0) {
         document.getElementById('pay').disabled = true;
     } else {
         document.getElementById('pay').disabled = false;
     }
+}
+
+function checkStock(input, stock, item) {
+  var qtyInput = document.getElementById('qty-'+item);
+
+  if (input > stock || input.length > stock.length) {
+    //qtyInput.html = stock;
+    qtyInput.value = stock;
+  }
 }

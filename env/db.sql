@@ -113,5 +113,3 @@ INSERT INTO branch (
 ) VALUES (
 	'VICAS', ' Block 6 Lot 1 Congressional Road, Raibow Village 5 Bagumbong Caloocan'
 );
-
-

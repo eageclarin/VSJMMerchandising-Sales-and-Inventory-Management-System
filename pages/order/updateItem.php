@@ -7,9 +7,9 @@
         switch($action) {
             case "update":
                 //variables
-                if(isset($_GET['itemID']) && isset($_GET['qty'])) {
+                if(isset($_GET['itemID']) && isset($_POST['qty'])) {
                     $id = $_GET['itemID'];
-                    $qty = $_GET['qty'];
+                    $qty = $_POST['qty'];
 
                     $sqlSearch = "SELECT * FROM cart WHERE itemID='$id'";
                     $resSearch = mysqli_query($conn, $sqlSearch);
@@ -23,7 +23,9 @@
                         $sqlUpdate = "UPDATE cart SET quantity='$qty', itemTotalP='$total' WHERE itemID='$id'";
                         $resUpdate = mysqli_query($conn, $sqlUpdate);
                         
-                        echo $total;
+                        if($resUpdate) {
+                            header("location: order.php?update=q");
+                        }
                     }
                 }
                 break;
