@@ -89,11 +89,13 @@ $totalValue = $row['salesvalue'];
                       <option value="Paints">Paints</option>
                       <option value="bolts and nuts">Bolts and Nuts</option>
                       <option value="Tools">Tools</option>
+                      <option value="Wood">Wood</option>
                     </select>        
                   </div> 
                 </div> <!-- MB-1 MT-1 -->
               </div> <!-- MODAL-BODY -->
               <div class="modal-footer pb-0">
+                  <input type="hidden" name="url" value="salability.php">
                   <input  type="submit" value="update" name="edit" class="form-control btn btn-primary" style="width:150px" > 
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
               </div> <!-- MODAL FOOTER -->
@@ -255,8 +257,9 @@ $totalValue = $row['salesvalue'];
                 <!--DELETE AND EDIT BUTTON-->
                 <td style="width:100px;"> <button type="button" class="btn editbtn" style="float:left;"> <i class='fas fa-edit'></i> </button>
                     <form action="search_sort.php" class="mb-1" method="post">
-                        <button class="btn" name="delete1" type="submit" style="float:right; padding-left:0px;" <?php if($row['inventoryItem_Status']==0){echo 'disabled';} ?>><i class='fas fa-trash'></i></button>
                         <input type=hidden name=itemID1 value=<?php echo $row['item_ID']?>>
+                        <button class="btn" name="delete1" type="submit" style="float:right; padding-left:0px;" <?php if($row['inventoryItem_Status']==0){echo 'disabled';} ?>><i class='fas fa-trash'></i></button>
+                        
                         
                     </form>
                 </td>    

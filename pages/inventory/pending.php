@@ -350,12 +350,13 @@ if(isset($_POST['deliver'])){
                                   <th> Unit Price </th>
                                   <th> Total Price </th>
                                   <th> </th>
+                                  <th><input type='checkbox' onClick='toggle(this)' /> Select All </th>
                                 </tr>";
                         //SHOW ITEMS IN TRANSACTIONS
                         $sql1 = "SELECT * FROM transaction_Items INNER JOIN item ON (transaction_Items.item_ID = item.item_ID) WHERE transaction_ID = '$ID' ;";   
                         $result1 = mysqli_query($conn,$sql1);
                         $resultCheck1 = mysqli_num_rows($result1);
-                  
+
                         if ($resultCheck1>0){
                           while ($row1 = mysqli_fetch_assoc($result1)) {
                             echo "<tr>"; 
@@ -369,7 +370,7 @@ if(isset($_POST['deliver'])){
                             <td>
                               <input type=hidden name=deliItemID value=<?php echo $row1['item_ID']?>>
                               <input type=hidden name=deliTransID value=<?php echo $ID?>>
-                              <button class="btn-primary" name="editDeli" type="submit" >Edit</button> <!-- EDIT BUTTON -->
+                              <button class="btn-primary" name="editDeli" type="submit" >Edit</button> </td><td> <!-- EDIT BUTTON -->
                               <input type="checkbox" name="check_list[]" value="<?php echo $row1['item_ID']?>"> <!-- CHECKLIST -->
                             </td>    
                           </tr><?php
@@ -391,6 +392,14 @@ if(isset($_POST['deliver'])){
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script language="JavaScript">
+  function toggle(source) {
+    checkboxes = document.getElementsByName('check_list[]');
+    for(var i=0, n=checkboxes.length;i<n;i++) {
+      checkboxes[i].checked = source.checked;
+    }
+  }
+</script>
 
 </body>
 </html>

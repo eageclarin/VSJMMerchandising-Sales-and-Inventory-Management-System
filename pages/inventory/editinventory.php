@@ -13,6 +13,7 @@
 			$item_Markup =$_POST['editMarkup'];
 			$item_Stock =$_POST['editStock'];
 			$item_Category = $_POST['item_Category'];
+			$url = "Location: ./" .$_POST['url'];
 
 		if($item_Stock<=10){
 			$pend = 1;
@@ -30,7 +31,8 @@
 		  echo mysqli_error($conn);
 		} 
 		unset($_POST['edit']);
-		header("Location: ./inventory.php");
+		header($url);
+		//header("Location: ./inventory.php");
 	}
 
 	/**if(isset($_POST['edit'])){
