@@ -62,9 +62,9 @@ main {
     margin-right: 10px;
 }
 
-#searchSortContainer{
+/*#searchSortContainer{
     float: right;
-}
+}*/
 
 #editID {
     border:0;
@@ -76,20 +76,21 @@ main {
     font-weight:500;
 }
 
+/*
 #inventoryHead{
     width: 100%;
     min-width: 800px;
     border: 1;
     border-radius: 1mm;
-}
+}*/
 
-#filters{
+/*#filters{
     width: 100%;
     padding-top: 15px;
     padding-bottom: 15px;
     min-width: 800px;
     float: left;
-}
+}*/
 
 .table-wrapper{
     width: 100%;

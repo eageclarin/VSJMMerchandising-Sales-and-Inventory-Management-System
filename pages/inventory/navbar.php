@@ -37,28 +37,28 @@
 			</li>
 			<li class="nav-item">
 				<a href="categories.php" class="nav-link text-white">
-					<i class="bi bi-people"></i> Categories and Brands
+					<i class="bi bi-grid"></i> Categories and Brands
 				</a>
 			</li>
 			<li class="nav-item">
 				<a href="pending.php" class="nav-link text-white"> Pending </a>
 			</li>
 			<li class="nav-item">
-				<a href="transactions.php" class="nav-link text-white"> Transactions </a>
+				<a href="transactions.php" class="nav-link text-white"> <i class="bi bi-newspaper"></i> Transactions </a>
 			</li>
 			<li class="nav-item">
-				<a href="salability.php" class="nav-link text-white">Salability </a>
+				<a href="salability.php" class="nav-link text-white"> <i class="bi bi-graph-up-arrow"></i> Salability </a>
 			</li>
 			<li class="nav-item">
-				<a href="items.php" class="nav-link text-white"> All Items </a>
+				<a href="items.php" class="nav-link text-white"> <i class="bi bi-collection"></i> All Items </a>
 			</li>
 			<li class="nav-item">
-				<a href="returnitem.php" class="nav-link text-white"> Returns </a>
+				<a href="returnitem.php" class="nav-link text-white"> <i class="bi bi-arrow-return-left"></i> Returns </a>
 			</li>
 		</ul>
 		<!------ END OF TABS ------>
 
-        <div class="col align-self-top">
+        <div class="col align-self-center mt-3">
             <div class="fw-bold fs-4 fst-italic mb-0"> Reminders </div>
 
 			<!-- SHOW LOW ON STOCKS ITEMS AND PENDING DELIVERIES-->
@@ -69,18 +69,20 @@
 				$resultCheck = mysqli_num_rows($result);
 				if ($resultCheck>0){ 
 					echo 'Low on Stocks';
-					echo '<ul class="text-wrap nav nav-pills flex-column mb-auto gap-2">';
+					echo '<div class="container flex-column mb-auto gap-2">';
 					while ($row = mysqli_fetch_assoc($result)) {	
-						echo '<li class="rounded nav-item p-2 py-1" style="background-color: #343a40;">';
-						echo	'<div style="float:left; width:85%;">'
-										.$row['item_ID'] .': ' .$row['item_Name']
-									.'</div>
-									<div style="float:right;width:12%; padding-right:3px; color:#D8172B;">'
-										.$row['item_Stock'] .$row['item_unit']
-									.'</div>
-								</li>';
+			?>
+						<div class="rounded p-2 py-1 row" style="background-color: #343a40;">
+							<div class="col-9 px-0">
+								<?php echo $row['item_Name'] ?>
+							</div>
+							<div class="col px-0 text-danger text-end">
+								<?php echo $row['item_Stock'] .$row['item_unit'] ?>
+							</div>
+						</div>
+			<?php
 					}
-					echo '</ul>';
+					echo '</div>';
 				}
 
 				//PENDING ORDERS
