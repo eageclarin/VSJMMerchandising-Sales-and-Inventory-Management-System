@@ -162,7 +162,7 @@ if(isset($_POST['deliver'])){
 <body >
 <!------------------------------>
       <!-- NAV BAR -->
-      <ul class="nav nav-tabs">
+	  <ul class="nav nav-tabs shadow border-0 p-1 text-white bg-dark" >
       <li class="nav-item">
         <a class="nav-link text-light" href="../../index.php">Home</a>
       </li>

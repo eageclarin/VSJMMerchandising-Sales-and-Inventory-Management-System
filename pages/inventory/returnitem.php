@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<?php include 'navbar.html'; ?>
+<?php include 'navbar.php'; ?>
 <?php
 
 //error_reporting(0);

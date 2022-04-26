@@ -12,7 +12,7 @@ $n=0;
   <script type="text/javascript" src="inventory.js"></script> 
   <link rel="stylesheet" href="./style.css?ts=<?=time()?>">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-  <!-- SA NAVBAR ITO <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">-->   
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">  
 <style>
 
 .panel-heading .colpsible-panel:after {
@@ -31,8 +31,8 @@ $n=0;
 </head>
 <body>
   <!------------------------------>
-      <!-- NAV BAR -->
-      <ul class="nav nav-tabs">
+     <!-- NAV BAR -->
+	  <ul class="nav nav-tabs shadow border-0 p-1 text-white bg-dark" >
       <li class="nav-item">
         <a class="nav-link text-light" href="../../index.php">Home</a>
       </li>

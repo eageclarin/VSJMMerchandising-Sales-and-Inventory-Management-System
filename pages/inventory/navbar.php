@@ -29,6 +29,28 @@ include_once '../../env/conn.php';
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>--> 
   </head>
   <!--<body>-->
+	  <!-- NAV BAR -->
+	  <ul class="nav nav-tabs shadow border-0 p-1 text-white bg-dark" >
+      <li class="nav-item">
+        <a class="nav-link text-light" href="../../index.php">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-light" href="inventory.php">Inventory</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-light" href="../supplier/suppliers.php">Suppliers</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-light" href="../sales/salesReport.php">Report</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-light" href="../order/order.php">Sales</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link disabled text-light" href="#" tabindex="-1" aria-disabled="true">Others</a>
+      </li>
+    </ul>
+    <!-- END OF NAV BAR -->
    <!------------ SIDEBAR ----------->
 	<div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px;float:left;height:100%;">
 		<a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
@@ -75,12 +97,12 @@ include_once '../../env/conn.php';
 				<p class="fw-bold fs-4 fst-italic mb-0"> Reminder </p>
 				<!-- SHOW LOW ON STOCKS ITEMS AND PENDING DELIVERIES-->
 				<?php
-					//LOW ON STOCKS
-					echo 'Low on Stocks';
+					//LOW ON STOCKS	
 					$sql = "SELECT * FROM inventory INNER JOIN item ON (inventory.item_ID = item.item_ID) WHERE inventoryItem_Status = 1 AND item_Stock<=10";
 					$result = mysqli_query($conn,$sql);
 					$resultCheck = mysqli_num_rows($result);
 					if ($resultCheck>0){ 
+						echo 'Low on Stocks';
 						echo '<ul class="text-wrap nav nav-pills flex-column mb-auto gap-2">';
 					  	while ($row = mysqli_fetch_assoc($result)) {	
 						  	echo '<li class="rounded nav-item p-2 py-1" style="background-color: #343a40;">';
