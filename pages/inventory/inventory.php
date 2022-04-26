@@ -122,6 +122,7 @@ $totalValue = $row['totalValue'];
                 </div> <!-- MB-1 MT-1 -->
               </div> <!-- MODAL-BODY -->
               <div class="modal-footer pb-0">
+                  <input type="hidden" name="url" value="inventory.php">
                   <input  type="submit" value="update" name="edit" class="form-control btn btn-primary" style="width:150px" > 
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
               </div> <!-- MODAL FOOTER -->
@@ -158,6 +159,7 @@ $totalValue = $row['totalValue'];
                 <option value="Tools">Tools</option>
                 <option value="bolts and nuts">Bolts and Nuts</option>
                 <option value="Paints">Paints and Accessories</option>
+                <option value="Wood">Wood</option>
               </select> 
 
               <label for="sort" class="col-auto col-form-label fw-bold">Sort by:</label>

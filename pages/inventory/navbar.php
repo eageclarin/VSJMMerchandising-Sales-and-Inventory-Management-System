@@ -18,7 +18,7 @@
 
 	<!------------ SIDEBAR ----------->
     <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px;">
-		<a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+		<a href="../../index.php" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
 		<img src="../../img/logo.png" class="me-2" width="40"/>
 		<span class="fs-5"> VSJM Merchandising</span>
 		</a>
@@ -59,7 +59,10 @@
 				</a>
 			</li>
 			<li class="nav-item">
-				<a href="transactions.php" class="nav-link <?php echo $t ?>"> <i class="bi bi-newspaper"></i> Transactions </a>
+				<a href="pending.php" class="nav-link text-white"> Pending </a>
+			</li>
+			<li class="nav-item">
+				<a href="transactions.php" class="nav-link text-white"> <i class="bi bi-newspaper"></i> Transactions </a>
 			</li>
 			<li class="nav-item">
 				<a href="salability.php" class="nav-link <?php echo $s ?>"> <i class="bi bi-graph-up-arrow"></i> Salability </a>
