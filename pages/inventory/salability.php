@@ -13,35 +13,26 @@ $totalValue = $row['salesvalue'];
   <head>
     <title> Salability </title>
     <link rel="stylesheet" href="./style.css?ts=<?=time()?>">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script type="text/javascript" src="inventory.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 
-
-    <!-- CSS -->
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-
-	<!-- JQUERY/BOOTSTRAP -->
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
-    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">-->
-    <!-- NAVBAR <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> -->
-    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>-->
-    <!--<script src="assets/js/jquery.js"></script>-->
-    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>--> 
+      <!-- CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    
+    <!-- JQUERY/BOOTSTRAP -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
   </head>
 
   
   <body >  
-    
-  <?php include 'navbar.php'; ?>
+    <main class="h-100">
+    <?php include 'navbar.php'; ?>
         
-
-    <div id="content" >
+    <div class="container-fluid bg-light p-5">
       <!-- EDIT MODAL ############################################################################ -->
       <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -104,52 +95,59 @@ $totalValue = $row['salesvalue'];
       <!-- EDIT MODAL ############################################################################ -->
 
 
-      <div id="inventoryHead"> 
-        <h1 style="float:left;"> Salability </h1>
+      <div id="inventoryHead" class="row"> 
+        <div class="col-7">
+          <span class="fs-1 fw-bold"> SALABILITY </span>
+        </div>
           
-        <div class="card float-right" style="width:400px; float:right;">
-          <div class="card-body">
+        <div class="col-5 py-auto mr-3 align-self-end">
+          <div class="p-3 bg-white rounded border rounded shadow-sm ">
             <h5>Total items: <?php echo number_format($totalItems) ?> </h5>
-            <h5>Total Value (in Pesos): <?php echo number_format($totalValue,2) ?></h5>
+            <h5 class="mb-0">Total Value (in Pesos): <?php echo number_format($totalValue,2) ?></h5>
           </div>
         </div>
       </div> <!-- END OF INVENTORY HEAD -->
       
-        <div id="filters" >
+        <div id="filters" class="row mt-3">
           <!-- CHOOSING CATEGORY -->
-          <div id="categoryContainer"> 
-            <label for="categ1">Category:</label>
-            <select name="categ1" id="categ1" style="height:30px;">
-              <option value="All" selected >All</option>
-              <option value="Architectural"> Architectural</option>
-              <option value="Electrical"> Electrical</option>
-              <option value="Plumbing"> Plumbing</option>
-              <option value="Tools">Tools</option>
-              <option value="bolts and nuts">Bolts and Nuts</option>
-              <option value="Paints">Paints and Accessories</option>
-            </select> 
-            
+          <div id="categoryContainer" class="col-7">
+            <div class="form-group row"> 
+              <label for="categ1" class="col-auto col-form-label fw-bold">Category:</label>
+              <select name="categ1" id="categ1" class="col-sm-10 form-select w-25" onchange="categ()">
+                <option value="All" selected >All</option>
+                <option value="Architectural"> Architectural</option>
+                <option value="Electrical"> Electrical</option>
+                <option value="Plumbing"> Plumbing</option>
+                <option value="Tools">Tools</option>
+                <option value="bolts and nuts">Bolts and Nuts</option>
+                <option value="Paints">Paints and Accessories</option>
+              </select>
+
+              <label for="sort1" class="col-auto col-form-label fw-bold">Sort by:</label>
+              <select name="sort1" id="sort" class="col-sm-10 form-select w-25" onchange="sort()">
+                <option value="ID" selected >ID</option>
+                <option value="Category">Category</option>
+                <option value="PriceAsc"> <span>&#8593;</span>Price</option>
+                <option value="PriceDesc"> <span>&#8595;</span>Price</option>
+                <option value="item_Stock">Stocks</option>
+                <option value="Salability">Salability</option>
+              </select> <!-- END OF SORTING -->
+            </div>
           </div><!-- END OF CATEGORY CONTAINER -->
             
           <!-- SEARCH TAB -->
-          <div id="searchSortContainer">
-            <input type="text" id="search1" autocomplete="off" placeholder="Search for items, brand, category..." style="height:30px;">
-          
-            <!-- SORTING -->
-            <label for="sort1">Sort by:</label>
-            <select name="sort1" id="sort1" style="height:30px;">
-              <option value="ID" selected >ID</option>
-              <option value="Category">Category</option>
-              <option value="PriceAsc"> <span>&#8593;</span>Price</option>
-              <option value="PriceDesc"> <span>&#8595;</span>Price</option>
-              <option value="item_Stock">Stocks</option>
-              <option value="Salability">Salability</option>
-            </select> <!-- END OF SORTING -->
-          </div> <!-- END OF SEARCHSORT CONTAINER -->
+          <div id="searchSortContainer" class="col">
+            <div class="form-group row">
+              <div class="col">
+                <input type="text" id="search1" class="form-control w-100" autocomplete="off" onkeyup="search()" placeholder="Search for items, brand, category...">
+              </div>
+              <!-- SORTING -->
+              </div>
+          </div>
         </div> <!-- END OF FILTERS -->
       
         <!-- DISPLAY LIST OF ITEMS IN INVENTORY -->
-        <div id="display">
+        <div id="display" class="mt-3">
             <?php 
                     // DELETE ITEM FROM INVENTORY
     if (isset($_POST['delete1'])) {
@@ -277,13 +275,13 @@ $totalValue = $row['salesvalue'];
         
         </div> <!-- END OF DISPLAY -->
 
-        <div id="filters">
+        <div class="mt-2">
           <div style="color:red; float:left;">*Items highlighted are Low on Stocks</div> 
           
         </div>
 
     </div> <!-- END OF CONTENT -->
-
+  </main>
          <script>
            $(document).ready(function(){
               $('.editbtn').on('click',function(){

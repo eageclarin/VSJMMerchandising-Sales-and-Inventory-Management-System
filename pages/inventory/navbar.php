@@ -1,4 +1,22 @@
-    <!------------ SIDEBAR ----------->
+	<?php
+		$url = substr($_SERVER["SCRIPT_NAME"],strrpos($_SERVER["SCRIPT_NAME"],"/")+1);
+		$in = $c = $t = $s = $it = $r = 'text-white';
+		if ($url == 'inventory.php') {
+			$in = 'active';
+		} else if ($url == 'categbrands.php') {
+			$c = 'active';
+		} else if ($url == 'transactions.php') {
+			$t = 'active';
+		} else if ($url == 'salability.php') {
+			$s = 'active';
+		} else if ($url == 'items.php') {
+			$it = 'active';
+		} else if ($url == 'returnitem.php') {
+			$r = 'active';
+		}
+   ?>
+
+	<!------------ SIDEBAR ----------->
     <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px;">
 		<a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
 		<img src="../../img/logo.png" class="me-2" width="40"/>
@@ -31,31 +49,31 @@
 		<!------ TABS ------>
 		<ul class="nav nav-pills flex-column mb-auto">
 			<li class="nav-item">
-				<a href="inventory.php" class="nav-link active" aria-current="page">
+				<a href="inventory.php" class="nav-link <?php echo $in ?>">
 				<i class="bi bi-archive"></i> Inventory
 				</a>
 			</li>
 			<li class="nav-item">
-				<a href="categories.php" class="nav-link text-white">
+				<a href="categbrands.php" class="nav-link <?php echo $c ?>">
 					<i class="bi bi-grid"></i> Categories and Brands
 				</a>
 			</li>
 			<li class="nav-item">
-				<a href="transactions.php" class="nav-link text-white"> <i class="bi bi-newspaper"></i> Transactions </a>
+				<a href="transactions.php" class="nav-link <?php echo $t ?>"> <i class="bi bi-newspaper"></i> Transactions </a>
 			</li>
 			<li class="nav-item">
-				<a href="salability.php" class="nav-link text-white"> <i class="bi bi-graph-up-arrow"></i> Salability </a>
+				<a href="salability.php" class="nav-link <?php echo $s ?>"> <i class="bi bi-graph-up-arrow"></i> Salability </a>
 			</li>
 			<li class="nav-item">
-				<a href="items.php" class="nav-link text-white"> <i class="bi bi-collection"></i> All Items </a>
+				<a href="items.php" class="nav-link <?php echo $it ?>"> <i class="bi bi-collection"></i> All Items </a>
 			</li>
 			<li class="nav-item">
-				<a href="returnitem.php" class="nav-link text-white"> <i class="bi bi-arrow-return-left"></i> Returns </a>
+				<a href="returnitem.php" class="nav-link <?php echo $r ?>"> <i class="bi bi-arrow-return-left"></i> Returns </a>
 			</li>
 		</ul>
 		<!------ END OF TABS ------>
 
-        <div class="col align-self-center mt-3">
+        <div class="col mt-3">
             <div class="fw-bold fs-4 fst-italic mb-0"> Reminders </div>
 
 			<!-- SHOW LOW ON STOCKS ITEMS AND PENDING DELIVERIES-->

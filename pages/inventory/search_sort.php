@@ -161,15 +161,18 @@
                 } 
                 ?>
                 <!--DELETE AND EDIT BUTTON-->
-                <td style="width:100px;"> <button type="button" class="btn editbtn" style="float:left;"> <i class='fas fa-edit'></i> </button>
+                <td style="width:100px;">
+                    <button type="button" class="btn editbtn pt-0" style="float:left;">
+                        <i class='fas fa-edit'></i>
+                    </button>
                     <form action="search_sort.php" class="mb-1" method="post">
-                        <button class="btn" name="delete1" type="submit" style="float:right; padding-left:0px;" <?php if($onSalability==true && $row['inventoryItem_Status']==0){echo 'disabled';} ?>><i class='fas fa-trash'></i></button>
+                        <button class="btn pt-0" name="delete1" type="submit" style="float:right; padding-left:0px;" <?php if($onSalability==true && $row['inventoryItem_Status']==0){echo 'disabled';} ?>><i class='fas fa-trash'></i></button>
                         <input type=hidden name=itemID1 value=<?php echo $row['item_ID']?>>
-                        
-                        
                     </form>
                     <!--<button class='table-see' onclick="location.href='../supplier/supplieritem.php?item_Name='<?php echo $row['item_Name']?>' ">Suppliers</button>-->
-                    <button><a href="../supplier/supplieritem.php?item_Name='<?php echo $row['item_Name']?>" >Suppliers</a></button>
+                    <a href="../supplier/supplieritem.php?item_Name='<?php echo $row['item_Name']?>" >
+                        <button class="btn btn-success" >Suppliers</button>
+                    </a>
                 </td>    
             </tr>
             
