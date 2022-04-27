@@ -1,6 +1,19 @@
 body {
-    font-family: 'Varela Round', sans-serif;
+    height: 100%;
+    min-height: 100%;
+    overflow-y: hidden;
 }
+  
+html {
+    height: -webkit-fill-available;
+}
+
+main {
+    display: flex;
+    flex-wrap: nowrap;
+    min-height: 100%;
+}
+
 .modal-confirm {		
     color: #636363;
     width: 400px;

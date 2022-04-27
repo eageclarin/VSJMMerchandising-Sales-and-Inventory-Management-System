@@ -1,7 +1,7 @@
 <?php
 		$url = substr($_SERVER["SCRIPT_NAME"],strrpos($_SERVER["SCRIPT_NAME"],"/")+1);
 		$s = $si = 'text-white';
-		if ($url == 'suppliers.php') {
+		if ($url == 'suppliers.php' || $url == 'editsupplier.php') {
 			$s = 'active';
 		} else if ($url == 'supplieritem.php') {
 			$si = 'active';

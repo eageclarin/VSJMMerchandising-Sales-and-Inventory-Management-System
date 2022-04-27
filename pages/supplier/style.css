@@ -12,7 +12,6 @@ main {
     min-height: 100%;
 }
 
-
 .dropdown-menu {
     background-color: #202c2f;
 }
@@ -28,7 +27,6 @@ main {
 #searchSortContainer{
     float: right;
 }
-
 
 
 #edititemID, #editsupplierID{
