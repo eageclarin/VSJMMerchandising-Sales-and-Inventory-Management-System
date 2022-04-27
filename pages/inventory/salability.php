@@ -100,6 +100,7 @@ $totalValue = $row['salesvalue'];
       <div id="inventoryHead" class="row"> 
         <div class="col-7">
           <span class="fs-1 fw-bold"> SALABILITY </span>
+          <div class="text-danger">*Items highlighted are Low on Stocks</div> 
         </div>
           
         <div class="col-5 py-auto mr-3 align-self-end">
@@ -279,7 +280,7 @@ $totalValue = $row['salesvalue'];
         </div> <!-- END OF DISPLAY -->
 
         <div class="mt-2">
-          <div style="color:red; float:left;">*Items highlighted are Low on Stocks</div> 
+          
           
         </div>
 

@@ -30,6 +30,6 @@ if(isset($_GET["supplier_ID"])){
 
 	mysqli_close($conn);
 }
-header("Location: ./suppliers.php");
+header("Location: suppliers.php");
 exit;
 ?>

@@ -35,7 +35,7 @@ $n=0;
   </style>
 </head>
 <body>
-  <main class="h-100">
+  <main>
   <?php include 'navbar.php'; ?>
         
   <div class="container-fluid bg-light p-5">

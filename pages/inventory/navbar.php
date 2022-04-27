@@ -29,7 +29,7 @@
 		<div class="mt-3 container w-100">
 			<div class="row d-flex justify-content-between">
 				<div class="col-auto p-0">
-					<a href="..//supplier/suppliers.php">
+					<a href="../supplier/suppliers.php">
 						<button class="btn btn-success">Suppliers</button>
 					</a>
 				</div>

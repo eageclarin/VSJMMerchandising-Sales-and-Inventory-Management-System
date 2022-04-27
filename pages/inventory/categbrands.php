@@ -23,15 +23,15 @@ include_once '../../env/conn.php';
     
  
     </head>
-    <body style="overflow-y:hidden">
-        <main class="h-100">
+    <body>
+        <main>
         <?php include 'navbar.php'; ?>
         
         <div class="container-fluid bg-light p-5">
             <div class="row">
                 <div class="col">
                     <div class="fs-1 fw-bold rounded-top bg-dark text-info px-4"> CATEGORIES </div>
-                    <div class="bg-white rounded-bottom border shadow-sm h-50 overflow-auto p-4">
+                    <div class="bg-white rounded-bottom border shadow-sm overflow-auto p-4" style="max-height:500px">
                     <?php
                         $sql = "SELECT COUNT(item.item_ID) AS num, item_Category FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) GROUP BY item_Category"; 
                         $result = mysqli_query($conn,$sql);
@@ -46,7 +46,7 @@ include_once '../../env/conn.php';
                 </div>
                 <div class="col">
                     <div class="fs-1 fw-bold rounded-top bg-dark text-warning px-4"> BRANDS </div>
-                    <div class="bg-white rounded-bottom border shadow-sm h-50 overflow-auto p-4">
+                    <div class="bg-white rounded-bottom border shadow-sm overflow-auto p-4" style="max-height:500px">
                     <?php
                         $sql = "SELECT COUNT(item.item_ID) AS num, item_Brand FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) GROUP BY item_Brand"; 
                         $result = mysqli_query($conn,$sql);

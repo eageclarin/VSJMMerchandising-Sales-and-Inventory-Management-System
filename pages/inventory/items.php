@@ -33,7 +33,7 @@ $sql = "SELECT * FROM item;";
 $result = mysqli_query($conn,$sql);
 $resultCheck = mysqli_num_rows($result);
        
-echo "<div class='table-wrapper mt-5'><table class='table table-hover'> 
+echo "<div class='table-wrapper mt-3'><table class='table table-hover'> 
         <thead> 
         <tr>
             <th> ID </th>

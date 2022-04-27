@@ -92,18 +92,20 @@ include_once 'env/conn.php';
 					$result = mysqli_query($conn,$sql);
 					$resultCheck = mysqli_num_rows($result);
 					if ($resultCheck>0){ 
-						echo '<ul class="text-wrap nav nav-pills flex-column mb-auto gap-2">';
+						echo '<div class="container flex-column mb-auto gap-2">';
 					  	while ($row = mysqli_fetch_assoc($result)) {	
-						  	echo '<li class="rounded nav-item p-2 py-1" style="background-color: #343a40;">';
-							echo	'<div style="float:left; width:85%;">'
-										.$row['item_ID'] .': ' .$row['item_Name']
-									.'</div>
-									<div style="float:right;width:12%; padding-right:3px; color:#D8172B;">'
-										.$row['item_Stock'] .$row['item_unit']
-									.'</div>
-								</li>';
+				?>
+							<div class="rounded p-2 py-1 row" style="background-color: #343a40;">
+								<div class="col-9 px-0">
+									<?php echo $row['item_Name'] ?>
+								</div>
+								<div class="col px-0 text-danger text-end">
+									<?php echo $row['item_Stock'] .$row['item_unit'] ?>
+								</div>
+							</div>
+				<?php
 					  	}
-						echo '</ul>';
+						echo '</div>';
 					}
 
 					//PENDING ORDERS
