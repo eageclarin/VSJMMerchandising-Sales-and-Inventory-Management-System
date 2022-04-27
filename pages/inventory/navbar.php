@@ -15,6 +15,8 @@
 			$r = 'active';
 		} else if ($url == 'pending.php') {
 			$p = 'active';
+		} else if ($url == 'archive.php') {
+			$a = 'active';
 		}
    ?>
 
@@ -74,6 +76,9 @@
 			</li>
 			<li class="nav-item">
 				<a href="returnitem.php" class="nav-link <?php echo $r ?>"> <i class="bi bi-arrow-return-left"></i> Returns </a>
+			</li>
+			<li class="nav-item">
+				<a href="archive.php" class="nav-link <?php echo $a ?>"> <i class="bi bi-archive"></i> Archive </a>
 			</li>
 		</ul>
 		<!------ END OF TABS ------>
