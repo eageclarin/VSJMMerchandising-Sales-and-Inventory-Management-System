@@ -69,7 +69,8 @@ if (isset($_POST['editDeli'])) {
 // IF delivered BUTTON IS SET FOR EACH TRANSACTION
 if(isset($_POST['deliver'])){ 
   $transID=$_POST['transaction'];
-  
+  //INSERT ALERT HERE: SUMTH LIKE 'HAVE YOU CHECKED ALL ITEMS?'
+  if(!empty($_POST['check_list'])){ 
   //GET ALL ITEMS IN GIVEN TRANSACTION ID
   $getitems = "SELECT * FROM transaction_Items WHERE transaction_ID = '$transID';";
   $resultItems = mysqli_query($conn,$getitems);
@@ -79,7 +80,7 @@ if(isset($_POST['deliver'])){
       $transItem = $rowitems["item_ID"];
 
       //CHECKLIST OF DELIVERED ITEMS 
-      if(!empty($_POST['check_list'])){          
+               
         if (!in_array($transItem, $_POST['check_list'])) {
           //echo $transItem." not checked";
           //REMOVE UNCHECKED ITEM FROM TRANSACTION
@@ -89,8 +90,8 @@ if(isset($_POST['deliver'])){
           $unchecked = "UPDATE inventory SET in_pending=0 WHERE item_ID='$transItem';";
           $sqlunchecked = mysqli_query($conn,$unchecked);
           break;
-        }
-      } // END OF CHECKLIST
+        }// END OF CHECKLIST
+       
       $transQuant = $rowitems["transactionItems_Quantity"];
       $CostTrans =$rowitems["transactionItems_CostPrice"];
       //UPDATING ITEMS IN INVENTORY
@@ -134,7 +135,33 @@ if(isset($_POST['deliver'])){
   } else {
     echo mysqli_error($conn);
   } //END OF UPDATING TRANSACTION STATUS
+} else {//END OF CHECKLIST NOT EMPTY 
+  //INSERT ALERT HERE: SUMTH LIKE 'NO ITEMS ARE CHECKED. CHECK OR CANCEL THE DELIVERY'
+  echo "<script>alert('No items are checked'); </script>";
+}
 }// END OF DELIVER BUTTON SET
+
+// CANCEL BUTTON
+if(isset($_POST['cancel'])){
+  $transID=$_POST['transaction'];
+  $getitems = "SELECT * FROM transaction_Items INNER JOIN inventory ON (transaction_Items.item_ID = inventory.item_ID) WHERE transaction_ID = '$transID';";
+  $resultItems = mysqli_query($conn,$getitems);
+  $resultCheckItems = mysqli_num_rows($resultItems);
+  if ($resultCheckItems>0){
+    while ($rowitems = mysqli_fetch_assoc($resultItems)) {
+      $cancelItem = $rowitems['item_ID'];
+      $updatePending = "UPDATE inventory SET in_pending=0 WHERE item_ID='$cancelItem';";
+      $sqlUpdatePending = mysqli_query($conn,$updatePending);
+    }
+  }
+  $updatePending = "DELETE FROM transaction_Items WHERE transaction_ID = '$transID';";
+  $sqlUpdatePending = mysqli_query($conn,$updatePending);
+  $updatePending = "DELETE FROM supplier_Transactions WHERE transaction_ID = '$transID';";
+  $sqlUpdatePending = mysqli_query($conn,$updatePending);
+
+
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -311,6 +338,7 @@ if(isset($_POST['deliver'])){
                       <!--DELIVERED BUTTON-->
                       <input type=hidden name=transaction value=<?php echo $ID?>>
                       <button class="btn btn-primary" name="deliver" type="submit" style="float:left;">Delivered</button>
+                      <button class="btn btn-primary" name="cancel" type="submit" style="float:left;">Canceled</button>
                       <!--</form> EXPORT BUTTON
                       <form action="export.php" method="post">
                         <input type=hidden name=ExportTransactionID value=<?php //echo $ID?>>
