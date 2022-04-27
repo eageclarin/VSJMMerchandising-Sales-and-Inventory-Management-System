@@ -8,6 +8,13 @@
 		}
    ?>
 
+    <style>
+      .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+        background-color: #198754;
+        border-color: #198754;
+        color: #fff;
+      }
+    </style>
 	<!------------ SIDEBAR ----------->
     <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px;">
 		<a href="../../index.php" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">

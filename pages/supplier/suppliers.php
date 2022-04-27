@@ -9,10 +9,6 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="./style.css?ts=<?=time()?>">
     <script type="text/javascript" src="myjs.js"></script> 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-</head>
-<body>
-<?php include 'navbar.php'; ?>
 
     <!-- CSS -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -24,7 +20,7 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-	<script>
+	<script type="text/javascript">
 		function changeLoc(loc, id) {
 			if (loc == 'supplier') {
 				location.href=loc+"table.php?supplier_ID="+id;
@@ -33,10 +29,53 @@
 			}
 		}
 		
+		function fill(Value) {
+		    $('#search').val(Value);
+		    $('#display').hide();
+		}
+
+		function search() {
+			var input = $('#search').val();
+
+			$.ajax({
+		        type: "POST",
+		        url: "search_sort.php",
+		        data: {
+		            search: input
+		        },
+		        success: function(data) {
+		            $("#display").html(data);
+		        }
+		    });
+		}
+
+		function sort() {
+			var option = $('#sort').find(":selected").val();
+			sessionStorage.setItem("selectedOption", option);
+		    var optionValue = $(this).selectedIndex;
+		    $.ajax({
+		        type: "POST",
+		        url: "search_sort.php",
+		        data: {
+		            selected: option
+		        },
+		        success: function(data) { 
+		            $("#display").html(data);
+		        }
+		    });
+		}
+
+		function checkdelete(){
+		return confirm('Are you sure you want to delete this record?');
+		}
+
+		function togglePopup(){
+			document.getElementById("popup-1").classList.toggle("active");
+		}
 	</script>
 </head>
 <body>
-	<main class="h-100">
+	<main >
     <?php include 'navbar.php'; ?>
         
     <div class="container-fluid bg-light p-5">
@@ -49,7 +88,7 @@
 		</div>
         <div class="form-group row mt-2 justify-content-md-center">
             <label for="sort" class="col-auto col-form-label fw-bold">Sort by:</label>
-			<select name="sort" id="sort" class="col-sm-10 form-select w-auto">
+			<select name="sort" id="sort" class="col-sm-10 form-select w-auto" onchange="sort()">
 				<option value="ID" selected >ID</option>
 				<option value="SupplierName">Name</option>
 				<option value="ContactP">Contact Person</option>
@@ -63,12 +102,13 @@
 	</div>
 
 	<!------ ORDER FUNCTIONS ------>
-	<div class="row mt-5 justify-content-md-center" style="height:80%">
+	<div class="row mt-3 justify-content-md-center" id="display" style="overflow-y:scroll; height: 450px">
 	<?php
 		$querySupplier = "select * from supplier";
 		$resultSupplier = mysqli_query($conn,$querySupplier);
 		if(mysqli_num_rows($resultSupplier) > 0){
 			echo "<table class='table'>
+			<thead>
 			<tr>
 				<th>Supplier ID</th>
 				<th>Supplier Name</th>
@@ -80,6 +120,7 @@
 				<th></th>
 				<th></th>
 			</tr>
+			</thead>
 			";
 			while($row = mysqli_fetch_assoc($resultSupplier)){
 				if($row['supplier_Status']==0){
@@ -120,81 +161,11 @@
 		else echo "No results";
 	?>
 	</div>
-	<button onclick="location.href='./addsupplier.php'">Add new supplier</button>
+	<button class="btn btn-success mt-3" onclick="location.href='./addsupplier.php'">Add new supplier</button>
 	<?php mysqli_close($conn); ?>
 
 	</div>
 </div>
-
-	<script>
-		 function fill(Value) {
-		    $('#search').val(Value);
-		    $('#display').hide();
-		 }
-
-
-		$(document).ready(function(){
-		    $("#search").keyup(function() {
-		        var input = $(this).val();
-
-		            $.ajax({
-		                type: "POST",
-		                url: "search_sort.php",
-		                data: {
-		                    search: input
-		                },
-		                success: function(data) {
-		                    $("#display").html(data);
-		                }
-		            });
-		  
-		    });
-
-		    $("#sort").change(function(){
-		        var option = $(this).find(":selected").val();
-		        sessionStorage.setItem("selectedOption", option);
-		        var optionValue = $(this).selectedIndex;
-		        $.ajax({
-		            type: "POST",
-		            url: "search_sort.php",
-		            data: {
-		                selected: option
-		            },
-		            success: function(data) { 
-		                $("#display").html(data);
-		            }
-		        });
-		        
-		    });
-
-		    //$('#sort').find('option[value='+sessionStorage.getItem('selectedOption')+']').attr('selected','selected');
-		    $("#categ").change(function(){
-		        var categOption = $(this).find(":selected").val();
-		        $.ajax({
-		            type: "POST",
-		            url: "search_sort.php",
-		            data: {
-		                category: categOption
-		            },
-		            success: function(data) { 
-		                $("#display").html(data);
-		            }
-		        });
-		        
-		    });
-		});
-
-
-		function checkdelete(){
-		return confirm('Are you sure you want to delete this record?');
-		}
-
-		function togglePopup(){
-			document.getElementById("popup-1").classList.toggle("active");
-		}
-
-
-	</script>
 </body>
 </html>
 
