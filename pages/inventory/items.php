@@ -56,7 +56,7 @@ if ($resultCheck>0){
             <td>" .$row['item_Brand'] . "</td> 
             <td>" .$row['item_Category'] . "</td> 
             <td><button type='button' class='btn editbtn pt-0' onclick=\"location.href='edititems.php?item_ID=".$row['item_ID']." ' \"><i class='fas fa-edit'></i></button>
-            <button class='btn btn-success' onclick=\"location.href='../supplier/supplieritem.php?item_Name=".$row['item_Name']." ' \">Suppliers</button></td>
+            <button class='btn p-0' onclick=\"location.href='../supplier/supplieritem.php?item_Name=".$row['item_Name']." ' \"><i class='fas fa-shopping-cart'></i></button></td>
 			</tr>
 			";
     }
