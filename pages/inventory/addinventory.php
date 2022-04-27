@@ -9,6 +9,7 @@
 
 include_once '../../env/conn.php';
 
+
 //if (isset($_POST['order'])) {
     $orderItemID = $_SESSION['orderItemID'];
     $orderItemSupp = $_SESSION['orderItemSupp'];
@@ -30,7 +31,8 @@ include_once '../../env/conn.php';
                     $item_category = $rowitems['item_Category'];
           } 
         } 
-        $dummyRetail = $item_CostPrice + $item_CostPrice*0.5;
+        $dummyRetail = $item_CostPrice*1.2;
+        $dummyRetail = ceil($dummyRetail*4)/4;
 //}
 
 if(isset($_POST['submit']))
@@ -129,11 +131,11 @@ mysqli_close($conn); // Close connection
 
 <form action="./addinventory.php" method="post" >
         Item Retail Price:
-        <input type="number" type="number" step="0.01" value="<?php echo $dummyRetail?>" name="item_RetailPrice" id="item_RetailPrice" > 
+        <input type="number" type="number" step="0.25" value="<?php echo number_format($dummyRetail,2)?>" name="item_RetailPrice" id="item_RetailPrice" > 
     </p>  
 	<p>
         Item Markup:
-        <input type="number" step="0.01" name="Item_markup" id="Item_markup" value="0.5" required>
+        <input type="number" step="0.01" name="Item_markup" id="Item_markup" value="1.2" required>
     </p>  
 	<p>
         Item Stock:
@@ -160,16 +162,21 @@ mysqli_close($conn); // Close connection
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
   <script>
-
+    $('#item_RetailPrice').change(function() {
+        var costPrice = <?php echo $item_CostPrice; ?>;
+        var retail = $('#item_RetailPrice').val();
+        $('#Item_markup').val((retail - costPrice)/costPrice);
+        $('#Item_markup').val(Number(parseFloat(retail /costPrice).toFixed(2)));
+        
+    });
     $('#Item_markup').change(function() {
         var costPrice = <?php echo $item_CostPrice; ?>;
-        $('#item_RetailPrice').val( (costPrice + costPrice*$('#Item_markup').val()).toFixed(1));
+        var retail = (costPrice*$('#Item_markup').val()).toFixed(1);
+        retail = Math.ceil(retail*4)/4;
+        $('#item_RetailPrice').val( retail);
     });
 
-    $('#item_RetailPrice').keyup(function() {
-        var costPrice = <?php echo $item_CostPrice; ?>;
-        $('#Item_markup').val(($('item_RetailPrice').val() - costPrice)/costPrice);
-    });
+    
   </script>
 
 </body>

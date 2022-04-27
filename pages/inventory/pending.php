@@ -101,7 +101,8 @@ if(isset($_POST['deliver'])){
         while ($rowinventory = mysqli_fetch_assoc($resultInventory)) {
           // SETTING OF NEW PRICE BASED ON NEW COSTPRICE
           $currentPrice = $rowinventory['item_RetailPrice'];
-          $newPrice = $CostTrans+($CostTrans*$rowinventory['Item_markup']/100);
+          //$newPrice = $CostTrans+($CostTrans*$rowinventory['Item_markup']/100);
+          $newPrice = $CostTrans*$rowinventory['Item_markup'];
           if($currentPrice> $newPrice){
             $newPrice = $currentPrice;
           } 
