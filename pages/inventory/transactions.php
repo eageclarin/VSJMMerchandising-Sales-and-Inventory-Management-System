@@ -48,6 +48,9 @@ $n=0;
       <div class="panel-group" id="accordion">
 
       <?php  
+        $sql = "SELECT * FROM supplier_transactions INNER JOIN supplier ON (supplier_transactions.supplier_ID = supplier.supplier_ID) WHERE transaction_Status !=0 ;";   
+        $result = mysqli_query($conn,$sql);
+        $resultCheck = mysqli_num_rows($result);
           if ($resultCheck>0){
               while ($row = mysqli_fetch_assoc($result)) {
                 $n++;
