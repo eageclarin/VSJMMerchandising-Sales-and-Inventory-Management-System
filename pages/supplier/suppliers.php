@@ -6,9 +6,13 @@
 <html>
 <head>
 	<title> Suppliers </title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="./style.css?ts=<?=time()?>">
-  	<script type="text/javascript" src="myjs.js"></script>
-  	<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    <script type="text/javascript" src="myjs.js"></script> 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+</head>
+<body>
+<?php include 'navbar.php'; ?>
 
     <!-- CSS -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -121,7 +125,76 @@
 
 	</div>
 </div>
-	</main>
+
+	<script>
+		 function fill(Value) {
+		    $('#search').val(Value);
+		    $('#display').hide();
+		 }
+
+
+		$(document).ready(function(){
+		    $("#search").keyup(function() {
+		        var input = $(this).val();
+
+		            $.ajax({
+		                type: "POST",
+		                url: "search_sort.php",
+		                data: {
+		                    search: input
+		                },
+		                success: function(data) {
+		                    $("#display").html(data);
+		                }
+		            });
+		  
+		    });
+
+		    $("#sort").change(function(){
+		        var option = $(this).find(":selected").val();
+		        sessionStorage.setItem("selectedOption", option);
+		        var optionValue = $(this).selectedIndex;
+		        $.ajax({
+		            type: "POST",
+		            url: "search_sort.php",
+		            data: {
+		                selected: option
+		            },
+		            success: function(data) { 
+		                $("#display").html(data);
+		            }
+		        });
+		        
+		    });
+
+		    //$('#sort').find('option[value='+sessionStorage.getItem('selectedOption')+']').attr('selected','selected');
+		    $("#categ").change(function(){
+		        var categOption = $(this).find(":selected").val();
+		        $.ajax({
+		            type: "POST",
+		            url: "search_sort.php",
+		            data: {
+		                category: categOption
+		            },
+		            success: function(data) { 
+		                $("#display").html(data);
+		            }
+		        });
+		        
+		    });
+		});
+
+
+		function checkdelete(){
+		return confirm('Are you sure you want to delete this record?');
+		}
+
+		function togglePopup(){
+			document.getElementById("popup-1").classList.toggle("active");
+		}
+
+
+	</script>
 </body>
 </html>
 
