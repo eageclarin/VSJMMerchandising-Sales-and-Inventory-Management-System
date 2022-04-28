@@ -20,12 +20,88 @@ include_once '../../env/conn.php';
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
 
+    <script>
+        $(document).ready(function(){
+            $('.editbtn').on('click',function(){
+                $('#staticBackdrop').modal('show');
+                $tr = $(this).closest('tr');
+
+                var data = $tr.children("td").map(function () {
+                    return $(this).text();
+                }).get();
+
+                console.log(data);
+
+                $('#editID').val(data[0]);
+                $('#editName').val(data[1]);
+                $('#editUnit').val(data[2]);
+                $('#editBrand').val(data[3]);
+                $('#editCategory').val(data[4]);
+                const $select = document.querySelector('#item_Category');
+                $select.value = data[4];
+                document.getElementById("labelID").innerHTML = "Item ID: " + data[0];
+            });
+        });
+
+    </script> 
 </head>
 <body>
     <main class="h-100">
     <?php include 'navbar.php'; ?>
         
     <div class="container-fluid bg-light p-5">
+        <!-- EDIT MODAL ############################################################################ -->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Edit Item</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div> <!-- MODAL-HEADER -->
+                
+                <form id="newform" action="edititems.php" method="post" class="form-inline" > 
+                <div class="modal-body mb-2">   
+                    <input type="hidden"  id="editID" name="editID" placeholder="Enter"> 
+                    <label for="editID" id="labelID" style="border:0; background-color: transparent; font-size: 1.25em; color:black; font-weight: 500;">Item ID: </label>
+                    <div class="mb-1 mt-1"> 
+                    <label for="editName" >Item Name: </label>
+                    <div>
+                        <input type="text" class="form-control"  id="editName" name="editName" placeholder="Enter">
+                    </div> 
+                    <label for="editUnit" >Item Unit: </label>
+                    <div>
+                        <input type="text" class="form-control"  id="editUnit" name="editUnit" placeholder="Enter">
+                    </div> 
+                    <label for="editBrand" >Brand: </label>
+                    <div>
+                        <input type="text" class="form-control"  id="editBrand" name="editBrand" placeholder="Enter">
+                    </div> 
+                    <label for="item_Category" >Category: </label>
+                    <div>
+                        <select name="item_Category" id="item_Category" style="height:30px;" >
+                        <option value="Electrical" >Electrical</option>
+                        <option value="Plumbing">Plumbing</option>
+                        <option value="Architectural"> Architectural</option>
+                        <option value="Paints">Paints</option>
+                        <option value="bolts and nuts">Bolts and Nuts</option>
+                        <option value="Tools">Tools</option>
+                        </select>        
+                    </div> 
+                    </div> <!-- MB-1 MT-1 -->
+                </div> <!-- MODAL-BODY -->
+                <div class="modal-footer pb-0">
+                    <input type="hidden" name="url" value="inventory.php">
+                    <input  type="submit" value="update" name="edit" class="form-control btn btn-primary" style="width:150px" > 
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div> <!-- MODAL FOOTER -->
+                </form>  
+            </div> <!-- MODAL-CONTENT -->
+            </div> <!-- MODAL-DIALOG -->
+        </div> <!-- MODAL-FADE-->
+        <!-- EDIT MODAL ############################################################################ -->
+
+
+
     <div class="fs-1 fw-bold text-center"> LIST OF ITEMS </div>
 <?php
 
@@ -54,11 +130,18 @@ if ($resultCheck>0){
             <td>". $row['item_Name']. "</td>  
             <td>" .$row['item_unit']. "</td>  
             <td>" .$row['item_Brand'] . "</td> 
-            <td>" .$row['item_Category'] . "</td> 
-            <td><button type='button' class='btn editbtn pt-0' onclick=\"location.href='edititems.php?item_ID=".$row['item_ID']." ' \"><i class='fas fa-edit'></i></button>
-            <button class='btn p-0' onclick=\"location.href='../supplier/supplieritem.php?item_Name=".$row['item_Name']." ' \"><i class='fas fa-shopping-cart'></i></button></td>
-			</tr>
-			";
+            <td>" .$row['item_Category'] . "</td>";
+
+                //<button type='button' class='btn editbtn pt-0' onclick=\"location.href='edititems.php?item_ID=".$row['item_ID']." ' \"><i class='fas fa-edit'></i></button>
+            ?>
+            <td>
+                <button type="button" class="btn editbtn p-0" style="float:left; padding:5px;">
+                <i class='fas fa-edit'></i>
+                </button>
+            </td>
+            <?php    
+            echo "<td> <button class='btn p-0' onclick=\"location.href='../supplier/supplieritem.php?item_Name=".$row['item_Name']." ' \"><i class='fas fa-shopping-cart'></i></button> </td>
+            </tr>";
     }
 }       
 mysqli_close($conn);
