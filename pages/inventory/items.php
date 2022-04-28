@@ -1,5 +1,8 @@
 <?php
 include_once '../../env/conn.php';
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -20,6 +23,7 @@ include_once '../../env/conn.php';
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
 
+  
     <script>
         $(document).ready(function(){
             $('.editbtn').on('click',function(){
@@ -100,6 +104,26 @@ include_once '../../env/conn.php';
         </div> <!-- MODAL-FADE-->
         <!-- EDIT MODAL ############################################################################ -->
 
+        <!-- NOTIFICATION MODAL ############################################################################ -->
+        <div class="modal fade modal-auto-clear" id="notif" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body mb-2">
+                    <?php
+                        if($_SESSION['updated'] == 'success'){
+                            echo "Item updated successfully.";
+                        } elseif ($_SESSION['updated'] = 'error') {
+                            echo "There is an error updating the item.";
+                        }
+                    ?>
+
+                </div> <!-- MODAL-BODY -->
+
+            </div> <!-- MODAL-CONTENT -->
+            </div> <!-- MODAL-DIALOG -->
+        </div> <!-- MODAL-FADE-->
+        <!-- EDIT MODAL ############################################################################ -->
+
 
 
     <div class="fs-1 fw-bold text-center"> LIST OF ITEMS </div>
@@ -151,5 +175,14 @@ echo "</tbody></table></div>";
 <button class='btn btn-primary p-2 mt-3' type="button" onclick="location.href='./additem.php'">Add Item </button> 
 </div>
 </main>
+
+<script>
+$('.modal-auto-clear').on('shown.bs.modal', function () {
+    $(this).delay(1000).fadeOut(200, function () {
+        $(this).modal('hide');
+    });
+})
+</script>
+
 </body>
 </html>
