@@ -118,7 +118,7 @@ $totalValue = $row['salesvalue'];
           <div id="categoryContainer" class="col-7">
             <div class="form-group row"> 
               <label for="categ1" class="col-auto col-form-label fw-bold">Category:</label>
-              <select name="categ1" id="categ1" class="col-sm-10 form-select w-25" onchange="categ()">
+              <select name="categ1" id="categ1" class="col-sm-10 form-select w-25" onchange="categ1()">
                 <option value="All" selected >All</option>
                 <option value="Architectural"> Architectural</option>
                 <option value="Electrical"> Electrical</option>
@@ -129,7 +129,7 @@ $totalValue = $row['salesvalue'];
               </select>
 
               <label for="sort1" class="col-auto col-form-label fw-bold">Sort by:</label>
-              <select name="sort1" id="sort" class="col-sm-10 form-select w-25" onchange="sort()">
+              <select name="sort1" id="sort1" class="col-sm-10 form-select w-25" onchange="sort1()">
                 <option value="ID" selected >ID</option>
                 <option value="Category">Category</option>
                 <option value="PriceAsc"> <span>&#8593;</span>Price</option>
@@ -144,7 +144,7 @@ $totalValue = $row['salesvalue'];
           <div id="searchSortContainer" class="col">
             <div class="form-group row">
               <div class="col">
-                <input type="text" id="search1" class="form-control w-100" autocomplete="off" onkeyup="search()" placeholder="Search for items, brand, category...">
+                <input type="text" id="search1" class="form-control w-100" autocomplete="off" onkeyup="search1()" placeholder="Search for items, brand, category...">
               </div>
               <!-- SORTING -->
               </div>

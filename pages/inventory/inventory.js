@@ -68,8 +68,9 @@ function categ(){
 }
 
     //categ on salability
-    $("#categ1").change(function(){
-        var categOption = $(this).find(":selected").val();
+    //$("#categ1").change(function(){
+        function categ1(){
+        var categOption = $("#categ1").find(":selected").val();
         $.ajax({
             type: "POST",
             url: "search_sort.php",
@@ -81,12 +82,16 @@ function categ(){
             }
         });
         
-    });
+    //});
+    }
     //sort on salability
-    $("#sort1").change(function(){
-        var option = $(this).find(":selected").val();
+    
+    
+    //$("#sort1").change(function(){
+    function sort1(){
+        var option = $("#sort1").find(":selected").val();
         sessionStorage.setItem("selectedOption", option);
-        var optionValue = $(this).selectedIndex;
+        var optionValue = $("#sort1").selectedIndex;
         $.ajax({
             type: "POST",
             url: "search_sort.php",
@@ -98,10 +103,12 @@ function categ(){
             }
         });
         
-    });
+    //});
+    }
     //search on salability
-    $("#search1").keyup(function() {
-        var input = $(this).val();
+    //$("#search1").keyup(function() {
+    function search1(){
+        var input = $("#search1").val();
             $.ajax({
                 type: "POST",
                 url: "search_sort.php",
@@ -112,4 +119,5 @@ function categ(){
                     $("#display").html(data);
                 }
             });
-    });
+    //});
+    }
