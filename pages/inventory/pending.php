@@ -89,7 +89,9 @@ if(isset($_POST['deliver'])){
           //SET ITEM TO BE NOT IN PENDING
           $unchecked = "UPDATE inventory SET in_pending=0 WHERE item_ID='$transItem';";
           $sqlunchecked = mysqli_query($conn,$unchecked);
-          break;
+           //echo ($transItem." not in array");
+          continue;
+         
         }// END OF CHECKLIST
        
       $transQuant = $rowitems["transactionItems_Quantity"];
@@ -112,7 +114,7 @@ if(isset($_POST['deliver'])){
         $updateStatus = "UPDATE inventory SET in_pending=0, inventoryItem_Status=1, item_Stock = item_Stock + '$transQuant', item_RetailPrice = '$newPrice'   WHERE item_ID = '$transItem';";
         $sqlUpdate = mysqli_query($conn,$updateStatus);
         if ($sqlUpdate) {
-          //echo "Update in inventory success <br/>";
+         // echo "Update in inventory success <br/>";
         } else {
           echo mysqli_error($conn);
         } //END OF ITEM IS ALREADY IN INVENTORY
@@ -168,19 +170,20 @@ if(isset($_POST['cancel'])){
 <html>
 <head>
 <title> Pending </title>
-<link rel="stylesheet" href="./style.css?ts=<?=time()?>">
-  <script type="text/javascript" src="inventory.js"></script>
-  <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    <link rel="stylesheet" href="./style.css?ts=<?=time()?>">
+    <script type="text/javascript" src="inventory.js"></script>
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    <!-- JQUERY/BOOTSTRAP -->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
 
     <!-- CSS -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   
-	<!-- JQUERY/BOOTSTRAP -->
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
+	
 
   <style>
     .panel-heading .colpsible-panel:after {
@@ -198,7 +201,8 @@ if(isset($_POST['cancel'])){
 <body >
     <main >
     <?php include 'navbar.php'; ?>
-        
+
+
     <div class="container-fluid bg-light p-5">
     <h1> Pending Orders</h1>
 
@@ -216,7 +220,6 @@ if(isset($_POST['cancel'])){
 
           <!-- PANELS -->
           <div class = "container" style="width: 100%;">
-            <div class="panel-group" id="accordion">
               <?php 
                 if ($resultCheck>0){
                   while ($row = mysqli_fetch_assoc($result)) {
@@ -225,34 +228,37 @@ if(isset($_POST['cancel'])){
                     $supplier = $row['supplier_ID'];
                     $transacDate = $row['transaction_Date'];   
                     $total = $row['transaction_TotalPrice'];                
-                    echo "<div class='panel panel-info'>"; ?>
+                     ?>
                     <!-- PANEL HEADING -->
-                    <div class="panel-heading">
-                      <h4 class="panel-title">
-                        <a class="colpsible-panel" data-toggle="collapse" data-parent="#accordion"  href="#collapse<?php echo $n?>">
-                          <?php echo "<h4> Transaction ID: ".$ID. "</h4>"; ?> 
-                        </a>
-                        <!--ORDER BUTTON-->
-                        <form action="pending.php" class="mb-1" method="post">
-                          <input type=hidden name=transaction value=<?php echo $ID?>>
-                          <button class="btn btn-primary" name="order" type="submit" style="float:left;">Order</button>
-                        <!-- EXPORT BUTTON -->
-                        </form>
-                        <form action="export.php" method="post">
-                          <input type=hidden name=ExportTransactionID value=<?php echo $ID?>>
-                          <input type=hidden name=ExportTransactionSupp value=<?php echo $supplier?>>
-                          <button class="btn btn-success" name="export" type="submit" style="float:left;">Export</button>
-                        </form>
-                      </h4>
-                      <?php 
-                      echo "Supplier ID: ".$supplier. "<br/>";
+                    <section class="accordion">
+                        <input type="checkbox" name="collapse" id="collapse<?php echo $n?>" >
+                        <h2 class="handle">
+                            <label for="collapse<?php echo $n?>"> <?php echo "Transaction ID: ".$ID; ?> 
+                            <div style="float:right; width:50%;">
+                            <!-- EXPORT BUTTON -->
+                            <form action="export.php" method="post">
+                                <input type=hidden name=ExportTransactionID value=<?php echo $ID?>>
+                                <input type=hidden name=ExportTransactionSupp value=<?php echo $supplier?>>
+                                <button class="btn" name="export" type="submit" style="float:right;"><i class='fas fa-download'></i></button>
+                            </form>
+                            <!--ORDER BUTTON-->
+                            <form action="pending.php" class="mb-1" method="post">
+                                <input type=hidden name=transaction value=<?php echo $ID?>>
+                                <button class="btn " name="delete" type="submit" style="float:right;" disabled><i class='fas fa-times'></i></button>
+                                <button class="btn " name="order" type="submit" style="float:right;"><i class='fas fa-check'></i></button>
+                            </form>
+                            
+                            </div>
+                            </label>  
+                      </h2>
+                     
+                      
+                    
+                    <div class="content">
+                         <?php echo "Supplier ID: ".$supplier. "<br/>";
                       echo "Date: ".$transacDate. "<br/>";
-                      echo "Total: ".$total. "<br/>";?>
-                    </div> <!-- END OF PANEL HEADING -->
-                    <!-- PANEL COLLAPSE -->
-                    <div id="collapse<?php echo $n?>" class="panel-collapse collapse">
-                      <div class="panel-body"> <!-- PANEL BODY -->
-                        <?php
+                      echo "Total: ".$total. "<br/>";
+                        
                           echo "<table class='table'> 
                                   <tr> 
                                     <th> ID </th>
@@ -295,12 +301,11 @@ if(isset($_POST['cancel'])){
                           echo "</table>";
                           echo "<a href='../supplier/suppliertable.php?supplier_ID=".$supplier."'>Add Items</a>";?>
               
-                      </div> <!-- END OF PANEL BODY -->
-                    </div> <!-- END OF PANEL COLLAPSE -->
-                  </div> <!-- END OF PANEL INFO --><?php
+                      </div> <!-- END OF CONTENT -->
+                    </section>
+                  <?php
                   } 
                 }?>  
-            </div> <!-- END PANEL GROUP -->
           </div><!-- END CONTAINER -->
       </div> <!-- END CARD BODY -->  
     </div> <!-- END CARD -->
@@ -319,7 +324,7 @@ if(isset($_POST['cancel'])){
         $result = mysqli_query($conn,$sql);
         $resultCheck = mysqli_num_rows($result); ?>
       <div class = "container" style="width: 100%;">
-        <div class="panel-group" id="accordion2">
+        
           <?php 
             if ($resultCheck>0){
               while ($row = mysqli_fetch_assoc($result)) {
@@ -328,33 +333,29 @@ if(isset($_POST['cancel'])){
                 $supplier = $row['supplier_ID'];
                 $transacDate = $row['transaction_Date'];   
                 $total = $row['transaction_TotalPrice'];
-                echo "<div class='panel panel-info'>";?>
+                ?>
+
                 <form action="pending.php" class="mb-1" method="post">
-                  <div class="panel-heading">
-                    <h4 class="panel-title">
-                      <a class="colpsible-panel" data-toggle="collapse" data-parent="#accordion2"  href="#collapseDeli<?php echo $k?>">
-                        <?php echo "<h4> Transaction ID: ".$ID. "</h4>"; ?> 
-                      </a>
-                      <!--DELIVERED BUTTON-->
-                      <input type=hidden name=transaction value=<?php echo $ID?>>
-                      <button class="btn btn-primary" name="deliver" type="submit" style="float:left;">Delivered</button>
-                      <button class="btn btn-primary" name="cancel" type="submit" style="float:left;">Canceled</button>
-                      <!--</form> EXPORT BUTTON
-                      <form action="export.php" method="post">
-                        <input type=hidden name=ExportTransactionID value=<?php //echo $ID?>>
-                        <input type=hidden name=ExportTransactionSupp value=<?php //echo $supplier?>>
-                        <button class="btn btn-success" name="export" type="submit" style="float:left;">Export</button>
-                      </form>-->
-                    </h4>
+                  <section class="accordion">
+                        <input type="checkbox" name="collapse" id="#collapseDeli<?php echo $k?>" >
+                        <h2 class="handle">
+                            <label for="#collapseDeli<?php echo $k?>"> <?php echo "Transaction ID: ".$ID; ?> 
+                            <div style="float:right; width:50%;">
+                            <!--DELIVERED BUTTON-->
+                            <input type=hidden name=transaction value=<?php echo $ID?>>
+                            <button class="btn" name="cancel" type="submit" style="float:right;"><i class='fas fa-times'></i></button>
+                            <button class="btn " name="deliver" type="submit" style="float:right;"><i class='fas fa-check'></i></button>
+                            
+                            </div>
+                            </label>
+                        </h2>
+                    
+                    <div class="content">
                     <?php 
                       echo "Supplier ID: ".$supplier. "<br/>";
                       echo "Date: ".$transacDate. "<br/>";
-                      echo "Total: ".$total. "<br/>";?>
-                  </div> <!-- END OF PANEL HEADING -->
-
-                  <div id="collapseDeli<?php echo $k?>" class="panel-collapse collapse">
-                    <div class="panel-body">
-                      <?php
+                      echo "Total: ".$total. "<br/>";
+                      
                         echo "<table class='table' style='width:100%;'> 
                                 <tr> 
                                   <th> ID </th>
@@ -392,13 +393,13 @@ if(isset($_POST['cancel'])){
                           }
                         } 
                       echo "</table>";?>
-                  </div> <!-- END OF PANEL BODY -->
-                    </div> <!-- END OF PANEL COLLAPSE -->
                       </form>
-                  </div> <!-- END OF PANEL INFO --><?php
+                    </div>
+                    </section>
+                <?php
                   } 
                 }?>  
-            </div> <!-- END PANEL GROUP -->
+            
           </div><!-- END CONTAINER -->
       </div> <!-- END CARD BODY -->  
     </div> <!-- END CARD -->
