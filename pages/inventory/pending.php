@@ -41,8 +41,10 @@ if (isset($_POST['delete'])) {
   $quantity = $_POST['changeQuantity'];
   $updateItemID=$_POST['itemID'];
   $updateitemTrans = $_POST['transID'];
+  $cost = $_POST['cost'];
+  $total =$quantity*$cost;
   //EDIT ITEM QUANTITY
-  $updateItem = "UPDATE transaction_Items SET transactionItems_Quantity = '$quantity' WHERE item_ID = '$updateItemID' AND transaction_ID = '$updateitemTrans';";
+  $updateItem = "UPDATE transaction_Items SET transactionItems_Quantity = '$quantity', transactionItems_TotalPrice = '$total' WHERE item_ID = '$updateItemID' AND transaction_ID = '$updateitemTrans';";
   $sqlupdateItem = mysqli_query($conn,$updateItem);
   if ($sqlupdateItem) {
     //echo "Update in supplier transactions Success </br>";
@@ -52,7 +54,8 @@ if (isset($_POST['delete'])) {
 }
 
 //EDIT BUTTON IN TO BE DELIVERED
-if (isset($_POST['editDeli'])) {
+//if (isset($_POST['editDeli'])) {
+  if (isset($_POST['deliQuant'])){
     $deliQuantity = $_POST['deliQuant'];
     $deliUpdateItemID=$_POST['deliItemID'];
     $deliUpdateitemTrans = $_POST['deliTransID'];
@@ -209,7 +212,7 @@ if(isset($_POST['cancel'])){
     <h1> Pending Orders</h1>
 
     <!-- TO BE PURCHASED CARD -->
-    <div class="card" style="width: 49%; min-height:80%; float:left;">
+    <div class="card" style="width: 49%; min-height:90%; float:left;">
       <div class="card-header bg-dark text-white">
         <h3 class="card-title">To be Purchased</h3>
       </div>
@@ -292,6 +295,7 @@ if(isset($_POST['cancel'])){
                                         <td>
                                           <!-- REMOVE AND EDIT BUTTON-->
                                           <input type=hidden name=itemID id= itemID value=<?php echo $row1['item_ID']?>>
+                                          <input type=hidden name=itemCost id= itemCost value=<?php echo $row1['transactionItems_CostPrice']?>>
                                           <input type=hidden name=transID id=transID value=<?php echo $ID?>>
                                           <button class="btn" name="delete" type="submit" ><i class='fas fa-trash'></i></button>
                                           <!--
@@ -316,7 +320,7 @@ if(isset($_POST['cancel'])){
     
 
   <!-------------DELIVERED CARD --------------->
-  <div class="card" style="width: 49%; float:right;">
+  <div class="card" style="width: 49%;min-height:90%;  float:right;">
     <div class="card-header bg-dark text-white">
       <h3 class="card-title">To be Delivered</h3>
     </div>
@@ -368,7 +372,6 @@ if(isset($_POST['cancel'])){
                                   <th> Quantity </th>
                                   <th> Unit Price </th>
                                   <th> Total Price </th>
-                                  <th> </th>
                                   <th><input type='checkbox' onClick='toggle(this)' /> Select All </th>
                                 </tr>";
                         //SHOW ITEMS IN TRANSACTIONS
@@ -383,13 +386,13 @@ if(isset($_POST['cancel'])){
                             echo "<td>". $row1['item_Name']. "</td>";  
                             echo "<td>" .$row1['item_Brand']. "</td>";  
                             echo "<td>" . $row1['item_unit'] . "</td>";  
-                            echo "<td><input type=number name=deliQuant value=" . $row1['transactionItems_Quantity']. " style='width:50px;'></td>"; 
-                            echo "<td><input type=number name=deliCost value=" .$row1['transactionItems_CostPrice']. " style='width:50px;'></td>";
-                            echo "<td>" .$row1['transactionItems_TotalPrice']. "</td>";   ?>
+                            echo "<td><input type=number name=deliQuant  id=deliQuant value=" . $row1['transactionItems_Quantity']. " style='width:50px;' onchange='notif1()'></td>"; 
+                            echo "<td><input type=number name=deliCost id=deliCost value=" .$row1['transactionItems_CostPrice']. " style='width:50px;' onchange='notif1()'></td>";
+                            echo "<td id=total> " .$row1['transactionItems_TotalPrice']. "</td>";   ?>
                             <td>
-                              <input type=hidden name=deliItemID value=<?php echo $row1['item_ID']?>>
-                              <input type=hidden name=deliTransID value=<?php echo $ID?>>
-                              <button class="btn-primary" name="editDeli" type="submit" >Edit</button> </td><td> <!-- EDIT BUTTON -->
+                              <input type=hidden name=deliItemID id=deliItemID value=<?php echo $row1['item_ID']?>>
+                              <input type=hidden name=deliTransID id=deliTransID value=<?php echo $ID?>>
+                              <!--<button class="btn-primary" name="editDeli" type="submit" >Edit</button> </td><td>  EDIT BUTTON -->
                               <input type="checkbox" name="check_list[]" value="<?php echo $row1['item_ID']?>"> <!-- CHECKLIST -->
                             </td>    
                           </tr><?php

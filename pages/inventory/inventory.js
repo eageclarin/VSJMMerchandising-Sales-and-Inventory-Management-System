@@ -2,15 +2,37 @@ function notif(){
     var quant = $("#quant").val();
     var ID = $("#itemID").val();
     var trans = $("#transID").val();
+    var cost = $("#itemCost").val();
+    alert(quant + " id: " + ID + " trans: " + trans);
         $.ajax({
             type: "POST",
             url: "pending.php",
             data: {
                 changeQuantity: quant,
+                cost: cost,
                 itemID: ID,
                 transID: trans
             }
         });
+}
+
+function notif1(){
+    var quant = $("#deliQuant").val();
+    var cost = $("#deliCost").val();
+    var ID = $("#deliItemID").val();
+    var trans = $("#deliTransID").val();
+    alert(quant + " id: " + ID + " trans: " + trans);
+        $.ajax({
+            type: "POST",
+            url: "pending.php",
+            data: {
+                deliQuant: quant,
+                deliCost: cost,
+                deliItemID: ID,
+                deliTransID: trans
+            }
+        });
+    document.getElementById("total").innerHTML = cost*quant;
 }
 
 
