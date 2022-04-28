@@ -310,46 +310,10 @@ $totalValue = $row['salesvalue'];
               });
            });
 
-           $('#editMarkup').change(function() {
-                var markup = $('#editMarkup').val();
-                var retail = $('editRetail').val();
-                var costPrice = retail/(1+markup);
-                $('#editRetail').val( (costPrice + costPrice*$('#editMarkup').val()).toFixed(1));
-            });
 
-            $('#editRetail').keyup(function() {
-                var costPrice = <?php echo $item_CostPrice; ?>;
-                $('#editMarkup').val(($('editRetail').val() - costPrice)/costPrice);
-            });
 
          </script>   
 
   </body>
 </html>
 
-<script>
-           $(document).ready(function(){
-              $('.editbtn').on('click',function(){
-                $('#staticBackdrop').modal('show');
-                $tr = $(this).closest('tr');
-
-                var data = $tr.children("td").map(function () {
-                    return $(this).text();
-                }).get();
-
-                console.log(data);
-
-                $('#editID').val(data[0]);
-                $('#editName').val(data[1]);
-                $('#editUnit').val(data[2]);
-                $('#editBrand').val(data[3]);
-                $('#editRetail').val(data[4]);
-                $('#editMarkup').val(data[5]);
-                $('#editStock').val(data[6]);
-                $('#editCategory').val(data[7]);
-                const $select = document.querySelector('#item_Category');
-                $select.value = data[7];
-                document.getElementById("labelID").innerHTML = "Item ID: " + data[0];
-              });
-           });
-         </script>
