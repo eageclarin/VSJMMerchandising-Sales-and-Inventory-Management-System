@@ -106,6 +106,8 @@ if(isset($_POST['buy']))
         $sqlInsert = mysqli_query($conn, $insert);
         if ($sqlInsert) {
             echo 'added in pending orders';
+            $updateTotal = "UPDATE supplier_Transactions SET transaction_TotalPrice = transaction_TotalPrice + '$items_total' WHERE transaction_ID='$Transaction'";
+            $sqlUpdateTotal = mysqli_query($conn,$updateTotal);
         } else {
             echo mysqli_error($conn);
         }
