@@ -1,6 +1,16 @@
 <?php
 include_once '../../env/conn.php';
 
+if(isset($_POST['edit'])>0){
+    $name = $_POST['editName'];
+    $ID = $_POST['editID'];
+    $brand = $_POST['editBrand'];
+    $categ = $_POST['item_Category'];
+    $unit = $_POST['editUnit'];
+    mysqli_query($conn, "UPDATE item set item_Name='$name', item_unit='$unit', item_Brand='$brand', item_Category = '$categ'
+    WHERE item_ID = '$ID'");
+    //echo "Record Edited Successfully";
+}
 
 
 ?>
@@ -25,9 +35,11 @@ include_once '../../env/conn.php';
 
   
     <script>
+        
         $(document).ready(function(){
             $('.editbtn').on('click',function(){
                 $('#staticBackdrop').modal('show');
+                
                 $tr = $(this).closest('tr');
 
                 var data = $tr.children("td").map(function () {
@@ -63,7 +75,7 @@ include_once '../../env/conn.php';
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div> <!-- MODAL-HEADER -->
                 
-                <form id="newform" action="edititems.php" method="post" class="form-inline" > 
+                <form id="newform" action="items.php" method="post" class="form-inline" > 
                 <div class="modal-body mb-2">   
                     <input type="hidden"  id="editID" name="editID" placeholder="Enter"> 
                     <label for="editID" id="labelID" style="border:0; background-color: transparent; font-size: 1.25em; color:black; font-weight: 500;">Item ID: </label>
@@ -105,7 +117,7 @@ include_once '../../env/conn.php';
         <!-- EDIT MODAL ############################################################################ -->
 
         <!-- NOTIFICATION MODAL ############################################################################ -->
-        <div class="modal fade modal-auto-clear" id="notif" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal fade modal-auto-clear" id="notif" >
             <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body mb-2">
@@ -177,6 +189,11 @@ echo "</tbody></table></div>";
 </main>
 
 <script>
+function notif(){
+    alert("HI");
+    $('#notif').modal('show');
+}
+    
 $('.modal-auto-clear').on('shown.bs.modal', function () {
     $(this).delay(1000).fadeOut(200, function () {
         $(this).modal('hide');

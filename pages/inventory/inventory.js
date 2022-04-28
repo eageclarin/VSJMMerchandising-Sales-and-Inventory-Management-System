@@ -1,3 +1,9 @@
+function notif(){
+    alert("HI");
+    $('#notif').modal('show');
+}
+
+
 function fill(Value) {
     $('#search').val(Value);
     $('#display').hide();
