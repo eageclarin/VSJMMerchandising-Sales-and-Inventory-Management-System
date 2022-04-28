@@ -1,6 +1,16 @@
 function notif(){
-    alert("HI");
-    $('#notif').modal('show');
+    var quant = $("#quant").val();
+    var ID = $("#itemID").val();
+    var trans = $("#transID").val();
+        $.ajax({
+            type: "POST",
+            url: "pending.php",
+            data: {
+                changeQuantity: quant,
+                itemID: ID,
+                transID: trans
+            }
+        });
 }
 
 
@@ -24,7 +34,6 @@ function add(){
 }
 
 function edit(){
-    $('#staticBackdrop').modal('show');
     alert("hi");
 }
 

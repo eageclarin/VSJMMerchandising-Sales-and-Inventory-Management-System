@@ -35,8 +35,10 @@ if (isset($_POST['delete'])) {
 }
 
 //EDIT BUTTON IN PENDING ORDERS
-if (isset($_POST['edit'])) {
-  $quantity = $_POST['quant'];
+//if (isset($_POST['edit'])) {
+  if(isset($_POST['changeQuantity'])){
+  //$quantity = $_POST['quant'];
+  $quantity = $_POST['changeQuantity'];
   $updateItemID=$_POST['itemID'];
   $updateitemTrans = $_POST['transID'];
   //EDIT ITEM QUANTITY
@@ -284,15 +286,16 @@ if(isset($_POST['cancel'])){
                               echo "    <td>". $row1['item_Name']. "</td>";  
                               echo "    <td>" .$row1['item_Brand']. "</td>";  
                               echo "    <td>" . $row1['item_unit'] . "</td>";  
-                              echo "    <td><input type=number name=quant value=" . $row1['transactionItems_Quantity']. " style='width:50px;'></td>"; 
+                              echo "    <td><input type=number name=quant id=quant value=" . $row1['transactionItems_Quantity']. " style='width:50px;' onchange='notif()'></td>"; 
                               echo "    <td>" .$row1['transactionItems_CostPrice']. "</td>";
                               echo "    <td>" .$row1['transactionItems_TotalPrice']. "</td>";   ?>
                                         <td>
                                           <!-- REMOVE AND EDIT BUTTON-->
-                                          <input type=hidden name=itemID value=<?php echo $row1['item_ID']?>>
-                                          <input type=hidden name=transID value=<?php echo $ID?>>
-                                          <button class="btn-primary" name="delete" type="submit" >Remove</button>
-                                          <button class="btn-primary" name="edit" type="submit" >Edit</button>                    
+                                          <input type=hidden name=itemID id= itemID value=<?php echo $row1['item_ID']?>>
+                                          <input type=hidden name=transID id=transID value=<?php echo $ID?>>
+                                          <button class="btn" name="delete" type="submit" ><i class='fas fa-trash'></i></button>
+                                          <!--
+                                          <button class="btn-primary" name="edit" type="submit" >Edit</button> -->                    
                                         </td>      
                                       </tr>
                                     </form> <?php
@@ -409,6 +412,9 @@ if(isset($_POST['cancel'])){
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 <script language="JavaScript">
+  function edit(){
+    alert("hi");
+  }
   function toggle(source) {
     checkboxes = document.getElementsByName('check_list[]');
     for(var i=0, n=checkboxes.length;i<n;i++) {
