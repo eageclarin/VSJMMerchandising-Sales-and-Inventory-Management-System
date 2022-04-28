@@ -37,15 +37,16 @@ $n=0;
 <body>
   <main>
   <?php include 'navbar.php'; ?>
+  
+
+
+
         
   <div class="container-fluid bg-light p-5">
     <span class="fs-1 fw-bold"> TRANSACTIONS </span>
     <p> Completed and undelivered transactions are shown here</p>
 
     <div class = "container">
-
-      
-      <div class="panel-group" id="accordion">
 
       <?php  
         $sql = "SELECT * FROM supplier_transactions INNER JOIN supplier ON (supplier_transactions.supplier_ID = supplier.supplier_ID) WHERE transaction_Status !=0 ;";   
@@ -60,31 +61,32 @@ $n=0;
                 $transacDate = $row['transaction_Date'];   
                 $total = $row['transaction_TotalPrice'];
                 $status = $row['transaction_Status'];
-                if ($status == 1) {
+               /* if ($status == 1) {
                   $status = 'undelivered';
                   echo "<div class='panel panel-info'>";
               } else{
                   $status = 'completed';
                   echo "<div class='panel panel-success'>";
-              }
+              }*/
         
         ?>
 
-      <!--<div class="panel panel-info">-->
-        <div class="panel-heading">
-          <h4 class="panel-title">
-            <a class="colpsible-panel" data-toggle="collapse" data-parent="#accordion" href="#collapse<?php echo $n?>">
-              <?php echo "<h4> Transaction ID: ".$ID. "</h4>"; ?> 
-            </a>
-            <form action="export.php" method="post">
-            <input type=hidden name=ExportTransactionID value=<?php echo $ID?>>
-            <input type=hidden name=ExportTransactionSupp value=<?php echo $supplier?>>
-              <button class="btn btn-success" name="export" type="submit">Export</button>
-            </form>
-          </h4>
-        </div>
-        <div id="collapse<?php echo $n?>" class="panel-collapse collapse">
-          <div class="panel-body">
+        <section class="accordion">
+          
+              <input type="checkbox" name="collapse" id="collapse<?php echo $n?>" >
+              <h2 class="handle">
+                <label for="collapse<?php echo $n?>"> <?php echo "Transaction ID: ".$ID; ?> 
+                <div style="float:right; width:50%;">
+                  <form action="export.php" method="post">
+                    <input type=hidden name=ExportTransactionID value=<?php echo $ID?>>
+                    <input type=hidden name=ExportTransactionSupp value=<?php echo $supplier?>>
+                    <button class="btn" name="export" type="submit" style="float:right;"><i class='fas fa-download'></i></button>
+                  </form>
+                </div>
+                </label>
+              </h2>
+        
+        <div class="content">
           <?php echo "<table class='table'> 
                             <tr> 
                                 <th> ID </th>
@@ -117,13 +119,10 @@ $n=0;
 
                     echo "</table>"; ?>
           </div>
-        </div>
+        </section>
 
-        
-      </div>
       <?php } 
       }?>
-    </div><!-- end accordion -->
   </div> <!-- end container -->
 
 </div> <!-- END CONTENT -->

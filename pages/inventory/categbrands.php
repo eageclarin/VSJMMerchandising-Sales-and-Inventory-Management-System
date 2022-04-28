@@ -6,7 +6,7 @@ include_once '../../env/conn.php';
 <!DOCTYPE html>
 <html>
   <head>
-    <title> Categories </title>
+    <title> Categories and Brands </title>
     <link rel="stylesheet" href="./style.css?ts=<?=time()?>">
     <script type="text/javascript" src="inventory.js"></script>
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
