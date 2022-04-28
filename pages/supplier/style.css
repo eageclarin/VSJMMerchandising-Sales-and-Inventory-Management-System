@@ -1,4 +1,5 @@
 body {
+    height: 100%;
     min-height: 100%;
 }
   
@@ -11,6 +12,48 @@ main {
     flex-wrap: nowrap;
     min-height: 100%;
 }
+
+
+.navbar{
+    width:250px;
+    height: 100%;
+    position:fixed;
+    
+    transition: 0.4s;
+    box-shadow: inset;
+}
+.navbar .nav-link {
+    font-size: 1.25em;
+}
+
+/*.navbar .nav-link:active,
+.navbar .nav-link:focus,
+.navbar .nav-link:hover {
+    background-color: #4e666a;
+}*/
+
+#sidebar{
+    height: 100%;
+}
+.nav {
+    border: none;
+    height: auto;
+    position: sticky;
+}
+
+.nav .nav-link {
+    /*text-align: center;*/
+    margin: auto;
+    padding: 8px;
+}
+
+.nav .nav-link:active,
+.nav .nav-link:focus,
+.nav .nav-link:hover {
+    background-color: #343a40;
+    border: none;
+}
+
 
 .dropdown-menu {
     background-color: #202c2f;
