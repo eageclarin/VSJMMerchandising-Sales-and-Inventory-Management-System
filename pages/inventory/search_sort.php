@@ -174,7 +174,8 @@
                 </td>
                 <td>
                     <!--<button class='table-see' onclick="location.href='../supplier/supplieritem.php?item_Name='<?php echo $row['item_Name']?>' ">Suppliers</button>-->
-                    <a href="../supplier/supplieritem.php?item_Name='<?php echo $row['item_Name']?>" >
+                    <!--<?php //echo "<a href=\"../supplier/supplieritem.php?item_Name='".$row['item_Name']."'\">"; ?>-->
+                    <a href="../supplier/supplieritem.php?item_Name=<?php echo $row['item_Name']; ?>" >
                         <button class="btn p-0"  ><i class='fas fa-shopping-cart'></i></button>
                     </a>
                 </td>    

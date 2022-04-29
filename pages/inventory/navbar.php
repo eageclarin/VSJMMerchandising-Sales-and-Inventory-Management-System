@@ -94,6 +94,7 @@
 				$resultCheck = mysqli_num_rows($result);
 				if ($resultCheck>0){ 
 					echo 'Low on Stocks';
+					echo "<div class='table-wrapper' style='height:auto; max-height:100px;' id='style-1'>";
 					echo '<div class="container flex-column mb-auto gap-2">';
 					while ($row = mysqli_fetch_assoc($result)) {	
 			?>
@@ -108,46 +109,52 @@
 			<?php
 					}
 					echo '</div>';
+					echo '</div>';
 				}
 
 				//PENDING ORDERS
-				$sql1 = "SELECT * FROM supplier_Transactions INNER JOIN transaction_items ON (supplier_Transactions.transaction_ID = transaction_Items.transaction_ID) INNER JOIN supplier ON (supplier.supplier_ID = supplier_Transactions.supplier_ID ) WHERE transaction_Status = 0";
+				$sql1 = "SELECT * FROM supplier_Transactions  INNER JOIN supplier ON (supplier.supplier_ID = supplier_Transactions.supplier_ID ) WHERE transaction_Status = 0";
 				$result1 = mysqli_query($conn,$sql1);
 				$resultCheck1 = mysqli_num_rows($result1);
 				if ($resultCheck1>0){ 
+					
 					echo 'Pending Orders';
+					echo "<div class='table-wrapper' style='height:auto; max-height:100px;' id='style-1'>";
 					echo '<ul class="text-wrap nav nav-pills flex-column mb-auto gap-2">';
 					while ($row1 = mysqli_fetch_assoc($result1)) {	
 						echo '<li class="rounded nav-item p-2 py-1" style="background-color: #343a40;">';
-						echo	'<div style="float:left; width:80%;">'
+						echo	'<div style="float:left; width:75%;">'
 										.$row1['transaction_ID'] .': ' .$row1['supplier_Name']
 									.'</div>
-									<div style="float:right;width:20%; padding-right:3px; color:#D8172B;">'
+									<div style="float:right; width:25%; color:#D8172B; padding-right:0px;">'
 										.number_format($row1['transaction_TotalPrice'],2)
 									.'</div>
 								</li>';
 					  	}
 					echo '</ul>';
+					echo "</div>";
 				}
 
 				//PENDING DELIVERIES 	
-				$sql1 = "SELECT * FROM supplier_Transactions INNER JOIN transaction_items ON (supplier_Transactions.transaction_ID = transaction_Items.transaction_ID) INNER JOIN supplier ON (supplier.supplier_ID = supplier_Transactions.supplier_ID ) WHERE transaction_Status = 1";
+				$sql1 = "SELECT * FROM supplier_Transactions  INNER JOIN supplier ON (supplier.supplier_ID = supplier_Transactions.supplier_ID ) WHERE transaction_Status = 1";
 				$result1 = mysqli_query($conn,$sql1);
 				$resultCheck1 = mysqli_num_rows($result1);
 				if ($resultCheck1>0){ 
 					echo 'Deliveries';
+					echo "<div class='table-wrapper' style='height:auto; max-height:100px;' id='style-1'>";
 					echo '<ul class="text-wrap nav nav-pills flex-column mb-auto gap-2">';
 					while ($row1 = mysqli_fetch_assoc($result1)) {	
 						echo '<li class="rounded nav-item p-2 py-1" style="background-color: #343a40;">';
-						echo	'<div style="float:left; width:80%;">'
+						echo	'<div style="float:left; width:75%;">'
 										.$row1['transaction_ID'] .': ' .$row1['supplier_Name']
 									.'</div>
-									<div style="float:right;width:20%; padding-right:3px; color:#D8172B;">'
+									<div style="float:right; width:25%; color:#D8172B;">'
 										.number_format($row1['transaction_TotalPrice'],2)
 									.'</div>
 								</li>';
 					}
 					echo '</ul>';
+					echo '</div>';
 				}
 				?>
 		</div>

@@ -1,3 +1,44 @@
+function notif(trans, ID){
+    var num = trans +""+ID;
+    var quant = $("#quant"+num).val();
+    //var ID = $("#itemID").val();
+    //var trans = $("#transID").val();
+    var cost = $("#itemCost"+num).val();
+    //alert(quant + " id: " + ID + " trans: " + trans);
+        $.ajax({
+            type: "POST",
+            url: "pending.php",
+            data: {
+                changeQuantity: quant,
+                cost: cost,
+                itemID: ID,
+                transID: trans
+            }
+        });
+        document.getElementById("total"+num).innerHTML = cost*quant;
+}
+
+function notif1(trans, ID){
+    var num = trans +""+ID;
+    var quant = $("#deliQuant"+num).val();
+    var cost = $("#deliCost"+num).val();
+    //var ID = $("#deliItemID").val();
+    //var trans = $("#deliTransID").val();
+    //alert(quant + " id: " + ID + " trans: " + trans);
+        $.ajax({
+            type: "POST",
+            url: "pending.php",
+            data: {
+                deliQuant: quant,
+                deliCost: cost,
+                deliItemID: ID,
+                deliTransID: trans
+            }
+        });
+    document.getElementById("total"+num).innerHTML = cost*quant;
+}
+
+
 function fill(Value) {
     $('#search').val(Value);
     $('#display').hide();
@@ -18,7 +59,6 @@ function add(){
 }
 
 function edit(){
-    $('#staticBackdrop').modal('show');
     alert("hi");
 }
 
@@ -68,8 +108,9 @@ function categ(){
 }
 
     //categ on salability
-    $("#categ1").change(function(){
-        var categOption = $(this).find(":selected").val();
+    //$("#categ1").change(function(){
+        function categ1(){
+        var categOption = $("#categ1").find(":selected").val();
         $.ajax({
             type: "POST",
             url: "search_sort.php",
@@ -81,12 +122,16 @@ function categ(){
             }
         });
         
-    });
+    //});
+    }
     //sort on salability
-    $("#sort1").change(function(){
-        var option = $(this).find(":selected").val();
+    
+    
+    //$("#sort1").change(function(){
+    function sort1(){
+        var option = $("#sort1").find(":selected").val();
         sessionStorage.setItem("selectedOption", option);
-        var optionValue = $(this).selectedIndex;
+        var optionValue = $("#sort1").selectedIndex;
         $.ajax({
             type: "POST",
             url: "search_sort.php",
@@ -98,10 +143,12 @@ function categ(){
             }
         });
         
-    });
+    //});
+    }
     //search on salability
-    $("#search1").keyup(function() {
-        var input = $(this).val();
+    //$("#search1").keyup(function() {
+    function search1(){
+        var input = $("#search1").val();
             $.ajax({
                 type: "POST",
                 url: "search_sort.php",
@@ -112,4 +159,5 @@ function categ(){
                     $("#display").html(data);
                 }
             });
-    });
+    //});
+    }

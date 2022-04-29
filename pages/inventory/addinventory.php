@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Add Records in Database</title>
+  <title>Add Items in Inventory</title>
 </head>
 <body>
 
@@ -9,8 +9,11 @@
 
 include_once '../../env/conn.php';
 
+
 //if (isset($_POST['order'])) {
-    $orderItemID = $_SESSION['orderItemID'];
+    /*$orderItemID = $_SESSION['orderItemID'];
+    $orderItemSupp = $_SESSION['orderItemSupp'];
+    $orderItemID = $_POST['editID'];
     $orderItemSupp = $_SESSION['orderItemSupp'];
     $supplier = "SELECT * FROM item INNER JOIN supplier_item ON (item.item_ID = supplier_item.item_ID) INNER JOIN supplier ON (supplier_item.supplier_ID = supplier.supplier_ID) WHERE supplier_item.supplier_ID='$orderItemSupp' AND supplier_item.item_ID = '$orderItemID';";
 
@@ -30,19 +33,23 @@ include_once '../../env/conn.php';
                     $item_category = $rowitems['item_Category'];
           } 
         } 
-        $dummyRetail = $item_CostPrice + $item_CostPrice*0.5;
+        $dummyRetail = $item_CostPrice*1.2;
+        $dummyRetail = ceil($dummyRetail*4)/4; */
 //}
 
-if(isset($_POST['submit']))
+if(isset($_POST['buy']))
 {		
-    
-	$Item_markup= $_POST['Item_markup'];
+    $orderItemSupp = $_POST['orderItemSupp'];
+    $orderItemID = $_POST['editID'];
+	$Item_markup= $_POST['editMarkup'];
     $_SESSION['addInventory_markup'] = $Item_markup;
-	$item_Stock= $_POST['item_Stock'];
-	$item_category= $_POST['item_category'];
-    $_SESSION['addInventory_category'] = $item_category;
-	$item_RetailPrice = $item_CostPrice+($item_CostPrice*$Item_markup/100);
-    echo $item_RetailPrice;
+	$item_Stock= $_POST['editStock'];
+	$item_category= $_POST['item_Category'];
+    $_SESSION['addInventory_Category'] = $item_category;
+    $item_RetailPrice = $_POST['editRetail'];
+    $item_CostPrice = $_POST['editCost'];
+	//$item_RetailPrice = ($item_CostPrice*$Item_markup/100);
+    //echo $item_RetailPrice;
 
     $updateCateg = "UPDATE item set item_Category = '$item_category' WHERE item_ID = '$orderItemID'";
 
@@ -99,6 +106,8 @@ if(isset($_POST['submit']))
         $sqlInsert = mysqli_query($conn, $insert);
         if ($sqlInsert) {
             echo 'added in pending orders';
+            $updateTotal = "UPDATE supplier_Transactions SET transaction_TotalPrice = transaction_TotalPrice + '$items_total' WHERE transaction_ID='$Transaction'";
+            $sqlUpdateTotal = mysqli_query($conn,$updateTotal);
         } else {
             echo mysqli_error($conn);
         }
@@ -122,18 +131,20 @@ if(isset($_POST['submit']))
 }
 
 mysqli_close($conn); // Close connection
+echo "Location: ../supplier/suppliertable.php?supplier_ID=".$orderItemSupp;
+header("Location: ../supplier/suppliertable.php?supplier_ID=".$orderItemSupp);
 
 ?>
 
-
+<!--
 
 <form action="./addinventory.php" method="post" >
         Item Retail Price:
-        <input type="number" type="number" step="0.01" value="<?php echo $dummyRetail?>" name="item_RetailPrice" id="item_RetailPrice" > 
+        <input type="number" type="number" step="0.25" value="<?php// echo number_format($dummyRetail,2)?>" name="item_RetailPrice" id="item_RetailPrice" > 
     </p>  
 	<p>
         Item Markup:
-        <input type="number" step="0.01" name="Item_markup" id="Item_markup" value="0.5" required>
+        <input type="number" step="0.01" name="Item_markup" id="Item_markup" value="1.2" required>
     </p>  
 	<p>
         Item Stock:
@@ -144,7 +155,7 @@ mysqli_close($conn); // Close connection
         Item Category:
         
         <select name="item_category" id="item_category" style="height:30px;">
-        <option value="<?php echo $item_category?>" ><?php echo $item_category?></option>
+        <option value="<?//php echo $item_category?>" ><?//php echo $item_category?></option>
             <option value="Electrical" >Electrical</option>
             <option value="Plumbing">Plumbing</option>
             <option value="Architectural"> Architectural</option>
@@ -156,20 +167,25 @@ mysqli_close($conn); // Close connection
 
   <input type="submit" name="submit" value="Submit">
   <button type="button" onclick="location.href='inventory.php'">Go back </button>
-</form>
+</form> -->
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
   <script>
-
+    $('#item_RetailPrice').change(function() {
+        var costPrice = <?php echo $item_CostPrice; ?>;
+        var retail = $('#item_RetailPrice').val();
+        //$('#Item_markup').val((retail - costPrice)/costPrice);
+        $('#Item_markup').val(Number(parseFloat(retail /costPrice).toFixed(2)));
+        
+    });
     $('#Item_markup').change(function() {
         var costPrice = <?php echo $item_CostPrice; ?>;
-        $('#item_RetailPrice').val( (costPrice + costPrice*$('#Item_markup').val()).toFixed(1));
+        var retail = (costPrice*$('#Item_markup').val()).toFixed(1);
+        retail = Math.ceil(retail*4)/4;
+        $('#item_RetailPrice').val( retail);
     });
 
-    $('#item_RetailPrice').keyup(function() {
-        var costPrice = <?php echo $item_CostPrice; ?>;
-        $('#Item_markup').val(($('item_RetailPrice').val() - costPrice)/costPrice);
-    });
+    
   </script>
 
 </body>

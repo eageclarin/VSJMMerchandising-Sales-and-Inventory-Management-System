@@ -12,6 +12,8 @@ include_once '../../env/conn.php';
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">   
     <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">-->
     <!-- NAVBAR <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> -->
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>-->
@@ -20,10 +22,19 @@ include_once '../../env/conn.php';
   </head>
 
   
-  <body >  
-    <?php include 'navbar.php'; ?>
+  <body>
+    <main>
+      <?php include 'navbar.php'; ?>
 
-    <div id="content">
+
+    <div class="container-fluid bg-light p-5">
+      <div class="row justify-content-md-center">
+        <div class="row">
+          <div class="col position-relative">
+            <div class="text-center fs-1 fw-bold"> SUPPLIERS </div>
+          </div>
+        </div>
+      </div>
       <!-- EDIT MODAL ############################################################################ -->
       <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -84,41 +95,50 @@ include_once '../../env/conn.php';
 
 
       <div id="supplierHead"> 
-        <h1 style="float:left;"> Suppliers </h1><br><br><br>
-        <h2 style="float:left;"> Items </h2>
+
+        <h1 style="float:left;"> Items </h1><br>
           
       <!-- END OF INVENTORY HEAD -->
       
-        <div id="filters" >
+       <!-- <div id="filters">-->
             
           <!-- SEARCH TAB -->
-          <div id="searchSortContainer">
-            <input type="text" id="search" autocomplete="off" placeholder="Search for items, brand, supplier..." <?php if(isset($_GET['item_Name'])){ echo" value='".$_GET['item_Name']."'";} ?> style="height:30px;">
-          
+        <div class="row justify-content-md-center">
+          <div class="form-group row mt-2 justify-content-md-center">
+          <!--<div id="searchSortContainer">-->
+
             <!-- SORTING -->
-            <label for="sort">Sort by:</label>
-            <select name="sort" id="sort" style="height:30px;">
+            <label for="sort" class="col-auto col-form-label fw-bold">Sort by:</label>
+            <select name="sort" id="sort" class="col-sm-10 form-select w-auto">
               <option value="ItemID" selected>Item ID</option>
               <option value="SupplierID">Supplier ID</option>
               <option value="PriceAsc"> <span>&#8593;</span>Price</option>
               <option value="PriceDesc"> <span>&#8595;</span>Price</option>
             </select> <!-- END OF SORTING -->
-          </div> <!-- END OF SEARCHSORT CONTAINER -->
-        </div> <!-- END OF FILTERS -->
+
+            <div class="col-5">
+              <input type="text" id="search" class="form-control w-100" autocomplete="off" placeholder="Search for Items, Brand, Supplier..." <?php if(isset($_GET['item_Name'])){ echo" value='".$_GET['item_Name']."'";} ?> >
+            </div>
+            
+          <!--</div>--> <!-- END OF SEARCHSORT CONTAINER -->
+          </div>
+        </div> 
+      <!--</div> END OF FILTERS -->
       
         <!-- DISPLAY LIST OF ITEMS IN INVENTORY -->
         <div id="display">
             <?php include 'search_sort_item.php'; ?>
-        
         </div> <!-- END OF DISPLAY -->
 
         <div id="filters">
-          
           <!-- ADD NEW ITEM IN INVENTORY BUTTON -->
-          <button class="btn btn-dark"style="float:right;" type="button" onclick="location.href='addsupplieritem.php'">Add Item/Supplier</button>
+          <button class="btn btn-success mt-3" type="button" onclick="location.href='addsupplieritem.php'">Add Item/Supplier</button>
         </div>
 
-    </div> <!-- END OF CONTENT -->
+    </div>
+  </div>
+
+  </main><!-- END OF CONTENT -->
 
          <script>
            $(document).ready(function(){
