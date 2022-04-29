@@ -68,10 +68,11 @@
                         while($rowItems = mysqli_fetch_assoc($resItems)) {
                             $id = $rowItems['itemID'];
                             $qty = $rowItems['quantity'];
+                            $itemTotal = $rowItems['itemTotalP'];
   
                             //store to order_items
                             $sqlOrderItems = "INSERT INTO order_items (item_ID, order_ID, orderItems_Quantity, orderItems_TotalPrice)
-                            VALUES ('$id','$recentID', '$qty', '$totalPrice')";
+                            VALUES ('$id','$recentID', '$qty', '$itemTotal')";
                             $resOrderItems = mysqli_query($conn, $sqlOrderItems);
 
                             $stock = $rowItems['item_Stock'] - $qty;

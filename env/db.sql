@@ -84,8 +84,8 @@ order_Total float(53) NOT NULL
 
 
 CREATE TABLE order_items(
-	item_ID int NOT NULL,
-order_ID int NOT NULL PRIMARY KEY,
+item_ID int NOT NULL,
+order_ID int NOT NULL,
 orderItems_Quantity int NOT NULL,
 orderItems_TotalPrice float(53) NOT NULL,
 FOREIGN KEY(item_ID) REFERENCES item(item_ID) ON UPDATE CASCADE,
