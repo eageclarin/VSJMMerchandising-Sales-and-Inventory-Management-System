@@ -1,9 +1,10 @@
-function notif(){
-    var quant = $("#quant").val();
-    var ID = $("#itemID").val();
-    var trans = $("#transID").val();
-    var cost = $("#itemCost").val();
-    alert(quant + " id: " + ID + " trans: " + trans);
+function notif(trans, ID){
+    var num = trans +""+ID;
+    var quant = $("#quant"+num).val();
+    //var ID = $("#itemID").val();
+    //var trans = $("#transID").val();
+    var cost = $("#itemCost"+num).val();
+    //alert(quant + " id: " + ID + " trans: " + trans);
         $.ajax({
             type: "POST",
             url: "pending.php",
@@ -14,14 +15,16 @@ function notif(){
                 transID: trans
             }
         });
+        document.getElementById("total"+num).innerHTML = cost*quant;
 }
 
-function notif1(){
-    var quant = $("#deliQuant").val();
-    var cost = $("#deliCost").val();
-    var ID = $("#deliItemID").val();
-    var trans = $("#deliTransID").val();
-    alert(quant + " id: " + ID + " trans: " + trans);
+function notif1(trans, ID){
+    var num = trans +""+ID;
+    var quant = $("#deliQuant"+num).val();
+    var cost = $("#deliCost"+num).val();
+    //var ID = $("#deliItemID").val();
+    //var trans = $("#deliTransID").val();
+    //alert(quant + " id: " + ID + " trans: " + trans);
         $.ajax({
             type: "POST",
             url: "pending.php",
@@ -32,7 +35,7 @@ function notif1(){
                 deliTransID: trans
             }
         });
-    document.getElementById("total").innerHTML = cost*quant;
+    document.getElementById("total"+num).innerHTML = cost*quant;
 }
 
 

@@ -283,19 +283,20 @@ if(isset($_POST['cancel'])){
                           
                           if ($resultCheck1>0){
                             while ($row1 = mysqli_fetch_assoc($result1)) {
+                              $item = $row1['item_ID'];
                               echo '<form action="pending.php" class="mb-1" method="post">';
                               echo "  <tr>"; 
                               echo "    <td>" .$row1['item_ID']. "</td>";  
                               echo "    <td>". $row1['item_Name']. "</td>";  
                               echo "    <td>" .$row1['item_Brand']. "</td>";  
                               echo "    <td>" . $row1['item_unit'] . "</td>";  
-                              echo "    <td><input type=number name=quant id=quant value=" . $row1['transactionItems_Quantity']. " style='width:50px;' onchange='notif()'></td>"; 
+                              echo "    <td><input type=number name=quant id=quant" .$ID .$item  ." value=" . $row1['transactionItems_Quantity']. " style='width:50px;' onchange='notif(".$ID ."," .$item .")'></td>"; 
                               echo "    <td>" .$row1['transactionItems_CostPrice']. "</td>";
-                              echo "    <td>" .$row1['transactionItems_TotalPrice']. "</td>";   ?>
+                              echo "    <td id=total".$ID .$item  .">" .$row1['transactionItems_TotalPrice']. "</td>";   ?>
                                         <td>
                                           <!-- REMOVE AND EDIT BUTTON-->
-                                          <input type=hidden name=itemID id= itemID value=<?php echo $row1['item_ID']?>>
-                                          <input type=hidden name=itemCost id= itemCost value=<?php echo $row1['transactionItems_CostPrice']?>>
+                                          <input type=hidden name=itemID id= itemID value=<?php echo $item?>>
+                                          <input type=hidden name=itemCost id= itemCost<?php echo $ID.$item?> value=<?php echo $row1['transactionItems_CostPrice']?>>
                                           <input type=hidden name=transID id=transID value=<?php echo $ID?>>
                                           <button class="btn" name="delete" type="submit" ><i class='fas fa-trash'></i></button>
                                           <!--
@@ -343,7 +344,7 @@ if(isset($_POST['cancel'])){
                 ?>
 
                 <form action="pending.php" class="mb-1" method="post">
-                  <section class="accordion">
+                  <section class="accordion" id=<?php echo $ID?>>
                         <input type="checkbox" name="collapse" id="#collapseDeli<?php echo $k?>" >
                         <h2 class="handle">
                             <label for="#collapseDeli<?php echo $k?>"> <?php echo "Transaction ID: ".$ID; ?> 
@@ -381,16 +382,17 @@ if(isset($_POST['cancel'])){
 
                         if ($resultCheck1>0){
                           while ($row1 = mysqli_fetch_assoc($result1)) {
+                            $item = $row1['item_ID'];
                             echo "<tr>"; 
                             echo "<td>" .$row1['item_ID']. "</td>";  
                             echo "<td>". $row1['item_Name']. "</td>";  
                             echo "<td>" .$row1['item_Brand']. "</td>";  
                             echo "<td>" . $row1['item_unit'] . "</td>";  
-                            echo "<td><input type=number name=deliQuant  id=deliQuant value=" . $row1['transactionItems_Quantity']. " style='width:50px;' onchange='notif1()'></td>"; 
-                            echo "<td><input type=number name=deliCost id=deliCost value=" .$row1['transactionItems_CostPrice']. " style='width:50px;' onchange='notif1()'></td>";
-                            echo "<td id=total> " .$row1['transactionItems_TotalPrice']. "</td>";   ?>
+                            echo "<td><input type=number name=deliQuant  id=deliQuant".$ID .$item  ." value=" . $row1['transactionItems_Quantity']. " style='width:50px;' onchange='notif1(".$ID. ",".$item.")'></td>"; 
+                            echo "<td><input type=number name=deliCost id=deliCost".$ID .$item  ."  value=" .$row1['transactionItems_CostPrice']. " style='width:50px;' onchange='notif1(".$ID. ",".$item.")'></td>";
+                            echo "<td id=total".$ID .$item  ." > " .$row1['transactionItems_TotalPrice']. "</td>";   ?>
                             <td>
-                              <input type=hidden name=deliItemID id=deliItemID value=<?php echo $row1['item_ID']?>>
+                              <input type=hidden name=deliItemID id=deliItemID value=<?php echo $item?>>
                               <input type=hidden name=deliTransID id=deliTransID value=<?php echo $ID?>>
                               <!--<button class="btn-primary" name="editDeli" type="submit" >Edit</button> </td><td>  EDIT BUTTON -->
                               <input type="checkbox" name="check_list[]" value="<?php echo $row1['item_ID']?>"> <!-- CHECKLIST -->
