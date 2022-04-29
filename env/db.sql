@@ -103,6 +103,7 @@ CREATE TABLE cart (
 
 CREATE TABLE return_item(
 	item_ID int(11) NOT NULL,
+	item_Name varchar(75) NOT NULL,
 	item_ReturnedQuan int NOT NULL,
 	item_Reason varchar(75) NOT NULL,
 	FOREIGN KEY(item_ID) REFERENCES inventory(item_ID) ON UPDATE CASCADE
