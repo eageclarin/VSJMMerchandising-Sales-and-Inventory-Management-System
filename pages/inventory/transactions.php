@@ -47,7 +47,7 @@ $n=0;
     <p> Completed and undelivered transactions are shown here</p>
 
     <div class = "container">
-
+      <div class='table-wrapper' style="height:600px;">
       <?php  
         $sql = "SELECT * FROM supplier_transactions INNER JOIN supplier ON (supplier_transactions.supplier_ID = supplier.supplier_ID) WHERE transaction_Status !=0 ;";   
         $result = mysqli_query($conn,$sql);
@@ -123,6 +123,7 @@ $n=0;
 
       <?php } 
       }?>
+      </div>
   </div> <!-- end container -->
 
 </div> <!-- END CONTENT -->

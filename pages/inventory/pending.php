@@ -212,7 +212,7 @@ if(isset($_POST['cancel'])){
     <h1> Pending Orders</h1>
 
     <!-- TO BE PURCHASED CARD -->
-    <div class="card" style="width: 49%; min-height:90%; float:left;">
+    <div class="card" style="width: 49%; min-height:70%; float:left;">
       <div class="card-header bg-dark text-white">
         <h3 class="card-title">To be Purchased</h3>
       </div>
@@ -321,7 +321,7 @@ if(isset($_POST['cancel'])){
     
 
   <!-------------DELIVERED CARD --------------->
-  <div class="card" style="width: 49%;min-height:90%;  float:right;">
+  <div class="card" style="width: 49%;min-height:70%;  float:right;">
     <div class="card-header bg-dark text-white">
       <h3 class="card-title">To be Delivered</h3>
     </div>
