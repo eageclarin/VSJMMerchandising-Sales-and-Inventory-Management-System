@@ -455,6 +455,8 @@
 							<th>Category</th>
 							<th>Cost Price</th>
 							<th></th>
+							<th></th>
+							<th></th>
 						</tr></thead>
 							<tbody>
 							<?php
@@ -521,7 +523,9 @@
 							<th>Item Total</th>
 							<th>Transaction Total</th>
 							<th></th>
-						</tr></thead>
+							<th></th>
+						</tr>
+					</thead>
 							<tbody>
 							<?php
 								
