@@ -9,7 +9,7 @@
 
 	<body>
 		<?php
-		if(isset($_POST['submit'])){	
+		if(isset($_POST['submit']) || isset($_POST['Submit'])){	
 			$server = "localhost:3306";
 			$user = "root";
 			$pass = "";
@@ -81,13 +81,14 @@
 			
 			mysqli_close($conn);
 		
-			if($_SESSION["prevpage"] == "suppliertable"){
-				unset($_SESSION["prevpage"]);
+			if($_POST["prevpage"] == "suppliertable"){
 				header( "Location: ./suppliertable.php?supplier_ID=".$supplier_ID);
 				exit;
-			}else{
-				unset($_SESSION["prevpage"]);
+			}else if($_POST["prevpage"] == "supplieritem"){
 				header( "Location: ./supplieritem.php?");
+				exit;
+			}else {
+				header( "Location: ../inventory/items.php?");
 				exit;
 			}
 			

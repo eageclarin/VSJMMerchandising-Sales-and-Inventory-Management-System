@@ -11,7 +11,11 @@
 				}
 
 		?>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<link rel="stylesheet" href="style.css?ts=<?=time()?>">
+	    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 		<script src="myjs.js" type="text/javascript"></script>
+
 		<!-- CSS -->
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
@@ -20,61 +24,142 @@
 		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
+
+
 		<style>
+			@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600,700");
+			@import url("https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css");
+			*, *:before, *:after {
+			  margin: 0;
+			  padding: 0;
+			  box-sizing: border-box;
+			}
+			th, td {
+				vertical-align:middle;
+			}
 
-			body {
-			    background: #ccc;
+			a {
+			  color: black;
+			  border: none;
+			  text-decoration: none;
 			}
-			td, th{
-				text-align: center;
-				padding: 5px;
-				margin: auto;
+
+			a.hover:hover
+			{
+			  color: black;
+			  border: none;
+			  text-decoration: none;
 			}
-		
-			span.thick {
-			  font-weight: bold;
+
+			#tabs-w-content{
+				padding:  10px;
 			}
-			.supplier_choice{
-				margin:  auto;
-				max-width: 90%;
+
+			#supplier-name {
+			  padding: 10px 0;
+			  
+			  text-align: left;
 			}
-			.mytabs {
-			    display: flex;
-			    flex-wrap: wrap;
-			    max-width: 100%;
-			    margin: auto;
-			    padding-top: 1px;
-			   	padding-bottom: 5px;
+
+			p {
+			  margin: 0 0 20px;
+			  line-height: 1.5;
 			}
-			.mytabs input[type="radio"] {
-			    display: none;
+
+			.table thead {
+			    position: sticky;
 			}
-			.mytabs label {
+
+			.colhead {
+				border-right: 1px solid #28a745;
+				width:  12%;
+			}
+
+			#activestat{
+				color: #6fed6f;
+			}
+
+			#inactivestat{
+				color:  #caccca;
+			}
+
+			#content1, #content2, #content3 {
+			  display: none;
+			  padding: 20px 0 0;
+			  border-top: 1px solid #ddd;
+			}
+
+			input {
+			  display: none;
+			}
+
+			label {
+			  display: inline-block;
+			  margin: 0 0 -1px;
+			  padding: 15px 25px;
+			  font-weight: 600;
+			  text-align: center;
+			  color: #bbb;
+			  border: 1px solid transparent;
+
+			}
+
+			label:before {
+			  font-family: fontawesome;
+			  font-weight: normal;
+			  margin-right: 10px;
+
+			}
+
+			label[for*='1']:before {
+			  content: '\f0c9';
+			}
+
+			label[for*='2']:before {
+			  content: '\f09d';
+			}
+
+			label[for*='3']:before {
+			  content: '\f05a';
+			}
+
+			label:hover {
+			  color: #888;
+			  cursor: pointer;
+			}
+
+			input:checked + label {
+			  color: #555;
+			  border: 1px solid #ddd;
+			  border-top: 2px solid #343a40;
+			  border-bottom: 1px solid #fff;
+			}
+
+			#tab1:checked ~ #content1,
+			#tab2:checked ~ #content2,
+			#tab3:checked ~ #content3 {
+			  display: block;
+			}
+
+			@media screen and (max-width: 650px) {
+			  label {
+			    font-size: 0;
+			  }
+
+			  label:before {
+			    margin: 0;
+			    font-size: 18px;
+
+			  }
+			}
+			@media screen and (max-width: 400px) {
+			  label {
 			    padding: 15px;
-			    background: #e2e2e2;
-			    font-weight: bold;
-			}
-
-			.mytabs .tab {
-			    width: 100%;
-			    padding: 20px;
-			    background: #fff;
-			    order: 1;
-			    display: none;
-			}
-			.mytabs .tab h2 {
-			    font-size: 3em;
-			}
-
-			.mytabs input[type='radio']:checked + label + .tab {
-			    display: block;
-			}
-
-			.mytabs input[type="radio"]:checked + label {
-			    background: #fff;
+			  }
 			}
 		</style>
-		    <script>
+
+		<script>
         $(document).ready(function(){
             $('.editbtn').on('click',function(){
                 $('#staticBackdrop').modal('show');
@@ -102,6 +187,12 @@
             });
         });
 
+        $(document).ready(function(){
+            $('.additembtn').on('click',function(){
+                $('#staticBackdropadd').modal('show');
+            });
+        });
+
     </script> 
 
 
@@ -110,18 +201,30 @@
 
 	<body>
 		
-
-
+	<main >
+    <?php include 'navbar.php'; ?>
+        
+    <div class="container-fluid bg-light p-5">
+    	<div class="text-center fs-1 fw-bold"> SUPPLIERS </div>
+    	<br>
+    	
 		<div class="supplier_choice">
 			<?php
 
 				$supplier_chosen = $_GET['supplier_ID'];
 			
-				$sql = "SELECT supplier_Name from supplier where supplier_ID =".$supplier_chosen;
+				$sql = "SELECT * from supplier where supplier_ID =".$supplier_chosen;
 				$result = $conn-> query($sql) or die($conn->error);
 				if ($result-> num_rows >0) {
 						while ($row = $result-> fetch_assoc()) {
-							echo "<h1>".$row["supplier_Name"]."</h1>";
+							echo "<div id=\"supplier-name\" class=\"fs-2 fw-bold rounded-top bg-dark text-info px-4\">".$row["supplier_Name"];
+							if($row["supplier_Status"] == 0){
+								echo "<div id=\"inactivestat\" class=\"fs-3 fw-light\" style=\" float: right;\"><i class=\"fa fa-circle-o\"></i> Inactive  </div>";
+							}else{
+								echo "<div id=\"activestat\" class=\"fs-3 fw-light\" style=\" float: right;\"><i class=\"fa fa-circle-o\"></i> Active  </div>";
+							}
+							
+							echo "</div><div id=\"container\" class=\"bg-white rounded-bottom border shadow-sm overflow-auto p-4\">";
 						}
 				}
 				
@@ -193,138 +296,300 @@
 			</div> <!-- MODAL-FADE-->
 			<!-- EDIT MODAL ############################################################################ -->
 
-			<!--#################  LIST OF ITEMS #################-->
-			<div class="mytabs">
 
-			    <input type="radio" id="tabitems" name="mytabs" checked="checked">
-			    <label for="tabitems">Items</label>
-			    <div class="tab">
-					<table>
-						<th>Item ID</th>
-						<th>Name</th>
-						<th>Unit</th>
-						<th>Brand</th>
-						<th>Cost Price</th>
-						<?php
-							
-							$sql = "SELECT * from item inner join supplier_item on item.item_ID=supplier_item.item_ID where supplier_ID = ".$supplier_chosen."";
-							
-							$result = $conn-> query($sql) or die($conn->error);
+			<!-- ADD ITEM MODAL ############################################################################ -->
 
-							if ($result-> num_rows >0) {
-								while ($row = $result-> fetch_assoc()) {
-									echo "<tr>
-											<td>". $row["item_ID"]."</td>
-											<td>". $row["item_Name"]."</td>
-											<td>". $row["item_unit"]."</td>
-											<td>". $row["item_Brand"]."</td>
-											<td>". $row["item_Category"]."</td>
-											<td>". $row["supplierItem_CostPrice"]."</td>
-											<td><button onclick=\"location.href='editsupplieritem.php?item_ID=".$row['item_ID']."&supplier_ID=".$supplier_chosen."'\">Edit Item</button></td>
-											<td><a onclick='return checkdelete()' href='deletesupplieritem.php?item_ID=".$row['item_ID']."&supplier_ID=".$supplier_chosen."'\"><button>Delete Item For This Supplier</a></button></td>
-											<td><a onclick='return checkdelete()' href='deleteitemtransactions.php?item_ID=".$row['item_ID']."&supplier_ID=".$supplier_chosen."'\"><button>Delete Item & Transactions</a></button></td>"
-											?>
-											<td>
-												<form action="suppliertable.php" class="mb-1" method="post">
-												<input type=hidden name=orderItemID value=<?php echo $row['item_ID']?>>
-												<input type=hidden name=orderItemSupp value=<?php echo $supplier_chosen?>>
-												<!--<a href="../inventory/addinventory.php"> <button class="btn-primary" name="order" type="submit">Order</button></a>-->
-												<button type="button" class="btn btn-primary editbtn p-2" style="float:left;">
-                        Buy</i>
-												</form>
-											</td>
-									<?php
-									echo"</tr>";
+			<div class="modal fade" id="staticBackdropadd" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+				<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+					<h5 class="modal-title" id="staticBackdropLabel">Add Item to Supplier</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div> <!-- MODAL-HEADER -->
+					<div class="modal-body mb-2">
+						<div id ="transactionform">
 
-								}
-							echo "<tr><td colspan=\"11\"><button onclick=\"location.href='addsupplieritem.php?supplier_ID=".$supplier_chosen."'\">Add Item to Supplier</button></td></tr>";
-							}
-							else {
+							<form action = "addsupplieritem.php" method="post" id="myForm">
+								<div class="mb-1 mt-1">
+								<p>
+								
+
+									Supplier:
+
+										<?php
+											
+
+											if(isset($_GET['supplier_ID'])){
+												$supplier_ID=$_GET['supplier_ID'];
+											}
+
+											$query = "SELECT * from supplier";
+												$result = mysqli_query($conn,$query);
+												if(mysqli_num_rows($result) > 0){
+													echo "<select id='supplier_ID' name='supplier_ID'>";
+														while($row = mysqli_fetch_assoc($result)){
+															echo "<option value='".$row['supplier_ID']."'";
+
+															if(isset($_GET['supplier_ID'])){
+																if($row['supplier_ID']==$supplier_ID){
+																	echo " selected";
+																}
+															}
+
+															echo">".$row['supplier_ID']." - ".$row['supplier_Name']."</option>";										
+
+														}
+														echo "<option value='other'>Other</option>";
+														echo "</select><br>";
+												}
+										?>
+									</p>
+									<div id="addsupplier">
+								        <p>
+								            Supplier Name:
+								            <input type="text" name="supplier_Name" class="form-control" id="supplier_Name" placeholder="Enter">
+								        </p> 
+								        <p>
+								            Supplier Contact Person:
+								            <input type="text" name="supplier_ContactPerson" class="form-control"id="supplier_ContactPerson" placeholder="Enter">
+								        </p>
+								        <p>
+								            Supplier Contact Number:
+								            <input type="text" name="supplier_ContactNum" class="form-control"id="supplier_ContactNum" placeholder="Enter">
+								        </p>  
+								        <p>
+								            Supplier Address:
+								            <input type="text" name="supplier_Address" class="form-control" id="supplier_Address" placeholder="Enter">
+								        </p>
+								    </div>
+
+								    
+									<p>
+										Item:
+										<?php
+											$query = "SELECT * from item";
+												$result = mysqli_query($conn,$query);
+												if(mysqli_num_rows($result) > 0){
+													echo "<select id='item_ID' name='item_ID'>";
+														while($row = mysqli_fetch_assoc($result)){
+															echo "<option value='".$row['item_ID']."'>".$row['item_ID']." - ".$row['item_Name']."</option>";
+														}
+														echo "<option value='other'>Other</option>";
+														echo "</select><br>";
+													}
+											
+										?>
+									</p>
+
+									<div id="additem">
+										<p>
+									        Item Name:
+									        <input type="text" name="item_Name" id="item_Name" class="form-control" placeholder="Enter">
+									    </p> 
+									    <p>
+									        Item Unit:
+									        <input type="text" name="item_unit" id="item_unit" class="form-control" placeholder="Enter">
+									    </p>
+									    <p>
+									        Item Brand:
+									        <input type="text" name="item_Brand" id="item_Brand" class="form-control" placeholder="Enter">
+									    </p>
+									    
+									    Category:
+						    			<div>
+						                    <select name="item_Category" id="item_Category" style="height:30px;" >
+						                      <option value="Electrical" >Electrical</option>
+						                      <option value="Plumbing">Plumbing</option>
+						                      <option value="Architectural"> Architectural</option>
+						                      <option value="Paints">Paints</option>
+						                      <option value="bolts and nuts">Bolts and Nuts</option>
+						                      <option value="Tools">Tools</option>
+						                    </select>        
+						                </div><br>
+
+									</div>
+
+									<p>Item Cost Price:<input type="text" name="supplierItem_CostPrice" class="form-control" placeholder="Enter"></p>
+
 									
-									echo "<tr><td colspan=\"6\">There are 0 results.</td></tr>";
-									echo "<tr><td colspan=\"11\"><button onclick=\"location.href='addsupplieritem.php?supplier_ID=".$supplier_chosen."'\">Add Item to Supplier</button></td></tr>";
-							}								
-
-						?>
-					</table>
-				</div>
-
-				<input type="radio" id="tabtransactions" name="mytabs">
-			    <label for="tabtransactions">Transactions</label>
-			    <div class="tab">
-			      <table id="transaction_table">
-						<th>Transaction ID</th>
-						<th>Supplier ID</th>
-						<th>Item ID</th>
-						<th>Transaction Date</th>
-						<th>Transaction Status</th>
-						<th>Item Quantity</th>
-						<th>Item Cost Price</th>
-						<th>Item Total Price</th>
-						<th>Transaction Total Price</th>
-						<?php
-							
-
-							$sql = "SELECT * from supplier_transactions INNER JOIN transaction_items on transaction_items.transaction_ID = supplier_transactions.transaction_ID where supplier_ID = ".$supplier_chosen;
-							$result = $conn-> query($sql) or die($conn->error);
-
-							if ($result-> num_rows >0) {
-								while ($row = $result-> fetch_assoc()) {
-									echo "<tr>
-											<td>". $row["transaction_ID"]."</td>
-											<td>". $row["supplier_ID"]."</td>
-											<td>". $row["item_ID"]."</td>
-											<td>". $row["transaction_Date"]."</td>
-											<td>". $row["transaction_Status"]."</td>
-											<td>". $row["transactionItems_Quantity"]."</td>
-											<td>". $row["transactionItems_CostPrice"]."</td>
-											<td>". $row["transactionItems_TotalPrice"]."</td>
-											<td>". $row["transaction_TotalPrice"]."</td>
-											<td><button onclick=\"location.href='edittransaction.php?transaction_ID=".$row['transaction_ID']."'\">Edit</button></td>
-											<td><button> <a onclick='return checkdelete()' href='deletetransaction.php?transaction_ID=".$row['transaction_ID']."'> Delete</button></a></td>
+								</div>
+								<div class="modal-footer pb-0">
+									<input type="hidden" id="prevpage" name="prevpage" value="suppliertable">
+									<input  type="submit" value="Submit" name="Submit" class="form-control btn btn-primary" style="width:150px" >  <!-- INSERT ALERT -->
+									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+								</div> <!-- MODAL FOOTER -->
+							</form>
+						</div>
 					
-									</tr>";
+					
 
+					</div>
+					</form>
+				</div>
+				</div>
+			</div>
+			<!-- ADD ITEM MODAL ############################################################################ -->
+
+
+			<!--#################  LIST OF ITEMS #################-->
+
+				<div id="tabs-w-content">
+					  <input id="tab1" type="radio" name="tabs" checked>
+					  <label for="tab1">Items</label>
+					    
+					  <input id="tab2" type="radio" name="tabs">
+					  <label for="tab2">Transactions</label>
+					    
+					  <input id="tab3" type="radio" name="tabs">
+					  <label for="tab3">Information</label>
+					    
+					    
+					  <section id="content1">
+					   	<div class='table-wrapper' style="overflow-y:scroll; height: 350px">
+					   	<table class='table table-hover'> 
+           				<thead><tr>
+							<th>Item ID</th>
+							<th>Name</th>
+							<th>Unit</th>
+							<th>Brand</th>
+							<th>Category</th>
+							<th>Cost Price</th>
+							<th></th>
+						</tr></thead>
+							<tbody>
+							<?php
+								
+								$sql = "SELECT * from item inner join supplier_item on item.item_ID=supplier_item.item_ID where supplier_ID = ".$supplier_chosen."";
+								
+								$result = $conn-> query($sql) or die($conn->error);
+
+								if ($result-> num_rows >0) {
+									while ($row = $result-> fetch_assoc()) {
+										echo "<tr>
+												<td>". $row["item_ID"]."</td>
+												<td>". $row["item_Name"]."</td>
+												<td>". $row["item_unit"]."</td>
+												<td>". $row["item_Brand"]."</td>
+												<td>". $row["item_Category"]."</td>
+												<td>". $row["supplierItem_CostPrice"]."</td>
+												<td><button class=\"btn editbtn p-0\" style=\"float:left;\" onclick=\"location.href='editsupplieritem.php?item_ID=".$row['item_ID']."&supplier_ID=".$supplier_chosen."'\"><i class='fas fa-edit'></i></button></td>
+												<td><a onclick='return checkdelete()' href='deletesupplieritem.php?item_ID=".$row['item_ID']."&supplier_ID=".$supplier_chosen."'\"><button style=\"border: none;\"><i class='fas fa-trash'></i></a></button></td>";
+										//echo "<td><a onclick='return checkdelete()' href='deleteitemtransactions.php?item_ID=".$row['item_ID']."&supplier_ID=".$supplier_chosen."'\"><button>Delete Item & Transactions</a></button></td>";
+												
+												?>
+												<td>
+													<form action="suppliertable.php" class="mb-1" method="post">
+													<input type=hidden name=orderItemID value=<?php echo $row['item_ID']?>>
+													<input type=hidden name=orderItemSupp value=<?php echo $supplier_chosen?>>
+													<!--<a href="../inventory/addinventory.php"> <button class="btn-primary" name="order" type="submit">Order</button></a>-->
+													<button type="button" class="btn btn-success editbtn p-2" style="float:left;"><i class="fa fa-shopping-cart"></i> Buy</i></button>
+													</form>
+												</td>
+										<?php
+										echo"</tr>";
+
+									}
+								
 								}
-							echo "<tr><td colspan=\"11\"><button onclick=\"location.href='addtransaction.php?supplier_chosen=".$supplier_chosen."'\">Add Transaction</button></td></tr>";
-							}
-							else {
+								else {
+										
+										echo "<tr><td colspan=\"7\">There are 0 results.</td></tr>";
 									
-									echo "<tr><td colspan=\"11\">There are 0 results.</td></tr>";
-									echo "<tr><td colspan=\"11\"><button onclick=\"location.href='addtransaction.php?supplier_chosen=".$supplier_chosen."'\">Add Transaction</button></td></tr>";
-							}	
+								}								
 
-
+							?>
+						</tbody></table></div>
+						<?php
+							//echo "<tr><td colspan=\"11\"><button class=\"btn btn-success additembtn mt-3\" onclick=\"location.href='addsupplieritem.php?supplier_ID=".$supplier_chosen."'\">Add Item to Supplier</button></td></tr>";
+							echo "<tr><td colspan=\"11\"><button class=\"btn btn-success additembtn mt-3\">Add Item to Supplier</button></td></tr>";
 						?>
-					</table>
-			    </div>
 
-			    <input type="radio" id="tabinformation" name="mytabs">
-			    <label for="tabinformation">Supplier Information</label>
-			    <div class="tab">
-			      	<?php					
+					  </section>
+					    
+					  <section id="content2">
+					  	<div class='table-wrapper' style="overflow-y:scroll; height: 350px">
+					   	<table id="transaction_table" class='table table-hover'> 
+           				<thead><tr>
+							<th>Transaction ID</th>
+							<th>Supplier ID</th>
+							<th>Item ID</th>
+							<th>Item Name</th>
+							<th>Transaction Date</th>
+							<th>Transaction Status</th>
+							<th>Item Quantity</th>
+							<th>Item Cost Price</th>
+							<th>Item Total</th>
+							<th>Transaction Total</th>
+							<th></th>
+						</tr></thead>
+							<tbody>
+							<?php
+								
+
+								$sql = "SELECT * from transaction_items INNER JOIN supplier_transactions on supplier_transactions.transaction_ID = transaction_items.transaction_ID INNER JOIN item on transaction_items.item_ID = item.item_ID where supplier_ID = ".$supplier_chosen;
+								$result = $conn-> query($sql) or die($conn->error);
+
+								if ($result-> num_rows >0) {
+									while ($row = $result-> fetch_assoc()) {
+										echo "<tr>
+												<td>". $row["transaction_ID"]."</td>
+												<td>". $row["supplier_ID"]."</td>
+												<td>". $row["item_ID"]."</td>
+												<td>". $row["item_Name"]."</td>
+												<td>". $row["transaction_Date"]."</td>
+												<td>". $row["transaction_Status"]."</td>
+												<td>". $row["transactionItems_Quantity"]."</td>
+												<td>". $row["transactionItems_CostPrice"]."</td>
+												<td>". $row["transactionItems_TotalPrice"]."</td>
+												<td>". $row["transaction_TotalPrice"]."</td>
+												<td><button class=\"btn editbtn p-0\" style=\"float:left;\" onclick=\"location.href='edittransaction.php?transaction_ID=".$row['transaction_ID']."'\"><i class='fas fa-edit'></i></button></td>
+												<td><button style=\"border: none;\"> <a onclick='return checkdelete()' href='deletetransaction.php?transaction_ID=".$row['transaction_ID']."'><i class='fas fa-trash'></i></button></a></td>
+						
+										</tr>";
+
+									}
+								
+								}
+								else {								
+										echo "<tr><td colspan=\"11\">There are 0 results.</td></tr>";
+									
+								}	
+							?>
+						</tbody></table></div>
+						<?php
+							echo "<button class=\"btn btn-success mt-3\" onclick=\"location.href='addtransaction.php?supplier_chosen=".$supplier_chosen."'\">Add Transaction</button>";
+						?>
+					  </section>
+					    
+					  <section id="content3">
+					     <?php					
 
 							$sql = "SELECT * from supplier where supplier_ID=".$supplier_chosen;
 							$result = $conn-> query($sql) or die($conn->error);
 							if ($result-> num_rows >0) {
 								while ($row = $result-> fetch_assoc()) {
-									echo "<br><span class='thick'>ID:</span> ".$row["supplier_ID"]." <br><br>";
-									echo "<span class='thick'>Contact Person:</span> ".$row["supplier_ContactPerson"]." <br><br>";
-									echo "<span class='thick'>Contact Number:</span> ".$row["supplier_ContactNum"]." <br><br>";
-									echo "<span class='thick'>Supplier Address:</span> ".$row["supplier_Address"]." <br><br>";
+									echo "<table class=\"table table-borderless\"><tr><th class='colhead'><span class='thick'><i class=\"fa fa-folder\"></i>  ID  </span></th><td>".$row["supplier_ID"]."</td></tr>";
+									echo "<tr><th class='colhead'><span class='thick'><i class=\"fa fa-circle-o\"></i>  Status  </span></th><td>";
+									if($row["supplier_Status"] == 0){
+										echo "Inactive";
+									} else{
+										echo "Active";
+									}
+									echo "</td></tr>";
+									echo "<tr><th class='colhead'><span class='thick'><i class=\"fa fa-user\"></i>  Contact Person  </span></th><td>".$row["supplier_ContactPerson"]."</td></tr>";
+									echo "<tr><th class='colhead'><span class='thick'><i class=\"fa fa-phone\"></i>  Contact Number  </span></th><td>".$row["supplier_ContactNum"]."</td></tr>";
+									echo "<tr><th class='colhead'><span class='thick'><i class=\"fa fa-map-marker\"></i>  Supplier Address  </span></th><td>".$row["supplier_Address"]."</td></tr></table>";
 								}
 							}
-							echo "<button onclick=\"location.href='editsupplier.php?supplier_ID=".$supplier_chosen."'\">Edit</button>";
-					?>
-
-
-			    </div>
-
-
+							echo "<button class=\"btn btn-success mt-3\" onclick=\"location.href='editsupplier.php?supplier_ID=".$supplier_chosen."'\"><i class='fas fa-edit'></i> Edit</button>";
+						?>
+					  </section>
+				</div>
 
 			</div>
-			<button type="button" onclick="location.href='./suppliers.php'">Back</button>
-		</div>
+			<button class="btn btn-dark mt-3" type="button" onclick="location.href='suppliers.php'"><i class="fa fa-chevron-left"></i> Go Back</button>
+	</div>
+	</main>
 
 
 
@@ -336,6 +601,7 @@
 
 		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 		<script>
+
 			$('#editRetail').change(function() {
 				var costPrice = $('#editCost').val();
 				var retail = $('#editRetail').val();
@@ -349,6 +615,34 @@
 				retail = Math.ceil(retail*4)/4;
 				$('#editRetail').val( retail);
 			});
+
+			$(document).ready(function () {
+	            toggleFields(); 
+	            $("#supplier_ID").change(function () {
+	                toggleFields();
+	            });
+
+	            $("#item_ID").change(function () {
+	                toggleFields();
+	            });
+				
+	        });
+	        
+	        function toggleFields() {
+	            if ($("#supplier_ID").val() === "other"){
+	            	$("#addsupplier").show();
+	            }
+	        	else{
+	            	$("#addsupplier").hide();
+	        	}
+
+	        	if ($("#item_ID").val() === "other"){
+	            	$("#additem").show();
+	            }
+	        	else{
+	            	$("#additem").hide();
+	        	}
+	        }
 
 			
 		</script>
