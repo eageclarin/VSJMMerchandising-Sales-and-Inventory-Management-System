@@ -125,7 +125,7 @@ if(isset($_POST['submit'])){
 			</div>
 			<div class="form-group row mt-2">
 				<label for="item_ReturnedQuan" class="col-5 col-form-label fw-bold">Returned Qty:</label>
-				<input type = "text" name = "item_ReturnedQuan" id="item_ReturnedQuan" class="col-sm-10 form-control w-50"  required>
+				<input type = "number" name = "item_ReturnedQuan" id="item_ReturnedQuan" class="col-sm-10 form-control w-50" value=1 required>
 			</div>
 			<div class="form-group row mt-2">
 					<label for="item_TReason" class="col-5 col-form-label fw-bold">Reason:</label>
@@ -135,7 +135,7 @@ if(isset($_POST['submit'])){
 				<option value="Excess quantity" >Excess quantity</option>
 				<option value="Item has a defect">Item has a defect</option>
 				<option value="Wrong item/s bought"> Wrong item/s bought </option>
-				<option value="Wrong size bought"> Wrong size bougth </option>
+				<option value="Wrong size bought"> Wrong size bought </option>
 				<option value=""> Others </option>
 				</select>
 			</div>
