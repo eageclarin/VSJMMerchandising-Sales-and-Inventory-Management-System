@@ -82,7 +82,7 @@
     $result = mysqli_query($conn,$sql) or die($conn->error);
     $resultCheck = mysqli_num_rows($result);
         
-    echo "<html><div class='table-wrapper'><table class='table table-hover'> 
+    echo "<html><div class='table-wrapper' style=\"overflow-y:scroll; height: 450px\"><table class='table table-hover'> 
            <thead> 
             <tr>
                 <th> Item ID </th>
