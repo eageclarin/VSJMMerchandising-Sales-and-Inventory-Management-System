@@ -137,6 +137,140 @@ if(isset($_POST['edit'])>0){
         <!-- EDIT MODAL ############################################################################ -->
 
 
+        <!-- ADD ITEM MODAL ############################################################################ -->
+
+            <div class="modal fade" id="staticBackdropadd" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Add Item to Supplier</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div> <!-- MODAL-HEADER -->
+                    <div class="modal-body mb-2">
+                        <div id ="transactionform">
+
+                            <form action = "../supplier/addsupplieritem.php" method="post" id="myForm">
+                                <div class="mb-1 mt-1">
+                                <p>
+                                
+
+                                    Supplier:
+
+                                        <?php
+                                            
+
+                                            if(isset($_GET['supplier_ID'])){
+                                                $supplier_ID=$_GET['supplier_ID'];
+                                            }
+
+                                            $query = "SELECT * from supplier";
+                                                $result = mysqli_query($conn,$query);
+                                                if(mysqli_num_rows($result) > 0){
+                                                    echo "<select id='supplier_ID' name='supplier_ID'>";
+                                                        while($row = mysqli_fetch_assoc($result)){
+                                                            echo "<option value='".$row['supplier_ID']."'";
+
+                                                            if(isset($_GET['supplier_ID'])){
+                                                                if($row['supplier_ID']==$supplier_ID){
+                                                                    echo " selected";
+                                                                }
+                                                            }
+
+                                                            echo">".$row['supplier_ID']." - ".$row['supplier_Name']."</option>";                                        
+
+                                                        }
+                                                        echo "<option value='other'>Other</option>";
+                                                        echo "</select><br>";
+                                                }
+                                        ?>
+                                    </p>
+                                    <div id="addsupplier">
+                                        <p>
+                                            Supplier Name:
+                                            <input type="text" name="supplier_Name" class="form-control" id="supplier_Name" placeholder="Enter">
+                                        </p> 
+                                        <p>
+                                            Supplier Contact Person:
+                                            <input type="text" name="supplier_ContactPerson" class="form-control"id="supplier_ContactPerson" placeholder="Enter">
+                                        </p>
+                                        <p>
+                                            Supplier Contact Number:
+                                            <input type="text" name="supplier_ContactNum" class="form-control"id="supplier_ContactNum" placeholder="Enter">
+                                        </p>  
+                                        <p>
+                                            Supplier Address:
+                                            <input type="text" name="supplier_Address" class="form-control" id="supplier_Address" placeholder="Enter">
+                                        </p>
+                                    </div>
+
+                                    
+                                    <p>
+                                        Item:
+                                        <?php
+                                            $query = "SELECT * from item";
+                                                $result = mysqli_query($conn,$query);
+                                                if(mysqli_num_rows($result) > 0){
+                                                    echo "<select id='item_ID' name='item_ID'>";
+                                                        while($row = mysqli_fetch_assoc($result)){
+                                                            echo "<option value='".$row['item_ID']."'>".$row['item_ID']." - ".$row['item_Name']."</option>";
+                                                        }
+                                                        echo "<option value='other'>Other</option>";
+                                                        echo "</select><br>";
+                                                    }
+                                            
+                                        ?>
+                                    </p>
+
+                                    <div id="additem">
+                                        <p>
+                                            Item Name:
+                                            <input type="text" name="item_Name" id="item_Name" class="form-control" placeholder="Enter">
+                                        </p> 
+                                        <p>
+                                            Item Unit:
+                                            <input type="text" name="item_unit" id="item_unit" class="form-control" placeholder="Enter">
+                                        </p>
+                                        <p>
+                                            Item Brand:
+                                            <input type="text" name="item_Brand" id="item_Brand" class="form-control" placeholder="Enter">
+                                        </p>
+                                        
+                                        Category:
+                                        <div>
+                                            <select name="item_Category" id="item_Category" style="height:30px;" >
+                                              <option value="Electrical" >Electrical</option>
+                                              <option value="Plumbing">Plumbing</option>
+                                              <option value="Architectural"> Architectural</option>
+                                              <option value="Paints">Paints</option>
+                                              <option value="bolts and nuts">Bolts and Nuts</option>
+                                              <option value="Tools">Tools</option>
+                                            </select>        
+                                        </div><br>
+
+                                    </div>
+
+                                    <p>Item Cost Price:<input type="text" name="supplierItem_CostPrice" class="form-control" placeholder="Enter"></p>
+
+                                    
+                                </div>
+                                <div class="modal-footer pb-0">
+                                    <input type="hidden" id="prevpage" name="prevpage" value="items">
+                                    <input  type="submit" value="Submit" name="Submit" class="form-control btn btn-primary" style="width:150px" >  <!-- INSERT ALERT -->
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                </div> <!-- MODAL FOOTER -->
+                            </form>
+                        </div>
+                    
+                    
+
+                    </div>
+                    </form>
+                </div>
+                </div>
+            </div>
+            <!-- ADD ITEM MODAL ############################################################################ -->
+
+
 
     <div class="fs-1 fw-bold text-center"> LIST OF ITEMS </div>
 <?php
@@ -184,7 +318,7 @@ mysqli_close($conn);
 echo "</tbody></table></div>";
 
 ?>
-<button class='btn btn-primary p-2 mt-3' type="button" onclick="location.href='./additem.php'">Add Item </button> 
+<button class='btn btn-primary additembtn p-2 mt-3' type="button">Add Item </button> 
 </div>
 </main>
 
@@ -199,6 +333,43 @@ $('.modal-auto-clear').on('shown.bs.modal', function () {
         $(this).modal('hide');
     });
 })
+
+
+//ADD ITEM/SUPPLIER MODAL
+
+          $(document).ready(function(){
+            $('.additembtn').on('click',function(){
+              $('#staticBackdropadd').modal('show');
+            });
+          });
+
+          $(document).ready(function () {
+              toggleFields(); 
+              $("#supplier_ID").change(function () {
+                  toggleFields();
+              });
+
+              $("#item_ID").change(function () {
+                  toggleFields();
+              });
+        
+          });
+          
+          function toggleFields() {
+              if ($("#supplier_ID").val() === "other"){
+                $("#addsupplier").show();
+              }
+            else{
+                $("#addsupplier").hide();
+            }
+
+            if ($("#item_ID").val() === "other"){
+                $("#additem").show();
+              }
+            else{
+                $("#additem").hide();
+            }
+          }
 </script>
 
 </body>
