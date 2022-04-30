@@ -20,63 +20,63 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-	<script type="text/javascript">
-		function changeLoc(loc, id) {
-			if (loc == 'supplier') {
-				location.href=loc+"table.php?supplier_ID="+id;
-			} else {
-				location.href=loc+"supplier.php?supplier_ID="+id;
-			}
-		}
-		
-		function fill(Value) {
-		    $('#search').val(Value);
-		    $('#display').hide();
-		}
-
-		function search() {
-			var input = $('#search').val();
-
-			$.ajax({
-		        type: "POST",
-		        url: "search_sort.php",
-		        data: {
-		            search: input
-		        },
-		        success: function(data) {
-		            $("#display").html(data);
-		        }
-		    });
-		}
-
-		function sort() {
-			var option = $('#sort').find(":selected").val();
-			sessionStorage.setItem("selectedOption", option);
-		    var optionValue = $(this).selectedIndex;
-		    $.ajax({
-		        type: "POST",
-		        url: "search_sort.php",
-		        data: {
-		            selected: option
-		        },
-		        success: function(data) { 
-		            $("#display").html(data);
-		        }
-		    });
-		}
-
-		function checkdelete(){
-		return confirm('Are you sure you want to delete this record?');
-		}
-
-		function togglePopup(){
-			document.getElementById("popup-1").classList.toggle("active");
-		}
-	</script>
+	
 </head>
 <body>
 	<main >
     <?php include 'navbar.php'; ?>
+
+
+	        <!-- ADD ITEM MODAL ############################################################################ -->
+
+            <div class="modal fade" id="staticBackdropadd" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Add Supplier</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div> <!-- MODAL-HEADER -->
+                    <div class="modal-body mb-2">
+                        <div id ="transactionform">
+
+                            <form action = "../supplier/addsupplier.php" method="post" id="myForm">
+								
+                                <div class="mb-1 mt-1">
+
+										<p>
+                                            Supplier Name:
+                                            <input type="text" name="supplier_Name" class="form-control" id="supplier_Name" placeholder="Enter">
+                                        </p> 
+                                        <p>
+                                            Supplier Contact Person:
+                                            <input type="text" name="supplier_ContactPerson" class="form-control"id="supplier_ContactPerson" placeholder="Enter">
+                                        </p>
+                                        <p>
+                                            Supplier Contact Number:
+                                            <input type="text" name="supplier_ContactNum" class="form-control"id="supplier_ContactNum" placeholder="Enter">
+                                        </p>  
+                                        <p>
+                                            Supplier Address:
+                                            <input type="text" name="supplier_Address" class="form-control" id="supplier_Address" placeholder="Enter">
+                                        </p>
+                                    
+                                </div>
+                                <div class="modal-footer pb-0">
+                                    <input type="hidden" id="prevpage" name="prevpage" value="items">
+                                    <input  type="submit" value="Submit" name="Submit" class="form-control btn btn-primary" style="width:150px" >  <!-- INSERT ALERT -->
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                </div> <!-- MODAL FOOTER -->
+                            </form>
+                        </div>
+
+
+
+                    </div>
+                    </form>
+                </div>
+                </div>
+            </div>
+            <!-- ADD ITEM MODAL ############################################################################ -->
         
     <div class="container-fluid bg-light p-5">
 	<!------ TITLE ------>
@@ -161,11 +161,89 @@
 		else echo "No results";
 	?>
 	</div>
-	<button class="btn btn-success mt-3" onclick="location.href='./addsupplier.php'">Add new supplier</button>
+	<button class='btn btn-primary additembtn p-2 mt-3' type="button">Add New Supplier </button> 
 	<?php mysqli_close($conn); ?>
 
 	</div>
 </div>
+
+
+
+<script type="text/javascript">
+		function changeLoc(loc, id) {
+			if (loc == 'supplier') {
+				location.href=loc+"table.php?supplier_ID="+id;
+			} else {
+				location.href=loc+"supplier.php?supplier_ID="+id;
+			}
+		}
+		
+		function fill(Value) {
+		    $('#search').val(Value);
+		    $('#display').hide();
+		}
+
+		function search() {
+			var input = $('#search').val();
+
+			$.ajax({
+		        type: "POST",
+		        url: "search_sort.php",
+		        data: {
+		            search: input
+		        },
+		        success: function(data) {
+		            $("#display").html(data);
+		        }
+		    });
+		}
+
+		
+		function sort() {
+			var option = $('#sort').find(":selected").val();
+			sessionStorage.setItem("selectedOption", option);
+		    var optionValue = $(this).selectedIndex;
+		    $.ajax({
+		        type: "POST",
+		        url: "search_sort.php",
+		        data: {
+		            selected: option
+		        },
+		        success: function(data) { 
+		            $("#display").html(data);
+		        }
+		    });
+		}
+
+		function checkdelete(){
+		return confirm('Are you sure you want to delete this record?');
+		}
+
+		function togglePopup(){
+			document.getElementById("popup-1").classList.toggle("active");
+		}
+
+
+		//ADD SUPPLIER MODAL
+
+          $(document).ready(function(){
+            $('.additembtn').on('click',function(){
+              $('#staticBackdropadd').modal('show');
+            });
+          });
+
+          $(document).ready(function () {
+              toggleFields(); 
+              $("#supplier_ID").change(function () {
+                  toggleFields();
+              });
+
+
+          });
+
+          
+</script>
+
 </body>
 </html>
 
