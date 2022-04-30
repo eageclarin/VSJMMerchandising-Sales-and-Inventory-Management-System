@@ -63,36 +63,49 @@ function edit(){
 }
 
 function search(){
+    var option = $('#sort').find(":selected").val();
     var input = $('#search').val();
+    /*
     $.ajax({
         type: "POST",
         url: "search_sort.php",
         data: {
-            search: input
+            search: input,
+            sort: option
         },
         success: function(data) {
             $("#display").html(data);
         }
-    });
+    });*/
+
+    const $select = document.querySelector('#categ');
+    $select.value = 'All';
+    sort();
 }
 
 function sort(){
     var option = $('#sort').find(":selected").val();
+    var categOption = $('#categ').find(":selected").val();
+    var input = $('#search').val();
+
     sessionStorage.setItem("selectedOption", option);
     var optionValue = $(this).selectedIndex;
-
     $.ajax({
         type: "POST",
         url: "search_sort.php",
         data: {
-            selected: option
+            selected: option,
+            categSort: categOption,
+            search: input
         },
         success: function(data) { 
             $("#display").html(data);
         }
     });
+
 }
 
+/* UNUSED ===================
 function categ(){
     var categOption = $('#categ').find(":selected").val();
     $.ajax({
@@ -105,7 +118,7 @@ function categ(){
             $("#display").html(data);
         }
     });
-}
+}======================*/
 
     //categ on salability
     //$("#categ1").change(function(){

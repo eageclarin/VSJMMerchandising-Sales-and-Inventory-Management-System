@@ -161,7 +161,7 @@ if (isset($_POST['edit'])) { //UPDATING INVENTORY
       <!-- EDIT MODAL ############################################################################ -->
 
 
-      <div id="inventoryHead" class="row">
+      <div id="inventoryHead" class="row mt-3">
         <div class="col-7">
           <span class="fs-1 fw-bold"> INVENTORY </span>
         </div>
@@ -179,7 +179,7 @@ if (isset($_POST['edit'])) { //UPDATING INVENTORY
           <div id="categoryContainer" class="col-7"> 
             <div class="form-group row">
               <label for="categ" class="col-auto col-form-label fw-bold">Category:</label>
-              <select name="categ" id="categ" class="col-sm-10 form-select w-25" onchange="categ()">
+              <select name="categ" id="categ" class="col-sm-10 form-select w-25" onchange="sort()">
                 <option value="All" selected >All</option>
                 <option value="Architectural"> Architectural</option>
                 <option value="Electrical"> Electrical</option>

@@ -1,6 +1,7 @@
 <?php
     error_reporting(0);
     include_once '../../env/conn.php';
+   
     
     // DELETE ITEM FROM INVENTORY
     if (isset($_POST['delete1'])) {
@@ -23,34 +24,56 @@
         unset($_POST['edit']);
     }
     // SQL QUERIES ==========================================================================================
+    /*=========== UNUSED
     // FROM SEARCH TAB
     if (isset($_POST['search'])) {
         $Name = $_POST['search'];
+        $sort = $_POST['sort'];
         if ($Name!="") {    
             $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) WHERE  inventoryItem_Status = 1 AND (item_Name LIKE '%$Name%' OR item_Brand LIKE '%$Name%' OR item_category LIKE '%$Name%'); ";
         } else {
             $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) WHERE  inventoryItem_Status = 1;"; 
-        }
+        }============
+
+
     // FROM SORT
-    } else if (isset($_POST['selected'])) {
+    } else if (isset($_POST['selected'])) {*/
+        
+    if (isset($_POST['selected'])) {
         $k = $_POST['selected'];
+        $c = $_POST['categSort'];
+        $Name = $_POST['search'];
         $_SESSION['option'] = $_POST['selected'];
         
-        if ($k == "PriceAsc") {
-            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) WHERE  inventoryItem_Status = 1 ORDER BY item_RetailPrice ASC;"; 
-        } else if ($k == "PriceDesc") {
-            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) WHERE  inventoryItem_Status = 1 ORDER BY item_RetailPrice DESC;"; 
-        } else if ($k == "item_Stock") {
-            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) WHERE  inventoryItem_Status = 1 ORDER BY $k ASC;"; 
-        } else if ($k == "Category") {
-            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) WHERE  inventoryItem_Status = 1 ORDER BY  item_category,item_Name ASC;"; 
-        } else if ($k == "ID"){
-            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) WHERE  inventoryItem_Status = 1 ORDER BY inventory.item_ID;"; 
-        } else if ($k == "Salability"){
-            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) INNER JOIN (SELECT SUM(orderItems_Quantity) as sales_sum, item_ID as order_itemID FROM order_items GROUP BY item_ID) as orders ON (inventory.item_ID = orders.order_itemID) WHERE  inventoryItem_Status = 1 ORDER BY sales_sum DESC;"; 
+        if ($c!="All") {
+            $addFilter = "AND item_Category = '$c' ";
         } else {
-            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) WHERE  inventoryItem_Status = 1;"; 
+            $addFilter ="";
         }
+
+        
+        if ($Name!="") {    
+            $addSearch = " AND (item_Name LIKE '%$Name%' OR item_Brand LIKE '%$Name%' OR item_category LIKE '%$Name%') ";
+        } else {
+            $addSearch = "";
+        }
+
+        if ($k == "PriceAsc") {
+            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) WHERE  inventoryItem_Status = 1 " .$addFilter .$addSearch ." ORDER BY item_RetailPrice ASC;"; 
+        } else if ($k == "PriceDesc") {
+            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) WHERE  inventoryItem_Status = 1 " .$addFilter .$addSearch ." ORDER BY item_RetailPrice DESC;"; 
+        } else if ($k == "item_Stock") {
+            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) WHERE  inventoryItem_Status = 1 " .$addFilter .$addSearch ." ORDER BY $k ASC;"; 
+        } else if ($k == "Category") {
+            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) WHERE  inventoryItem_Status = 1 " .$addFilter .$addSearch ." ORDER BY  item_category,item_Name ASC;"; 
+        } else if ($k == "ID"){
+            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) WHERE  inventoryItem_Status = 1 " .$addFilter .$addSearch ." ORDER BY inventory.item_ID;"; 
+        } else if ($k == "Salability"){
+            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) INNER JOIN (SELECT SUM(orderItems_Quantity) as sales_sum, item_ID as order_itemID FROM order_items GROUP BY item_ID) as orders ON (inventory.item_ID = orders.order_itemID) WHERE  inventoryItem_Status = 1 " .$addFilter .$addSearch ." ORDER BY sales_sum DESC;"; 
+        } else {
+            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) WHERE  inventoryItem_Status = 1 " .$addFilter .$addSearch ." ;"; 
+        }
+    /* UNUSED===================
     // FROM CATEGORY  
     } else if (isset($_POST['category'])) {
         $category= $_POST['category'];
@@ -58,11 +81,12 @@
             $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) WHERE  inventoryItem_Status = 1 ";
         } else {
             $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) WHERE  item_category = '$category' AND  inventoryItem_Status = 1";
-        }
+        } =======================*/
     // DEFAULT: BY ID    
     }  else {
             $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) WHERE  inventoryItem_Status = 1 ORDER BY inventory.item_ID;"; 
     }  
+
     // ON SALABILITY
     if (isset($_POST['category1'])) {
         $category= $_POST['category1'];
