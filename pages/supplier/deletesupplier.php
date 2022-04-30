@@ -30,6 +30,12 @@ if(isset($_GET["supplier_ID"])){
 
 	mysqli_close($conn);
 }
-header("Location: suppliers.php");
-exit;
+if(isset($_GET['prevpage'])){
+	header( "Location: ./suppliertable.php?supplier_ID=".$_GET["supplier_ID"]);
+	exit;
+}else{
+	header("Location: suppliers.php");
+	exit;
+}
+
 ?>

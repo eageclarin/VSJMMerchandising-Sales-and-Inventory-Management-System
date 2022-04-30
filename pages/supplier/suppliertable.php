@@ -581,7 +581,9 @@
 									echo "<tr><th class='colhead'><span class='thick'><i class=\"fa fa-map-marker\"></i>  Supplier Address  </span></th><td>".$row["supplier_Address"]."</td></tr></table>";
 								}
 							}
-							echo "<button class=\"btn btn-success mt-3\" onclick=\"location.href='editsupplier.php?supplier_ID=".$supplier_chosen."'\"><i class='fas fa-edit'></i> Edit</button>";
+							echo "<button class=\"btn btn-success mt-3\" onclick=\"location.href='editsupplier.php?supplier_ID=".$supplier_chosen."'\"><i class='fas fa-edit'></i> Edit </button> ";
+							echo "<button class=\"btn btn-success mt-3\" onclick=\"changeLoc('delete','".$supplier_chosen."')\"><i class=\"fa fa-circle-o\"></i> Change Status
+							</button>";
 						?>
 					  </section>
 				</div>
@@ -643,6 +645,13 @@
 	            	$("#additem").hide();
 	        	}
 	        }
+
+	        function changeLoc(loc, id) {
+				if (loc == 'delete') {
+
+					location.href=loc+"supplier.php?supplier_ID="+id+"&prevpage='suppliertable'";
+				}
+			}
 
 			
 		</script>
