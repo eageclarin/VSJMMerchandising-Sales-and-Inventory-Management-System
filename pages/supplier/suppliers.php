@@ -1,6 +1,9 @@
 <?php
 	include_once '../../env/conn.php';
+
 ?>
+
+
 <!DOCTYPE html>
 
 <html>
@@ -19,6 +22,7 @@
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 
 	
 </head>
@@ -39,7 +43,7 @@
                     <div class="modal-body mb-2">
                         <div id ="transactionform">
 
-                            <form action = "../supplier/addsupplier.php" method="post" id="myForm">
+                            <form action = "../supplier/suppliers.php" method="post" id="myForm">
 								
                                 <div class="mb-1 mt-1">
 
@@ -63,13 +67,11 @@
                                 </div>
                                 <div class="modal-footer pb-0">
                                     <input type="hidden" id="prevpage" name="prevpage" value="items">
-                                    <input  type="submit" value="Submit" name="Submit" class="form-control btn btn-primary" style="width:150px" >  <!-- INSERT ALERT -->
+                                    <input  type="submit" value="Submit" name="Submit" class="form-control btn btn-primary" style="width:150px" >  
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                 </div> <!-- MODAL FOOTER -->
                             </form>
                         </div>
-
-
 
                     </div>
                     </form>
@@ -101,7 +103,48 @@
         </div>
 	</div>
 
+	<!------ADD SUPPLIER IN DB ------>
+		<?php
+			$db = mysqli_connect("localhost","root","","VSJM");
+
+			if(!$db)
+			{
+				die("Connection failed: " . mysqli_connect_error());
+			}
+
+		if(isset($_POST['submit']) || isset($_POST['Submit']))
+		{		
+			
+			$supplier_Name= $_POST['supplier_Name'];
+			$supplier_ContactPerson = $_POST['supplier_ContactPerson'];
+			$supplier_ContactNum= $_POST['supplier_ContactNum'];
+			$supplier_Address= $_POST['supplier_Address'];
+		
+
+			$insert = mysqli_query($db,"INSERT INTO supplier ". "(supplier_Name, supplier_ContactPerson,
+					supplier_ContactNum, supplier_Address) ". "
+					VALUES('$supplier_Name', '$supplier_ContactPerson', '$supplier_ContactNum', '$supplier_Address')");
+					
+					
+			if(!$insert)
+			{
+				echo mysqli_error();
+			}
+			else
+			{
+				echo '<div class="popup" id="flash-msg">
+                		<div class="overlay"></div>
+                			<div class="popup-content">
+							<i class="bi-check2-square" style="font-size:30px;"></i>
+                    			<p class="title">Successfully Added!</p>
+                			</div>
+            		 </div>';
+			}
+		}
+		?>
+
 	<!------ ORDER FUNCTIONS ------>
+
 	<div class="row mt-3 justify-content-md-center" id="display" style="overflow-y:scroll; height: 450px">
 	<?php
 		$querySupplier = "select * from supplier";
@@ -240,6 +283,11 @@
 
 
           });
+
+		  //Notification Modal
+			$(document).ready(function () {
+			$("#flash-msg").delay(1300).fadeOut("slow");
+		});
 
           
 </script>
