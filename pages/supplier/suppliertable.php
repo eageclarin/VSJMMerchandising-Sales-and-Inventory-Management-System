@@ -193,6 +193,12 @@
             });
         });
 
+		 $(document).ready(function(){
+            $('.addtransbtn').on('click',function(){
+                $('#staticBackdropaddtrans').modal('show');
+            });
+        });
+
     </script> 
 
 
@@ -430,6 +436,99 @@
 			</div>
 			<!-- ADD ITEM MODAL ############################################################################ -->
 
+			<!-- ADD TRANSACTION MODAL ############################################################################ -->
+
+			<div class="modal fade" id="staticBackdropaddtrans" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+				<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+					<h5 class="modal-title" id="staticBackdropLabel">AddTransaction</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div> <!-- MODAL-HEADER -->
+					<div class="modal-body mb-2">
+						<div id ="transactionform">
+
+							<form action = "./addtransaction.php" method="post" id="myForm">
+								<div class="mb-1 mt-1">
+								
+									<?php
+										include_once '../../env/conn.php';
+								
+										if(isset($_GET['supplier_chosen'])){
+											$supplier_ID = $_GET['supplier_chosen'];					
+										}else if(isset($_POST['supplier_ID'])){
+											$supplier_ID = $_POST['supplier_ID'];
+										}else{
+											$supplier_ID = 1;
+										}
+									?>	
+										<p>
+											Supplier:
+											<?php
+												$query = "SELECT * from supplier";
+													$result = mysqli_query($conn,$query);
+													if(mysqli_num_rows($result) > 0){
+														echo "<select name='supplier_ID'>";
+															while($row = mysqli_fetch_assoc($result)){
+																echo "<option value='".$row['supplier_ID']."'";
+
+																if($row['supplier_ID']==$supplier_ID){
+																	echo " selected";
+																}
+
+																echo">".$row['supplier_Name']."</option>";										
+
+															}
+															echo "</select><br>";
+													}
+											?>
+										</p>
+
+									
+
+										<p>
+											Item:
+											<?php
+												$query = "SELECT * from item";
+													$result = mysqli_query($conn,$query);
+													if(mysqli_num_rows($result) > 0){
+														echo "<select name='item_ID'>";
+															while($row = mysqli_fetch_assoc($result)){
+																echo "<option value='".$row['item_ID']."'>"
+																.$row['item_ID']."</option>";
+															}
+															echo "</select><br>";
+														}
+											date_default_timezone_set('Asia/Taipei');
+											?>
+										</p>
+										<p>Item Quantity: <input type="text" name="transactionItems_Quantity" class="form-control" placeholder="Enter"></p>
+										<p>Item Cost Price: Php <input type="text" name="transactionItems_CostPrice" class="form-control" placeholder="Enter"></p>
+										<p>Transaction Date: <input type="datetime-local" name="transaction_Date" class="form-control" value="<?php date('yyyy-MM-ddThh:mm'); ?>" /></p>
+										<p>Transaction Status: <select name="transaction_Status" id="transaction_Status">
+										<option value="1">Successful</option>
+										<option value="0">Failed</option>
+										</select><p>
+										<p>Transaction Total Price: Php <input type="text" name="transaction_TotalPrice" class="form-control" placeholder="Enter"><p>
+									
+								</div>
+								<div class="modal-footer pb-0">
+									<input type="hidden" id="prevpage" name="prevpage" value="suppliertable">
+									<input  type="submit" value="Submit" name="Submit" class="form-control btn btn-primary" style="width:150px" >  <!-- INSERT ALERT -->
+									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+								</div> <!-- MODAL FOOTER -->
+							</form>
+						</div>
+					
+					
+
+					</div>
+					</form>
+				</div>
+				</div>
+			</div>
+			<!-- ADD TRANSACTION MODAL ############################################################################ -->
+
 
 			<!--#################  LIST OF ITEMS #################-->
 
@@ -561,7 +660,7 @@
 							?>
 						</tbody></table></div>
 						<?php
-							echo "<button class=\"btn btn-success mt-3\" onclick=\"location.href='addtransaction.php?supplier_chosen=".$supplier_chosen."'\">Add Transaction</button>";
+							echo "<tr><td colspan=\"11\"><button class=\"btn btn-success addtransbtn mt-3\">Add Transaction</button></td></tr>";
 						?>
 					  </section>
 					    
@@ -621,34 +720,6 @@
 				retail = Math.ceil(retail*4)/4;
 				$('#editRetail').val( retail);
 			});
-
-			$(document).ready(function () {
-	            toggleFields(); 
-	            $("#supplier_ID").change(function () {
-	                toggleFields();
-	            });
-
-	            $("#item_ID").change(function () {
-	                toggleFields();
-	            });
-				
-	        });
-	        
-	        function toggleFields() {
-	            if ($("#supplier_ID").val() === "other"){
-	            	$("#addsupplier").show();
-	            }
-	        	else{
-	            	$("#addsupplier").hide();
-	        	}
-
-	        	if ($("#item_ID").val() === "other"){
-	            	$("#additem").show();
-	            }
-	        	else{
-	            	$("#additem").hide();
-	        	}
-	        }
 
 	        function changeLoc(loc, id) {
 				if (loc == 'delete') {
