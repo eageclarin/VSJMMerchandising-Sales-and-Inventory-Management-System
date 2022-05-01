@@ -721,6 +721,34 @@
 				$('#editRetail').val( retail);
 			});
 
+			$(document).ready(function () {
+	            toggleFields(); 
+	            $("#supplier_ID").change(function () {
+	                toggleFields();
+	            });
+
+	            $("#item_ID").change(function () {
+	                toggleFields();
+	            });
+
+	        });
+
+	        function toggleFields() {
+	            if ($("#supplier_ID").val() === "other"){
+	            	$("#addsupplier").show();
+	            }
+	        	else{
+	            	$("#addsupplier").hide();
+	        	}
+
+	        	if ($("#item_ID").val() === "other"){
+	            	$("#additem").show();
+	            }
+	        	else{
+	            	$("#additem").hide();
+	        	}
+	        }
+
 	        function changeLoc(loc, id) {
 				if (loc == 'delete') {
 
