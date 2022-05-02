@@ -103,10 +103,11 @@ CREATE TABLE cart (
 
 CREATE TABLE return_item(
 	return_ID int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	item_Name varchar(75) NOT NULL,
+	item_ID int NOT NULL,
 	item_ReturnedQuan int NOT NULL,
-	item_Reason varchar(75) NOT NULL,
-	itemReturn_Date datetime NOT NULL
+	item_Reason longtext NOT NULL,
+	itemReturn_Date datetime NOT NULL,
+	FOREIGN KEY (item_ID) REFERENCES item(item_ID) ON UPDATE CASCADE
 );
 
 INSERT INTO branch (
