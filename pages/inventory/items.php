@@ -149,9 +149,38 @@ if(isset($_POST['edit'])>0){
                     <div class="modal-body mb-2">
                         <div id ="transactionform">
 
-                            <form action = "../supplier/addsupplieritem.php" method="post" id="myForm">
+                            <form action = "./additem.php" method="post" id="myForm">
                                 <div class="mb-1 mt-1">
-                                <p>
+
+                                    <div id="additem">
+                                        <p>
+                                            Item Name:
+                                            <input type="text" name="item_Name" id="item_Name" class="form-control" placeholder="Enter">
+                                        </p> 
+                                        <p>
+                                            Item Unit:
+                                            <input type="text" name="item_unit" id="item_unit" class="form-control" placeholder="Enter">
+                                        </p>
+                                        <p>
+                                            Item Brand:
+                                            <input type="text" name="item_Brand" id="item_Brand" class="form-control" placeholder="Enter">
+                                        </p>
+                                        
+                                        Category:
+                                        <div>
+                                            <select name="item_Category" id="item_Category" style="height:30px;" >
+                                              <option value="Electrical" >Electrical</option>
+                                              <option value="Plumbing">Plumbing</option>
+                                              <option value="Architectural"> Architectural</option>
+                                              <option value="Paints">Paints</option>
+                                              <option value="bolts and nuts">Bolts and Nuts</option>
+                                              <option value="Tools">Tools</option>
+                                            </select>        
+                                        </div><br>
+
+                                    </div>
+
+                                    <p>
                                 
 
                                     Supplier:
@@ -203,53 +232,7 @@ if(isset($_POST['edit'])>0){
                                         </p>
                                     </div>
 
-                                    
-                                    <p>
-                                        Item:
-                                        <?php
-                                            $query = "SELECT * from item";
-                                                $result = mysqli_query($conn,$query);
-                                                if(mysqli_num_rows($result) > 0){
-                                                    echo "<select id='item_ID' name='item_ID'>";
-                                                        while($row = mysqli_fetch_assoc($result)){
-                                                            echo "<option value='".$row['item_ID']."'>".$row['item_ID']." - ".$row['item_Name']."</option>";
-                                                        }
-                                                        echo "<option value='other'>Other</option>";
-                                                        echo "</select><br>";
-                                                    }
-                                            
-                                        ?>
-                                    </p>
-
-                                    <div id="additem">
-                                        <p>
-                                            Item Name:
-                                            <input type="text" name="item_Name" id="item_Name" class="form-control" placeholder="Enter">
-                                        </p> 
-                                        <p>
-                                            Item Unit:
-                                            <input type="text" name="item_unit" id="item_unit" class="form-control" placeholder="Enter">
-                                        </p>
-                                        <p>
-                                            Item Brand:
-                                            <input type="text" name="item_Brand" id="item_Brand" class="form-control" placeholder="Enter">
-                                        </p>
-                                        
-                                        Category:
-                                        <div>
-                                            <select name="item_Category" id="item_Category" style="height:30px;" >
-                                              <option value="Electrical" >Electrical</option>
-                                              <option value="Plumbing">Plumbing</option>
-                                              <option value="Architectural"> Architectural</option>
-                                              <option value="Paints">Paints</option>
-                                              <option value="bolts and nuts">Bolts and Nuts</option>
-                                              <option value="Tools">Tools</option>
-                                            </select>        
-                                        </div><br>
-
-                                    </div>
-
-                                    <p>Item Cost Price:<input type="text" name="supplierItem_CostPrice" class="form-control" placeholder="Enter"></p>
+                                    <p>Item Cost Price:<input type="number" name="supplierItem_CostPrice" class="form-control" placeholder="Enter"></p>
 
                                     
                                 </div>
@@ -349,10 +332,6 @@ $('.modal-auto-clear').on('shown.bs.modal', function () {
                   toggleFields();
               });
 
-              $("#item_ID").change(function () {
-                  toggleFields();
-              });
-        
           });
           
           function toggleFields() {
@@ -363,12 +342,6 @@ $('.modal-auto-clear').on('shown.bs.modal', function () {
                 $("#addsupplier").hide();
             }
 
-            if ($("#item_ID").val() === "other"){
-                $("#additem").show();
-              }
-            else{
-                $("#additem").hide();
-            }
           }
 </script>
 
