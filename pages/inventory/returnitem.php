@@ -30,12 +30,12 @@ if(!$db)
 }
 
 if(isset($_POST['submit'])){
-	$item_Name = $_POST['item_Name'];
+	$item_ID = $_POST['item_Name'];
 	$item_ReturnedQuan = $_POST['item_ReturnedQuan'];
 	$item_Reason = $_POST['item_Reason'];
 	$itemReturn_Date = $_POST['itemReturn_Date'];
-	$insert = mysqli_query($db,"INSERT INTO return_item ". "(item_Name, item_ReturnedQuan, item_Reason, itemReturn_Date) ". "
-			  VALUES('$item_Name', '$item_ReturnedQuan', '$item_Reason', '$itemReturn_Date')");
+	$insert = mysqli_query($db,"INSERT INTO return_item ". "(item_ID, item_ReturnedQuan, item_Reason, itemReturn_Date) ". "
+			  VALUES('$item_ID', '$item_ReturnedQuan', '$item_Reason', '$itemReturn_Date')");
 			  
 	if(!$insert)
     {
@@ -50,9 +50,7 @@ if(isset($_POST['submit'])){
 ?>
 <div class="container-fluid bg-light p-5">
 	<div class="row">
-		<div class="col-7">
-	
-		 
+		<div class="col-7" style="overflow-y: scroll; height: 600px;">
 			<?php
 			$server = "localhost:3306";
 			$user = "root";
@@ -61,13 +59,14 @@ if(isset($_POST['submit'])){
 			$conn = mysqli_connect($server, $user, $pass, $db);
 				
 			if(!$conn) die(mysqli_error($conn));
-			$sql = "SELECT * FROM return_item;";                                    
+			$sql = "SELECT * FROM item INNER JOIN return_item ON(item.item_ID = return_item.item_ID);";                                    
 			$result = mysqli_query($conn,$sql);
 			$resultCheck = mysqli_num_rows($result);			
 				
 			echo "<table> 
 					<tr>
 						<th> Return ID </th>
+						<th> Item ID </th>
 						<th> Item Name </th>
 						<th> Returned Quantity </th>
 						<th> Reason </th>
@@ -79,6 +78,7 @@ if(isset($_POST['submit'])){
 						echo "
 						<tr>
 						<td>" .$row['return_ID']. "</td>  
+						<td>" .$row['item_ID']. "</td>
 						<td>" .$row['item_Name']. "</td>
 						<td>" .$row['item_ReturnedQuan']. "</td>  
 						<td>" .$row['item_Reason'] . "</td> 
@@ -97,10 +97,9 @@ if(isset($_POST['submit'])){
 	<div class="col bg-white border shadow-sm p-5" style="border-radius: 15px">
 	<div class="fs-3 fw-bold text-center"> RETURN ITEM </div>
 		<hr>
-		<h2> Return Forms </h2>
 		<form action = "./returnitem.php" method="post" id="form">
 			<div class="form-group row"> 
-				<label for="item_Name" class="col-5 col-form-label fw-bold">Item Name:</label>
+				<label for="item_Name" class="col-5 col-form-label fw-bold">Item ID:</label>
 				<?php
 						$server = "localhost:3306";
 								$user = "root";
@@ -115,8 +114,8 @@ if(isset($_POST['submit'])){
 										<select name="item_Name" id="item" class="col-sm-10 form-select w-50" required>
 									<?php
 											while($row = mysqli_fetch_assoc($result)){
-												echo "<option value='".$row['item_Name']."'>"
-												.$row['item_Name']."</option>";
+												echo "<option value='".$row['item_ID']."'>"
+												.$row['item_ID']."</option>";
 											}
 											echo "</select><br>";
 										}
@@ -125,17 +124,17 @@ if(isset($_POST['submit'])){
 			</div>
 			<div class="form-group row mt-2">
 				<label for="item_ReturnedQuan" class="col-5 col-form-label fw-bold">Returned Qty:</label>
-				<input type = "number" name = "item_ReturnedQuan" id="item_ReturnedQuan" class="col-sm-10 form-control w-50" value=1 required>
+				<input type = "text" name = "item_ReturnedQuan" id="item_ReturnedQuan" class="col-sm-10 form-control w-50"  required>
 			</div>
 			<div class="form-group row mt-2">
 					<label for="item_TReason" class="col-5 col-form-label fw-bold">Reason:</label>
-				<select name="item_TReason" id="item_TReason" class="col-sm-10 form-select w-50" onchange="mhie();" required >
+				<select name="item_TReason" id="item_TReason" class="col-sm-10 form-select w-50" onchange="Reason();" required >
 				
 				<option value="" id="reason">--Select Reason--</option>
 				<option value="Excess quantity" >Excess quantity</option>
 				<option value="Item has a defect">Item has a defect</option>
 				<option value="Wrong item/s bought"> Wrong item/s bought </option>
-				<option value="Wrong size bought"> Wrong size bought </option>
+				<option value="Wrong size bought"> Wrong size bougth </option>
 				<option value=""> Others </option>
 				</select>
 			</div>
@@ -146,7 +145,8 @@ if(isset($_POST['submit'])){
 			
 			<div class="form-group row mt-2">
 				<label for="itemReturn_Date" class="col-5 col-form-label fw-bold">Date of Return:</label>
-				<input type="datetime-local" name="itemReturn_Date" id="itemReturn_Date" class="col-sm-10 form-control w-50" required>
+				
+					 <input type="datetime-local" name="itemReturn_Date" id="itemReturn_Date" class="col-sm-10 form-control w-50" required>
 			</div>
 			
 			<div class="form-group row">
@@ -160,11 +160,16 @@ if(isset($_POST['submit'])){
 </div>
 </main>
 <script type="text/javascript">
-function mhie() {
+function Reason() {
 	var d = document.getElementById("item_TReason");
 	var displaytext=d.options[d.selectedIndex].text;
 	document.getElementById("item_Reason").value=displaytext;
 }  
+
+const now = new Date();
+now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+document.getElementById('itemReturn_Date').value = now.toISOString().slice(0, 16);
+
 </script>
 
 </body>
