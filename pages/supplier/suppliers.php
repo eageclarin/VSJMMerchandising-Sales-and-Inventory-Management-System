@@ -1,6 +1,25 @@
 <?php
 	include_once '../../env/conn.php';
 
+	//Edit supplier query
+	if(isset($_POST['edit'])>0){
+		$name = $_POST['editName'];
+		$ID = $_POST['editID'];
+		$person = $_POST['editPerson'];
+		$number = $_POST['editNumber'];
+		$address = $_POST['editAddress'];
+		mysqli_query($conn, "UPDATE supplier set supplier_ID='$ID', supplier_Name='$name', supplier_ContactPerson='$person', 
+		supplier_ContactNum='$number', supplier_Address='$address' 
+		WHERE supplier_ID = '$ID' ");
+		echo '<div class="popup" id="flash-msg">
+		<div class="overlay"></div>
+			<div class="popup-content">
+			<i class="bi-check2-square" style="font-size:30px;"></i>
+				<p class="title">Successfully Updated!</p>
+			</div>
+		</div>';
+	}
+
 ?>
 
 
@@ -29,6 +48,52 @@
 <body>
 	<main >
     <?php include 'navbar.php'; ?>
+
+
+	<div class="container-fluid bg-light p-5">
+        <!-- EDIT MODAL ############################################################################ -->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Edit Supplier</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div> <!-- MODAL-HEADER -->
+                
+                <form id="newform" action="suppliers.php" method="post" class="form-inline" > 
+                <div class="modal-body mb-2">   
+                    <input type="hidden"  id="editID" name="editID" placeholder="Enter"> 
+                    <label for="editID" id="labelID" style="border:0; background-color: transparent; font-size: 1.25em; color:black; font-weight: 500;">Supplier ID: </label>
+                    <div class="mb-1 mt-1"> 
+                    <label for="editName" >Supplier Name: </label>
+                    <div>
+                        <input type="text" class="form-control"  id="editName" name="editName" placeholder="Enter">
+                    </div> 
+                    <label for="editPerson" >Supplier Contact Person: </label>
+                    <div>
+                        <input type="text" class="form-control"  id="editPerson" name="editPerson" placeholder="Enter">
+                    </div> 
+                    <label for="editNumber" >Supplier Contact Person: </label>
+                    <div>
+                        <input type="text" class="form-control"  id="editNumber" name="editNumber" placeholder="Enter">
+                    </div> 
+					<label for="editAddress" >Supplier Address: </label>
+                    <div>
+                        <input type="text" class="form-control"  id="editAddress" name="editAddress" placeholder="Enter">
+                    </div> 
+                    
+                    </div> <!-- MB-1 MT-1 -->
+                </div> <!-- MODAL-BODY -->
+                <div class="modal-footer pb-0">
+                    <input type="hidden" name="url" value="inventory.php">
+                    <input  type="submit" value="update" name="edit" class="form-control btn btn-primary" style="width:150px" > 
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div> <!-- MODAL FOOTER -->
+                </form>  
+            </div> <!-- MODAL-CONTENT -->
+            </div> <!-- MODAL-DIALOG -->
+        </div> <!-- MODAL-FADE-->
+        <!-- EDIT MODAL ############################################################################ -->
 
 
 	        <!-- ADD ITEM MODAL ############################################################################ -->
@@ -181,7 +246,7 @@
 					<td> <?php echo $row['supplier_Address'] ?> </td>
 					<td> <?php echo $supplier_Status ?> </td>
 					<td>
-						<button class="btn btn-outline-success" onclick="changeLoc('edit','<?php echo $row['supplier_ID']?>')">
+						<button type="button" class="btn btn-outline-success editbtn" style="float:left; padding:5px;">
 							Edit
 						</button>
 					</td>
@@ -283,6 +348,30 @@
 
 
           });
+
+		  //Edit Modal
+
+		  $(document).ready(function(){
+            $('.editbtn').on('click',function(){
+                $('#staticBackdrop').modal('show');
+                
+                $tr = $(this).closest('tr');
+
+                var data = $tr.children("td").map(function () {
+                    return $(this).text();
+                }).get();
+
+                console.log(data);
+
+                $('#editID').val(data[0]);
+                $('#editName').val(data[1]);
+                $('#editPerson').val(data[2]);
+                $('#editNumber').val(data[3]);
+                $('#editAddress').val(data[4]);
+                document.getElementById("labelID").innerHTML = "Supplier ID: " + data[0];
+            });
+        });
+
 
 		  //Notification Modal
 			$(document).ready(function () {
