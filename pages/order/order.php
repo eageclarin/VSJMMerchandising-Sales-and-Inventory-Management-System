@@ -53,9 +53,70 @@
     if (isset($_GET['action'])) {
         $action = $_GET['action'];
         switch($action) {
-            case "add": /*------ ADD ITEM ------*/
+            case "addCart": /*------ ADD ITEM ------*/
                 //variables
-                if(isset($_POST['item'])) {
+                if(isset($_POST['itemAdd'])) {
+                    $id = $_POST['itemAdd'];
+                    $name = $price = '';
+                    $sqlGet = "SELECT * FROM item i
+                        INNER JOIN inventory iv ON (i.item_ID = iv.item_ID)
+                        WHERE i.item_ID = '$id'
+                        AND iv.item_Stock > 0";
+                    $resGet = mysqli_query($conn, $sqlGet);
+                    $countGet = mysqli_num_rows($resGet);
+                    if ($countGet >= 1){ //item in inventory
+                        $rowGet = mysqli_fetch_assoc($resGet);
+                        $name = $rowGet['item_Name'];
+                        $price = $rowGet['item_RetailPrice'];
+                    } else {
+                        header('location: order.php?search=n'); //item not in inventory
+                    }
+ 
+                    $qty = 1;
+                    $iTotal = $price * $qty;
+
+                    $sqlSearch = "SELECT * FROM cart WHERE itemID = $id";
+                    $resSearch = mysqli_query($conn, $sqlSearch);
+                    $countSearch = mysqli_num_rows($resSearch);
+                    $rowSearch = mysqli_fetch_assoc($resSearch);
+
+                    if($countSearch >= 1) { //if product already in cart
+                        $qty = $rowSearch['quantity'];
+                        $itemTotal = $rowSearch['itemTotalP'];
+                        
+                        $qty++;
+                        $itemTotal = $qty * $price;
+
+                        $sqlUpdate = "UPDATE cart SET quantity = '$qty', itemTotalP = '$itemTotal'
+                            WHERE itemID = '$id'";
+                        $resUpdate = mysqli_query($conn, $sqlUpdate);
+
+                        //update total
+                        //decrease stock??
+                        if ($resUpdate) {
+                            header('location: order.php?update=u'); //item in cart. updated item quantity
+                        } else {
+                            echo "ERROR: Could not be able to execute $sqlUpdate." . mysqli_error($conn);
+                        }
+                    } else { //if product not in cart
+                        $sqlInsert = "INSERT INTO cart (
+                            itemID, itemName, itemPrice, quantity, itemTotalP)
+                            VALUES (
+                            '$id', '$name', '$price', '$qty', '$iTotal')";
+                        $resInsert = mysqli_query($conn, $sqlInsert);
+
+                        //update total
+                        //decrease stock??
+                        if ($resInsert) {
+                            header('location: order.php?update=i'); //item added to cart
+                        } else {
+                            echo "ERROR: Could not be able to execute $sqlInsert." . mysqli_error($conn);
+                        }
+                    }
+                }
+                break;
+            case "addSearch":
+                if (isset($_POST['item'])) {
                     $name = $_POST['item'];
                     $id = $price = '';
                     $sqlGet = "SELECT * FROM item i
@@ -81,7 +142,7 @@
                     $countSearch = mysqli_num_rows($resSearch);
                     $rowSearch = mysqli_fetch_assoc($resSearch);
 
-                    if($countSearch >= 1) { //if product not in cart yet
+                    if($countSearch >= 1) { //if product already in cart
                         $qty = $rowSearch['quantity'];
                         $itemTotal = $rowSearch['itemTotalP'];
                         
@@ -99,7 +160,7 @@
                         } else {
                             echo "ERROR: Could not be able to execute $sqlUpdate." . mysqli_error($conn);
                         }
-                    } else { //if product already in cart
+                    } else { //if product not in cart yet
                         $sqlInsert = "INSERT INTO cart (
                             itemID, itemName, itemPrice, quantity, itemTotalP)
                             VALUES (
@@ -109,7 +170,7 @@
                         //update total
                         //decrease stock??
                         if ($resInsert) {
-                            header("location: order.php?update=i"); //item added to cart
+                            header('location: order.php?update=i'); //item added to cart
                         } else {
                             echo "ERROR: Could not be able to execute $sqlInsert." . mysqli_error($conn);
                         }
@@ -152,6 +213,7 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 
     <!-- JQUERY/BOOTSTRAP -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -177,7 +239,7 @@
                 source: function(request, response) {
                     var results = $.ui.autocomplete.filter(plang, request.term);
 
-                    response(results.slice(0,5));
+                    response(results.slice(0,2));
                 }
             });
 
@@ -236,109 +298,230 @@
 
         <!------ ORDER FUNCTIONS ------>
         <div class="row w-100" style="height:80%">
-            <!------ CART ------>
-            <div class="col-8">
-                <div class="row text-center border-bottom p-2">
-                    <div class="col-4">Name</div>
-                    <div class="col-2">Price/Unit</div>
-                    <div class="col-2">Qty</div>
-                    <div class="col-3">Total</div>
-                    <div class="col-1"></div>
-                </div>
+            <!------ ITEMS ------>
+            <div class="col-6">
+                <!------ CATEG SORT SEARCH ------>
+                <div class="row">
+                    <div class="col-7">
+                        <div class="form-group row">
+                            <!-- categ -->
+                            <label for="categ" class="col-auto col-form-label fw-bold">Category:</label>
+                            <select name="categ" id="categ" class="col-sm-10 form-select w-25" onchange="sort()">
+                                <option value="All" selected >All</option>
+                                <option value="Architectural"> Architectural</option>
+                                <option value="Electrical"> Electrical</option>
+                                <option value="Plumbing"> Plumbing</option>
+                                <option value="Tools">Tools</option>
+                                <option value="bolts and nuts">Bolts and Nuts</option>
+                                <option value="Paints">Paints and Accessories</option>
+                                <option value="Wood">Wood</option>
+                            </select> 
+                            <!-- end of categ -->
 
-                <!-- list of items in cart -->
-                <?php
-                    $sqlDisplay = "SELECT * FROM cart c
-                                    INNER JOIN item i ON (c.itemID = i.item_ID)";
-                    $resDisplay = mysqli_query($conn, $sqlDisplay);
-                    $totalPrice = 0;
-
-                    $countRows = mysqli_num_rows($resDisplay);
-                    if ($countRows > 0) {
-                        $button = "";
-                    } else {
-                        $button = "disabled";
-                    }
-
-                    while($rowDisplay = mysqli_fetch_assoc($resDisplay)) {
-                        $iID = $rowDisplay["itemID"];
-                        $iName = $rowDisplay["itemName"];
-                        $iPrice = $rowDisplay["itemPrice"];
-                        $iQty = $rowDisplay['quantity'];
-                        $style = "";
-                        $sqlStock = "SELECT item_Stock FROM inventory i
-                        INNER JOIN cart c ON (i.item_ID = c.itemID)
-                        WHERE i.item_ID = $iID";
-                        $resStock = mysqli_query($conn, $sqlStock);
-                        $rowStock = mysqli_fetch_assoc($resStock);
-                        $itemStock = $rowStock['item_Stock'];
-
-                        if ($itemStock <= 10) { //if item stock is <=10
-                            $style = "style='color:#dc3545;'";
-                            if ($itemStock <= 0){ //if no more stock
-                                $disable = "disabled";
-                            }
-                        } else {
-                            $disable = "";
-                        }
-                ?>
-                    <!-- display item information -->
-                    <div class="row text-center border-bottom p-2 mt-2 fs-5">
-                        <!-- item name -->
-                        <div class="col-4 text-start fw-bold text-wrap">
-                            <?php echo $iName ?> 
-                        </div>
-
-                        <!-- item unit -->
-                        <div class="col-2">
-                            <?php echo $iPrice ?> / <?php echo $rowDisplay["item_unit"] ?>
-                        </div>
-
-                        <!-- item quantity -->
-                        <div class="col-2">
-                            <form action="updateItem.php?action=update&itemID=<?php echo $iID ?>" method="post" class="mb-0">
-                                <div class="input-group mb-0">
-                                    <input type="number" name="qty" id="qty-<?php echo $iID ?>" class="form-control bg-dark text-light" value="<?php echo $iQty ?>" max="<?php echo $itemStock ?>" aria-describedby="button-addon2" onkeyup="checkStock(this.value,'<?php echo $itemStock ?>','<?php echo $iID ?>')">
-                                    <button class="btn btn-outline-secondary" type="submit" id="qtyUpdate">&#8635;</button>
-                                </div>
-                            </form>
-                            <p id="stocks" <?php echo $style ?>> Stocks left: <?php echo $itemStock ?> </p>
-                        </div>
-
-                        <!-- item total price -->
-                        <div class="col-3">
-                            <p id="itemTotal-<?php echo $iID ?>">
-                                <?php echo $rowDisplay["itemTotalP"] ?>
-                            </p>
-                        </div>
-
-                        <!-- item delete button -->
-                        <div class="col">
-                            <form action="order.php?action=delete&itemID=<?php echo $iID ?>" method="post">
-                                <button type="submit" class="btn btn-danger" id="delItem" aria-label="Close">X</button>
-                            </form>
+                            <!-- sort -->
+                            <label for="sort" class="col-auto col-form-label fw-bold">Sort by:</label>
+                            <select name="sort" id="sort" class="col-sm-10 form-select w-25" onchange="sort()">
+                                <option value="ID" selected >ID</option>
+                                <option value="Category">Category</option>
+                                <option value="PriceAsc"> <span>&#8593;</span>Price</option>
+                                <option value="PriceDesc"> <span>&#8595;</span>Price</option>
+                                <option value="item_Stock">Stocks</option>
+                                <option value="Salability">Salability</option>
+                            </select>
+                            <!-- end of sort -->
                         </div>
                     </div>
+                    <div class="col">
+                        <div class="form-group row">
+                        <div class="col">
+                            <!-- search item -->
+                            <form method="POST" action="order.php?action=addSearch" class="d-flex mb-0">
+                                <input type="text" name="item" autcomplete="off" class="form-control form-control me-2 ui-autocomplete-input border" id="searchItem" onkeyup="search()" placeholder="Search Item...">
+                                <button class="btn btn-success" id="addItem" type="submit"><i class="fa fa-check btn-icon-prepend"></i>Add</button>
+                            </form>
                         
-                    <?php  
-                            $totalPrice += $rowDisplay["itemTotalP"];
+                            <!-- end of search item -->
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                <!------ END OF CATEG SORT SEARCH ------>
+
+                <div class="row mt-3" style="overflow-y:scroll; height:80%" id="display">
+                <?php
+                    $sqlDisplay = "SELECT * FROM item i
+                        INNER JOIN inventory iv ON (i.item_ID = iv.item_ID)
+                        WHERE iv.item_Stock > 0 ORDER BY i.item_ID ASC";
+                    $resDiplay = mysqli_query($conn, $sqlDisplay);
+                    $countDisplay = mysqli_num_rows($resDiplay);
+                    $i = 1; $counter = 0; $r = 1;
+
+                    while ($rowDisplay = mysqli_fetch_assoc($resDiplay)) { //item in inventory
+                        $id = $rowDisplay['item_ID'];
+                        $name = $rowDisplay['item_Name'];
+                        $price = $rowDisplay['item_RetailPrice'];
+                        $unit = $rowDisplay['item_unit'];
+                        $stocks = $rowDisplay['item_Stock'];
+                ?>
+                        <!-- item -->
+                        <div class="col">
+                            <form method="POST" action="order.php?action=addCart">
+                            <div class="row">
+                                <div class="col-md-9 bg-dark text-light p-3">
+                                    <input type="hidden" name="itemAdd" value="<?php echo $id ?>">
+                                    <p class="fw-bold text-start mb-1"> <?php echo $name; ?> </p>
+                                    <div class="row">
+                                        <div class="col-6 text-start"><?php echo $price.'/'.$unit; ?></div>
+                                        <div class="col-6 text-start">Stocks: <?php echo $stocks; ?></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 ps-0">
+                                    <button type="submit" name="addCart" class="btn btn-outline-success w-100 h-100 rounded-end">
+                                        <i class="bi bi-cart"></i>
+                                    </button>
+                                </div>
+                            </div> 
+                            </form>
+                        </div>
+                <?php
+                        $i++;
+                        
+                        if ($r == 5) {
+                            $r = 1;
                         }
-                    ?>
+                        if (++$counter == $resultCheck) {
+                            while ($r != 5){
+                                while ($i != 3) {
+                                    echo '<div class="col">
+                                    <form method="" action="">
+                                    <div class="row">
+                                        <div class="col-md-9">
+                                            <input type="hidden" value="" aria-describedby="button-addon2">
+                                            <p class="fw-bold text-start mb-1"></p>
+                                            <div class="row">
+                                                <div class="col-6"></div>
+                                                <div class="col-6"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 ps-0">
+                                           
+                                        </div>
+                                    </div> 
+                                    </form>
+                                    </div>';
+                
+                                    $i++;
+                                }
+                                echo "<div class='w-100'></div>";
+                                $i = 1;
+                                $r++; 
+                            }
+                        } else if ($i == 3) {
+                            echo "<div class='w-100'></div>";
+                            $i = 1;
+                            $r++;
+                        }
+                    }
+                ?>
+                </div>
             </div>
-            <!------ END OF CART ------>
+            <!------ END OF ITEMS ------>
 
             <!------ ORDER ------>
             <div class="col">
-                <!-- search item -->
-                <form method="POST" action="order.php?action=add" class="d-flex mb-0">
-                    <input type="text" name="item" autcomplete="off" class="form-control form-control-lg me-2 ui-autocomplete-input border" id="searchItem" placeholder="Search Item...">
-                    <button class="btn btn-success" id="addItem" type="submit"><i class="fa fa-check btn-icon-prepend"></i>Add</button>
-                </form>
-                <p id="update" class="mt-2" <?php echo $updateStyle ?>><?php echo $update ?></p>
-                <!-- end of search item -->
+                <!------ CART ------>
+                <div class="cart">
+                    <div class="row text-center border-bottom p-2">
+                        <div class="col-4">Name</div>
+                        <div class="col-2">Price/Unit</div>
+                        <div class="col">Qty</div>
+                        <div class="col-2">Total</div>
+                        <div class="col-1"></div>
+                    </div>
 
+                    <!-- list of items in cart -->
+                    <?php
+                        $sqlDisplay = "SELECT * FROM cart c
+                                        INNER JOIN item i ON (c.itemID = i.item_ID)";
+                        $resDisplay = mysqli_query($conn, $sqlDisplay);
+                        $totalPrice = 0;
+
+                        $countRows = mysqli_num_rows($resDisplay);
+                        if ($countRows > 0) {
+                            $button = "";
+                        } else {
+                            $button = "disabled";
+                        }
+
+                        while($rowDisplay = mysqli_fetch_assoc($resDisplay)) {
+                            $iID = $rowDisplay["itemID"];
+                            $iName = $rowDisplay["itemName"];
+                            $iPrice = $rowDisplay["itemPrice"];
+                            $iQty = $rowDisplay['quantity'];
+                            $style = "";
+                            $sqlStock = "SELECT item_Stock FROM inventory i
+                            INNER JOIN cart c ON (i.item_ID = c.itemID)
+                            WHERE i.item_ID = $iID";
+                            $resStock = mysqli_query($conn, $sqlStock);
+                            $rowStock = mysqli_fetch_assoc($resStock);
+                            $itemStock = $rowStock['item_Stock'];
+
+                            if ($itemStock <= 10) { //if item stock is <=10
+                                $style = "style='color:#dc3545;'";
+                                if ($itemStock <= 0){ //if no more stock
+                                    $disable = "disabled";
+                                }
+                            } else {
+                                $disable = "";
+                            }
+                    ?>
+                        <!-- display item information -->
+                        <div class="row text-center border-bottom p-2 mt-2">
+                            <!-- item name -->
+                            <div class="col-4 text-start fw-bold text-wrap">
+                                <?php echo $iName ?> 
+                            </div>
+
+                            <!-- item unit -->
+                            <div class="col-2">
+                                <?php echo $iPrice ?> / <?php echo $rowDisplay["item_unit"] ?>
+                            </div>
+
+                            <!-- item quantity -->
+                            <div class="col">
+                                <form action="updateItem.php?action=update&itemID=<?php echo $iID ?>" method="post" class="mb-0">
+                                    <div class="input-group mb-0">
+                                        <input type="number" name="qty" id="qty-<?php echo $iID ?>" class="form-control bg-dark text-light" value="<?php echo $iQty ?>" max="<?php echo $itemStock ?>" aria-describedby="button-addon2" onkeyup="checkStock(this.value,'<?php echo $itemStock ?>','<?php echo $iID ?>')">
+                                        <button class="btn btn-outline-secondary" type="submit" id="qtyUpdate">&#8635;</button>
+                                    </div>
+                                </form>
+                                <p id="stocks" <?php echo $style ?>> Stocks left: <?php echo $itemStock ?> </p>
+                            </div>
+
+                            <!-- item total price -->
+                            <div class="col-2">
+                                <p id="itemTotal-<?php echo $iID ?>">
+                                    <?php echo $rowDisplay["itemTotalP"] ?>
+                                </p>
+                            </div>
+
+                            <!-- item delete button -->
+                            <div class="col-1">
+                                <form action="order.php?action=delete&itemID=<?php echo $iID ?>" method="post">
+                                    <button type="submit" class="btn btn-danger" id="delItem" aria-label="Close">X</button>
+                                </form>
+                            </div>
+                        </div>
+                            
+                        <?php  
+                                $totalPrice += $rowDisplay["itemTotalP"];
+                            }
+                        ?>
+                </div>
+                <!------ END OF CART ------>
+                
                 <!-- order total -->
-                <div class="pb-0 mt-5"> Order ID #</div>
+                <div class="pb-0 mt-4"> <p id="update" <?php echo $updateStyle ?>><?php echo $update ?></p></div>
                 <div class="row">
                     <div class="col-2">
                         <p class="fs-4"> Total </p>

@@ -1,3 +1,48 @@
+//search item
+function search(){
+  var option = $('#sort').find(":selected").val();
+  var input = $('#searchItem').val();
+  /*
+  $.ajax({
+      type: "POST",
+      url: "search_sort.php",
+      data: {
+          search: input,
+          sort: option
+      },
+      success: function(data) {
+          $("#display").html(data);
+      }
+  });*/
+
+  const $select = document.querySelector('#categ');
+  $select.value = 'All';
+  sort();
+}
+
+//sort and category item
+function sort(){
+  var option = $('#sort').find(":selected").val();
+  var categOption = $('#categ').find(":selected").val();
+  var input = $('#searchItem').val();
+
+  sessionStorage.setItem("selectedOption", option);
+  var optionValue = $(this).selectedIndex;
+  $.ajax({
+      type: "POST",
+      url: "searchSort.php",
+      data: {
+          selected: option,
+          categSort: categOption,
+          search: input
+      },
+      success: function(data) { 
+          $("#display").html(data);
+      }
+  });
+
+}
+
 //change qty
 function changeQty(getID, getQty) {
     var dataString = "action=update&itemID="+getID+"&qty="+getQty;
@@ -51,3 +96,4 @@ function checkStock(input, stock, item) {
     qtyInput.value = stock;
   }
 }
+
