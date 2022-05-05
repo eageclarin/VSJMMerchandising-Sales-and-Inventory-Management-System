@@ -21,6 +21,7 @@ if(isset($_POST['edit'])>0){
 
 ?>
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -123,32 +124,6 @@ if(isset($_POST['edit'])>0){
         </div> <!-- MODAL-FADE-->
         <!-- EDIT MODAL ############################################################################ -->
 
-        <!-- NOTIFICATION MODAL ############################################################################ -->
-        <div class="modal fade modal-auto-clear" id="notif" >
-            <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-body mb-2">
-                    <?php
-                        if($_SESSION['updated'] == 'success'){
-                            echo '<div class="popup" id="flash-msg">
-                            <div class="overlay"></div>
-                                <div class="popup-content">
-                                <i class="bi-check2-square" style="font-size:30px;"></i>
-                                    <p class="title">Successfully Added!</p>
-                                </div>
-                         </div>';
-                        } elseif ($_SESSION['updated'] = 'error') {
-                            echo "There is an error updating the item.";
-                        }
-                    ?>
-
-                </div> <!-- MODAL-BODY -->
-
-            </div> <!-- MODAL-CONTENT -->
-            </div> <!-- MODAL-DIALOG -->
-        </div> <!-- MODAL-FADE-->
-        <!-- EDIT MODAL ############################################################################ -->
-
 
         <!-- ADD ITEM MODAL ############################################################################ -->
 
@@ -162,7 +137,7 @@ if(isset($_POST['edit'])>0){
                     <div class="modal-body mb-2">
                         <div id ="transactionform">
 
-                            <form action = "./additem.php" method="post" id="myForm">
+                            <form action = "items.php" method="post" id="myForm">
                                 <div class="mb-1 mt-1">
 
                                     <div id="additem">
@@ -252,6 +227,7 @@ if(isset($_POST['edit'])>0){
                                 <div class="modal-footer pb-0">
                                     <input type="hidden" id="prevpage" name="prevpage" value="items">
                                     <input  type="submit" value="Submit" name="Submit" class="form-control btn btn-primary" style="width:150px" >  <!-- INSERT ALERT -->
+
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                 </div> <!-- MODAL FOOTER -->
                             </form>
@@ -265,10 +241,71 @@ if(isset($_POST['edit'])>0){
                 </div>
             </div>
             <!-- ADD ITEM MODAL ############################################################################ -->
+            
+
+           <!-- ADD ITEM QUERY ############################################################################ -->
+            <?php
+            $db = mysqli_connect("localhost","root","","VSJM");
+            if(!$db)
+            {
+                die("Connection failed: " . mysqli_connect_error());
+            }
+
+            if(isset($_POST['submit']) || isset($_POST['Submit']))
+            {		
+                
+                $item_Name= $_POST['item_Name'];
+                $item_unit= $_POST['item_unit'];
+                $item_Brand= $_POST['item_Brand'];
+                $item_Category= $_POST['item_Category'];
+
+                $supplierItem_CostPrice= $_POST['supplierItem_CostPrice'];
+
+            
+                $insert = mysqli_query($db,"INSERT INTO item ". "(item_Name, item_unit, item_Brand, item_Category) ". "
+                        VALUES('$item_Name', '$item_unit', '$item_Brand', '$item_Category')");
+
+
+                $item_ID = $db->insert_id;
+
+                if($_POST['supplier_ID']=="other"){
+
+                    $supplier_Name= $_POST['supplier_Name'];
+                    $supplier_ContactPerson = $_POST['supplier_ContactPerson'];
+                    $supplier_ContactNum= $_POST['supplier_ContactNum'];
+                    $supplier_Address= $_POST['supplier_Address'];
+
+                    $insert = mysqli_query($db,"INSERT INTO supplier ". "(supplier_Name, supplier_ContactPerson, supplier_ContactNum, supplier_Address) ". "VALUES('$supplier_Name', '$supplier_ContactPerson', '$supplier_ContactNum', '$supplier_Address')");
+                    $supplier_ID = $db->insert_id;
+
+                }else{
+                    $supplier_ID = $_POST['supplier_ID'];
+                }
+
+                $insert = mysqli_query($db,"INSERT INTO supplier_item". "(supplier_ID, item_ID, supplierItem_CostPrice)"."VALUES('$supplier_ID', '$item_ID', '$supplierItem_CostPrice')");
+                        
+                if(!$insert)
+                {
+                    echo mysqli_error();
+                }
+                else
+                {
+                    echo '<div class="popup" id="flash-msg">
+                    <div class="overlay"></div>
+                        <div class="popup-content">
+                        <i class="bi-check2-square" style="font-size:30px;"></i>
+                            <p class="title">Successfully Added!</p>
+                        </div>
+                    </div>';
+                }  
+            }
+
+        ?>  <!-- ADD ITEM QUERY ############################################################################ -->
 
 
 
-    <div class="fs-1 fw-bold text-center"> LIST OF ITEMS </div>
+
+<div class="fs-1 fw-bold text-center"> LIST OF ITEMS </div>
 <?php
 
 $sql = "SELECT * FROM item;";                                    
@@ -319,17 +356,6 @@ echo "</tbody></table></div>";
 </main>
 
 <script>
-function notif(){
-    alert("HI");
-    $('#notif').modal('show');
-}
-    
-$('.modal-auto-clear').on('shown.bs.modal', function () {
-    $(this).delay(1000).fadeOut(200, function () {
-        $(this).modal('hide');
-    });
-})
-
 
 //ADD ITEM/SUPPLIER MODAL
 
