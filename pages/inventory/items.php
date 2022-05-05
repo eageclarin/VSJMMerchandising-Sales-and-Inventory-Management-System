@@ -9,7 +9,13 @@ if(isset($_POST['edit'])>0){
     $unit = $_POST['editUnit'];
     mysqli_query($conn, "UPDATE item set item_Name='$name', item_unit='$unit', item_Brand='$brand', item_Category = '$categ'
     WHERE item_ID = '$ID'");
-    //echo "Record Edited Successfully";
+    echo '<div class="popup" id="flash-msg">
+    <div class="overlay"></div>
+        <div class="popup-content">
+        <i class="bi-check2-square" style="font-size:30px;"></i>
+            <p class="title">Successfully Updated!</p>
+        </div>
+    </div>';
 }
 
 
@@ -26,6 +32,7 @@ if(isset($_POST['edit'])>0){
     <!-- CSS -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="./style.css?ts=<?=time()?>">
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   
 	<!-- JQUERY/BOOTSTRAP -->
@@ -123,7 +130,13 @@ if(isset($_POST['edit'])>0){
                 <div class="modal-body mb-2">
                     <?php
                         if($_SESSION['updated'] == 'success'){
-                            echo "Item updated successfully.";
+                            echo '<div class="popup" id="flash-msg">
+                            <div class="overlay"></div>
+                                <div class="popup-content">
+                                <i class="bi-check2-square" style="font-size:30px;"></i>
+                                    <p class="title">Successfully Added!</p>
+                                </div>
+                         </div>';
                         } elseif ($_SESSION['updated'] = 'error') {
                             echo "There is an error updating the item.";
                         }
@@ -343,6 +356,12 @@ $('.modal-auto-clear').on('shown.bs.modal', function () {
             }
 
           }
+
+          //Notification Modal
+			$(document).ready(function () {
+			$("#flash-msg").delay(1300).fadeOut("slow");
+		});
+
 </script>
 
 </body>
