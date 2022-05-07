@@ -16,14 +16,11 @@ class PDF extends FPDF{
 }
 
 include "conn.php";
-$from_date = date("Y-m-d", strtotime("first day of this month"));
-$to_date = date("Y-m-d", strtotime("last day of this month"));
     
     $sql = "SELECT item.item_ID, item.item_Name, item.item_unit, item.item_Brand, order_items.order_ID, order_items.orderItems_Quantity, order_items.orderItems_TotalPrice, orders.order_Date, orders.order_Total 
             FROM item 
             INNER JOIN order_items on order_items.item_ID = item.item_ID 
-            INNER JOIN orders on orders.order_ID = order_items.order_ID 
-            WHERE orders.order_Date BETWEEN '$from_date' AND '$to_date'";                                   
+            INNER JOIN orders on orders.order_ID = order_items.order_ID";                                   
     $result = mysqli_query($conn, $sql);
     
     $pdf = new PDF();
@@ -32,55 +29,69 @@ $to_date = date("Y-m-d", strtotime("last day of this month"));
 
         if(mysqli_num_rows($result) > 0)
         {
-            $sql1 = "SELECT DISTINCT order_ID FROM order_items";
-            $result1 = mysqli_query($conn, $sql1);
-            $current = '';
-            $previous = '';
-
-            foreach($result1 as $row)
+            $sql3 = "SELECT DISTINCT MONTHNAME(order_Date) from orders ORDER BY order_Date";
+            $result3 = mysqli_query($conn, $sql3);
+            foreach($result3 as $row)
             {
-                $pdf->SetFont('Arial','B',10);
-                $pdf->Cell(0,8,"Order ID:".$row['order_ID'],1,0,'C');
+                $date = date("Y", strtotime($row['MONTHNAME(order_Date)']));
+                $month = date("F", strtotime($row['MONTHNAME(order_Date)']));
+                $day = date("Y-m", strtotime($row['MONTHNAME(order_Date)']));
+
+                $pdf->SetFont('Arial','B',12);
+                $pdf->Cell(0,8,$month.'('.$date.')',1,0,);
                 $pdf->Ln(8);
-                $pdf->SetFont('Arial','B',8);
-                $pdf->Cell(30,10,'Order Date',1,0);
-                $pdf->Cell(20,10,'Item ID',1,0);
-                $pdf->Cell(45,10,'Item Name',1,0);
-                $pdf->Cell(25,10,'Item Unit',1,0);
-                $pdf->Cell(30,10,'Item Brand',1,0);
-                $pdf->Cell(20,10,'Quantity',1,0);
-                $pdf->Cell(20,10,'Order Total',1,1);
-                $y = $pdf->GetY();
 
-                $result2 = mysqli_query($conn, $sql);
-                $current = $row['order_ID'];
-
-                foreach($result2 as $row)
+                $sql1 = "SELECT DISTINCT order_items.order_ID, orders.order_Date  
+                FROM order_items
+                INNER JOIN orders on orders.order_ID = order_items.order_ID";
+                $result1 = mysqli_query($conn, $sql1);
+                foreach($result1 as $row)
                 {
-                    $previous = $row['order_ID'];
-                    if($current == $previous)
+                    $day2 = date("Y-m", strtotime($row['order_Date']));
+                    if($day2 == $day)
                     {
-                        $pdf->SetFont('Arial','',8);
-                        $y= $pdf ->GetY();
-                        $pdf->MultiCell(30,8,$row['order_Date'],1,'L');
-                        $y1=$pdf ->GetY();
-                        $pdf ->SetY($y);
-                        $pdf ->Cell(30,5,'');$pdf->Cell(20,8,$row['item_ID'],1,0);
-                        $pdf->Cell(45,8,$row['item_Name'],1,0);
-                        $pdf->Cell(25,8,$row['item_unit'],1,0);
-                        $pdf->Cell(30,8,$row['item_Brand'],1,0);
-                        $pdf->Cell(20,8,$row['orderItems_Quantity'],1,0);
-                        $pdf->Cell(20,8,$row['order_Total'],1,1);   
-                    }
-                }
-                $pdf ->SetY($y1+6);
-            }
-             
+                        $pdf->SetFont('Arial','B',10);
+                        $pdf->Cell(0,8,"Order ID:".$row['order_ID'],1,0,'C');
+                        $pdf->Ln(8);
+                        $pdf->SetFont('Arial','B',8);
+                        $pdf->Cell(30,10,'Order Date',1,0);
+                        $pdf->Cell(20,10,'Item ID',1,0);
+                        $pdf->Cell(45,10,'Item Name',1,0);
+                        $pdf->Cell(25,10,'Item Unit',1,0);
+                        $pdf->Cell(30,10,'Item Brand',1,0);
+                        $pdf->Cell(20,10,'Quantity',1,0);
+                        $pdf->Cell(20,10,'Order Total',1,1);
+                        $y = $pdf->GetY();
+
+                        $current = $row['order_ID'];
+                        foreach($result as $row)
+                        {
+                            $previous = $row['order_ID'];
+                            if($current == $previous)
+                            {
+                                $pdf->SetFont('Arial','',8);
+                                $y= $pdf ->GetY();
+                                $pdf->MultiCell(30,8,$row['order_Date'],1,'L');
+                                $y1=$pdf ->GetY();
+                                $pdf ->SetY($y);
+                                $pdf ->Cell(30,5,'');$pdf->Cell(20,8,$row['item_ID'],1,0);
+                                $pdf->Cell(45,8,$row['item_Name'],1,0);
+                                $pdf->Cell(25,8,$row['item_unit'],1,0);
+                                $pdf->Cell(30,8,$row['item_Brand'],1,0);
+                                $pdf->Cell(20,8,$row['orderItems_Quantity'],1,0);
+                                $pdf->Cell(20,8,$row['order_Total'],1,1);   
+                            }
+                        }
+                    }   
+                        
+                }$pdf ->SetY($y1+10);
+
+            }   
         }
-        else{
+        else
+        {
             $pdf->SetFont('Arial','B',10);
             $pdf->Cell(0,8,"No Record Found",0,'C');
         }
-
 $pdf->Output();
 ?>
