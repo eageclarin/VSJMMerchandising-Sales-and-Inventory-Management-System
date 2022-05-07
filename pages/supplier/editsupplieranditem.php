@@ -11,7 +11,9 @@
 
 			$itemID = $_POST['edititemID'];
 			$item_Name =trim($_POST['editName']);
+			$item_Unit =trim($_POST['editUnit']);
 			$item_Brand =trim($_POST['editBrand']);
+			$item_Category = trim($_POST['item_Category']);
 			$supplierID = $_POST['editsupplierID'];
 			$supplier_Name =trim($_POST['editsupplier']);
 			$supplier_Status =$_POST['editstatus'];
@@ -19,7 +21,7 @@
 
 
 
-		mysqli_query($conn, "UPDATE item set item_ID=' " .$itemID. " ', item_Name=' " . $item_Name . " ', item_Brand=' " . $item_Brand . " '
+		mysqli_query($conn, "UPDATE item set item_ID=' " .$itemID. " ', item_unit=' " .$item_Unit. " ', item_Name=' " . $item_Name . " ', item_Brand=' " . $item_Brand . " ', item_Category=' " . $item_Category . " '
 				WHERE item_ID = ' " . $itemID . " ' ") or die( mysqli_error($conn));
 
 		mysqli_query($conn, "UPDATE supplier set supplier_ID=' " . $supplierID . " ', supplier_Name=' " . $supplier_Name . " ', supplier_Status=' " . $supplier_Status . " '
