@@ -127,8 +127,8 @@ if(isset($_POST['deliver'])){
       } else {  //ELSE, INSERT NEW ITEM IN INVENTORY
         $markup = $_SESSION['addInventory_markup']; //to be edited, insert modal here for item cetegory and markup
         $newPrice = $CostTrans*$markup;
-        $insert = "INSERT INTO inventory(branch_ID, item_ID, item_Stock, item_RetailPrice, item_category, Item_markup, in_pending)
-        VALUES (1, '$transItem', '$transQuant', '$newPrice' , 'dummy', $markup, 0);";
+        $insert = "INSERT INTO inventory(branch_ID, item_ID, item_Stock, item_RetailPrice, Item_markup, in_pending, inventoryItem_Status)
+        VALUES (1, '$transItem', '$transQuant', '$newPrice', $markup, 0, 1);";
         $sqlInsert = mysqli_query($conn, $insert);
       } //END OF INSERTING NEW ITEM  
     } //END OF RESULTITEMS WHILE LOOP

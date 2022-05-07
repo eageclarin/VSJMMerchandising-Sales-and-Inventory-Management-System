@@ -145,6 +145,7 @@ if (isset($_POST['edit'])) { //UPDATING INVENTORY
                       <option value="Paints">Paints</option>
                       <option value="bolts and nuts">Bolts and Nuts</option>
                       <option value="Tools">Tools</option>
+                      <option value="Wood">Wood</option>
                     </select>        
                   </div> 
                 </div> <!-- MB-1 MT-1 -->

@@ -25,13 +25,8 @@ if (isset($_POST['edit'])) { //UPDATING INVENTORY
   $item_Category = $_POST['item_Category'];
   $url = "Location: ./" .$_POST['url'];
 
-  if($item_Stock<=10){
-    $pend = 1;
-  } else{
-    $pend =0;
-  }
-
-  $updateStatus = "UPDATE inventory SET in_pending=$pend, item_Stock = '$item_Stock', item_RetailPrice = '$item_Retail', Item_markup = '$item_Markup' WHERE item_ID = '$itemID' AND branch_ID=1;";
+ 
+  $updateStatus = "UPDATE inventory SET in_pending=0, item_Stock = '$item_Stock', item_RetailPrice = '$item_Retail', Item_markup = '$item_Markup' WHERE item_ID = '$itemID' AND branch_ID=1;";
   $sqlUpdate = mysqli_query($conn,$updateStatus);
   $updateStatus = "UPDATE item SET item_Name = '$item_Name', item_unit='$item_Unit', item_Brand ='$item_Brand', item_Category = '$item_Category' WHERE item_ID = '$itemID';";
   $sqlUpdate = mysqli_query($conn,$updateStatus);
