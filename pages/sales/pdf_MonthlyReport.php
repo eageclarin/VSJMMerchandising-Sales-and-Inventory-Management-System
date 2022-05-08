@@ -38,7 +38,7 @@ include "conn.php";
                 $day = date("Y-m", strtotime($row['MONTHNAME(order_Date)']));
 
                 $pdf->SetFont('Arial','B',12);
-                $pdf->Cell(0,8,$month.'('.$date.')',1,0,);
+                $pdf->Cell(0,8,$month.'('.$date.')',1,0);
                 $pdf->Ln(8);
 
                 $sql1 = "SELECT DISTINCT order_items.order_ID, orders.order_Date  

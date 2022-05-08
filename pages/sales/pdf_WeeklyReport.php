@@ -36,7 +36,7 @@ $res = mysqli_query($conn, $sql);
                 $month = date("F Y", strtotime($row['MONTHNAME(order_Date)']));
                 $timestamp1 = $row['WEEK(order_Date)'];
                 $pdf->SetFont('Arial','B',12);
-                $pdf->Cell(0,8,'Week '.$timestamp1.' ('.$month.')' ,1,0,);
+                $pdf->Cell(0,8,'Week '.$timestamp1.' ('.$month.')' ,1,0);
                 $pdf->Ln(8);
 
                 $sql1 = "SELECT DISTINCT order_items.order_ID, WEEK(orders.order_Date)  
