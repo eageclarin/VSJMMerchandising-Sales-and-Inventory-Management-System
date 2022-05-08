@@ -75,7 +75,8 @@ $n=0;
           
               <input type="checkbox" name="collapse" id="collapse<?php echo $n?>" >
               <h2 class="handle">
-                <label for="collapse<?php echo $n?>"> <?php echo "Transaction ID: ".$ID; ?> 
+                <label for="collapse<?php echo $n?>" > <?php echo "Transaction ID: ".$ID; ?> 
+                &emsp; &emsp; &emsp; &emsp; Supplier: <?php echo $supplierName; ?>
                 <div style="float:right; width:50%;">
                   <form action="export.php" method="post">
                     <input type=hidden name=ExportTransactionID value=<?php echo $ID?>>
@@ -83,6 +84,8 @@ $n=0;
                     <button class="btn" name="export" type="submit" style="float:right;"><i class='fas fa-download'></i></button>
                   </form>
                 </div>
+                </br> <span style="padding-left:27px; font-weight: 100;">Date: <?php echo $transacDate; ?></span>
+                &nbsp; &nbsp; &nbsp; Total: <?php echo $total;?>
                 </label>
               </h2>
         
