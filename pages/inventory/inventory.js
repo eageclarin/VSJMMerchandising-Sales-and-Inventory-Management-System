@@ -1,4 +1,4 @@
-function notif(trans, ID){
+function notif(trans, ID, transTotal){
     var num = trans +""+ID;
     var quant = $("#quant"+num).val();
     //var ID = $("#itemID").val();
@@ -16,6 +16,7 @@ function notif(trans, ID){
             }
         });
         document.getElementById("total"+num).innerHTML = cost*quant;
+        //document.getElementById("transTotal"+trans).innerHTML = transTotal;
 }
 
 function notif1(trans, ID){

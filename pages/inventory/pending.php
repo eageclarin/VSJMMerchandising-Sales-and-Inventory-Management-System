@@ -46,6 +46,11 @@ if (isset($_POST['delete'])) {
   //EDIT ITEM QUANTITY
   $updateItem = "UPDATE transaction_Items SET transactionItems_Quantity = '$quantity', transactionItems_TotalPrice = '$total' WHERE item_ID = '$updateItemID' AND transaction_ID = '$updateitemTrans';";
   $sqlupdateItem = mysqli_query($conn,$updateItem);
+
+  //UPDATE TRANSACTION TOTAL PRICE
+  $updateItem = "UPDATE supplier_transactions SET transaction_TotalPrice = (SELECT SUM(transactionItems_TotalPrice) FROM transaction_items WHERE transaction_ID = '$updateitemTrans' ) WHERE transaction_ID = '$updateitemTrans';";
+  $sqlupdateItem = mysqli_query($conn,$updateItem);
+
   if ($sqlupdateItem) {
     //echo "Update in supplier transactions Success </br>";
   } else {
@@ -64,8 +69,13 @@ if (isset($_POST['delete'])) {
     //UPDATE QUANTITY, COST PRICE AND TOTAL
     $updateItem = "UPDATE transaction_Items SET transactionItems_Quantity = '$deliQuantity', transactionItems_CostPrice = '$deliCost', transactionItems_TotalPrice = '$total'  WHERE item_ID = '$deliUpdateItemID' AND transaction_ID = '$deliUpdateitemTrans';";
     $sqlupdateItem = mysqli_query($conn,$updateItem);
+
+
+    //UPDATE TRANSACTION TOTAL PRICE
+    $updateItem = "UPDATE supplier_transactions SET transaction_TotalPrice = (SELECT SUM(transactionItems_TotalPrice) FROM transaction_items WHERE transaction_ID = '$deliUpdateitemTrans' ) WHERE transaction_ID = '$deliUpdateitemTrans';";
+    $sqlupdateItem = mysqli_query($conn,$updateItem);
     if ($sqlupdateItem) {
-      //echo "Update in supplier transactions Success </br>";
+      // alert
     } else {
       echo mysqli_error($conn);
     } 
@@ -135,7 +145,7 @@ if(isset($_POST['deliver'])){
   }//END OF GETTING ALL ITEMS
         
   //UPDATE TRANSACTION_STATUS TO 2 (DELIVERED ALREADY)
-  $updateStatusTrans = "UPDATE supplier_transactions SET transaction_Status=2 WHERE transaction_ID = '$transID';";
+  $updateStatusTrans = "UPDATE supplier_transactions SET transaction_Status=2, transaction_TotalPrice = (SELECT SUM(transactionItems_TotalPrice) FROM transaction_items WHERE transaction_ID = '$transID' ) WHERE transaction_ID = '$transID';";
   $sqlUpdateTrans = mysqli_query($conn,$updateStatusTrans);
   if ($sqlUpdateTrans) {
     //echo "Update in supplier transactions Success </br>";  
@@ -148,7 +158,7 @@ if(isset($_POST['deliver'])){
 }
 }// END OF DELIVER BUTTON SET
 
-// CANCEL BUTTON
+// CANCEL BUTTON IN TO BE DELIVERED
 if(isset($_POST['cancel'])){
   $transID=$_POST['transaction'];
   $getitems = "SELECT * FROM transaction_Items INNER JOIN inventory ON (transaction_Items.item_ID = inventory.item_ID) WHERE transaction_ID = '$transID';";
@@ -219,7 +229,7 @@ if(isset($_POST['cancel'])){
       <div class="card-body">
         <p class="card-text">Items that are not yet ordered</p>
         <?php //SHOW PENDING TRANSACTIONS
-          $sql = "SELECT * FROM supplier_transactions WHERE transaction_Status =0 ;";   
+          $sql = "SELECT * FROM supplier_transactions INNER JOIN supplier ON (supplier_transactions.supplier_ID = supplier.supplier_ID) WHERE transaction_Status =0 ;";   
           $result = mysqli_query($conn,$sql);
           $resultCheck = mysqli_num_rows($result); ?>
 
@@ -231,6 +241,7 @@ if(isset($_POST['cancel'])){
                     $n++;
                     $ID = $row['transaction_ID'];  
                     $supplier = $row['supplier_ID'];
+                    $supplierName = $row['supplier_Name'];
                     $transacDate = $row['transaction_Date'];   
                     $total = $row['transaction_TotalPrice'];                
                      ?>
@@ -239,7 +250,8 @@ if(isset($_POST['cancel'])){
                         <input type="checkbox" name="collapse" id="collapse<?php echo $n?>" >
                         <h2 class="handle">
                             <label for="collapse<?php echo $n?>"> <?php echo "Transaction ID: ".$ID; ?> 
-                            <div style="float:right; width:50%;">
+                            
+                            <div style="float:right; width:25%;">
                             <!-- EXPORT BUTTON -->
                             <form action="export.php" method="post">
                                 <input type=hidden name=ExportTransactionID value=<?php echo $ID?>>
@@ -254,15 +266,16 @@ if(isset($_POST['cancel'])){
                             </form>
                             
                             </div>
+                            &emsp; &emsp;  Supplier: <?php echo $supplierName; ?>
+                            </br> <span style="padding-left:27px; font-weight: 100;" id=transTotal<?php echo $ID;?> >Total: <?php echo $total;?></span>
+                            
                             </label>  
                       </h2>
                      
                       
                     
                     <div class="content">
-                         <?php echo "Supplier ID: ".$supplier. "<br/>";
-                      echo "Date: ".$transacDate. "<br/>";
-                      echo "Total: ".$total. "<br/>";
+                         <?php 
                         
                           echo "<table class='table'> 
                                   <tr> 
@@ -290,9 +303,9 @@ if(isset($_POST['cancel'])){
                               echo "    <td>". $row1['item_Name']. "</td>";  
                               echo "    <td>" .$row1['item_Brand']. "</td>";  
                               echo "    <td>" . $row1['item_unit'] . "</td>";  
-                              echo "    <td><input type=number name=quant id=quant" .$ID .$item  ." value=" . $row1['transactionItems_Quantity']. " style='width:50px;' onchange='notif(".$ID ."," .$item .")'></td>"; 
+                              echo "    <td><input type=number name=quant id=quant" .$ID .$item  ." value=" . $row1['transactionItems_Quantity']. " style='width:50px;' onchange='notif(".$ID ."," .$item ."," .$total .")'></td>"; 
                               echo "    <td>" .$row1['transactionItems_CostPrice']. "</td>";
-                              echo "    <td id=total".$ID .$item  .">" .$row1['transactionItems_TotalPrice']. "</td>";   ?>
+                              echo "    <td id=total".$ID .$item .">" .$row1['transactionItems_TotalPrice']. "</td>";   ?>
                                         <td>
                                           <!-- REMOVE AND EDIT BUTTON-->
                                           <input type=hidden name=itemID id= itemID value=<?php echo $item?>>
@@ -328,7 +341,7 @@ if(isset($_POST['cancel'])){
     <div class="card-body">
       <p class="card-text">Pending deliveries..</p>
       <?php
-        $sql = "SELECT * FROM supplier_transactions WHERE transaction_Status =1 ;";   
+        $sql = "SELECT * FROM supplier_transactions INNER JOIN supplier ON (supplier_transactions.supplier_ID = supplier.supplier_ID) WHERE transaction_Status =1 ;";   
         $result = mysqli_query($conn,$sql);
         $resultCheck = mysqli_num_rows($result); ?>
       <div class = "container" style="width: 100%;">
@@ -339,6 +352,7 @@ if(isset($_POST['cancel'])){
                 $k++;
                 $ID = $row['transaction_ID'];  
                 $supplier = $row['supplier_ID'];
+                $supplierName = $row['supplier_Name'];
                 $transacDate = $row['transaction_Date'];   
                 $total = $row['transaction_TotalPrice'];
                 ?>
@@ -348,21 +362,23 @@ if(isset($_POST['cancel'])){
                         <input type="checkbox" name="collapse" id="#collapseDeli<?php echo $k?>" >
                         <h2 class="handle">
                             <label for="#collapseDeli<?php echo $k?>"> <?php echo "Transaction ID: ".$ID; ?> 
-                            <div style="float:right; width:50%;">
+                            <div style="float:right; width:15%;">
                             <!--DELIVERED BUTTON-->
                             <input type=hidden name=transaction value=<?php echo $ID?>>
                             <button class="btn" name="cancel" type="submit" style="float:right;"><i class='fas fa-times'></i></button>
                             <button class="btn " name="deliver" type="submit" style="float:right;"><i class='fas fa-check'></i></button>
                             
                             </div>
+                            &emsp; &emsp; &emsp; &emsp; Supplier: <?php echo $supplierName; ?>
+                            </br> <span style="padding-left:27px; font-weight: 100;">Date: <?php echo $transacDate; ?></span>
+                &nbsp; &nbsp; &nbsp; Total: <?php echo $total;?>
+
+
                             </label>
                         </h2>
                     
                     <div class="content">
                     <?php 
-                      echo "Supplier ID: ".$supplier. "<br/>";
-                      echo "Date: ".$transacDate. "<br/>";
-                      echo "Total: ".$total. "<br/>";
                       
                         echo "<table class='table' style='width:100%;'> 
                                 <tr> 
