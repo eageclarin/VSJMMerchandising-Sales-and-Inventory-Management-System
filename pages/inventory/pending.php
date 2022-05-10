@@ -34,52 +34,7 @@ if (isset($_POST['delete'])) {
   } 
 }
 
-//EDIT BUTTON IN PENDING ORDERS
-//if (isset($_POST['edit'])) {
-  if(isset($_POST['changeQuantity'])){
-  //$quantity = $_POST['quant'];
-  $quantity = $_POST['changeQuantity'];
-  $updateItemID=$_POST['itemID'];
-  $updateitemTrans = $_POST['transID'];
-  $cost = $_POST['cost'];
-  $total =$quantity*$cost;
-  //EDIT ITEM QUANTITY
-  $updateItem = "UPDATE transaction_Items SET transactionItems_Quantity = '$quantity', transactionItems_TotalPrice = '$total' WHERE item_ID = '$updateItemID' AND transaction_ID = '$updateitemTrans';";
-  $sqlupdateItem = mysqli_query($conn,$updateItem);
 
-  //UPDATE TRANSACTION TOTAL PRICE
-  $updateItem = "UPDATE supplier_transactions SET transaction_TotalPrice = (SELECT SUM(transactionItems_TotalPrice) FROM transaction_items WHERE transaction_ID = '$updateitemTrans' ) WHERE transaction_ID = '$updateitemTrans';";
-  $sqlupdateItem = mysqli_query($conn,$updateItem);
-
-  if ($sqlupdateItem) {
-    //echo "Update in supplier transactions Success </br>";
-  } else {
-    echo mysqli_error($conn);
-  } 
-}
-
-//EDIT BUTTON IN TO BE DELIVERED
-//if (isset($_POST['editDeli'])) {
-  if (isset($_POST['deliQuant'])){
-    $deliQuantity = $_POST['deliQuant'];
-    $deliUpdateItemID=$_POST['deliItemID'];
-    $deliUpdateitemTrans = $_POST['deliTransID'];
-    $deliCost = $_POST['deliCost'];
-    $total = $deliQuantity*$deliCost;
-    //UPDATE QUANTITY, COST PRICE AND TOTAL
-    $updateItem = "UPDATE transaction_Items SET transactionItems_Quantity = '$deliQuantity', transactionItems_CostPrice = '$deliCost', transactionItems_TotalPrice = '$total'  WHERE item_ID = '$deliUpdateItemID' AND transaction_ID = '$deliUpdateitemTrans';";
-    $sqlupdateItem = mysqli_query($conn,$updateItem);
-
-
-    //UPDATE TRANSACTION TOTAL PRICE
-    $updateItem = "UPDATE supplier_transactions SET transaction_TotalPrice = (SELECT SUM(transactionItems_TotalPrice) FROM transaction_items WHERE transaction_ID = '$deliUpdateitemTrans' ) WHERE transaction_ID = '$deliUpdateitemTrans';";
-    $sqlupdateItem = mysqli_query($conn,$updateItem);
-    if ($sqlupdateItem) {
-      // alert
-    } else {
-      echo mysqli_error($conn);
-    } 
-}
 
 // IF delivered BUTTON IS SET FOR EACH TRANSACTION
 if(isset($_POST['deliver'])){ 
@@ -261,7 +216,7 @@ if(isset($_POST['cancel'])){
                             <!--ORDER BUTTON-->
                             <form action="pending.php" class="mb-1" method="post">
                                 <input type=hidden name=transaction value=<?php echo $ID?>>
-                                <button class="btn " name="delete" type="submit" style="float:right;" disabled><i class='fas fa-times'></i></button>
+                                <button class="btn " name="cancel" type="submit" style="float:right;" ><i class='fas fa-times'></i></button>
                                 <button class="btn " name="order" type="submit" style="float:right;"><i class='fas fa-check'></i></button>
                             </form>
                             
@@ -303,6 +258,7 @@ if(isset($_POST['cancel'])){
                               echo "    <td>". $row1['item_Name']. "</td>";  
                               echo "    <td>" .$row1['item_Brand']. "</td>";  
                               echo "    <td>" . $row1['item_unit'] . "</td>";  
+
                               echo "    <td><input type=number name=quant id=quant" .$ID .$item  ." value=" . $row1['transactionItems_Quantity']. " style='width:50px;' onchange='notif(".$ID ."," .$item ."," .$total .")'></td>"; 
                               echo "    <td>" .$row1['transactionItems_CostPrice']. "</td>";
                               echo "    <td id=total".$ID .$item .">" .$row1['transactionItems_TotalPrice']. "</td>";   ?>
@@ -371,7 +327,7 @@ if(isset($_POST['cancel'])){
                             </div>
                             &emsp; &emsp; &emsp; &emsp; Supplier: <?php echo $supplierName; ?>
                             </br> <span style="padding-left:27px; font-weight: 100;">Date: <?php echo $transacDate; ?></span>
-                &nbsp; &nbsp; &nbsp; Total: <?php echo $total;?>
+                &nbsp; &nbsp; &nbsp; <span id=transTotal<?php echo $ID;?> >Total: <?php echo $total;?></span>
 
 
                             </label>

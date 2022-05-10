@@ -7,15 +7,19 @@ function notif(trans, ID, transTotal){
     //alert(quant + " id: " + ID + " trans: " + trans);
         $.ajax({
             type: "POST",
-            url: "pending.php",
+            url: "pending2.php",
             data: {
                 changeQuantity: quant,
                 cost: cost,
                 itemID: ID,
                 transID: trans
+            },
+            success: function(data) { 
+                $("#transTotal"+trans).html(data);
             }
         });
         document.getElementById("total"+num).innerHTML = cost*quant;
+
         //document.getElementById("transTotal"+trans).innerHTML = transTotal;
 }
 
@@ -28,12 +32,15 @@ function notif1(trans, ID){
     //alert(quant + " id: " + ID + " trans: " + trans);
         $.ajax({
             type: "POST",
-            url: "pending.php",
+            url: "pending2.php",
             data: {
                 deliQuant: quant,
                 deliCost: cost,
                 deliItemID: ID,
                 deliTransID: trans
+            },
+            success: function(data) { 
+                $("#transTotal"+trans).html(data);
             }
         });
     document.getElementById("total"+num).innerHTML = cost*quant;
