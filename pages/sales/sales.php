@@ -8,13 +8,27 @@
     <title>Sales Report</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
+
+    
 </head>
 <body>
-    
-    <div class="container">
-        <div class="row justify-content-center">
+
+<div class="d-flex flex-row flex-shrink-0" >
+<?php 
+include "conn.php";
+include 'navbar.php'; 
+?>
+
+
+
+        <div class="container" style="width: 80%;">
             <div class="col-md-12">
-                <div class="card mt-5">
+                <div class="card mt-3">
                     <div class="card-header">
                         <h4>Sales Report</h4>
                     </div>
@@ -58,7 +72,7 @@
                         <div class= "container1">
                         <table class="table table-borderd">
                             <?php
-                                include "conn.php";
+                                
                                 $sql = "select distinct item_NAME from item order by item_NAME";
                                 $result = mysqli_query($conn, $sql);
 
@@ -130,11 +144,6 @@
             </div>
         </div>
     </div>
-
-
-
-    
-
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
