@@ -28,11 +28,13 @@ $result = mysqli_query($conn, $sql);
 
         if(mysqli_num_rows($result) > 0)
         {
-            $sql3 = "SELECT DISTINCT QUARTER(order_Date), YEAR(order_Date) from orders ORDER BY order_Date";
+            $sql3 = "SELECT DISTINCT QUARTER(order_Date), YEAR(order_Date) 
+                     FROM orders ORDER BY order_Date";
             $result3 = mysqli_query($conn, $sql3);
             foreach($result3 as $row)
             {
                 $timestamp1 = $row['QUARTER(order_Date)'];
+                $month = date("n", strtotime($timestamp1));
                 $year = date("Y", strtotime($row['YEAR(order_Date)']));
                 $pdf->SetFont('Arial','B',12);
                 $pdf->Cell(0,8,'Quarter '.$timestamp1.'('.$year.')',1,0,);
@@ -47,7 +49,7 @@ $result = mysqli_query($conn, $sql);
                 {
                     $timestamp = $row['QUARTER(orders.order_Date)'];
                     $month2 = date("n", strtotime($timestamp));
-                    if($month2 == $timestamp1)
+                    if($month2 == $month)
                     {
                         $pdf->SetFont('Arial','B',10);
                         $pdf->Cell(0,8,"Order ID:".$row['order_ID'],1,0,'C');
