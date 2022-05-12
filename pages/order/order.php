@@ -185,7 +185,9 @@
 
                         //update total
                         //increase stock
-                        header('location: order.php?update=d');
+                        if ($resDelete) {
+                            header('location: order.php?update=d');
+                        }
                     }
                 }
                 break;
