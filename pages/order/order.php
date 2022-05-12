@@ -383,7 +383,7 @@
                         if ($r == 5) {
                             $r = 1;
                         }
-                        if (++$counter == $resultCheck) {
+                        if (++$counter == $countDisplay) {
                             while ($r != 5){
                                 while ($i != 3) {
                                     echo '<div class="col">
