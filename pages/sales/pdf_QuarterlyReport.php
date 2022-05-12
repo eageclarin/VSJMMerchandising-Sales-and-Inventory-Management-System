@@ -47,8 +47,7 @@ $result = mysqli_query($conn, $sql);
                 foreach($result1 as $row)
                 {
                     $timestamp = $row['QUARTER(orders.order_Date)'];
-                    $month2 = date("n", strtotime($timestamp));
-                    if($month2 == $timestamp1)
+                    if($timestamp == $timestamp1)
                     {
                         $pdf->SetFont('Arial','B',10);
                         $pdf->Cell(0,8,"Order ID:".$row['order_ID'],1,0,'C');
