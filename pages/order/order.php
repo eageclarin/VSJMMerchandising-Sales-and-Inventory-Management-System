@@ -18,16 +18,17 @@
         while ($list = mysqli_fetch_assoc($resList)) {
             $res[] = trim($list['item_Name']);
         }
+        echo "<script> var plang = ".json_encode($res)."; </script>";
     } else {
-        $res = array();  
+        $res = array();
+        echo "<script> var plang = ".json_encode($res)."; </script>";  
     }
     //pass to javascript
-    echo "<script> var plang = ".json_encode($res)."; </script>";
-
+    
     /*-------- DISPLAY UPDATE TEXT --------*/
     if (isset($_GET['update'])) {
         $u = $_GET['update'];
-
+    
         switch($u) {
             case 'u':
                 $update = "Already in cart. Updated item quantity.";
@@ -48,7 +49,7 @@
                 break;
         }
     }
-
+    
     /*-------- ACTION: ADD/DELETE ITEM --------*/
     if (isset($_GET['action'])) {
         $action = $_GET['action'];
@@ -69,7 +70,8 @@
                         $name = $rowGet['item_Name'];
                         $price = $rowGet['item_RetailPrice'];
                     } else {
-                        header('location: order.php?search=n'); //item not in inventory
+                        echo "<script> window.location.replace('order.php?update=n') </script>";
+                        //header('location: order.php?update=n'); //item not in inventory
                     }
  
                     $qty = 1;
@@ -94,19 +96,20 @@
                         //update total
                         //decrease stock??
                         if ($resUpdate) {
-                            header('location: order.php?update=u'); //item in cart. updated item quantity
+                            echo "<script> window.location.replace('order.php?update=u') </script>";
+                            //header('location: order.php?update=u'); //item in cart. updated item quantity
                         }
                     } else { //if product not in cart
                         $sqlInsert = "INSERT INTO cart (
                             itemID, itemName, itemPrice, quantity, itemTotalP)
-                            VALUES (
-                            '$id', '$name', '$price', '$qty', '$iTotal')";
+                            VALUES ('$id', '$name', '$price', '$qty', '$iTotal')";
                         $resInsert = mysqli_query($conn, $sqlInsert);
 
                         //update total
                         //decrease stock??
                         if ($resInsert) {
-                            header('location: order.php?update=i'); //item added to cart
+                            echo "<script> window.location.replace('order.php?update=i') </script>";
+                            //header('location: order.php?update=i'); //item added to cart
                         }
                     }
                 }
@@ -127,7 +130,8 @@
                         $id = $rowGet['item_ID'];
                         $price = $rowGet['item_RetailPrice'];
                     } else {
-                        header('location: order.php?search=n'); //item not in inventory
+                        echo "<script> window.location.replace('order.php?update=n') </script>";
+                        //header('location: order.php?search=n'); //item not in inventory
                     }
  
                     $qty = 1;
@@ -152,7 +156,8 @@
                         //update total
                         //decrease stock??
                         if ($resUpdate) {
-                            header('location: order.php?update=u'); //item in cart. updated item quantity
+                            echo "<script> window.location.replace('order.php?update=u') </script>";
+                            //header('location: order.php?update=u'); //item in cart. updated item quantity
                         }
                     } else { //if product not in cart yet
                         $sqlInsert = "INSERT INTO cart (
@@ -164,7 +169,8 @@
                         //update total
                         //decrease stock??
                         if ($resInsert) {
-                            header('location: order.php?update=i'); //item added to cart
+                            echo "<script> window.location.replace('order.php?update=i') </script>";
+                            //header('location: order.php?update=i'); //item added to cart
                         }
                     }
                 }
@@ -186,7 +192,8 @@
                         //update total
                         //increase stock
                         if ($resDelete) {
-                            header('location: order.php?update=d');
+                            echo "<script> window.location.replace('order.php?update=d') </script>";
+                            //header('location: order.php?update=d');
                         }
                     }
                 }
