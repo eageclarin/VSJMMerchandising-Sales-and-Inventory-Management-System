@@ -37,7 +37,7 @@ $result = mysqli_query($conn, $sql);
                 $month = date("n", strtotime($timestamp1));
                 $year = date("Y", strtotime($row['YEAR(order_Date)']));
                 $pdf->SetFont('Arial','B',12);
-                $pdf->Cell(0,8,'Quarter '.$timestamp1.'('.$year.')',1,0,);
+                $pdf->Cell(0,8,'Quarter '.$timestamp1.'('.$year.')',1,0);
                 $pdf->Ln(8);
 
                 $sql1 = "SELECT DISTINCT order_items.order_ID, QUARTER(orders.order_Date)  
