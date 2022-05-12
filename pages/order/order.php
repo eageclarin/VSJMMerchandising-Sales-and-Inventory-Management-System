@@ -95,8 +95,6 @@
                         //decrease stock??
                         if ($resUpdate) {
                             header('location: order.php?update=u'); //item in cart. updated item quantity
-                        } else {
-                            echo "ERROR: Could not be able to execute $sqlUpdate." . mysqli_error($conn);
                         }
                     } else { //if product not in cart
                         $sqlInsert = "INSERT INTO cart (
@@ -109,8 +107,6 @@
                         //decrease stock??
                         if ($resInsert) {
                             header('location: order.php?update=i'); //item added to cart
-                        } else {
-                            echo "ERROR: Could not be able to execute $sqlInsert." . mysqli_error($conn);
                         }
                     }
                 }
@@ -157,8 +153,6 @@
                         //decrease stock??
                         if ($resUpdate) {
                             header('location: order.php?update=u'); //item in cart. updated item quantity
-                        } else {
-                            echo "ERROR: Could not be able to execute $sqlUpdate." . mysqli_error($conn);
                         }
                     } else { //if product not in cart yet
                         $sqlInsert = "INSERT INTO cart (
@@ -171,8 +165,6 @@
                         //decrease stock??
                         if ($resInsert) {
                             header('location: order.php?update=i'); //item added to cart
-                        } else {
-                            echo "ERROR: Could not be able to execute $sqlInsert." . mysqli_error($conn);
                         }
                     }
                 }
@@ -193,7 +185,7 @@
 
                         //update total
                         //increase stock
-                        header("location: order.php?update=d");
+                        header('location: order.php?update=d');
                     }
                 }
                 break;
