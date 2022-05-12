@@ -34,7 +34,6 @@ $result = mysqli_query($conn, $sql);
             foreach($result3 as $row)
             {
                 $timestamp1 = $row['QUARTER(order_Date)'];
-                $month = date("n", strtotime($timestamp1));
                 $year = date("Y", strtotime($row['YEAR(order_Date)']));
                 $pdf->SetFont('Arial','B',12);
                 $pdf->Cell(0,8,'Quarter '.$timestamp1.'('.$year.')',1,0);
@@ -49,7 +48,7 @@ $result = mysqli_query($conn, $sql);
                 {
                     $timestamp = $row['QUARTER(orders.order_Date)'];
                     $month2 = date("n", strtotime($timestamp));
-                    if($month2 == $month)
+                    if($month2 == $timestamp1)
                     {
                         $pdf->SetFont('Arial','B',10);
                         $pdf->Cell(0,8,"Order ID:".$row['order_ID'],1,0,'C');
