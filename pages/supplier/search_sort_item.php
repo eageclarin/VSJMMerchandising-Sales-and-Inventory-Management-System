@@ -26,6 +26,11 @@
         header("Location: ./editsupplieranditem.php");
         unset($_POST['edit']);
     }
+
+
+
+
+
     // SQL QUERIES ==========================================================================================
     // FROM SEARCH TAB
     if (isset($_POST['search']) && !isset($_POST['selected'])) {
@@ -87,7 +92,9 @@
             <tr>
                 <th> Item ID </th>
                 <th> Item </th>
+                <th> Unit </th>
                 <th> Brand </th>
+                <th> Category </th>
                 <th> Supplier ID </th>
                 <th> Supplier </th>
                 <th> Supplier Status </th>
@@ -103,8 +110,10 @@
         while ($row = mysqli_fetch_assoc($result)) {
 
                 echo "<td>" .$row['item_ID']. "</td>";  
-                echo "<td>". $row['item_Name']. "</td>";  
-                echo "<td>" . $row['item_Brand'] . "</td>";  
+                echo "<td>". $row['item_Name']. "</td>";
+                echo "<td>" . $row['item_unit'] . "</td>";  
+                echo "<td>" . $row['item_Brand'] . "</td>"; 
+                echo "<td>" . $row['item_Category'] . "</td>";  
                 echo "<td>" . $row['supplier_ID']. "</td>"; 
                 echo "<td>" . $row['supplier_Name']. "</td>";
                 if($row['supplier_Status']==1){
@@ -123,6 +132,14 @@
                         <input type=hidden name=itemID1 value=<?php echo $row['item_ID']?>>
                         <input type=hidden name=supplierID1 value=<?php echo $row['supplier_ID']?>>
                         
+                    </form>
+                </td>
+                <td>
+                    <form action="supplieritem.php" class="mb-1" method="post">
+                        <input type=hidden name=orderItemID value=<?php echo $row['item_ID']?>>
+                        <input type=hidden name=orderItemSupp value=<?php echo $row['supplier_ID']?>>
+                        <!--<a href="../inventory/addinventory.php"> <button class="btn-primary" name="order" type="submit">Order</button></a>-->
+                        <button type="button" class="btn btn-success buybtn p-2" style="float:left;"><i class="fa fa-shopping-cart"></i> Buy</i></button>
                     </form>
                 </td>    
             </tr>
@@ -148,15 +165,21 @@
 
                 $('#edititemID').val(data[0]);
                 $('#editName').val(data[1]);
-                $('#editBrand').val(data[2]);
-                $('#editsupplierID').val(data[3]);
-                $('#editsupplier').val(data[4]);
-                $('#editstatus').val(data[5]);
-                $('#editcostprice').val(data[6]);
-                const $select = document.querySelector('#editstatus');
-                $select.value = data[5];
-              
-          
+                $('#editUnit').val(data[2]);
+                $('#editBrand').val(data[3]);
+                $('#editsupplierID').val(data[5]);
+                $('#editsupplier').val(data[6]);
+                $('#editstatus').val(data[7]);
+                $('#editcostprice').val(data[8]);
+                $('#item_Category').val(data[4]);
+                const $select = document.querySelector('#item_Category');
+                $select.value = data[4];
+
+
+                const $select1 = document.querySelector('#editstatus');
+                $select1.value = data[7];
+                
+                
               });
            });
 
@@ -164,4 +187,46 @@
                 return confirm('Are you sure you want to delete this record?');
             }
 
+        $('#editRetail1').change(function() {
+            var costPrice = $('#editCost1').val();
+            var retail = $('#editRetail1').val();
+            
+            $('#editMarkup1').val(Number(parseFloat(retail /costPrice).toFixed(2)));
+            
+          });
+          $('#editMarkup1').change(function() {
+            var costPrice = $('#editCost1').val();
+            var retail = (costPrice*$('#editMarkup1').val()).toFixed(1);
+            retail = Math.ceil(retail*4)/4;
+            $('#editRetail1').val( retail);
+          });
+
+         $(document).ready(function(){
+              $('.buybtn').on('click',function(){
+                  $('#staticBackdropbuy').modal('show');
+                  $tr = $(this).closest('tr');
+
+                  var data = $tr.children("td").map(function () {
+                      return $(this).text();
+                  }).get();
+
+                  console.log(data);
+                  var retail = data[8]*1.2;
+                  $('#editID1').val(data[0]);
+                  $('#editsuppID1').val(data[5]);
+                  $('#editRetail1').val(Math.ceil(retail*4)/4);               
+                  $('#editMarkup1').val(1.2);
+                  //$('#editStock').val(data[6]);
+                  $('#item_Category1').val(data[4]);
+                  const $select2 = document.querySelector('#item_Category1');
+                  $select2.value = data[4];
+                  $('#editCost1').val(data[8]);
+                  
+                  document.getElementById("labelID1").innerHTML = "Item ID: " + data[0];
+                  document.getElementById("labelsuppID1").innerHTML = "Supplier ID: " + data[5];
+                  document.getElementById("labelName1").innerHTML = data[1];
+                  document.getElementById("labelBrand1").innerHTML = data[3];
+                  document.getElementById("labelCost1").innerHTML = data[8] + "/"+ data[2];
+              });
+          });
          </script></html>

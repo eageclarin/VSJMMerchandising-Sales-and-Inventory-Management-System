@@ -193,14 +193,14 @@ include_once 'env/conn.php';
 				<!-- SALES -->
 				<li class="nav-item flex-fill">
 					<a class="nav-link d-grid h-75" href="pages/sales/sales.php">
-						<button class="btn btn-danger fs-5 shadow-sm"><i class="bi bi-table"></i><br>Summary of Sales</button>
+						<button class="btn btn-danger fs-5 shadow-sm"><i class="bi bi-table"></i><br>Reports</button>
 					</a>
 				</li>
 
 				<!-- ORDER -->
 				<li class="nav-item flex-fill">
 					<a class="nav-link d-grid h-75" href="pages/order/order.php">
-						<button class="btn btn-warning fs-5 shadow-sm"><i class="bi bi-cart-fill"></i><br>Order</button>
+						<button class="btn btn-warning fs-5 shadow-sm"><i class="bi bi-cart-fill"></i><br>Sales Entry</button>
 					</a>
 				</li>
 			</ul>

@@ -1,6 +1,13 @@
 <?php
   error_reporting(0);
   include_once '../../env/conn.php';
+  
+  if(isset($_POST['order'])){
+        $_SESSION['orderItemID'] = $_POST['orderItemID'];
+        $_SESSION['orderItemSupp'] = $_POST['orderItemSupp'];
+          header("Location: ../inventory/addinventory.php");
+        unset($_POST['edit']);
+  }
 
 ?>
 
@@ -65,11 +72,27 @@
                   <label for="editName" >Item Name: </label>
                   <div>
                     <input type="text" class="form-control"  id="editName" name="editName" placeholder="Enter">
+                  </div>
+                  <label for="editBrand" >Unit: </label>
+                  <div>
+                    <input type="text" class="form-control"  id="editUnit" name="editUnit" placeholder="Enter">
                   </div> 
                   <label for="editBrand" >Brand: </label>
                   <div>
                     <input type="text" class="form-control"  id="editBrand" name="editBrand" placeholder="Enter">
-                  </div> 
+                  </div>
+                  <label for="item_Category" >Category: </label>
+                        <div>
+                            <select name="item_Category" id="item_Category" style="height:30px;" >
+                            <option value="Electrical" >Electrical</option>
+                            <option value="Plumbing">Plumbing</option>
+                            <option value="Architectural"> Architectural</option>
+                            <option value="Paints">Paints</option>
+                            <option value="bolts and nuts">Bolts and Nuts</option>
+                            <option value="Tools">Tools</option>
+                            <option value="Wood">Wood</option>
+                            </select>        
+                        </div> 
                   <label for="editsupplier" >Supplier Name: </label>
                   <div>
                     <input type="text" class="form-control"  id="editsupplier" name="editsupplier" placeholder="Enter">
@@ -98,7 +121,81 @@
       </div> <!-- MODAL-FADE-->
       <!-- EDIT MODAL ############################################################################ -->
 
+      <!-- BUY MODAL ############################################################################ -->
 
+            <div class="modal fade" id="staticBackdropbuy" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Buy Item</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div> <!-- MODAL-HEADER -->
+                    
+                    <form id="newform" action="../inventory/addinventory.php" method="post" class="form-inline" > 
+                    <div class="modal-body mb-2">
+
+                        <?php
+                          
+                        ?>
+                        
+                        <input type="hidden"  id="editID1" name="editID1" placeholder="Enter">
+                        <input type="hidden"  id="editsuppID1" name="editsuppID1" placeholder="Enter">
+                        
+                        <label for="editID1" id="labelID1" style="border:0; background-color: transparent; font-size: 1em; color:black; font-weight: 400;padding:0px;">Item ID: </label> </br>
+
+                        <label for="editsuppID1" id="labelsuppID1" style="border:0; background-color: transparent; font-size: 1em; color:black; font-weight: 400;padding:0px;">Supplier ID: </label> </br>
+
+                        <label for="editName1" id="labelName1" style="border:0; background-color: transparent; font-size: 1.5em; color:black; font-weight: 500;"></label>
+                        <div>
+                            <label  id="labelBrand1" style="border:0; background-color: transparent; font-size: 1em; color:black; font-weight: 500;"></label>
+                        </div>
+                        <div class="mb-1 mt-1">
+                         
+                        
+                        <div>
+                            <label id="labelCost1" style="border:0; background-color: transparent; font-size: 1.25em; color:black; font-weight: 500; padding-bottom:5px; color:#D8172B;"></label>
+                            <input type="hidden"  id="editCost1" name="editCost1" placeholder="Enter">
+                        </div> 
+                        
+                        <label for="editRetail1" >Retail Price: </label>
+                        <div>
+                            <input type="number" step="0.25" class="form-control"  id="editRetail1" name="editRetail1" placeholder="Enter">
+                            <input type="hidden" step="0.25" class="form-control"  id="hiddenRetail" name="hiddenRetail" placeholder="Enter">
+                        </div> 
+                        
+                        <label for="editMarkup1" >Markup: </label>
+                        <div>
+                            <input type="number" step="0.01" class="form-control"  id="editMarkup1" name="editMarkup1" placeholder="Enter">
+                            <input type="hidden" step="0.01" class="form-control"  id="hiddenmarkup" name="hiddenmarkup" placeholder="Enter">
+                        </div> 
+                        <label for="editStock1" >Number of Stocks: </label>
+                        <div>
+                            <input type="number" step="any" class="form-control"  id="editStock1" name="editStock1" placeholder="Enter">
+                        </div> 
+                        <label for="item_Category1" >Category: </label>
+                        <div>
+                            <select name="item_Category1" id="item_Category1" style="height:30px;" >
+                            <option value="Electrical" >Electrical</option>
+                            <option value="Plumbing">Plumbing</option>
+                            <option value="Architectural"> Architectural</option>
+                            <option value="Paints">Paints</option>
+                            <option value="bolts and nuts">Bolts and Nuts</option>
+                            <option value="Tools">Tools</option>
+                            <option value="Wood">Wood</option>
+                            </select>        
+                        </div> 
+                        </div> <!-- MB-1 MT-1 -->
+                    </div> <!-- MODAL-BODY -->
+                    <div class="modal-footer pb-0">
+                        <input type="hidden" name="url" value="inventory.php">
+                        <input  type="submit" value="Buy" name="buy1" class="form-control btn btn-primary" style="width:150px" >  <!-- INSERT ALERT -->
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div> <!-- MODAL FOOTER -->
+                    </form>  
+                </div> <!-- MODAL-CONTENT -->
+                </div> <!-- MODAL-DIALOG -->
+            </div> <!-- MODAL-FADE-->
+            <!-- BUY MODAL ############################################################################ -->
             <!-- ADD ITEM MODAL ############################################################################ -->
 
       <div class="modal fade" id="staticBackdropadd" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -291,15 +388,19 @@
 
                 $('#edititemID').val(data[0]);
                 $('#editName').val(data[1]);
-                $('#editBrand').val(data[2]);
-                $('#editsupplierID').val(data[3]);
-                $('#editsupplier').val(data[4]);
-                $('#editstatus').val(data[5]);
-                $('#editcostprice').val(data[6]);
+                $('#editUnit').val(data[2]);
+                $('#editBrand').val(data[3]);
+                $('#editsupplierID').val(data[5]);
+                $('#editsupplier').val(data[6]);
+                $('#editstatus').val(data[7]);
+                $('#editcostprice').val(data[8]);
+                $('#item_Category').val(data[4]);
+                const $select = document.querySelector('#item_Category');
+                $select.value = data[4];
 
 
-                const $select = document.querySelector('#editstatus');
-                $select.value = data[5];
+                const $select1 = document.querySelector('#editstatus');
+                $select1.value = data[7];
                 
                 
               });
@@ -323,6 +424,49 @@
                   toggleFields();
               });
         
+          });
+
+          $('#editRetail1').change(function() {
+            var costPrice = $('#editCost1').val();
+            var retail = $('#editRetail1').val();
+            
+            $('#editMarkup1').val(Number(parseFloat(retail /costPrice).toFixed(2)));
+            
+          });
+          $('#editMarkup1').change(function() {
+            var costPrice = $('#editCost1').val();
+            var retail = (costPrice*$('#editMarkup1').val()).toFixed(1);
+            retail = Math.ceil(retail*4)/4;
+            $('#editRetail1').val( retail);
+          });
+
+          $(document).ready(function(){
+              $('.buybtn').on('click',function(){
+                  $('#staticBackdropbuy').modal('show');
+                  $tr = $(this).closest('tr');
+
+                  var data = $tr.children("td").map(function () {
+                      return $(this).text();
+                  }).get();
+
+                  console.log(data);
+                  var retail = data[8]*1.2;
+                  $('#editID1').val(data[0]);
+                  $('#editsuppID1').val(data[5]);
+                  $('#editRetail1').val(Math.ceil(retail*4)/4);               
+                  $('#editMarkup1').val(1.2);
+                  //$('#editStock').val(data[6]);
+                  $('#item_Category1').val(data[4]);
+                  const $select2 = document.querySelector('#item_Category1');
+                  $select2.value = data[4];
+                  $('#editCost1').val(data[8]);
+                  
+                  document.getElementById("labelID1").innerHTML = "Item ID: " + data[0];
+                  document.getElementById("labelsuppID1").innerHTML = "Supplier ID: " + data[5];
+                  document.getElementById("labelName1").innerHTML = data[1];
+                  document.getElementById("labelBrand1").innerHTML = data[3];
+                  document.getElementById("labelCost1").innerHTML = data[8] + "/"+ data[2];
+              });
           });
           
           function toggleFields() {

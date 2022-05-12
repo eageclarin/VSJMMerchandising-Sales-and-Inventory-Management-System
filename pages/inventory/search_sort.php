@@ -202,7 +202,13 @@
                     <a href="../supplier/supplieritem.php?item_Name=<?php echo $row['item_Name']; ?>" >
                         <button class="btn p-0"  ><i class='fas fa-shopping-cart'></i></button>
                     </a>
-                </td>    
+                </td>   
+                <td>
+                    <form action="itemTransactions.php" class="mb-1" method="post">
+                        <button class="btn p-0" name="more" type="submit" ><i style="font-size:15px" class="fa">&#xf0c9;</i></button>
+                        <input type=hidden name=itemID1 value=<?php echo $row['item_ID']?>>
+                    </form>
+                </td> 
             </tr>
             
         <?php  

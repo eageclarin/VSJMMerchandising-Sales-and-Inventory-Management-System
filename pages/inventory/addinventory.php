@@ -37,19 +37,33 @@ include_once '../../env/conn.php';
         $dummyRetail = ceil($dummyRetail*4)/4; */
 //}
 
-if(isset($_POST['buy']))
+if(isset($_POST['buy']) || isset($_POST['buy1']))
 {		
-    $orderItemSupp = $_POST['orderItemSupp'];
-    $orderItemID = $_POST['editID'];
-	$Item_markup= $_POST['editMarkup'];
-    $_SESSION['addInventory_markup'] = $Item_markup;
-	$item_Stock= $_POST['editStock'];
-	$item_category= $_POST['item_Category'];
-    $_SESSION['addInventory_Category'] = $item_category;
-    $item_RetailPrice = $_POST['editRetail'];
-    $item_CostPrice = $_POST['editCost'];
+
+    if(isset($_POST['buy1'])){ //FROM SUPPLIERITEM.PHP
+        $orderItemSupp = $_POST['editsuppID1'];
+        $orderItemID = $_POST['editID1'];
+        $Item_markup= $_POST['editMarkup1'];
+        $_SESSION['addInventory_markup'] = $Item_markup;
+        $item_Stock= $_POST['editStock1'];
+        $item_category= $_POST['item_Category1'];
+        $_SESSION['addInventory_Category'] = $item_category;
+        $item_RetailPrice = $_POST['editRetail1'];
+        $item_CostPrice = $_POST['editCost1'];
+    }
+    else{
+        $orderItemSupp = $_POST['orderItemSupp'];
+        $orderItemID = $_POST['editID'];
+    	$Item_markup= $_POST['editMarkup'];
+        $_SESSION['addInventory_markup'] = $Item_markup;
+    	$item_Stock= $_POST['editStock'];
+    	$item_category= $_POST['item_Category'];
+        $_SESSION['addInventory_Category'] = $item_category;
+        $item_RetailPrice = $_POST['editRetail'];
+        $item_CostPrice = $_POST['editCost'];
 	//$item_RetailPrice = ($item_CostPrice*$Item_markup/100);
     //echo $item_RetailPrice;
+    }
 
     $updateCateg = "UPDATE item set item_Category = '$item_category' WHERE item_ID = '$orderItemID'";
 
@@ -131,8 +145,14 @@ if(isset($_POST['buy']))
 }
 
 mysqli_close($conn); // Close connection
-echo "Location: ../supplier/suppliertable.php?supplier_ID=".$orderItemSupp;
-header("Location: ../supplier/suppliertable.php?supplier_ID=".$orderItemSupp);
+if(isset($_POST['buy1'])){
+    echo "Location: ../supplier/supplieritem.php";
+    header("Location: ../supplier/supplieritem.php");
+}else{
+    echo "Location: ../supplier/suppliertable.php?supplier_ID=".$orderItemSupp;
+    header("Location: ../supplier/suppliertable.php?supplier_ID=".$orderItemSupp);
+}
+
 
 ?>
 
