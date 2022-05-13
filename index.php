@@ -244,13 +244,21 @@ include_once 'env/conn.php';
 		<!------ BOTTOM ------>
 		<div class="row px-3" style="height:25%">
 			<!-- SALES -->
+			<?php 
+			$result = mysqli_query($conn, "SELECT COUNT(order_ID) as orderCount, SUM(order_Total) AS orderTotal FROM orders");
+			$row = mysqli_fetch_array($result);
+			
+			$orderCount = $row['orderCount'];
+			$orderTotal = $row['orderTotal'];
+			?>
+
 			<div class="col-7">
 				<span class="fs-5 pb-1 fw-bold"> Sales </span>
 				<hr class="mt-1">
 				<div class="bg-white text-center mt-2 rounded shadow-sm">
 					<div class="row h-50">
-						<span class="align-middle fs-1 text-success fw-bold"> 0.00 PHP</span>
-						<span> No. of Orders: 0 </span>
+						<span class="align-middle fs-1 text-success fw-bold"> <?php echo $orderTotal; ?> PHP</span>
+						<span> No. of Orders: <?php echo $orderCount; ?> </span>
 					</div>
 				</div>
 			</div>
