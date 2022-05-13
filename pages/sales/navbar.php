@@ -16,7 +16,7 @@
       }
     </style>
 	<!------------ SIDEBAR ----------->
-    <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px;">
+    <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px;height:100%;">
 		<a href="../../index.php" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
 		<img src="../../img/logo.png" class="me-2" width="40"/>
 		<span class="fs-5"> VSJM Merchandising</span>
@@ -31,8 +31,8 @@
 					</a>
 				</div>
 				<div class="col-auto p-0">
-					<a href="../supplier/suppliers.php">
-						<button class="btn btn-danger">Suppliers</button>
+					<a href="sales.php">
+						<button class="btn btn-danger">Sales</button>
 					</a>
 				</div>
 				<div class="col-auto p-0">
@@ -54,7 +54,7 @@
 			</li>
 			<li class="nav-item">
 				<a href="supplieritem.php" class="nav-link <?php echo $si ?>">
-					<i class="bi bi-grid"></i> Bills??
+					<i class="bi bi-grid"></i> Bills
 				</a>
 			</li>
 		</ul>
