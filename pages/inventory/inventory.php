@@ -225,8 +225,13 @@ if (isset($_POST['edit'])) { //UPDATING INVENTORY
 
         <div class="mt-2">
           <div style="color:red; float:left;">*Items highlighted are Low on Stocks</div> 
+          
           <!-- ADD NEW ITEM IN INVENTORY BUTTON -->
-          <button class="btn btn-dark"style="float:right;" type="button" onclick="location.href='../supplier/suppliers.php'">New Item</button>
+          <button class="btn btn-dark"style="float:right; " type="button" onclick="location.href='../supplier/suppliers.php'">New Item</button>
+          <!-- DOWNLOAD ITEMS IN INVENTORY -->
+          <form action="export.php" method="post">
+            <button class="btn btn-success" style="float:right; margin-right:10px" name="exportItems" type="submit" >Download Items</button>
+          </form>
         </div>
 
     </div> <!-- END OF CONTENT -->
