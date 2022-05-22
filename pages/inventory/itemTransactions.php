@@ -57,7 +57,7 @@ $n=0;
       <?php  
     }
           
-        $sql = "SELECT * FROM supplier_transactions INNER JOIN supplier ON (supplier_transactions.supplier_ID = supplier.supplier_ID) INNER JOIN transaction_Items ON (supplier_transactions.transaction_ID = transaction_Items.transaction_ID) WHERE transaction_Status !=0 AND '$item' IN (transaction_Items.item_ID)";   
+        $sql = "SELECT * FROM supplier_transactions INNER JOIN supplier ON (supplier_transactions.supplier_ID = supplier.supplier_ID) INNER JOIN transaction_Items ON (supplier_transactions.transaction_ID = transaction_Items.transaction_ID) WHERE transaction_Status =2 AND '$item' IN (transaction_Items.item_ID) ORDER BY item_ID DESC";   
         $result = mysqli_query($conn,$sql);
         $resultCheck = mysqli_num_rows($result);
           if ($resultCheck>0){

@@ -140,6 +140,7 @@
             <tr>
                 <th> ID </th>
                 <th> Item </th>
+                
                 <th> Unit </th>
                 <th> Brand </th>
                 <th> Retail Price </th>
@@ -150,7 +151,8 @@
                 if ($onSalability==true){
                     echo "<th> Sales</th>"; 
                 }  
-            echo "<th> </th>
+            echo "<td class='text-muted'> Last Transaction </td>
+                <th> </th>
                     </tr>
                     </thead>
                      <tbody>";
@@ -170,9 +172,16 @@
                 else{   //NOT LOW ON STOCK =================================================
                     echo '<tr>';
                 }   
+                //last transaction with item
+                $ctrItemID = $row['item_ID'];
+                $lastDate = mysqli_query($conn, "SELECT * FROM supplier_transactions INNER JOIN transaction_Items ON (supplier_transactions.transaction_ID = transaction_Items.transaction_ID) WHERE transaction_Status =2 AND item_ID = '$ctrItemID' ORDER BY item_ID DESC LIMIT 1");
+                $rowDate = mysqli_fetch_array($lastDate);
+
+                $date = $rowDate['transaction_Date'];
 
                 echo "<td>" .$row['item_ID']. "</td>";  
                 echo "<td>". $row['item_Name']. "</td>";  
+                 
                 echo "<td>" .$row['item_unit']. "</td>";  
                 echo "<td>" . $row['item_Brand'] . "</td>";  
                 echo "<td>" . $row['item_RetailPrice']. "</td>"; 
@@ -182,7 +191,8 @@
                 echo "<td>" .$row['item_Category']. "</td>";   
                 if ($onSalability == true){
                     echo "<td>" .$row['sales_sum']. "</td>"; 
-                } 
+                }
+                echo "<td class='text-muted'>". $date. "</td>";  
                 ?>
                 <!--DELETE AND EDIT BUTTON-->
                 <td>
