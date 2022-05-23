@@ -36,20 +36,28 @@ $n=0;
 </head>
 <body>
   <main>
-  <?php include 'navbar.php'; ?>
+  <?php include 'navbar.php'; 
+    if (isset($_POST['itemID1'])) {
+        $item = $_POST['itemID1'];
+        $itemName = $_POST['itemIDName'];
+  ?>
   
 
 
 
-        
+  
+	     
   <div class="container-fluid bg-light p-5">
-    <span class="fs-1 fw-bold"> TRANSACTIONS </span>
-    <p> Completed and undelivered transactions are shown here</p>
+      <button class="btn pl-0" type="button" onclick="location.href='inventory.php'"><i class="fa fa-chevron-left"> back </i></button> </br>
+    <span class="fs-1 fw-bold"> <?php echo $itemName ?> </span>
+    <p> Transactions with the current item. </p>
 
     <div class = "container">
       <div class='table-wrapper' style="height:600px;">
       <?php  
-        $sql = "SELECT * FROM supplier_transactions INNER JOIN supplier ON (supplier_transactions.supplier_ID = supplier.supplier_ID) WHERE transaction_Status !=0 ;";   
+    }
+          
+        $sql = "SELECT * FROM supplier_transactions INNER JOIN supplier ON (supplier_transactions.supplier_ID = supplier.supplier_ID) INNER JOIN transaction_Items ON (supplier_transactions.transaction_ID = transaction_Items.transaction_ID) WHERE transaction_Status =2 AND '$item' IN (transaction_Items.item_ID) ORDER BY item_ID DESC";   
         $result = mysqli_query($conn,$sql);
         $resultCheck = mysqli_num_rows($result);
           if ($resultCheck>0){
@@ -77,17 +85,13 @@ $n=0;
               <h2 class="handle">
                 <label for="collapse<?php echo $n?>" > <?php echo "Transaction ID: ".$ID; ?> 
                 &emsp; &emsp; &emsp; &emsp; Supplier: <?php echo $supplierName; ?>
-                <div style="float:right; width:30px;">
+                <div style="float:right; width:50%;">
                   <form action="export.php" method="post">
                     <input type=hidden name=ExportTransactionID value=<?php echo $ID?>>
                     <input type=hidden name=ExportTransactionSupp value=<?php echo $supplier?>>
                     <button class="btn" name="export" type="submit" style="float:right;"><i class='fas fa-download'></i></button>
                   </form>
                 </div>
-                <?php if ($status==1) {
-                  echo '<span style="float:right;padding-top:8px;padding-right:30px; color:#AA2A2A">undelivered</span>';
-                }?>
-                
                 </br> <span style="padding-left:27px; font-weight: 100;">Date: <?php echo $transacDate; ?></span>
                 &nbsp; &nbsp; &nbsp; Total: <?php echo $total;?>
                 </label>
@@ -129,6 +133,8 @@ $n=0;
         </section>
 
       <?php } 
+      } else {
+          echo "<div style='text-align:center; padding-top: 50px;'>No Transactions yet with this item</div>";
       }?>
       </div>
   </div> <!-- end container -->

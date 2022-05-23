@@ -110,10 +110,21 @@ CREATE TABLE return_item(
 	FOREIGN KEY (item_ID) REFERENCES item(item_ID) ON UPDATE CASCADE
 );
 
+CREATE TABLE login(
+	login_ID int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	login_pword varchar(100) NOT NULL
+);
+
 INSERT INTO branch (
 	branch_Name, branch_Address
 ) VALUES (
 	'VICAS', ' Block 6 Lot 1 Congressional Road, Raibow Village 5 Bagumbong Caloocan'
 );
+
+INSERT INTO login (
+	login_ID, login_pword
+) VALUES (
+	1, '1234'),
+	(2, '0825');
 
 

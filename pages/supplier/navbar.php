@@ -1,25 +1,20 @@
-	<?php
+<?php
 		$url = substr($_SERVER["SCRIPT_NAME"],strrpos($_SERVER["SCRIPT_NAME"],"/")+1);
-		$in = $c = $t = $s = $it = $r = $p = 'text-white';
-		if ($url == 'inventory.php') {
-			$in = 'active';
-		} else if ($url == 'categbrands.php') {
-			$c = 'active';
-		} else if ($url == 'transactions.php') {
-			$t = 'active';
-		} else if ($url == 'salability.php') {
+		$s = $si = 'text-white';
+		if ($url == 'suppliers.php' || $url == 'editsupplier.php' || $url == 'suppliertable.php') {
 			$s = 'active';
-		} else if ($url == 'items.php') {
-			$it = 'active';
-		} else if ($url == 'returnitem.php') {
-			$r = 'active';
-		} else if ($url == 'pending.php') {
-			$p = 'active';
-		} else if ($url == 'archive.php') {
-			$a = 'active';
+		} else if ($url == 'supplieritem.php') {
+			$si = 'active';
 		}
    ?>
 
+    <style>
+      .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+        background-color: #198754;
+        border-color: #198754;
+        color: #fff;
+      }
+    </style>
 	<!------------ SIDEBAR ----------->
     <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px;">
 		<a href="../../index.php" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
@@ -31,8 +26,8 @@
 		<div class="mt-3 container w-100">
 			<div class="row d-flex justify-content-between">
 				<div class="col-auto p-0">
-					<a href="../supplier/suppliers.php">
-						<button class="btn btn-success">Suppliers</button>
+					<a href="../inventory/inventory.php">
+						<button class="btn btn-primary">Inventory</button>
 					</a>
 				</div>
 				<div class="col-auto p-0">
@@ -53,32 +48,14 @@
 		<!------ TABS ------>
 		<ul class="nav nav-pills flex-column mb-auto">
 			<li class="nav-item">
-				<a href="inventory.php" class="nav-link <?php echo $in ?>">
-				<i class="bi bi-archive"></i> Inventory
+				<a href="suppliers.php" class="nav-link <?php echo $s ?>">
+				  <i class="bi bi-archive"></i> Suppliers
 				</a>
 			</li>
 			<li class="nav-item">
-				<a href="categbrands.php" class="nav-link <?php echo $c ?>">
-					<i class="bi bi-grid"></i> Categories and Brands
+				<a href="supplieritem.php" class="nav-link <?php echo $si ?>">
+					<i class="bi bi-grid"></i> Supplier Items
 				</a>
-			</li>
-			<li class="nav-item">
-				<a href="pending.php" class="nav-link <?php echo $p ?>"> <i class="bi bi-clock"></i> Pending </a>
-			</li>
-			<li class="nav-item">
-				<a href="transactions.php" class="nav-link <?php echo $t ?>"> <i class="bi bi-newspaper"></i> Transactions </a>
-			</li>
-			<li class="nav-item">
-				<a href="salability.php" class="nav-link <?php echo $s ?>"> <i class="bi bi-graph-up-arrow"></i> Salability </a>
-			</li>
-			<li class="nav-item">
-				<a href="items.php" class="nav-link <?php echo $it ?>"> <i class="bi bi-collection"></i> All Items </a>
-			</li>
-			<li class="nav-item">
-				<a href="returnitem.php" class="nav-link <?php echo $r ?>"> <i class="bi bi-arrow-return-left"></i> Returns </a>
-			</li>
-			<li class="nav-item">
-				<a href="archive.php" class="nav-link <?php echo $a ?>"> <i class="bi bi-archive"></i> Archive </a>
 			</li>
 		</ul>
 		<!------ END OF TABS ------>
@@ -94,7 +71,6 @@
 				$resultCheck = mysqli_num_rows($result);
 				if ($resultCheck>0){ 
 					echo 'Low on Stocks';
-					echo "<div class='table-wrapper' style='height:auto; max-height:100px;' id='style-1'>";
 					echo '<div class="container flex-column mb-auto gap-2">';
 					while ($row = mysqli_fetch_assoc($result)) {	
 			?>
@@ -109,52 +85,46 @@
 			<?php
 					}
 					echo '</div>';
-					echo '</div>';
 				}
 
 				//PENDING ORDERS
-				$sql1 = "SELECT * FROM supplier_Transactions  INNER JOIN supplier ON (supplier.supplier_ID = supplier_Transactions.supplier_ID ) WHERE transaction_Status = 0";
+				$sql1 = "SELECT * FROM supplier_Transactions INNER JOIN transaction_items ON (supplier_Transactions.transaction_ID = transaction_Items.transaction_ID) INNER JOIN supplier ON (supplier.supplier_ID = supplier_Transactions.supplier_ID ) WHERE transaction_Status = 0";
 				$result1 = mysqli_query($conn,$sql1);
 				$resultCheck1 = mysqli_num_rows($result1);
 				if ($resultCheck1>0){ 
-					
 					echo 'Pending Orders';
-					echo "<div class='table-wrapper' style='height:auto; max-height:100px;' id='style-1'>";
 					echo '<ul class="text-wrap nav nav-pills flex-column mb-auto gap-2">';
 					while ($row1 = mysqli_fetch_assoc($result1)) {	
 						echo '<li class="rounded nav-item p-2 py-1" style="background-color: #343a40;">';
-						echo	'<div style="float:left; width:75%;">'
+						echo	'<div style="float:left; width:80%;">'
 										.$row1['transaction_ID'] .': ' .$row1['supplier_Name']
 									.'</div>
-									<div style="float:right; width:25%; color:#D8172B; padding-right:0px;">'
+									<div style="float:right;width:20%; padding-right:3px; color:#D8172B;">'
 										.number_format($row1['transaction_TotalPrice'],2)
 									.'</div>
 								</li>';
 					  	}
 					echo '</ul>';
-					echo "</div>";
 				}
 
 				//PENDING DELIVERIES 	
-				$sql1 = "SELECT * FROM supplier_Transactions  INNER JOIN supplier ON (supplier.supplier_ID = supplier_Transactions.supplier_ID ) WHERE transaction_Status = 1";
+				$sql1 = "SELECT * FROM supplier_Transactions INNER JOIN transaction_items ON (supplier_Transactions.transaction_ID = transaction_Items.transaction_ID) INNER JOIN supplier ON (supplier.supplier_ID = supplier_Transactions.supplier_ID ) WHERE transaction_Status = 1";
 				$result1 = mysqli_query($conn,$sql1);
 				$resultCheck1 = mysqli_num_rows($result1);
 				if ($resultCheck1>0){ 
 					echo 'Deliveries';
-					echo "<div class='table-wrapper' style='height:auto; max-height:100px;' id='style-1'>";
 					echo '<ul class="text-wrap nav nav-pills flex-column mb-auto gap-2">';
 					while ($row1 = mysqli_fetch_assoc($result1)) {	
 						echo '<li class="rounded nav-item p-2 py-1" style="background-color: #343a40;">';
-						echo	'<div style="float:left; width:75%;">'
+						echo	'<div style="float:left; width:80%;">'
 										.$row1['transaction_ID'] .': ' .$row1['supplier_Name']
 									.'</div>
-									<div style="float:right; width:25%; color:#D8172B;">'
+									<div style="float:right;width:20%; padding-right:3px; color:#D8172B;">'
 										.number_format($row1['transaction_TotalPrice'],2)
 									.'</div>
 								</li>';
 					}
 					echo '</ul>';
-					echo '</div>';
 				}
 				?>
 		</div>

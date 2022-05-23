@@ -2,6 +2,8 @@
 <html>
 <head>
   <title>Add Records in Database</title>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" ></script>
+	    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
 </head>
 <body>
 
@@ -17,7 +19,7 @@ if(!$db)
 
 
 
-if(isset($_POST['submit']))
+if(isset($_POST['submit']) || isset($_POST['Submit']))
 {		
     
     $supplier_Name= $_POST['supplier_Name'];
@@ -37,11 +39,13 @@ if(isset($_POST['submit']))
     }
     else
     {
-        echo "Records added successfully.";
+        header( "Location: ./suppliers.php?");
+        exit;
     }
 }
 
 mysqli_close($db); // Close connection
+
 ?>
 
 <!-- ------------------------ walang supplier ID, autoincrement ? --------------------------- -->

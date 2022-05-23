@@ -93,5 +93,41 @@
         
 
 
+    } elseif (isset($_POST['exportItems'])) {
+        
+         $output .= "<table class='table' bordered='1'> 
+                            <tr> 
+                                <th> ID </th>
+                                <th> Item </th>
+                                <th> Unit </th>
+                                <th> Brand </th>
+                                <th> Stock </th>
+                            </tr>";
+
+        $sql1 = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) WHERE  inventoryItem_Status = 1 ORDER BY inventory.item_ID;";   
+        $result1 = mysqli_query($conn,$sql1);
+        $resultCheck1 = mysqli_num_rows($result1);            
+                    
+        if ($resultCheck1>0){
+            while ($row1 = mysqli_fetch_assoc($result1)) {
+                $output .= "<tr>"; 
+                $output .= "<td>" .$row1['item_ID']. "</td>";  
+                $output .= "<td>". $row1['item_Name']. "</td>";  
+                $output .="<td>" . $row1['item_unit'] . "</td>"; 
+                $output .= "<td>" .$row1['item_Brand']. "</td>";  
+                $output .= "<td>". $row1['item_Stock']. "</td>";       
+                $output .= "</tr>"; 
+
+            }
+        } 
+        
+        $output .= "</table>"; 
+        $date = date("m-d-Y");
+        header('Content-Type: application/xls');
+        header('Content-Disposition: attachment; filename=VSJM_inventory(' .$date .').xls');
+        echo $output;
+        
+
+
     }
 ?>

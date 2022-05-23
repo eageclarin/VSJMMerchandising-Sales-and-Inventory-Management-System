@@ -1,8 +1,23 @@
+body {
+    height: 100%;
+    min-height: 100%;
+}
+  
+html {
+    height: -webkit-fill-available;
+}
+
+main {
+    display: flex;
+    flex-wrap: nowrap;
+    min-height: 100%;
+}
+
 .navbar{
     width:250px;
     height: 100%;
     position:fixed;
-   /* background-color: #2b3a3d;*/
+    
     transition: 0.4s;
     box-shadow: inset;
 }
@@ -38,21 +53,15 @@
     border: none;
 }
 
-.dropdown-menu {
-    background-color: #202c2f;
-}
-
 #content{
     margin-left: 260px;
     padding: 50px;
     margin-right: 10px;
 }
-#categoryContainer{
-    float: left;
-}
-#searchSortContainer{
+
+/*#searchSortContainer{
     float: right;
-}
+}*/
 
 #editID {
     border:0;
@@ -64,27 +73,29 @@
     font-weight:500;
 }
 
+/*
 #inventoryHead{
     width: 100%;
     min-width: 800px;
     border: 1;
     border-radius: 1mm;
-}
+}*/
 
-#filters{
+/*#filters{
     width: 100%;
     padding-top: 15px;
     padding-bottom: 15px;
     min-width: 800px;
     float: left;
-}
+}*/
 
 .table-wrapper{
     width: 100%;
-    height:450px;
+    height:500px;
     overflow-y: scroll;
     display: block;
     border-bottom: solid;
+    margin-bottom: 5px;
 }
 
 .table-wrapper thead,th {
@@ -92,13 +103,184 @@
 
 }
 
-.panel-heading .colpsible-panel:after {
+/*
+#style-1::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+  background-color: #F5F5F5;
+}*/
+
+#style-1::-webkit-scrollbar
+{
+	width: 5px;
+	/*background-color: #F5F5F5;*/
+}
+
+#style-1::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: rgb(234, 234, 234);
+}
+
+#style-1{
+  font-size: small;
+}
+
+
+/*========================= accordion ========================== */
+/*
+ CSS for the main interaction
+*/
+.accordion > input[name="collapse"] {
+    display: none;
     
-    font-family: 'Glyphicons Halflings'; 
-    content: "\e114";    
-    float: right;        
-    color: #408080;         
-}
-.panel-heading .colpsible-panel.collapsed:after {
-    content: "\e080"; 
-}
+    /*position: absolute;
+    left: -100vw;*/
+  }
+  
+  .accordion label,
+  .accordion .content{
+   max-width: 100%;
+    margin: 0 auto;
+   }
+  
+  
+  .accordion .content {
+    background: #fff;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.5s;
+    width: 100%;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+  }
+  
+  .accordion > input[name="collapse"]:checked ~ .content {
+    max-height: 300px;
+    transition: max-height 0.5s;
+  }
+  
+  .accordion label {
+    display: block;
+   
+  }
+  
+  
+  /* For Desktop */
+  @media only screen and (min-width: 620px){
+  
+  
+  /*.accordion > input[name="collapse"]:checked ~ .content {
+    height:fit-content;
+  }*/
+  
+  }
+  
+  
+  /*
+  .accordion {
+    margin-bottom: 1em;
+  }*/
+  
+  .accordion > input[name="collapse"]:checked ~ .content {
+    max-height: 1000px;
+    border-top: 0;
+    transition: max-height 1s;
+  }
+  
+  .accordion .handle {
+    margin: 0;
+    font-size: 16px;
+    
+    
+  }
+  
+  .accordion label {
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    font-weight:500;
+    padding: 10px;
+    /*background: #252525;*/
+    user-select: none;
+    border-bottom: solid;
+    
+  }
+  
+  .accordion label:hover,
+  .accordion label:focus {
+    background: #d6d6d6;
+  }
+  
+  .accordion .handle label:before {
+    font-family: FontAwesome;
+    content: "\f107";
+    display: inline-block;
+    margin-right: 10px;
+    font-size: 1em;
+    line-height: 1.556em;
+    vertical-align: middle;
+    transition: 0.4s;
+    
+  }
+  
+  .accordion > input[name="collapse"]:checked ~ .handle label:before {
+      transform: rotate(180deg);
+      transform-origin: center;
+      transition: 0.4s;
+  }
+  
+  
+  /*
+   Demo purposes only
+  */
+  *,
+  *:before,
+  *:after {
+    box-sizing: border-box;
+  }
+  
+  
+  .accordion p:last-child {
+    margin-bottom: 0;
+  }
+  .container{
+      max-width: 620px;
+      margin: 0 auto;
+  }
+
+  .popup .overlay{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.7);
+    z-index: 1;
+  }
+  .popup .popup-content{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: rgb(255, 255, 255);
+    width: 440px;
+    height: 160px;
+    z-index: 2;
+    padding-left: 20px;
+    box-sizing: border-box;
+    padding-top: 40px;
+      padding-bottom: 10px;
+    text-align: center;
+    border-radius: 40px 40px;
+  }
+  .popup .title{
+    font-family: "Times New Roman", Times, serif;
+    font-size: 30px;
+    color: rgb(4, 83, 0);
+    font-weight: 500;
+  }
+
+  .fa:hover {
+    opacity: 0.7;
+  }

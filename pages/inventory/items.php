@@ -9,11 +9,18 @@ if(isset($_POST['edit'])>0){
     $unit = $_POST['editUnit'];
     mysqli_query($conn, "UPDATE item set item_Name='$name', item_unit='$unit', item_Brand='$brand', item_Category = '$categ'
     WHERE item_ID = '$ID'");
-    //echo "Record Edited Successfully";
+    echo '<div class="popup" id="flash-msg">
+    <div class="overlay"></div>
+        <div class="popup-content">
+        <i class="bi-check2-square" style="font-size:30px;"></i>
+            <p class="title">Successfully Updated!</p>
+        </div>
+    </div>';
 }
 
 
 ?>
+
 
 <!DOCTYPE html>
 <html>
@@ -26,6 +33,7 @@ if(isset($_POST['edit'])>0){
     <!-- CSS -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="./style.css?ts=<?=time()?>">
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   
 	<!-- JQUERY/BOOTSTRAP -->
@@ -149,9 +157,38 @@ if(isset($_POST['edit'])>0){
                     <div class="modal-body mb-2">
                         <div id ="transactionform">
 
-                            <form action = "../supplier/addsupplieritem.php" method="post" id="myForm">
+                            <form action = "items.php" method="post" id="myForm">
                                 <div class="mb-1 mt-1">
-                                <p>
+
+                                    <div id="additem">
+                                        <p>
+                                            Item Name:
+                                            <input type="text" name="item_Name" id="item_Name" class="form-control" placeholder="Enter">
+                                        </p> 
+                                        <p>
+                                            Item Unit:
+                                            <input type="text" name="item_unit" id="item_unit" class="form-control" placeholder="Enter">
+                                        </p>
+                                        <p>
+                                            Item Brand:
+                                            <input type="text" name="item_Brand" id="item_Brand" class="form-control" placeholder="Enter">
+                                        </p>
+                                        
+                                        Category:
+                                        <div>
+                                            <select name="item_Category" id="item_Category" style="height:30px;" >
+                                              <option value="Electrical" >Electrical</option>
+                                              <option value="Plumbing">Plumbing</option>
+                                              <option value="Architectural"> Architectural</option>
+                                              <option value="Paints">Paints</option>
+                                              <option value="bolts and nuts">Bolts and Nuts</option>
+                                              <option value="Tools">Tools</option>
+                                            </select>        
+                                        </div><br>
+
+                                    </div>
+
+                                    <p>
                                 
 
                                     Supplier:
@@ -203,53 +240,7 @@ if(isset($_POST['edit'])>0){
                                         </p>
                                     </div>
 
-                                    
-                                    <p>
-                                        Item:
-                                        <?php
-                                            $query = "SELECT * from item";
-                                                $result = mysqli_query($conn,$query);
-                                                if(mysqli_num_rows($result) > 0){
-                                                    echo "<select id='item_ID' name='item_ID'>";
-                                                        while($row = mysqli_fetch_assoc($result)){
-                                                            echo "<option value='".$row['item_ID']."'>".$row['item_ID']." - ".$row['item_Name']."</option>";
-                                                        }
-                                                        echo "<option value='other'>Other</option>";
-                                                        echo "</select><br>";
-                                                    }
-                                            
-                                        ?>
-                                    </p>
-
-                                    <div id="additem">
-                                        <p>
-                                            Item Name:
-                                            <input type="text" name="item_Name" id="item_Name" class="form-control" placeholder="Enter">
-                                        </p> 
-                                        <p>
-                                            Item Unit:
-                                            <input type="text" name="item_unit" id="item_unit" class="form-control" placeholder="Enter">
-                                        </p>
-                                        <p>
-                                            Item Brand:
-                                            <input type="text" name="item_Brand" id="item_Brand" class="form-control" placeholder="Enter">
-                                        </p>
-                                        
-                                        Category:
-                                        <div>
-                                            <select name="item_Category" id="item_Category" style="height:30px;" >
-                                              <option value="Electrical" >Electrical</option>
-                                              <option value="Plumbing">Plumbing</option>
-                                              <option value="Architectural"> Architectural</option>
-                                              <option value="Paints">Paints</option>
-                                              <option value="bolts and nuts">Bolts and Nuts</option>
-                                              <option value="Tools">Tools</option>
-                                            </select>        
-                                        </div><br>
-
-                                    </div>
-
-                                    <p>Item Cost Price:<input type="text" name="supplierItem_CostPrice" class="form-control" placeholder="Enter"></p>
+                                    <p>Item Cost Price:<input type="number" name="supplierItem_CostPrice" class="form-control" placeholder="Enter"></p>
 
                                     
                                 </div>
@@ -269,10 +260,71 @@ if(isset($_POST['edit'])>0){
                 </div>
             </div>
             <!-- ADD ITEM MODAL ############################################################################ -->
+            
+
+           <!-- ADD ITEM QUERY ############################################################################ -->
+            <?php
+            $db = mysqli_connect("localhost","root","","VSJM");
+            if(!$db)
+            {
+                die("Connection failed: " . mysqli_connect_error());
+            }
+
+            if(isset($_POST['submit']) || isset($_POST['Submit']))
+            {		
+                
+                $item_Name= $_POST['item_Name'];
+                $item_unit= $_POST['item_unit'];
+                $item_Brand= $_POST['item_Brand'];
+                $item_Category= $_POST['item_Category'];
+
+                $supplierItem_CostPrice= $_POST['supplierItem_CostPrice'];
+
+            
+                $insert = mysqli_query($db,"INSERT INTO item ". "(item_Name, item_unit, item_Brand, item_Category) ". "
+                        VALUES('$item_Name', '$item_unit', '$item_Brand', '$item_Category')");
+
+
+                $item_ID = $db->insert_id;
+
+                if($_POST['supplier_ID']=="other"){
+
+                    $supplier_Name= $_POST['supplier_Name'];
+                    $supplier_ContactPerson = $_POST['supplier_ContactPerson'];
+                    $supplier_ContactNum= $_POST['supplier_ContactNum'];
+                    $supplier_Address= $_POST['supplier_Address'];
+
+                    $insert = mysqli_query($db,"INSERT INTO supplier ". "(supplier_Name, supplier_ContactPerson, supplier_ContactNum, supplier_Address) ". "VALUES('$supplier_Name', '$supplier_ContactPerson', '$supplier_ContactNum', '$supplier_Address')");
+                    $supplier_ID = $db->insert_id;
+
+                }else{
+                    $supplier_ID = $_POST['supplier_ID'];
+                }
+
+                $insert = mysqli_query($db,"INSERT INTO supplier_item". "(supplier_ID, item_ID, supplierItem_CostPrice)"."VALUES('$supplier_ID', '$item_ID', '$supplierItem_CostPrice')");
+                        
+                if(!$insert)
+                {
+                    echo mysqli_error();
+                }
+                else
+                {
+                    echo '<div class="popup" id="flash-msg">
+                    <div class="overlay"></div>
+                        <div class="popup-content">
+                        <i class="bi-check2-square" style="font-size:30px;"></i>
+                            <p class="title">Successfully Added!</p>
+                        </div>
+                    </div>';
+                }  
+            }
+
+        ?>  <!-- ADD ITEM QUERY ############################################################################ -->
 
 
 
-    <div class="fs-1 fw-bold text-center"> LIST OF ITEMS </div>
+
+<div class="fs-1 fw-bold text-center"> LIST OF ITEMS </div>
 <?php
 
 $sql = "SELECT * FROM item;";                                    
@@ -323,17 +375,6 @@ echo "</tbody></table></div>";
 </main>
 
 <script>
-function notif(){
-    alert("HI");
-    $('#notif').modal('show');
-}
-    
-$('.modal-auto-clear').on('shown.bs.modal', function () {
-    $(this).delay(1000).fadeOut(200, function () {
-        $(this).modal('hide');
-    });
-})
-
 
 //ADD ITEM/SUPPLIER MODAL
 
@@ -349,10 +390,6 @@ $('.modal-auto-clear').on('shown.bs.modal', function () {
                   toggleFields();
               });
 
-              $("#item_ID").change(function () {
-                  toggleFields();
-              });
-        
           });
           
           function toggleFields() {
@@ -363,13 +400,13 @@ $('.modal-auto-clear').on('shown.bs.modal', function () {
                 $("#addsupplier").hide();
             }
 
-            if ($("#item_ID").val() === "other"){
-                $("#additem").show();
-              }
-            else{
-                $("#additem").hide();
-            }
           }
+
+          //Notification Modal
+			$(document).ready(function () {
+			$("#flash-msg").delay(1300).fadeOut("slow");
+		});
+
 </script>
 
 </body>

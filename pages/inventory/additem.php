@@ -35,18 +35,20 @@ if(!$db)
 
 
 
-if(isset($_POST['submit']))
+if(isset($_POST['submit']) || isset($_POST['Submit']))
 {		
     
     
     $item_Name= $_POST['item_Name'];
     $item_unit= $_POST['item_unit'];
     $item_Brand= $_POST['item_Brand'];
+    $item_Category= $_POST['item_Category'];
+
     $supplierItem_CostPrice= $_POST['supplierItem_CostPrice'];
 
   
-    $insert = mysqli_query($db,"INSERT INTO item ". "(item_Name, item_unit, item_Brand) ". "
-			  VALUES('$item_Name', '$item_unit', '$item_Brand')");
+    $insert = mysqli_query($db,"INSERT INTO item ". "(item_Name, item_unit, item_Brand, item_Category) ". "
+			  VALUES('$item_Name', '$item_unit', '$item_Brand', '$item_Category')");
 			
                
     if(!$insert)
@@ -97,6 +99,9 @@ if(isset($_POST['submit']))
     {
         echo " Supplier item records added successfully.";
     }
+
+    header( "Location: ./items.php?");
+    exit;
 }
 
 
@@ -115,6 +120,19 @@ if(isset($_POST['submit']))
         Item Brand:
         <input type="text" name="item_Brand" id="item_Brand" required>
     </p> 
+    <p>
+    Category:
+        <div>
+            <select name="item_Category" id="item_Category" style="height:30px;" >
+                <option value="Electrical" >Electrical</option>
+                <option value="Plumbing">Plumbing</option>
+                <option value="Architectural"> Architectural</option>
+                <option value="Paints">Paints</option>
+                <option value="bolts and nuts">Bolts and Nuts</option>
+                <option value="Tools">Tools</option>
+            </select>        
+        </div>
+    </p>
     <p>
         Supplier:
         <?php
