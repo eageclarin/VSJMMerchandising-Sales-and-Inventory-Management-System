@@ -206,7 +206,9 @@ include_once 'env/conn.php';
 			</ul>
 		</div>
 		<!------ END OF MAIN PAGES ------>
-
+		<a href="env/backup.php">Backup Database </a>
+		<?php
+		?>
 		<!------ ORDERED FROM SUPPLIERS ------>
 		<div class="row px-3 h-50">
 			<div class="col">
