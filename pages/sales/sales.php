@@ -67,9 +67,46 @@ include 'navbar.php';
                     </div>
                     
 
-                    <div class="card mt-4">
+                    
+                    <div class="card-header">
+                        <h5>Custom Date</h5>
+                    </div>
                     <div class="card-body">
-                        <div class= "container1">
+                    
+                        <form action="pdf_CustomReport.php" method="GET" target="_blank">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>From Date</label>
+                                        <input type="date" name="from_date" value="<?php if(isset($_GET['from_date'])){ echo $_GET['from_date']; } ?>" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>To Date</label>
+                                        <input type="date" name="to_date" value="<?php if(isset($_GET['to_date'])){ echo $_GET['to_date']; } ?>" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label></label> <br>
+                                      <button type="submit" class="form-control" style="color:black; background-color:#7393B3" style="background-color:#7393B3">Filter</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                
+
+
+                    
+
+                </div>
+            </div>
+
+            <div class="card mt-4">
+                <div class="card-body">
+                    <div class= "container1">
                         <table class="table table-borderd">
                             <?php
                                 
@@ -106,7 +143,6 @@ include 'navbar.php';
 
                                     if(mysqli_num_rows($result) > 0)
                                     {
-                                        //echo $to_date;
                                         foreach($result as $row)
                                         {
                                             ?>
@@ -136,14 +172,15 @@ include 'navbar.php';
                             ?>
                             </tbody>
                         </table>
-                        </div>
                     </div>
-                    </div>
-
                 </div>
             </div>
+
+
         </div>
     </div>
+
+
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
