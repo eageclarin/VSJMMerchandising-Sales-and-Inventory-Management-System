@@ -60,57 +60,10 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
 </head>
-<!--<body class="login-body">
-	<div class="login-container">
-		<div class="login-header">
-			<h1>login</h1>
-			<h3>Supermarket Customer</h3>
-		</div>
 
-		<div class="login-main">
-			<form action="#" method="POST">
-				<span>
-					<i class="fa fa-user"></i>
-					<input placeholder="   Enter Customer ID" type="text" name="login_ID" maxlength="10" onkeypress="return isNumberKey(event)" required>
-				</span><br>
-				<span>
-					<i class="fa fa-lock"></i>
-					<input placeholder="   Enter Password" type="password" name="login_pword" required>
-				</span><br>
-					<input  id="button" type="submit" value="Login">	
-				<p>Don't have an account? <a href="./addcustomer.php">Sign up</a></p>
-	<script type="text/javascript">
-		function isNumberKey(evt){
-    	var charCode = (evt.which) ? evt.which : evt.keyCode;
-    	if (charCode > 31 && (charCode < 48 || charCode > 57))
-        	return false;
-    	return true;
-		}
-	</script>
-	
-	</form>
-				
-
-
-
-		</div>
-	</div>
-
-
-	
-
-<!-- Gsap JS -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.8.0/gsap.min.js"></script>
 
-<script type="text/javascript">
-	gsap.from(".login-container", {
-		duration: 1,
-		opacity: 0,
-		y: -100,
-		stagger: .2
-	})
 
-</script>
 <body>	
 	<div class="col bg-white border shadow-sm p-5" style="border-radius: 10px">
 	
