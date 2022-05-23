@@ -17,7 +17,7 @@ if (isset($_POST['delete1'])) {
         unset($_SESSION['delete1']);
   }
 
-if(isset($_POST['edit'])>0){
+if(isset($_POST['edit'])){
     //$name = $_POST['editName'];
     $ID = $_POST['editID'];
 	//$Name = $_POST['editName'];
@@ -71,18 +71,19 @@ if(isset($_POST['edit'])>0){
                 }).get();
 
                 console.log(data);
-
+				let date = new Date(data[5]);
+				//alert(date);
                 $('#editID').val(data[0]);
 				
-				$('#editQuan').val(data[1]);
+				$('#editQuan').val(data[3]);
 				$('#editName').val(data[2]);
-                $('#editDate').val(data[3]);
+                $('#editDate').val(date);
 				$('#editReason').val(data[4]);
 				const $select = document.querySelector('#editReason');
                 $select.value = data[4];
                 //$('#editCategory').val(data[4]);
                 
-                document.getElementById("labelID").innerHTML = "Return ID: " + data[0];
+                document.getElementById("labelID").innerHTML = "Item ID: " + data[1];
 				//document.getElementById("labelName").innerHTML = "Item ID: " + data[2];
 
             });
