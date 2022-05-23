@@ -16,7 +16,7 @@
     date_default_timezone_set("Asia/Manila");
     if (file_exists("C:/Users/User1/VSJM/Database")) {
         $filename = $dbname."_".date("F_d_Y")."@".date("g_ia").uniqid("_",false); 
-        $folder = "C:/Users/User1/VSJM/Database/".$filename.".sql";
+        $folder = "C:\\xampp\htdocs\CMSC-128\Files\Database\\".$filename.".sql";
         $command = "C:\\xampp\mysql\bin\mysqldump -u root " .$dbname ."> " .$folder;
         echo $command;
         exec($command);
