@@ -73,7 +73,7 @@
                     <div>
                         <input type="text" class="form-control"  id="editPerson" name="editPerson" placeholder="Enter">
                     </div> 
-                    <label for="editNumber" >Supplier Contact Person: </label>
+                    <label for="editNumber" >Supplier Contact Number: </label>
                     <div>
                         <input type="text" class="form-control"  id="editNumber" name="editNumber" placeholder="Enter">
                     </div> 
