@@ -231,7 +231,7 @@
                   </div> 
 				  <label for="item_Category" >Category: </label>
                         <div>
-                            <select name="item_Category" id="item_Category" style="height:30px;" >
+                            <select name="item_Category" type="text" id="item_Category" style="height:30px;" >
                             <option value="Electrical" >Electrical</option>
                             <option value="Plumbing">Plumbing</option>
                             <option value="Architectural"> Architectural</option>
@@ -252,6 +252,72 @@
         </div> <!-- MODAL-DIALOG -->
       </div> <!-- MODAL-FADE-->
       <!-- EDIT ITEM MODAL ############################################################################ -->
+
+	  <!-- EDIT TRANSACTION MODAL ############################################################################ -->
+			<div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Edit Transaction</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div> <!-- MODAL-HEADER -->
+
+                <form id="newform" action="edittransaction.php" method="post" class="form-inline" > 
+                <div class="modal-body mb-2"> 
+				<input type="text"  id="editTransactionID" name="editTransactionID" placeholder="Enter"> 
+                <label for="editTransactionID" id="labelTransactionID" style="border:0; background-color: transparent; font-size: 1.25em; color:black; font-weight: 500;">Transaction ID: </label>  
+                <input type="hidden"  id="editSupplierID" name="editSupplierID" placeholder="Enter"> 
+                <label for="editSupplierID" id="labelSupplierID" style="border:0; background-color: transparent; font-size: 1.25em; color:black; font-weight: 500;">Supplier ID: </label>
+				<input type="hidden"  id="editItemID" name="editItemID" placeholder="Enter"> 
+                <label for="editItemID" id="labelItemID" style="border:0; background-color: transparent; font-size: 1.25em; color:black; font-weight: 500;">Item ID: </label>	
+					
+					<div class="mb-1 mt-1"> 
+                    <label for="editQuantity" >Item Quantity: </label>
+                    <div>
+                        <input type="text" class="form-control"  id="editQuantity" name="editQuantity" placeholder="Enter">
+                    </div> 
+                    <label for="editItemCost" >Item Cost Price: </label>
+                    <div>
+                        <input type="text" class="form-control"  id="editItemCost" name="editItemCost" placeholder="Enter">
+                    </div> 
+                    <label for="editDate" >Transaction Date: </label>
+                    <div>
+                        <input type="datetime-local" class="form-control"  id="editDate" name="editDate" placeholder="Enter">
+                    </div> 
+					<label for="editStatus" >Transaction Status: </label>
+                    <div>
+                        <select  id="editStatus" name="editStatus" >
+						<?php
+								echo"<p>
+								<option value=\"1\""; 
+								if(['$editStatus']=="1"){
+									echo " selected";
+								}
+							    echo ">Successful</option>
+								<option value=\"0\"";
+								if(['$editStatus']=="0"){
+									echo " selected";
+								}
+							   echo ">Failed</option>
+							   </select></p>";
+						?>
+                    </div> 
+					<label for="editTotalPrice" >Transaction Total Price: </label>
+					<div>
+                        <input type="text" class="form-control"  id="editTotalPrice" name="editTotalPrice" placeholder="Enter">
+                    </div>
+                    </div> <!-- MB-1 MT-1 -->
+                </div> <!-- MODAL-BODY -->
+                <div class="modal-footer pb-0">
+                    <input type="hidden" name="url" value="inventory.php">
+                    <input  type="submit" value="update" name="edit" class="form-control btn btn-primary" style="width:150px" > 
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div> <!-- MODAL FOOTER -->
+                </form>  
+            </div> <!-- MODAL-CONTENT -->
+            </div> <!-- MODAL-DIALOG -->
+        </div> <!-- MODAL-FADE-->
+        <!-- EDIT TRANSACTION MODAL ############################################################################ -->
 
 			<!-- BUY MODAL ############################################################################ -->
 			<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -461,7 +527,7 @@
 				<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-					<h5 class="modal-title" id="staticBackdropLabel">AddTransaction</h5>
+					<h5 class="modal-title" id="staticBackdropLabel">Add Transaction</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div> <!-- MODAL-HEADER -->
 					<div class="modal-body mb-2">
@@ -487,7 +553,7 @@
 												$query = "SELECT * from supplier";
 													$result = mysqli_query($conn,$query);
 													if(mysqli_num_rows($result) > 0){
-														echo "<select name='supplier_ID'>";
+														echo "<select name='supplier_ID' name='supplier_ID'>";
 															while($row = mysqli_fetch_assoc($result)){
 																echo "<option value='".$row['supplier_ID']."'";
 
@@ -508,16 +574,15 @@
 										<p>
 											Item:
 											<?php
-												$query = "SELECT * from item";
-													$result = mysqli_query($conn,$query);
-													if(mysqli_num_rows($result) > 0){
-														echo "<select name='item_ID'>";
-															while($row = mysqli_fetch_assoc($result)){
-																echo "<option value='".$row['item_ID']."'>"
-																.$row['item_ID']."</option>";
-															}
-															echo "</select><br>";
+											$query = "SELECT * from item";
+												$result = mysqli_query($conn,$query);
+												if(mysqli_num_rows($result) > 0){
+													echo "<select id='item_ID' name='item_ID'>";
+														while($row = mysqli_fetch_assoc($result)){
+															echo "<option value='".$row['item_ID']."'>".$row['item_ID']." - ".$row['item_Name']."</option>";
 														}
+														echo "</select><br>";
+													}
 											date_default_timezone_set('Asia/Taipei');
 											?>
 										</p>
@@ -664,7 +729,7 @@
 												<td>". $row["transactionItems_CostPrice"]."</td>
 												<td>". $row["transactionItems_TotalPrice"]."</td>
 												<td>". $row["transaction_TotalPrice"]."</td>
-												<td><button class=\"btn editbtn p-0\" style=\"float:left;\" onclick=\"location.href='edittransaction.php?transaction_ID=".$row['transaction_ID']."'\"><i class='fas fa-edit'></i></button></td>
+												<td><button class=\"btn editbtn2 p-0\" style=\"float:left;\" ><i class='fas fa-edit'></i></button></td>
 												<td><button style=\"border: none;\"> <a onclick='return checkdelete()' href='deletetransaction.php?transaction_ID=".$row['transaction_ID']."'><i class='fas fa-trash'></i></button></a></td>
 						
 										</tr>";
@@ -831,13 +896,44 @@
                 $('#editName').val(data[1]);
                 $('#editUnit').val(data[2]);
                 $('#editBrand').val(data[3]);
-				$('#editcostprice').val(data[4]);
-				$('#item_Category').val(data[5]);
+				$('#editcostprice').val(data[5]);
+				$('#item_Category').val(data[4]);
                 const $select = document.querySelector('#item_Category');
-                $select.value = data[5];
+                $select.value = data[4];
 
               });
            });
+
+		    //Edit Transaction Modal 
+
+		        $(document).ready(function(){
+                $('.editbtn2').on('click',function(){
+                $('#staticBackdrop2').modal('show');
+
+                $tr = $(this).closest('tr');
+
+                var data = $tr.children("td").map(function () {
+                    return $(this).text();
+                }).get();
+
+                console.log(data);
+
+                $('#editTransactionID').val(data[0]);
+                $('#editSupplierID').val(data[1]);
+                $('#editItemID').val(data[2]);
+                $('#editQuantity').val(data[6]);
+                $('#editItemCost').val(data[7]);
+				$('#editDate').val(data[4]);
+				$('#editStatus').val(data[5]);
+				$('#editTotalPrice').val(data[9]);
+				const $select = document.querySelector('#editDate');
+                $select.value = data[4];
+                document.getElementById("labelTransactionID").innerHTML = "Transaction ID: " + data[0];
+				document.getElementById("labelSupplierID").innerHTML = "Supplier ID: " + data[1];
+				document.getElementById("labelItemID").innerHTML = "Item ID: " + data[2];
+            });
+        });
+
 
 		   //Notification Modal
 			$(document).ready(function () {
