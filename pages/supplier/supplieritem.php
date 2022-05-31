@@ -367,6 +367,19 @@
         <div id="filters">
           <!-- ADD NEW ITEM IN INVENTORY BUTTON -->
           <button class="btn btn-success additembtn mt-3" type="button" >Add Item/Supplier</button>
+           <div class="row-6 align-self-center" style="float:right;" >
+                  <form action="exportpurchases.php" method="post">
+                    <div class="align-bottom" style=" display: inline-block;">
+                      <label for="exportMonth" class="col-auto col-form-label fw-bold">Month & Year:</label>
+                    </div>
+                    <div class="align-bottom" style=" display: inline-block;">
+                      <input type="month" class="form-control" id="exportMonth" name="exportMonth">
+                    </div>
+                    <div class="align-bottom" style=" display: inline-block;">
+                      <button class="btn btn-success purchasesbtn " name="export" type="submit" style="float:right;"><i class='fas fa-download'></i>  Monthly Purchases</button>
+                    </div>
+                  </form>
+            </div>
         </div>
 
     </div>

@@ -688,6 +688,21 @@
 							//echo "<tr><td colspan=\"11\"><button class=\"btn btn-success additembtn mt-3\" onclick=\"location.href='addsupplieritem.php?supplier_ID=".$supplier_chosen."'\">Add Item to Supplier</button></td></tr>";
 							echo "<tr><td colspan=\"11\"><button class=\"btn btn-success additembtn mt-3\">Add Item to Supplier</button></td></tr>";
 						?>
+						<br>
+							<div class="row-6 align-self-center" style="float:right;" >
+	                  <form action="exportpurchases.php" method="post">
+	                    <div class="align-bottom" style=" display: inline-block;">
+	                      <label for="exportMonth" class="col-auto col-form-label fw-bold">Month & Year:</label>
+	                    </div>
+	                    <div class="align-bottom" style=" display: inline-block;">
+	                      <input type="month" class="form-control" id="exportMonth" name="exportMonth">
+	                    </div>
+	                    <div class="align-bottom" style=" display: inline-block;">
+	                    	<input type=hidden name=ExportTransactionSupp value=<?php echo $supplier_chosen?>>
+	                      <button class="btn btn-success purchasesbtn " name="exportsupp" type="submit" style="float:right;"><i class='fas fa-download'></i>  Monthly Purchases</button>
+	                    </div>
+	                  </form>
+	            </div>
 
 					  </section>
 					    
@@ -745,7 +760,21 @@
 						</tbody></table></div>
 						<?php
 							echo "<tr><td colspan=\"11\"><button class=\"btn btn-success addtransbtn mt-3\">Add Transaction</button></td></tr>";
-						?>
+						?><br>
+							<div class="row-6 align-self-center" style="float:right;" >
+	                  <form action="exportpurchases.php" method="post">
+	                    <div class="align-bottom" style=" display: inline-block;">
+	                      <label for="exportMonth" class="col-auto col-form-label fw-bold">Month & Year:</label>
+	                    </div>
+	                    <div class="align-bottom" style=" display: inline-block;">
+	                      <input type="month" class="form-control" id="exportMonth" name="exportMonth">
+	                    </div>
+	                    <div class="align-bottom" style=" display: inline-block;">
+	                    	<input type=hidden name=ExportTransactionSupp value=<?php echo $supplier_chosen?>>
+	                      <button class="btn btn-success purchasesbtn " name="exportsupp" type="submit" style="float:right;"><i class='fas fa-download'></i>  Monthly Purchases</button>
+	                    </div>
+	                  </form>
+	            </div>
 					  </section>
 					    
 					  <section id="content3">
