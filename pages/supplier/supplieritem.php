@@ -20,12 +20,17 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.js"></script>
+		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    
 
     <!-- CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+
     <!-- JQUERY/BOOTSTRAP -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
@@ -112,7 +117,7 @@
                 </div> <!-- MB-1 MT-1 -->
               </div> <!-- MODAL-BODY -->
               <div class="modal-footer pb-0">
-                  <input  type="submit" value="update" name="edit" class="form-control btn btn-primary" style="width:150px" > 
+                  <input  type="submit" value="Update" name="edit" class="form-control btn btn-primary" style="width:150px" > 
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
               </div> <!-- MODAL FOOTER -->
             </form>  
@@ -196,8 +201,8 @@
                 </div> <!-- MODAL-DIALOG -->
             </div> <!-- MODAL-FADE-->
             <!-- BUY MODAL ############################################################################ -->
-            <!-- ADD ITEM MODAL ############################################################################ -->
 
+      <!-- ADD ITEM MODAL ############################################################################ -->
       <div class="modal fade" id="staticBackdropadd" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
         <div class="modal-content">
@@ -575,6 +580,73 @@
               });
 
           });
+
+          //Add Notif
+
+          $(document).ready(function(){
+
+          $('#staticBackdropadd').on('submit',function() {  
+          $.ajax({
+            url:'addsupplieritem.php', 
+            data:$(this).serialize(),
+            type:'POST',
+            success:function(data){
+              console.log(data);
+              swal("Success!", "Item Added!", "success");
+
+            },
+            error:function(data){
+              swal("Oops...", "Something went wrong :(", "error");
+            }
+            });
+            $("#staticBackdropadd").delay(10000).fadeOut("slow");
+          });
+          });
+
+          	//Edit Notif
+
+          $(document).ready(function(){
+
+          $('#staticBackdrop').on('submit',function() {  
+          $.ajax({
+            url:'editsupplieranditem.php', 
+            data:$(this).serialize(),
+            type:'POST',
+            success:function(data){
+              console.log(data);
+              swal("Success!", "Item and Supplier Updated!", "success");
+            },
+            error:function(data){
+              swal("Oops...", "Something went wrong :(", "error");
+            }
+            });
+            $("#staticBackdrop").delay(10000).fadeOut("slow");
+          });
+          });
+
+          //Buy Notif
+
+          $(document).ready(function(){
+
+          $('#staticBackdropbuy').on('submit',function() {  
+          $.ajax({
+            url:'../inventory/addinventory.php', 
+            data:$(this).serialize(),
+            type:'POST',
+            success:function(data){
+              console.log(data);
+              swal("Success!", "Item Purchased!", "success");
+            },
+            error:function(data){
+              swal("Oops...", "Something went wrong :(", "error");
+            }
+            });
+            $("#staticBackdropbuy").delay(10000).fadeOut("slow");
+          });
+          });
+
+
+          
 
          </script>   
 
