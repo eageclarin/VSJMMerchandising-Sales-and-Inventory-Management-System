@@ -70,6 +70,43 @@ include_once 'env/conn.php';
 	</script>
 </head>	
 <body>
+	    <!-- NAV BAR -->
+		<nav class="navbar">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a href="../../index.php" class="d-flex align-items-center pl-3 mb-3 mb-md-0 me-md-auto text-decoration-none">
+            <img src="img/logo.png" class="me-2" width="40"/>
+            <span class="fs-5"> VSJM Merchandising</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="pages/inventory/inventory.php">Inventory</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="pages/supplier/suppliers.php">Suppliers</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="pages/sales/sales.php">Sales</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="pages/order/order.php">Order</a>
+        </li>
+      </ul>
+      
+      <div class="dropdown">
+        <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+          <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+          <strong>User</strong>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+          <li><a class="dropdown-item" href="#">Settings</a></li>
+          <li><a class="dropdown-item" href="#">Profile</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="#">Sign out</a></li>
+        </ul>
+      </div>
+    </nav>
+    <!-- END OF NAV BAR -->
 	<main class="h-100">
 	
 	<!------------ SIDEBAR ----------->
