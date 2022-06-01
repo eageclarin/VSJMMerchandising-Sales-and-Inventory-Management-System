@@ -55,7 +55,10 @@ if(isset($_POST['edit'])){
 	
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> 
 	
 	<script>
 	
@@ -179,7 +182,7 @@ if(isset($_POST['submit'])){
                 </div> <!-- MODAL-BODY -->
                 <div class="modal-footer pb-0">
                     <input type="hidden" name="url" value="returnitem.php">
-                    <input  type="submit" value="update" name="edit" class="form-control btn btn-primary" style="width:150px" > 
+                    <input  type="submit" value="Update" name="edit" class="form-control btn btn-primary" style="width:150px" > 
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div> <!-- MODAL FOOTER -->
                 </form>  
@@ -352,7 +355,33 @@ document.getElementById('itemReturn_Date').value = now.toISOString().slice(0, 16
 function checkdelete(){
     return confirm('Are you sure you want to delete this record?');
 }
+
+	//Edit Notif
+
+	$(document).ready(function(){
+
+	$('#staticBackdrop').on('submit',function() {  
+	$.ajax({
+		url:'returnitem.php', 
+		data:$(this).serialize(),
+		type:'POST',
+		success:function(data){
+			console.log(data);
+			swal("Success!", "Return Item Updated!", "success");
+		},
+		error:function(data){
+			swal("Oops...", "Something went wrong :(", "error");
+		}
+		});
+		$("#staticBackdrop").delay(10000).fadeOut("slow");
+	});
+	});
+
+
+
+
 </script>
+
 
 </body>
 </html>
