@@ -15,7 +15,10 @@
 		<link rel="stylesheet" href="style.css?ts=<?=time()?>">
 	    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 		<script src="myjs.js" type="text/javascript"></script>
-
+		<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.js"></script>
+		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+		
 		<!-- CSS -->
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
@@ -244,7 +247,7 @@
                 </div> <!-- MB-1 MT-1 -->
               </div> <!-- MODAL-BODY -->
               <div class="modal-footer pb-0">
-                  <input  type="submit" value="update" name="edit" class="form-control btn btn-primary" style="width:150px" > 
+                  <input  type="submit" value="Update" name="edit" class="form-control btn btn-primary" style="width:150px" > 
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
               </div> <!-- MODAL FOOTER -->
             </form>  
@@ -310,7 +313,7 @@
                 </div> <!-- MODAL-BODY -->
                 <div class="modal-footer pb-0">
                     <input type="hidden" name="url" value="inventory.php">
-                    <input  type="submit" value="update" name="edit" class="form-control btn btn-primary" style="width:150px" > 
+                    <input  type="submit" value="Update" name="edit" class="form-control btn btn-primary" style="width:150px" > 
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div> <!-- MODAL FOOTER -->
                 </form>  
@@ -964,10 +967,110 @@
         });
 
 
-		   //Notification Modal
-			$(document).ready(function () {
-			$("#flash-msg").delay(1000).fadeOut("slow");
-		});
+		   //Add Notif
+
+			$(document).ready(function(){
+			
+			$('#staticBackdropadd').on('submit',function() {  
+			$.ajax({
+				url:'addsupplieritem.php', 
+				data:$(this).serialize(),
+				type:'POST',
+				success:function(data){
+					console.log(data);
+					swal("Success!", "Item Added!", "success");
+					
+				},
+				error:function(data){
+					swal("Oops...", "Something went wrong :(", "error");
+				}
+				});
+				$("#staticBackdropadd").delay(10000).fadeOut("slow");
+			});
+			});
+
+			$(document).ready(function(){
+			
+			$('#staticBackdropaddtrans').on('submit',function() {  
+			$.ajax({
+				url:'addtransaction.php', 
+				data:$(this).serialize(),
+				type:'POST',
+				success:function(data){
+					console.log(data);
+					swal("Success!", "Transaction Added!", "success");
+				},
+				error:function(data){
+					swal("Oops...", "Something went wrong :(", "error");
+				}
+				});
+				$("#staticBackdropaddtrans").delay(10000).fadeOut("slow");
+			});
+			});
+
+			//Edit Notif
+
+			$(document).ready(function(){
+			
+			$('#staticBackdrop1').on('submit',function() {  
+			$.ajax({
+				url:'editsupplieritem.php', 
+				data:$(this).serialize(),
+				type:'POST',
+				success:function(data){
+					console.log(data);
+					swal("Success!", "Item Updated!", "success");
+				},
+				error:function(data){
+					swal("Oops...", "Something went wrong :(", "error");
+				}
+				});
+				$("#staticBackdrop1").delay(10000).fadeOut("slow");
+			});
+			});
+
+
+			$(document).ready(function(){
+			
+			$('#staticBackdrop2').on('submit',function() {  
+			$.ajax({
+				url:'edittransaction.php', 
+				data:$(this).serialize(),
+				type:'POST',
+				success:function(data){
+					console.log(data);
+					swal("Success!", "Transaction Updated!", "success");
+				},
+				error:function(data){
+					swal("Oops...", "Something went wrong :(", "error");
+				}
+				});
+				$("#staticBackdrop2").delay(10000).fadeOut("slow");
+			});
+			});
+
+			
+			//Buy Notif
+			$(document).ready(function(){
+			
+			$('#staticBackdrop').on('submit',function() {  
+			$.ajax({
+				url:'../inventory/addinventory.php', 
+				data:$(this).serialize(),
+				type:'POST',
+				success:function(data){
+					console.log(data);
+					swal("Success!", "Item Purchased!", "success");
+				},
+				error:function(data){
+					swal("Oops...", "Something went wrong :(", "error");
+				}
+				});
+				$("#staticBackdrop").delay(10000).fadeOut("slow");
+			});
+			});
+
+			
 
 			
 		</script>
