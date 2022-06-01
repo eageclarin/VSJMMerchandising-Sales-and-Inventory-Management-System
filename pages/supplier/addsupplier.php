@@ -12,25 +12,25 @@
 
 $db = mysqli_connect("localhost","root","","VSJM");
 
-if(!$db)
-{
-    die("Connection failed: " . mysqli_connect_error());
-}
+			if(!$db)
+			{
+				die("Connection failed: " . mysqli_connect_error());
+			}
 
+			if(isset($_POST['submit']))
+			{		
+			
+			$supplier_Name= $_POST['supplier_Name'];
+			$supplier_ContactPerson = $_POST['supplier_ContactPerson'];
+			$supplier_ContactNum= $_POST['supplier_ContactNum'];
+			$supplier_Address= $_POST['supplier_Address'];
+		
 
-
-if(isset($_POST['submit']) || isset($_POST['Submit']))
-{		
-    
-    $supplier_Name= $_POST['supplier_Name'];
-    $supplier_ContactPerson = $_POST['supplier_ContactPerson'];
-    $supplier_ContactNum= $_POST['supplier_ContactNum'];
-    $supplier_Address= $_POST['supplier_Address'];
-   
-
-    $insert = mysqli_query($db,"INSERT INTO supplier ". "(supplier_Name, supplier_ContactPerson,
-              supplier_ContactNum, supplier_Address) ". "
-			  VALUES('$supplier_Name', '$supplier_ContactPerson', '$supplier_ContactNum', '$supplier_Address')");
+			$insert = mysqli_query($db,"INSERT INTO supplier ". "(supplier_Name, supplier_ContactPerson,
+					supplier_ContactNum, supplier_Address) ". "
+					VALUES('$supplier_Name', '$supplier_ContactPerson', '$supplier_ContactNum', '$supplier_Address')");
+					
+			}
 			
                
     if(!$insert)
@@ -42,7 +42,7 @@ if(isset($_POST['submit']) || isset($_POST['Submit']))
         header( "Location: ./suppliers.php?");
         exit;
     }
-}
+
 
 mysqli_close($db); // Close connection
 
