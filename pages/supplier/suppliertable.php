@@ -159,48 +159,6 @@
 			}
 		</style>
 
-		<script>
-        $(document).ready(function(){
-            $('.editbtn').on('click',function(){
-                $('#staticBackdrop').modal('show');
-                $tr = $(this).closest('tr');
-
-                var data = $tr.children("td").map(function () {
-                    return $(this).text();
-                }).get();
-
-                console.log(data);
-				var retail = data[5]*1.2;
-                $('#editID').val(data[0]);
-                $('#editRetail').val(Math.ceil(retail*4)/4);               
-                $('#editMarkup').val(1.2);
-                //$('#editStock').val(data[6]);
-                $('#editCategory').val(data[4]);
-                const $select = document.querySelector('#item_Category');
-                $select.value = data[4];
-				$('#editCost').val(data[5]);
-                
-                document.getElementById("labelID").innerHTML = "Item ID: " + data[0];
-				document.getElementById("labelName").innerHTML = data[1];
-				document.getElementById("labelBrand").innerHTML = data[3];
-				document.getElementById("labelCost").innerHTML = data[5] + "/"+ data[2];
-            });
-        });
-
-        $(document).ready(function(){
-            $('.additembtn').on('click',function(){
-                $('#staticBackdropadd').modal('show');
-            });
-        });
-
-		 $(document).ready(function(){
-            $('.addtransbtn').on('click',function(){
-                $('#staticBackdropaddtrans').modal('show');
-            });
-        });
-
-    </script> 
-
 
 
 	</head>
@@ -235,7 +193,133 @@
 				}
 				
 			?>
-			<!-- EDIT MODAL ############################################################################ -->
+
+	   <!-- EDIT ITEM MODAL ############################################################################ -->
+		<div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">Edit Item</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div> <!-- MODAL-HEADER -->
+            
+            <form id="newform" action="editsupplieritem.php" method="post" class="form-inline" > 
+              <div class="modal-body mb-2">   
+
+                <!--<input type="hidden"  id="edititemID" name="edititemID" placeholder="Enter"> -->
+                <div style="display:flex; flex-direction: row; align-items: center;">
+                  <label for="edititemID" style="border:0; background-color: transparent; font-size: 1.35em; color:black; font-weight: 500;">Item ID: </label>
+                  <span><input type="text" class="form-control" id="edititemID" name="edititemID" style="font-size: 1.35em; color:black; font-weight: 500;" readonly></span>
+                </div>
+               
+                <div class="mb-1 mt-1"> 
+                  <label for="editName" >Item Name: </label>
+                  <div>
+                    <input type="text" class="form-control"  id="editName" name="editName" placeholder="Enter">
+                  </div>
+                  <label for="editBrand" >Unit: </label>
+                  <div>
+                    <input type="text" class="form-control"  id="editUnit" name="editUnit" placeholder="Enter">
+                  </div> 
+                  <label for="editBrand" >Brand: </label>
+                  <div>
+                    <input type="text" class="form-control"  id="editBrand" name="editBrand" placeholder="Enter">
+                  </div>
+				  <label for="editcostprice">Cost Price: </label>
+                  <div>
+                    <input type="number" step="any" class="form-control"  id="editcostprice" name="editcostprice" placeholder="Enter">
+                  </div> 
+				  <label for="item_Category" >Category: </label>
+                        <div>
+                            <select name="item_Category" type="text" id="item_Category" style="height:30px;" >
+                            <option value="Electrical" >Electrical</option>
+                            <option value="Plumbing">Plumbing</option>
+                            <option value="Architectural"> Architectural</option>
+                            <option value="Paints">Paints</option>
+                            <option value="bolts and nuts">Bolts and Nuts</option>
+                            <option value="Tools">Tools</option>
+                            <option value="Wood">Wood</option>
+                            </select>        
+                        </div> 
+                </div> <!-- MB-1 MT-1 -->
+              </div> <!-- MODAL-BODY -->
+              <div class="modal-footer pb-0">
+                  <input  type="submit" value="update" name="edit" class="form-control btn btn-primary" style="width:150px" > 
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div> <!-- MODAL FOOTER -->
+            </form>  
+          </div> <!-- MODAL-CONTENT -->
+        </div> <!-- MODAL-DIALOG -->
+      </div> <!-- MODAL-FADE-->
+      <!-- EDIT ITEM MODAL ############################################################################ -->
+
+	  <!-- EDIT TRANSACTION MODAL ############################################################################ -->
+			<div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Edit Transaction</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div> <!-- MODAL-HEADER -->
+
+                <form id="newform" action="edittransaction.php" method="post" class="form-inline" > 
+                <div class="modal-body mb-2"> 
+				<input type="text"  id="editTransactionID" name="editTransactionID" placeholder="Enter"> 
+                <label for="editTransactionID" id="labelTransactionID" style="border:0; background-color: transparent; font-size: 1.25em; color:black; font-weight: 500;">Transaction ID: </label>  
+                <input type="hidden"  id="editSupplierID" name="editSupplierID" placeholder="Enter"> 
+                <label for="editSupplierID" id="labelSupplierID" style="border:0; background-color: transparent; font-size: 1.25em; color:black; font-weight: 500;">Supplier ID: </label>
+				<input type="hidden"  id="editItemID" name="editItemID" placeholder="Enter"> 
+                <label for="editItemID" id="labelItemID" style="border:0; background-color: transparent; font-size: 1.25em; color:black; font-weight: 500;">Item ID: </label>	
+					
+					<div class="mb-1 mt-1"> 
+                    <label for="editQuantity" >Item Quantity: </label>
+                    <div>
+                        <input type="text" class="form-control"  id="editQuantity" name="editQuantity" placeholder="Enter">
+                    </div> 
+                    <label for="editItemCost" >Item Cost Price: </label>
+                    <div>
+                        <input type="text" class="form-control"  id="editItemCost" name="editItemCost" placeholder="Enter">
+                    </div> 
+                    <label for="editDate" >Transaction Date: </label>
+                    <div>
+                        <input type="datetime-local" class="form-control"  id="editDate" name="editDate" placeholder="Enter">
+                    </div> 
+					<label for="editStatus" >Transaction Status: </label>
+                    <div>
+                        <select  id="editStatus" name="editStatus" >
+						<?php
+								echo"<p>
+								<option value=\"1\""; 
+								if(['$editStatus']=="1"){
+									echo " selected";
+								}
+							    echo ">Successful</option>
+								<option value=\"0\"";
+								if(['$editStatus']=="0"){
+									echo " selected";
+								}
+							   echo ">Failed</option>
+							   </select></p>";
+						?>
+                    </div> 
+					<label for="editTotalPrice" >Transaction Total Price: </label>
+					<div>
+                        <input type="text" class="form-control"  id="editTotalPrice" name="editTotalPrice" placeholder="Enter">
+                    </div>
+                    </div> <!-- MB-1 MT-1 -->
+                </div> <!-- MODAL-BODY -->
+                <div class="modal-footer pb-0">
+                    <input type="hidden" name="url" value="inventory.php">
+                    <input  type="submit" value="update" name="edit" class="form-control btn btn-primary" style="width:150px" > 
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div> <!-- MODAL FOOTER -->
+                </form>  
+            </div> <!-- MODAL-CONTENT -->
+            </div> <!-- MODAL-DIALOG -->
+        </div> <!-- MODAL-FADE-->
+        <!-- EDIT TRANSACTION MODAL ############################################################################ -->
+
+			<!-- BUY MODAL ############################################################################ -->
 			<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 				<div class="modal-dialog">
 				<div class="modal-content">
@@ -301,7 +385,7 @@
 				</div> <!-- MODAL-CONTENT -->
 				</div> <!-- MODAL-DIALOG -->
 			</div> <!-- MODAL-FADE-->
-			<!-- EDIT MODAL ############################################################################ -->
+			<!-- BUY MODAL ############################################################################ -->
 
 
 			<!-- ADD ITEM MODAL ############################################################################ -->
@@ -443,7 +527,7 @@
 				<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-					<h5 class="modal-title" id="staticBackdropLabel">AddTransaction</h5>
+					<h5 class="modal-title" id="staticBackdropLabel">Add Transaction</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div> <!-- MODAL-HEADER -->
 					<div class="modal-body mb-2">
@@ -469,7 +553,7 @@
 												$query = "SELECT * from supplier";
 													$result = mysqli_query($conn,$query);
 													if(mysqli_num_rows($result) > 0){
-														echo "<select name='supplier_ID'>";
+														echo "<select name='supplier_ID' name='supplier_ID'>";
 															while($row = mysqli_fetch_assoc($result)){
 																echo "<option value='".$row['supplier_ID']."'";
 
@@ -490,16 +574,15 @@
 										<p>
 											Item:
 											<?php
-												$query = "SELECT * from item";
-													$result = mysqli_query($conn,$query);
-													if(mysqli_num_rows($result) > 0){
-														echo "<select name='item_ID'>";
-															while($row = mysqli_fetch_assoc($result)){
-																echo "<option value='".$row['item_ID']."'>"
-																.$row['item_ID']."</option>";
-															}
-															echo "</select><br>";
+											$query = "SELECT * from item";
+												$result = mysqli_query($conn,$query);
+												if(mysqli_num_rows($result) > 0){
+													echo "<select id='item_ID' name='item_ID'>";
+														while($row = mysqli_fetch_assoc($result)){
+															echo "<option value='".$row['item_ID']."'>".$row['item_ID']." - ".$row['item_Name']."</option>";
 														}
+														echo "</select><br>";
+													}
 											date_default_timezone_set('Asia/Taipei');
 											?>
 										</p>
@@ -574,7 +657,7 @@
 												<td>". $row["item_Brand"]."</td>
 												<td>". $row["item_Category"]."</td>
 												<td>". $row["supplierItem_CostPrice"]."</td>
-												<td><button class=\"btn editbtn p-0\" style=\"float:left;\" onclick=\"location.href='editsupplieritem.php?item_ID=".$row['item_ID']."&supplier_ID=".$supplier_chosen."'\"><i class='fas fa-edit'></i></button></td>
+												<td><button class=\"btn editbtn1 p-0\" style=\"float:left;\"><i class='fas fa-edit'></i></button></td>
 												<td><a onclick='return checkdelete()' href='deletesupplieritem.php?item_ID=".$row['item_ID']."&supplier_ID=".$supplier_chosen."'\"><button style=\"border: none;\"><i class='fas fa-trash'></i></a></button></td>";
 										//echo "<td><a onclick='return checkdelete()' href='deleteitemtransactions.php?item_ID=".$row['item_ID']."&supplier_ID=".$supplier_chosen."'\"><button>Delete Item & Transactions</a></button></td>";
 												
@@ -605,6 +688,21 @@
 							//echo "<tr><td colspan=\"11\"><button class=\"btn btn-success additembtn mt-3\" onclick=\"location.href='addsupplieritem.php?supplier_ID=".$supplier_chosen."'\">Add Item to Supplier</button></td></tr>";
 							echo "<tr><td colspan=\"11\"><button class=\"btn btn-success additembtn mt-3\">Add Item to Supplier</button></td></tr>";
 						?>
+						<br>
+							<div class="row-6 align-self-center" style="float:right;" >
+	                  <form action="exportpurchases.php" method="post">
+	                    <div class="align-bottom" style=" display: inline-block;">
+	                      <label for="exportMonth" class="col-auto col-form-label fw-bold">Month & Year:</label>
+	                    </div>
+	                    <div class="align-bottom" style=" display: inline-block;">
+	                      <input type="month" class="form-control" id="exportMonth" name="exportMonth">
+	                    </div>
+	                    <div class="align-bottom" style=" display: inline-block;">
+	                    	<input type=hidden name=ExportTransactionSupp value=<?php echo $supplier_chosen?>>
+	                      <button class="btn btn-success purchasesbtn " name="exportsupp" type="submit" style="float:right;"><i class='fas fa-download'></i>  Monthly Purchases</button>
+	                    </div>
+	                  </form>
+	            </div>
 
 					  </section>
 					    
@@ -646,7 +744,7 @@
 												<td>". $row["transactionItems_CostPrice"]."</td>
 												<td>". $row["transactionItems_TotalPrice"]."</td>
 												<td>". $row["transaction_TotalPrice"]."</td>
-												<td><button class=\"btn editbtn p-0\" style=\"float:left;\" onclick=\"location.href='edittransaction.php?transaction_ID=".$row['transaction_ID']."'\"><i class='fas fa-edit'></i></button></td>
+												<td><button class=\"btn editbtn2 p-0\" style=\"float:left;\" ><i class='fas fa-edit'></i></button></td>
 												<td><button style=\"border: none;\"> <a onclick='return checkdelete()' href='deletetransaction.php?transaction_ID=".$row['transaction_ID']."'><i class='fas fa-trash'></i></button></a></td>
 						
 										</tr>";
@@ -662,7 +760,21 @@
 						</tbody></table></div>
 						<?php
 							echo "<tr><td colspan=\"11\"><button class=\"btn btn-success addtransbtn mt-3\">Add Transaction</button></td></tr>";
-						?>
+						?><br>
+							<div class="row-6 align-self-center" style="float:right;" >
+	                  <form action="exportpurchases.php" method="post">
+	                    <div class="align-bottom" style=" display: inline-block;">
+	                      <label for="exportMonth" class="col-auto col-form-label fw-bold">Month & Year:</label>
+	                    </div>
+	                    <div class="align-bottom" style=" display: inline-block;">
+	                      <input type="month" class="form-control" id="exportMonth" name="exportMonth">
+	                    </div>
+	                    <div class="align-bottom" style=" display: inline-block;">
+	                    	<input type=hidden name=ExportTransactionSupp value=<?php echo $supplier_chosen?>>
+	                      <button class="btn btn-success purchasesbtn " name="exportsupp" type="submit" style="float:right;"><i class='fas fa-download'></i>  Monthly Purchases</button>
+	                    </div>
+	                  </form>
+	            </div>
 					  </section>
 					    
 					  <section id="content3">
@@ -685,7 +797,6 @@
 									echo "<tr><th class='colhead'><span class='thick'><i class=\"fa fa-map-marker\"></i>  Supplier Address  </span></th><td>".$row["supplier_Address"]."</td></tr></table>";
 								}
 							}
-							echo "<button class=\"btn btn-success mt-3\" onclick=\"location.href='editsupplier.php?supplier_ID=".$supplier_chosen."'\"><i class='fas fa-edit'></i> Edit </button> ";
 							echo "<button class=\"btn btn-success mt-3\" onclick=\"changeLoc('delete','".$supplier_chosen."')\"><i class=\"fa fa-circle-o\"></i> Change Status
 							</button>";
 						?>
@@ -756,6 +867,107 @@
 					location.href=loc+"supplier.php?supplier_ID="+id+"&prevpage='suppliertable'";
 				}
 			}
+
+	
+        $(document).ready(function(){
+            $('.editbtn').on('click',function(){
+                $('#staticBackdrop').modal('show');
+                $tr = $(this).closest('tr');
+
+                var data = $tr.children("td").map(function () {
+                    return $(this).text();
+                }).get();
+
+                console.log(data);
+				var retail = data[5]*1.2;
+                $('#editID').val(data[0]);
+                $('#editRetail').val(Math.ceil(retail*4)/4);               
+                $('#editMarkup').val(1.2);
+                //$('#editStock').val(data[6]);
+                $('#editCategory').val(data[4]);
+                const $select = document.querySelector('#item_Category');
+                $select.value = data[4];
+				$('#editCost').val(data[5]);
+                
+                document.getElementById("labelID").innerHTML = "Item ID: " + data[0];
+				document.getElementById("labelName").innerHTML = data[1];
+				document.getElementById("labelBrand").innerHTML = data[3];
+				document.getElementById("labelCost").innerHTML = data[5] + "/"+ data[2];
+            });
+        });
+
+        $(document).ready(function(){
+            $('.additembtn').on('click',function(){
+                $('#staticBackdropadd').modal('show');
+            });
+        });
+
+		 $(document).ready(function(){
+            $('.addtransbtn').on('click',function(){
+                $('#staticBackdropaddtrans').modal('show');
+            });
+        });
+
+		//Edit Item Modal
+
+		$(document).ready(function(){
+              $('.editbtn1').on('click',function(){
+                $('#staticBackdrop1').modal('show');
+                $tr = $(this).closest('tr');
+
+                var data = $tr.children("td").map(function () {
+                    return $(this).text();
+                }).get();
+
+                console.log(data);
+
+                $('#edititemID').val(data[0]);
+                $('#editName').val(data[1]);
+                $('#editUnit').val(data[2]);
+                $('#editBrand').val(data[3]);
+				$('#editcostprice').val(data[5]);
+				$('#item_Category').val(data[4]);
+                const $select = document.querySelector('#item_Category');
+                $select.value = data[4];
+
+              });
+           });
+
+		    //Edit Transaction Modal 
+
+		        $(document).ready(function(){
+                $('.editbtn2').on('click',function(){
+                $('#staticBackdrop2').modal('show');
+
+                $tr = $(this).closest('tr');
+
+                var data = $tr.children("td").map(function () {
+                    return $(this).text();
+                }).get();
+
+                console.log(data);
+
+                $('#editTransactionID').val(data[0]);
+                $('#editSupplierID').val(data[1]);
+                $('#editItemID').val(data[2]);
+                $('#editQuantity').val(data[6]);
+                $('#editItemCost').val(data[7]);
+				$('#editDate').val(data[4]);
+				$('#editStatus').val(data[5]);
+				$('#editTotalPrice').val(data[9]);
+				const $select = document.querySelector('#editDate');
+                $select.value = data[4];
+                document.getElementById("labelTransactionID").innerHTML = "Transaction ID: " + data[0];
+				document.getElementById("labelSupplierID").innerHTML = "Supplier ID: " + data[1];
+				document.getElementById("labelItemID").innerHTML = "Item ID: " + data[2];
+            });
+        });
+
+
+		   //Notification Modal
+			$(document).ready(function () {
+			$("#flash-msg").delay(1000).fadeOut("slow");
+		});
 
 			
 		</script>
