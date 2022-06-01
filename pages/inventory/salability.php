@@ -42,7 +42,7 @@ $totalValue = $row['salesvalue'];
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div> <!-- MODAL-HEADER -->
             
-            <form id="newform" action="editinventory.php" method="post" class="form-inline" > 
+            <form id="newform" action="salability.php" method="post" class="form-inline" > 
               <div class="modal-body mb-2">   
                 <input type="hidden"  id="editID" name="editID" placeholder="Enter"> 
                 <label for="editID" id="labelID" style="border:0; background-color: transparent; font-size: 1.25em; color:black; font-weight: 500;">Item ID: </label>
@@ -156,23 +156,55 @@ $totalValue = $row['salesvalue'];
             <?php 
                     // DELETE ITEM FROM INVENTORY
     if (isset($_POST['delete1'])) {
-        echo "delete clicked";
         $itemID = $_POST['itemID1'];
         $deleteItem = "UPDATE inventory SET inventoryItem_Status = 0 WHERE branch_ID =1 AND item_ID = '$itemID';";
         $sqlDelete = mysqli_query($conn,$deleteItem);
         if ($sqlDelete) {
-          echo "deleted";
+          //echo "deleted";
         } else {
           echo mysqli_error($conn);
         }
-        header("Location: ./inventory.php");
+        
         unset($_SESSION['delete1']);
     }
     // EDIT AN ITEM FROM INVENTORY
     if(isset($_POST['edit'])){
-        $_SESSION['itemID'] = $_POST['itemID'];
-        header("Location: ./editinventory.php");
-        unset($_POST['edit']);
+        //$_SESSION['itemID'] = $_POST['itemID'];
+        //header("Location: ./editinventory.php");
+        //unset($_POST['edit']);
+
+          //echo $_POST['editID'];
+          $itemID = $_POST['editID'];
+          $item_Name =$_POST['editName'];
+          $item_Unit =$_POST['editUnit'];
+          $item_Brand =$_POST['editBrand'];
+          $item_Retail =$_POST['editRetail'];
+          $item_Markup =$_POST['editMarkup'];
+          $item_Stock =$_POST['editStock'];
+          $item_Category = $_POST['item_Category'];
+          $url = "Location: ./" .$_POST['url'];
+
+          if($item_Stock<=10){
+            $pend = 1;
+          } else{
+            $pend =0;
+          }
+
+          $updateStatus = "UPDATE inventory SET in_pending=$pend, item_Stock = '$item_Stock', item_RetailPrice = '$item_Retail', Item_markup = '$item_Markup' WHERE item_ID = '$itemID' AND branch_ID=1;";
+          $sqlUpdate = mysqli_query($conn,$updateStatus);
+          $updateStatus = "UPDATE item SET item_Name = '$item_Name', item_unit='$item_Unit', item_Brand ='$item_Brand', item_Category = '$item_Category' WHERE item_ID = '$itemID';";
+          $sqlUpdate = mysqli_query($conn,$updateStatus);
+          if ($sqlUpdate) {
+            //echo "Update in inventory success <br/>";
+          } else {
+            echo mysqli_error($conn);
+          } 
+          unset($_POST['edit']);
+          //header($url);
+          //header("Location: ./inventory.php");
+
+
+
     }
     // SQL QUERIES ==========================================================================================
     // FROM SEARCH TAB
@@ -257,7 +289,7 @@ $totalValue = $row['salesvalue'];
                 ?>
                 <!--DELETE AND EDIT BUTTON-->
                 <td style="width:100px;"> <button type="button" class="btn editbtn" style="float:left;"> <i class='fas fa-edit'></i> </button>
-                    <form action="search_sort.php" class="mb-1" method="post">
+                    <form action="salability.php" class="mb-1" method="post">
                         <input type=hidden name=itemID1 value=<?php echo $row['item_ID']?>>
                         <button class="btn" name="delete1" type="submit" style="float:right; padding-left:0px;" <?php if($row['inventoryItem_Status']==0){echo 'disabled';} ?>><i class='fas fa-trash'></i></button>
                         
