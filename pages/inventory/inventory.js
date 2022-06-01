@@ -191,3 +191,8 @@ function categ(){
         var link = "export.php?exportTransactions=range&from=" + $("#from_date").val() + "&to=" + $("#to_date").val();
         document.getElementById('exportRange').setAttribute("href", link);
     }
+
+    function changeRange(){
+        var link = "export.php?exportTransactions=range&from=" + $("#from_date").val() + "&to=" + $("#to_date").val();
+        document.getElementById('exportRange').setAttribute("href", link);
+    }

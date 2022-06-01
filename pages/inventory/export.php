@@ -134,15 +134,17 @@
 
         if ($type=='all') {
             $sql1 = "SELECT * FROM supplier_transactions INNER JOIN supplier ON (supplier_transactions.supplier_ID = supplier.supplier_ID) WHERE transaction_Status !=0 ;";
-            $filename = 'VSJM_All_Trans_'.date("F_d_Y"). '.xls';
+            $filename = 'VSJM_All_Trans@'.date("F_d_Y"). '.xls';
         } elseif ($type=='month') {
-            echo "month";
-            $sql1 = "SELECT * FROM supplier_transactions INNER JOIN supplier ON (supplier_transactions.supplier_ID = supplier.supplier_ID) WHERE transaction_Status !=0 ;"; //to be edited
-            $filename = 'VSJM_'.date("F") .'_Trans_'.date("F_d_Y"). '.xls';
+            $year = date("Y");
+            $month = date("m");
+            $sql1 = "SELECT * FROM supplier_transactions INNER JOIN supplier ON (supplier_transactions.supplier_ID = supplier.supplier_ID) WHERE transaction_Status !=0 AND YEAR(supplier_transactions.transaction_Date) = '$year' AND MONTH(supplier_transactions.transaction_Date) = '$month';"; 
+            $filename = 'VSJM_' .date("F") .'_Trans@'.date("F_d_Y"). '.xls';
         } elseif ($type=='range') {
-            echo "date range";
-            $sql1 = "SELECT * FROM supplier_transactions INNER JOIN supplier ON (supplier_transactions.supplier_ID = supplier.supplier_ID) WHERE transaction_Status !=0 ;"; //to be edited
-            $filename = 'VSJM_[range]_Trans_'.date("F_d_Y"). '.xls';
+            $from_date = $_GET['from'];
+            $to_date = $_GET['to'];
+            $sql1 = "SELECT * FROM supplier_transactions INNER JOIN supplier ON (supplier_transactions.supplier_ID = supplier.supplier_ID) WHERE transaction_Status !=0 AND transaction_Date BETWEEN '$from_date' AND '$to_date';"; 
+            $filename = 'VSJM_' .$from_date .'_to_' .$to_date .'_Trans@'.date("F_d_Y"). '.xls';
         }  
         $result1 = mysqli_query($conn,$sql1);
         $resultCheck1 = mysqli_num_rows($result1);            
@@ -228,8 +230,8 @@
 
 
         
-        //header('Content-Type: application/xls');
-        //header('Content-Disposition: attachment; filename=VSJM_All_Trans_'.date("F_d_Y"). '.xls' );
+        header('Content-Type: application/xls');
+        header('Content-Disposition: attachment; filename='.$filename);
         echo $output;
 
     }

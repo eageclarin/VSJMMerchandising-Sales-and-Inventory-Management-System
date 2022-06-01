@@ -81,7 +81,7 @@ $to_date=date("Y-m-d");
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                   <li><a class="dropdown-item" href="export.php?exportTransactions=all#">All Transactions</a></li>
                   <li><a class="dropdown-item" href="export.php?exportTransactions=month#">Transactions for this Month</a></li>
-                  <li><a class="dropdown-item" href="export.php?exportTransactions=range&from=<?php echo $from_date?>&to=<?php echo $to_date?>#" id=exportRange>Transactions in Date Range</a></li>
+                  <li><a class="dropdown-item" href="export.php?exportTransactions=range&from=<?php echo $from_date?>&to=<?php echo $to_date?>#" id=exportRange onclick="changeRange()">Transactions in Date Range</a></li>
                 </ul>
               </div>
             </div>               
