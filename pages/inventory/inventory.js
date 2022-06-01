@@ -182,3 +182,10 @@ function categ(){
             });
     //});
     }
+
+    function transactionDate(){
+        var min = $("#from_date").val();       
+        document.getElementById('to_date').setAttribute("min", min);
+        //var max = $("#to_date").val(); 
+        //document.getElementById('from_date').setAttribute("max", max);
+    }

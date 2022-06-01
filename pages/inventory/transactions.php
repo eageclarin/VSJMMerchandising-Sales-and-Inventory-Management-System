@@ -45,11 +45,54 @@ $n=0;
   <div class="container-fluid bg-light p-5">
     <span class="fs-1 fw-bold"> TRANSACTIONS </span>
     <p> Completed and undelivered transactions are shown here</p>
+                       
 
     <div class = "container">
+
+      <form action="transactions.php" method="GET">
+        <div class="row pb-3 mb-3">
+          <div class="col-md-3">        
+            <div class="form-group">          
+              <label>From </label>
+              <input type="date" name="from_date" id="from_date" value="<?php if(isset($_GET['from_date'])){ echo $_GET['from_date']; } else {
+                echo '2022-01-01';
+              } ?>" class="form-control" onchange="transactionDate()">
+            </div>          
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label>To </label>
+              <input type="date" name="to_date" id="to_date" value="<?php if(isset($_GET['to_date'])){ echo $_GET['to_date']; } else {echo date("Y-m-d");} ?>" class="form-control" onchange="transactionDate()" min="2022-01-01">
+            </div>
+          </div>
+          <div class="col-md-3">        
+            <div class="form-group">        
+              <label></label> <br>        
+              <button type="submit" class="form-control" style="color:black; background-color:#7393B3" style="background-color:#7393B3">Filter</button>
+            </div>               
+          </div>
+          <div class="col-md-3">        
+            <div class="form-group">        
+              <label></label> <br>        
+              <button class="btn btn-success form-control" name="exportItems" type="submit" disabled >Download </button>
+            </div>               
+          </div>
+        </div>              
+      </form> 
+
       <div class='table-wrapper' style="height:600px;">
       <?php  
-        $sql = "SELECT * FROM supplier_transactions INNER JOIN supplier ON (supplier_transactions.supplier_ID = supplier.supplier_ID) WHERE transaction_Status !=0 ;";   
+        if (isset($_GET['from_date'])) {
+          $from_date = $_GET['from_date'];
+          $to_date = $_GET['to_date'];
+          $sql = "SELECT * FROM supplier_transactions INNER JOIN supplier ON (supplier_transactions.supplier_ID = supplier.supplier_ID) WHERE transaction_Status !=0 AND transaction_Date BETWEEN '$from_date' AND '$to_date';";  
+          unset($_GET['from_date']);
+          unset($_GET['to_date']);
+        } else {
+          $sql = "SELECT * FROM supplier_transactions INNER JOIN supplier ON (supplier_transactions.supplier_ID = supplier.supplier_ID) WHERE transaction_Status !=0 ;";
+        }
+
+           
         $result = mysqli_query($conn,$sql);
         $resultCheck = mysqli_num_rows($result);
           if ($resultCheck>0){
