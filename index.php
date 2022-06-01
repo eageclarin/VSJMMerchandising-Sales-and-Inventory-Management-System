@@ -97,7 +97,7 @@ include_once 'env/conn.php';
 				?>
 							<div class="rounded p-2 py-1 row" style="background-color: #343a40;">
 								<div class="col-9 px-0">
-									<?php echo $row['item_Name'] ?>
+									<a href=pages/inventory/inventory.php style="text-decoration:none;"><?php echo $row['item_Name'] ?></a>
 								</div>
 								<div class="col px-0 text-danger text-end">
 									<?php echo $row['item_Stock'] .$row['item_unit'] ?>
@@ -117,9 +117,9 @@ include_once 'env/conn.php';
 						echo '<ul class="text-wrap nav nav-pills flex-column mb-auto gap-2">';
 					  	while ($row1 = mysqli_fetch_assoc($result1)) {	
 						  	echo '<li class="rounded nav-item p-2 py-1" style="background-color: #343a40;">';
-							echo	'<div style="float:left; width:80%;">'
+							echo	'<div style="float:left; width:80%;"> <a href="pages/inventory/pending.php">'
 										.$row1['transaction_ID'] .': ' .$row1['supplier_Name']
-									.'</div>
+									.'</a></div>
 									<div style="float:right;width:20%; padding-right:3px; color:#D8172B;">'
 										.number_format($row1['transaction_TotalPrice'],2)
 									.'</div>
@@ -137,9 +137,9 @@ include_once 'env/conn.php';
 						echo '<ul class="text-wrap nav nav-pills flex-column mb-auto gap-2">';
 					  	while ($row1 = mysqli_fetch_assoc($result1)) {	
 						  	echo '<li class="rounded nav-item p-2 py-1" style="background-color: #343a40;">';
-							echo	'<div style="float:left; width:80%;">'
+							echo	'<div style="float:left; width:80%;"><a href="pages/inventory/pending.php">'
 										.$row1['transaction_ID'] .': ' .$row1['supplier_Name']
-									.'</div>
+									.'</a></div>
 									<div style="float:right;width:20%; padding-right:3px; color:#D8172B;">'
 										.number_format($row1['transaction_TotalPrice'],2)
 									.'</div>

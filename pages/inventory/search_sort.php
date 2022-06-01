@@ -71,7 +71,7 @@
         } else if ($k == "Salability"){
             $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) INNER JOIN (SELECT SUM(orderItems_Quantity) as sales_sum, item_ID as order_itemID FROM order_items GROUP BY item_ID) as orders ON (inventory.item_ID = orders.order_itemID) WHERE  inventoryItem_Status = 1 " .$addFilter .$addSearch ." ORDER BY sales_sum DESC;"; 
         } else {
-            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) WHERE  inventoryItem_Status = 1 " .$addFilter .$addSearch ." ;"; 
+            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) WHERE  inventoryItem_Status = 1 " .$addFilter .$addSearch ." ORDER BY item_Stock ASC;"; 
         }
     /* UNUSED===================
     // FROM CATEGORY  
@@ -84,7 +84,7 @@
         } =======================*/
     // DEFAULT: BY ID    
     }  else {
-            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) WHERE  inventoryItem_Status = 1 ORDER BY inventory.item_ID;"; 
+            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) WHERE  inventoryItem_Status = 1 ORDER BY item_Stock;"; 
     }  
 
     // ON SALABILITY

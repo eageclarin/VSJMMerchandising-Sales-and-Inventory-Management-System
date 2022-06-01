@@ -362,8 +362,16 @@ if ($resultCheck>0){
                 </button>
             </td>
             <?php    
-            echo "<td> <button class='btn p-0' onclick=\"location.href='../supplier/supplieritem.php?item_Name=".$row['item_Name']." ' \"><i class='fas fa-shopping-cart'></i></button> </td>
-            </tr>";
+            echo "<td> <button class='btn p-0' onclick=\"location.href='../supplier/supplieritem.php?item_Name=".$row['item_Name']." ' \"><i class='fas fa-shopping-cart'></i></button> </td>"; ?>
+            <td>
+                <form action="itemTransactions.php" class="mb-1" method="post">
+                    <button class="btn p-0" name="more" type="submit" ><i style="font-size:15px" class="fa">&#xf0c9;</i></button>
+                    <input type=hidden name=itemID1 value=<?php echo $row['item_ID']?>>
+                    <input type=hidden name=itemIDName value='<?php echo $row['item_Name']?>'>
+                </form>
+            </td>
+            </tr>
+            <?php
     }
 }       
 mysqli_close($conn);

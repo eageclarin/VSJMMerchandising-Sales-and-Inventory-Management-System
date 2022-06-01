@@ -7,6 +7,7 @@ $row = mysqli_fetch_array($result);
 $totalItems = $row['totalItems'];
 $totalValue = $row['totalValue'];
 
+
 if (isset($_POST['edit'])) { //UPDATING INVENTORY
   //echo $_POST['editID'];
   $itemID = $_POST['editID'];
@@ -193,11 +194,11 @@ if (isset($_POST['edit'])) { //UPDATING INVENTORY
 
               <label for="sort" class="col-auto col-form-label fw-bold">Sort by:</label>
               <select name="sort" id="sort" class="col-sm-10 form-select w-25" onchange="sort()">
-                <option value="ID" selected >ID</option>
+                <option value="item_Stock" selected >Stocks</option>
+                <option value="ID" >ID</option>
                 <option value="Category">Category</option>
                 <option value="PriceAsc"> <span>&#8593;</span>Price</option>
                 <option value="PriceDesc"> <span>&#8595;</span>Price</option>
-                <option value="item_Stock">Stocks</option>
                 <option value="Salability">Salability</option>
               </select> <!-- END OF SORTING -->
             </div>
