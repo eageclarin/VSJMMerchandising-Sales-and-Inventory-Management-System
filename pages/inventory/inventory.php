@@ -8,7 +8,7 @@ $totalItems = $row['totalItems'];
 $totalValue = $row['totalValue'];
 
 if (isset($_POST['edit'])) { //UPDATING INVENTORY
-  echo $_POST['editID'];
+  //echo $_POST['editID'];
   $itemID = $_POST['editID'];
   $item_Name =$_POST['editName'];
   $item_Unit =$_POST['editUnit'];
@@ -30,7 +30,7 @@ if (isset($_POST['edit'])) { //UPDATING INVENTORY
   $updateStatus = "UPDATE item SET item_Name = '$item_Name', item_unit='$item_Unit', item_Brand ='$item_Brand', item_Category = '$item_Category' WHERE item_ID = '$itemID';";
   $sqlUpdate = mysqli_query($conn,$updateStatus);
   if ($sqlUpdate) {
-    echo "Update in inventory success <br/>";
+    //echo "Update in inventory success <br/>";
   } else {
     echo mysqli_error($conn);
   } 
