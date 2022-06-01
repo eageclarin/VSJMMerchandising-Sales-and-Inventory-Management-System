@@ -1,6 +1,8 @@
 <?php
 include_once '../../env/conn.php';
 $n=0;
+$from_date='2022-01-01';
+$to_date=date("Y-m-d");
 
   $sql = "SELECT * FROM supplier_transactions INNER JOIN supplier ON (supplier_transactions.supplier_ID = supplier.supplier_ID) WHERE transaction_Status !=0 ;";   
   $result = mysqli_query($conn,$sql);
@@ -74,7 +76,14 @@ $n=0;
           <div class="col-md-3">        
             <div class="form-group">        
               <label></label> <br>        
-              <button class="btn btn-success form-control" name="exportItems" type="submit" disabled >Download </button>
+              <div class="dropdown">
+                <button class="btn btn-success dropdown-toggle form-control" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Download</button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  <li><a class="dropdown-item" href="export.php?exportTransactions=all#">All Transactions</a></li>
+                  <li><a class="dropdown-item" href="export.php?exportTransactions=month#">Transactions for this Month</a></li>
+                  <li><a class="dropdown-item" href="export.php?exportTransactions=range&from=<?php echo $from_date?>&to=<?php echo $to_date?>#" id=exportRange>Transactions in Date Range</a></li>
+                </ul>
+              </div>
             </div>               
           </div>
         </div>              

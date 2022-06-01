@@ -129,5 +129,108 @@
         
 
 
+    } elseif (isset($_GET['exportTransactions'])) {
+        $type = $_GET['exportTransactions'];
+
+        if ($type=='all') {
+            $sql1 = "SELECT * FROM supplier_transactions INNER JOIN supplier ON (supplier_transactions.supplier_ID = supplier.supplier_ID) WHERE transaction_Status !=0 ;";
+            $filename = 'VSJM_All_Trans_'.date("F_d_Y"). '.xls';
+        } elseif ($type=='month') {
+            echo "month";
+            $sql1 = "SELECT * FROM supplier_transactions INNER JOIN supplier ON (supplier_transactions.supplier_ID = supplier.supplier_ID) WHERE transaction_Status !=0 ;"; //to be edited
+            $filename = 'VSJM_'.date("F") .'_Trans_'.date("F_d_Y"). '.xls';
+        } elseif ($type=='range') {
+            echo "date range";
+            $sql1 = "SELECT * FROM supplier_transactions INNER JOIN supplier ON (supplier_transactions.supplier_ID = supplier.supplier_ID) WHERE transaction_Status !=0 ;"; //to be edited
+            $filename = 'VSJM_[range]_Trans_'.date("F_d_Y"). '.xls';
+        }  
+        $result1 = mysqli_query($conn,$sql1);
+        $resultCheck1 = mysqli_num_rows($result1);            
+                    
+        if ($resultCheck1>0){
+            while ($row1 = mysqli_fetch_assoc($result1)) {
+                $supplierName = $row1['supplier_Name'];
+                $supplierContactPerson = $row1['supplier_ContactPerson'];
+                $supplierContactNum = $row1['supplier_ContactNum'];
+                $supplierAddress = $row1['supplier_Address'];
+                $transactionDate = $row1['transaction_Date'];
+                $transactionTotalPrice = $row1['transaction_TotalPrice'];
+                $transactionStatus = $row1['transaction_Status'];
+                $ID = $row1['transaction_ID'];
+
+                $output .= "<table class='table' bordered='1'> 
+                            <tr>
+                                <td> Supplier: </td>
+                                <td>". $supplierName ."</td>
+                            </tr>
+                            <tr>
+                                <td> Contact Person: </td>
+                                <td>". $supplierContactPerson ."</td>
+                                <td> No.: </td>
+                                <td>". $supplierContactNum ."</td>
+                            </tr>
+                            <tr>
+                                <td> Address: </td>
+                                <td>". $supplierAddress ."</td>
+                            </tr>
+                            <tr>
+                                <td> Date: </td>
+                                <td>". $transactionDate ."</td>
+                            </tr>
+                            <tr>
+                                
+                            </tr>
+
+                            <tr> 
+                                <th> ID </th>
+                                <th> Item </th>
+                                <th> Brand </th>
+                                <th> unit </th>
+                                <th> Quantity </th>
+                                <th> Unit Price </th>
+                                <th> Total Price </th>
+                            </tr>";
+
+                $sql2 = "SELECT * FROM transaction_Items INNER JOIN item ON (transaction_Items.item_ID = item.item_ID) WHERE transaction_ID = '$ID' ;";   
+                $result2 = mysqli_query($conn,$sql2);
+                $resultCheck2 = mysqli_num_rows($result2);            
+                            
+                if ($resultCheck2>0){
+                    while ($row2 = mysqli_fetch_assoc($result2)) {
+                        $output .= "<tr>"; 
+                        $output .= "<td>" .$row2['item_ID']. "</td>";  
+                        $output .= "<td>". $row2['item_Name']. "</td>";  
+                        $output .= "<td>" .$row2['item_Brand']. "</td>";  
+                        $output .="<td>" . $row2['item_unit'] . "</td>";  
+                        $output .= "<td>" . $row2['transactionItems_Quantity']. "</td>"; 
+                        $output .= "<td>" .$row2['transactionItems_CostPrice']. "</td>";
+                        $output .= "<td>" .$row2['transactionItems_TotalPrice']. "</td>";       
+                        $output .= "</tr>"; 
+
+                    }
+                } 
+                $output .= "<tr> </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>Total: </td>
+                                <td>". $transactionTotalPrice . "</td>
+
+                            </tr>";
+                $output .= "</table>"; 
+
+            }
+        }
+
+
+
+        
+        //header('Content-Type: application/xls');
+        //header('Content-Disposition: attachment; filename=VSJM_All_Trans_'.date("F_d_Y"). '.xls' );
+        echo $output;
+
     }
 ?>

@@ -188,4 +188,6 @@ function categ(){
         document.getElementById('to_date').setAttribute("min", min);
         //var max = $("#to_date").val(); 
         //document.getElementById('from_date').setAttribute("max", max);
+        var link = "export.php?exportTransactions=range&from=" + $("#from_date").val() + "&to=" + $("#to_date").val();
+        document.getElementById('exportRange').setAttribute("href", link);
     }
