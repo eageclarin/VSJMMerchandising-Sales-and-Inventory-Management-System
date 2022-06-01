@@ -202,7 +202,7 @@
                 </td>
                 <td>
                     <form action="search_sort.php" class="mb-1" method="post">
-                        <button class="btn p-0" name="delete1" type="submit" <?php if($onSalability==true && $row['inventoryItem_Status']==0){echo 'disabled';} ?>><i class='fas fa-trash'></i></button>
+                        <button onclick='return checkdelete()' class="btn p-0" name="delete1" type="submit" <?php if($onSalability==true && $row['inventoryItem_Status']==0){echo 'disabled';} ?>><i class='fas fa-trash'></i></button>
                         <input type=hidden name=itemID1 value=<?php echo $row['item_ID']?>>
                     </form>
                 </td>
@@ -254,4 +254,8 @@
                 document.getElementById("labelID").innerHTML = "Item ID: " + data[0];
               });
            });
+
+           function checkdelete(){
+                return confirm('Are you sure you want to delete this record?');
+            }
          </script>
