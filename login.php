@@ -6,7 +6,7 @@ $db="VSJM";
 
 session_start();
 unset($_SESSION["customerID"]);
-
+$warning = "";
 $data=mysqli_connect($host,$user,$password,$db);
 
 if($data===false)
@@ -37,7 +37,8 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
 
 	else
 	{
-		echo "username or password incorrect";
+		//echo "username or password incorrect";
+		$warning = "Wrong username or password.";
 	}
 
 }
@@ -64,30 +65,31 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.8.0/gsap.min.js"></script>
 
 
-<body>
-	<div class = "w-50 mx-auto">
+<body class = "text-center">
+	<div class = "w-20 mx-auto text-center">
 		<img src="img/logo.png" class="rounded mx-auto d-block" width="130"/> 
 		<br>
 		
 	</div>
-	<div class="w-50 mx-auto" style="border-radius: 15px">
+	<div class="w-25 mx-auto text-center" style="border-radius: 15px; margin:auto;">
 	
 	<div class="fs-3 fw-bold text-center"> LOGIN </div>
 		<hr>
-		<form action = "#" method="post" id="form">
-			<div class="form-group row"> 
-				<label for="login_ID" class="col-5 col-form-label fw-bold">Login ID:</label>
-				<input type = "text" name = "login_ID" id="login_ID" class="col-sm-5 form-control w-50"  required>
+		<form action = "#" method="post" id="form" class="text-center">
+			<div class="form-floating"> 
+				<input type = "text" name = "login_ID" id="login_ID" class="col-sm-3 form-control "  required>
+				<label for="login_ID">Username</label>
 			</div>
-			<div class="form-group row mt-2">
-				<label for="login_pword" class="col-5 col-form-label fw-bold">Password:</label>
-				<input type = "password" name = "login_pword" id="login_pword" class="col-sm-5 form-control w-50"  required>
+			<div class="form-floating mt-2">
+				<input type = "password" name = "login_pword" id="login_pword" class="col-sm-3 form-control "  required>
+				<label for="login_pword">Password</label>
 			</div>
-			<div class="form-group row">
+			<div class="form-floating mt-2">
 				<div class="col">
 					<input type="submit" name="submit" value="login" class="btn btn-lg btn-success mt-3 w-100">
 				</div>
 			</div>
+			<div class="text-center text-danger pt-3 mt-1" style="font-size: 13px"><?php echo $warning ?></div>
 		</form>
 		</div>
 	</div>
