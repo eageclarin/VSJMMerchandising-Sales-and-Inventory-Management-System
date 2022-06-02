@@ -309,7 +309,8 @@ if (isset($_POST['edit'])) { //UPDATING INVENTORY
           
       });
 
-      //Edit Notif
+ 
+       //Edit Notif
       $(document).ready(function(){
       $('#staticBackdrop').on('submit',function() {  
       $.ajax({
