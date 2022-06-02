@@ -136,7 +136,7 @@ require_once 'auth_check.php';
 	<div class="dropdown " style="padding-right:80px;">
         <a href="#" class="pr-3 d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
           <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-          <strong ><?php echo $_SESSION["customerName"]; ?></strong>
+          <strong ><?php //echo $_SESSION["customerName"]; ?></strong>
         </a>
         <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1" >
 			<li class=" dropdown-item text-muted">Settings</li>
@@ -189,7 +189,7 @@ require_once 'auth_check.php';
 					}
 
 					//PENDING ORDERS
-					$sql1 = "SELECT * FROM supplier_Transactions INNER JOIN transaction_items ON (supplier_Transactions.transaction_ID = transaction_Items.transaction_ID) INNER JOIN supplier ON (supplier.supplier_ID = supplier_Transactions.supplier_ID ) WHERE transaction_Status = 0";
+					$sql1 = "SELECT * FROM supplier_Transactions  INNER JOIN supplier ON (supplier.supplier_ID = supplier_Transactions.supplier_ID ) WHERE transaction_Status = 0";
 					$result1 = mysqli_query($conn,$sql1);
 					$resultCheck1 = mysqli_num_rows($result1);
 					if ($resultCheck1>0){ 
@@ -211,7 +211,7 @@ require_once 'auth_check.php';
 					}
 
 					//PENDING DELIVERIES 	
-					$sql1 = "SELECT * FROM supplier_Transactions INNER JOIN transaction_items ON (supplier_Transactions.transaction_ID = transaction_Items.transaction_ID) INNER JOIN supplier ON (supplier.supplier_ID = supplier_Transactions.supplier_ID ) WHERE transaction_Status = 1";
+					$sql1 = "SELECT * FROM supplier_Transactions  INNER JOIN supplier ON (supplier.supplier_ID = supplier_Transactions.supplier_ID ) WHERE transaction_Status = 1";
 					$result1 = mysqli_query($conn,$sql1);
 					$resultCheck1 = mysqli_num_rows($result1);
 					if ($resultCheck1>0){ 
@@ -279,7 +279,7 @@ require_once 'auth_check.php';
 			<div class="btn-group" style="display:block; margin-left: auto; margin-right:2">
 				<button type="button" class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" id="dropdownUser1" aria-expanded="false">
 					<img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-					<strong>User</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<strong><?php echo $_SESSION["customerName"]; ?></strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				</button>
 				<ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start"  aria-labelledby="dropdownUser1">
 				<li><a class="dropdown-item" href="#">Settings</a></li>
@@ -329,15 +329,15 @@ require_once 'auth_check.php';
 		<!------ ORDERED FROM SUPPLIERS ------>
 		<div class="row px-3 mt-2" style="height:60%">
 			<div class="col">
-				<span class="fs-5 pb-1 fw-bold"> Suppliers </span>
+				<span class="fs-5 pb-1 fw-bold"> Pending Purchases  </span>(from Suppliers)
 				<hr class="mt-1 ">
-				<div class="bg-dark mt-2 rounded shadow-sm">
+				<div class="bg-dark mt-2 rounded shadow-sm table-hover">
 					<div class="row text-center text-light border-bottom p-2">
-						<div class="col-4">TransactionID</div>
+						<div class="col-2">Transaction ID</div>
 						<div class="col-2">Supplier ID</div>
-						<div class="col-2">Supplier Name</div>
-						<div class="col-2">Transaction Date</div>
-						<div class="col-2">Transaction Total Price</div>
+						<div class="col-3">Supplier Name</div>
+						<div class="col-3">Transaction Date</div>
+						<div class="col-2">Total Price</div>
 					</div>
 					<div style="overflow-y:scroll; overflow-x:hidden; max-height: 65%;">
 					<?php 
@@ -356,11 +356,11 @@ require_once 'auth_check.php';
 						  $total = $row['transaction_TotalPrice'];                
 						
 					?>	
-						<div class="row bg-white text-center border-bottom p-2">
-							<div class="col-4 fw-bold fs-5"><?php echo $ID ?></div> 
+						<div class="row bg-white text-center border-bottom p-2" onclick="location.href='pages/inventory/pending.php'"> 
+							<div class="col-2 fw-bold fs-5"><?php echo $ID ?></div> 
 							<div class="col-2 fs-5"><?php echo $supplier ?></div>
-							<div class="col-2 fs-5"><?php echo $supplierName ?></div>
-							<div class="col-2 fs-5"><?php echo $transacDate ?></div>
+							<div class="col-3 fs-5"><?php echo $supplierName ?></div>
+							<div class="col-3 fs-5"><?php echo $transacDate ?></div>
 							<div class="col-2 fs-5"><?php echo $total ?></div>
 						</div>
 					<?php

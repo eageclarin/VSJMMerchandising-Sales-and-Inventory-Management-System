@@ -15,7 +15,7 @@ if($data===false)
 }
 
 
-if($_SERVER["REQUEST_METHOD"]=="POST")
+if(isset($_POST["submit"]))
 {
 	$user_ID=$_POST["login_ID"];
 	$user_pword=$_POST["login_pword"];
