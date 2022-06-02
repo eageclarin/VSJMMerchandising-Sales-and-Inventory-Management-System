@@ -65,7 +65,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.8.0/gsap.min.js"></script>
 
 
-<body class = "text-center">
+<body class = "text-center m-3 p-3">
 	<div class = "w-20 mx-auto text-center">
 		<img src="img/logo.png" class="rounded mx-auto d-block" width="130"/> 
 		<br>
