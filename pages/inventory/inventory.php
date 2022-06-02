@@ -80,12 +80,12 @@ if (isset($_POST['edit'])) { //UPDATING INVENTORY
                 $('#editUnit').val(data[2]);
                 $('#editBrand').val(data[3]);
                 $('#editRetail').val(data[4]);
-                
                 $('#editMarkup').val(data[5]);
                 $('#editStock').val(data[6]);
                 $('#editCategory').val(data[7]);
                 const $select = document.querySelector('#item_Category');
                 $select.value = data[7];
+                $('#editCost').val(data[9]);
                 $('#hiddenRetail').val(data[4]);
                 $('#hiddenmarkup').val(data[5]);
                 document.getElementById("labelID").innerHTML = "Item ID: " + data[0];
@@ -167,7 +167,7 @@ if (isset($_POST['edit'])) { //UPDATING INVENTORY
                     <input type="number" step="0.25" class="form-control"  id="editRetail" name="editRetail" placeholder="Enter">
                     <input type="hidden" step="0.25" class="form-control"  id="hiddenRetail" name="hiddenRetail" placeholder="Enter">
                   </div> 
-                  
+                  <input type="hidden" step="0.01" class="form-control"  id="editCost" name="editCost" placeholder="Enter">
                   <label for="editMarkup" >Markup: </label>
                   <div>
                     <input type="number" step="0.01" class="form-control"  id="editMarkup" name="editMarkup" placeholder="Enter">
@@ -282,24 +282,31 @@ if (isset($_POST['edit'])) { //UPDATING INVENTORY
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script>
       $('#editRetail').change(function() {
-          var retail = $('#hiddenRetail').val(); //not fixed, might change to accessing last transaction of item instead
-          var markup = $('#hiddenmarkup').val();
-          var costPrice = retail/markup;
-          //alert(retail + " and "+ markup + " Cost: " + costPrice);
+          //var retail = $('#hiddenRetail').val(); 
+          //var markup = $('#hiddenmarkup').val();
           retail = $('#editRetail').val();
-          var newmarkup = Number(parseFloat(retail/costPrice).toFixed(2));
+          var costPrice = $('#editCost').val();
+          if (costPrice!="") {
+            alert(costPrice);
+            var newmarkup = Number(parseFloat(retail/costPrice).toFixed(2));
+            $('#editMarkup').val(newmarkup);
+          }
           //$('#editMarkup').val((retail - costPrice)/costPrice);
-          $('#editMarkup').val(newmarkup);
+          //alert(newmarkup);
+          
           //$('#hiddenRetail').val($('#editRetail').val());
          // alert($('#editMarkup').val());
       });
       $('#editMarkup').change(function() {
-          var retail = $('#hiddenRetail').val();
-          var markup = $('#hiddenmarkup').val();
-          var costPrice = retail/(markup);
-          retail = (costPrice*$('#editMarkup').val()).toFixed(1);
-          retail = Math.ceil(retail*4)/4;    
-          $('#editRetail').val(retail);
+          var retail = $('#editRetail').val();
+          var markup = $('#editmarkup').val();
+          var costPrice = $('#editCost').val();
+          if (costPrice!="") {
+            retail = (costPrice*$('#editMarkup').val()).toFixed(1);
+            retail = Math.ceil(retail*4)/4;    
+            $('#editRetail').val(retail);
+          }
+          
       });
 
       //Edit Notif

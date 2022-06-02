@@ -174,10 +174,16 @@
                 }   
                 //last transaction with item
                 $ctrItemID = $row['item_ID'];
-                $lastDate = mysqli_query($conn, "SELECT * FROM supplier_transactions INNER JOIN transaction_Items ON (supplier_transactions.transaction_ID = transaction_Items.transaction_ID) WHERE transaction_Status =2 AND item_ID = '$ctrItemID' ORDER BY item_ID DESC LIMIT 1");
+                $lastDate = mysqli_query($conn, "SELECT * FROM supplier_transactions INNER JOIN transaction_Items ON (supplier_transactions.transaction_ID = transaction_Items.transaction_ID) WHERE transaction_Status =2 AND item_ID = '$ctrItemID' ORDER BY transaction_Items.transaction_ID DESC LIMIT 1");
                 $rowDate = mysqli_fetch_array($lastDate);
-
                 $date = $rowDate['transaction_Date'];
+                if (mysqli_num_rows($lastDate)) {
+                    $lastCost = $rowDate['transactionItems_CostPrice'];
+                    
+                } else {
+                    //$lastCost = $row['item_RetailPrice'];
+                }
+                
 
                 echo "<td>" .$row['item_ID']. "</td>";  
                 echo "<td>". $row['item_Name']. "</td>";  
@@ -193,6 +199,7 @@
                     echo "<td>" .$row['sales_sum']. "</td>"; 
                 }
                 echo "<td class='text-muted'>". $date. "</td>";  
+                echo "<td hidden>" .$lastCost ."</td>";
                 ?>
                 <!--DELETE AND EDIT BUTTON-->
                 <td>
@@ -229,6 +236,7 @@
     echo "</tbody></table></div>";
     $onSalability == false;
 ?>
+<!--
 <script>
            $(document).ready(function(){
               $('.editbtn').on('click',function(){
@@ -258,4 +266,4 @@
            function checkdelete(){
                 return confirm('Are you sure you want to delete this record?');
             }
-         </script>
+         </script>-->
