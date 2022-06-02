@@ -9,7 +9,7 @@ class PDF extends FPDF{
         $this->Cell(30,10,'VSJM Merchandising',50,0,'C');
         $this->SetFont('Arial','B',15);
         $this->Ln(10);
-        $this->Cell(190,10,'Sales Report',50,0,'C');
+        $this->Cell(190,10,'Daily Sales Report',50,0,'C');
         $this->Line(10,40,199,40);
         $this->Ln(30);
     }
@@ -19,14 +19,47 @@ include "conn.php";
     $sql = "SELECT item.item_ID, item.item_Name, item.item_unit, item.item_Brand, order_items.order_ID, order_items.orderItems_Quantity, order_items.orderItems_TotalPrice, orders.order_Date, orders.order_Total 
             FROM item 
             INNER JOIN order_items on order_items.item_ID = item.item_ID 
-            INNER JOIN orders on orders.order_ID = order_items.order_ID";                                   
+            INNER JOIN orders on orders.order_ID = order_items.order_ID";     
+                                 
     $result = mysqli_query($conn, $sql);
     
     $pdf = new PDF();
     $pdf->AddPage();
     $pdf->SetFont('Arial','B',8);
-
-        if(mysqli_num_rows($result) > 0)
+        
+        //QUERY EDITED
+        
+        $pdf->SetFont('Arial','B',8);
+        $pdf->Cell(50,10,'Order Date',1,0,'C');
+        $pdf->Cell(46,10,'Total No. of Orders',1,0,'C');
+        $pdf->Cell(46,10,'Total No. of Items',1,0,'C');
+        $pdf->Cell(46,10,'Total Sales',1,1,'C');
+        $y = $pdf->GetY();
+        $date = date("Y-m-d");
+        $sql = "SELECT order_Date, COUNT(DISTINCT orders.order_ID) AS totalOrders, SUM(orderItems_Quantity) AS totalItems, SUM(orderItems_TotalPrice) AS totalSales FROM orders INNER JOIN order_items ON (orders.order_ID = order_items.order_ID) GROUP BY order_Date;" ;
+        $result = mysqli_query($conn,$sql);
+        $resultCheck = mysqli_num_rows($result);
+        if ($resultCheck>0){
+          while ($row = mysqli_fetch_assoc($result)) {
+            $pdf->SetFont('Arial','',8);
+            $y= $pdf ->GetY();
+            $pdf->Cell(50,8,$row['order_Date'],1,'C');
+            //$pdf ->Cell(30,5,'');
+            $pdf->Cell(46,8,$row['totalOrders'],1,0);
+            $pdf->Cell(46,8,$row['totalItems'],1,0);
+            $pdf->Cell(46,8,$row['totalSales'],1,1);
+            
+          }
+          $y1=$pdf ->GetY();
+            $pdf ->SetY($y);
+          $pdf ->SetY($y1+10);
+        } else {
+            $pdf->SetFont('Arial','B',10);
+            $pdf->Cell(0,8,"No Record Found",0,'C');
+        }
+        //END OF QUERY EDITED
+        /*
+         if(mysqli_num_rows($result) > 0)
         {
             $sql3 = "SELECT DISTINCT (DATE(order_Date)) from orders ORDER BY order_Date";
             $result3 = mysqli_query($conn, $sql3);
@@ -89,6 +122,7 @@ include "conn.php";
         {
             $pdf->SetFont('Arial','B',10);
             $pdf->Cell(0,8,"No Record Found",0,'C');
-        }
+        }  */
+       
 $pdf->Output();
 ?>
