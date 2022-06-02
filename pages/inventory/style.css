@@ -8,9 +8,7 @@ html {
 }
 
 main {
-    display: flex;
-    flex-wrap: nowrap;
-    min-height: 100%;
+   height:auto;
 }
 
 .navbar{
@@ -49,8 +47,13 @@ main {
 .nav .nav-link:active,
 .nav .nav-link:focus,
 .nav .nav-link:hover {
-    background-color: #343a40;
+    background-color: #EEEDE7;
     border: none;
+    outline:0;
+    color:#0C2D48 ;
+}
+#report_side:hover{
+  color: #979797;
 }
 
 #content{
@@ -247,7 +250,9 @@ main {
   .container{
       max-width: 620px;
       margin: 0 auto;
+      
   }
+  
 
   .popup .overlay{
     position: fixed;

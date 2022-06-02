@@ -22,10 +22,10 @@
 
 	<!------------ SIDEBAR ----------->
     <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px;">
-		<!--<a href="../../index.php" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+		<a href="../../index.php" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
 		<img src="../../img/logo.png" class="me-2" width="40"/>
-		<span class="fs-5"> VSJM Merchandising</span>
-		</a>-->
+		<span class="fs-5"  id="report_side"> VSJM Merchandising</span>
+		</a>
 
 		<!------ OTHER PAGES 
 		<div class="mt-3 container w-100">

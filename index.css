@@ -16,6 +16,10 @@ main {
 
 }
 
+#report_side:hover{
+    color: #979797;
+}
+
 .container-fluid {
     max-height: 100%;
     height: 100%;

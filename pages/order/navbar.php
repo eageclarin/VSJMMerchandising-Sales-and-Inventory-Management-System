@@ -25,7 +25,27 @@
 		<span class="fs-5" id="report_side"> VSJM Merchandising</span>
 		</a>
 
-	
+		<!------ OTHER PAGES ------>
+		<div class="mt-3 container w-100">
+			<div class="row d-flex justify-content-between">
+				<div class="col-auto p-0">
+					<a href="../inventory/inventory.php">
+						<button class="btn btn-primary">Inventory</button>
+					</a>
+				</div>
+				<div class="col-auto p-0">
+					<a href="sales.php">
+						<button class="btn btn-danger">Sales</button>
+					</a>
+				</div>
+				<div class="col-auto p-0">
+					<a href="../order/order.php">
+						<button class="btn btn-warning">Order</button>
+					</a>
+				</div>
+			</div>
+		</div>
+		<!------ END OF OTHER PAGES ------>
 		<hr>
 
 		<!------ TABS ------>
