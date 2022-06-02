@@ -1,7 +1,6 @@
 <?php
 error_reporting(0);
 include_once '../../env/conn.php';
-require_once '../../env/auth_check.php';
 $result = mysqli_query($conn, "SELECT SUM(orderItems_Quantity) as salesnum, SUM(orderItems_TotalPrice) as salesvalue FROM order_items;");
 $row = mysqli_fetch_array($result);
 

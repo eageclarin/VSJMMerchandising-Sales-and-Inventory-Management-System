@@ -1,7 +1,5 @@
 <?php
-error_reporting(0);
 include_once '../../env/conn.php';
-require_once '../../env/auth_check.php';
 ?>
 <?php
 if (isset($_POST['delete1'])) {
