@@ -72,7 +72,7 @@ include 'navbar.php';
                         <h5>Custom Date</h5>
                     </div>
                     <div class="card-body">
-                    
+                        <!--
                         <form action="pdf_CustomReport.php" method="GET" target="_blank">
                             <div class="row">
                                 <div class="col-md-4">
@@ -94,7 +94,43 @@ include 'navbar.php';
                                     </div>
                                 </div>
                             </div>
-                        </form>
+                        </form> -->
+                        <form action="sales.php" method="GET">
+                            <div class="row pb-3 mb-3">
+                            <div class="col-md-3">        
+                                <div class="form-group">          
+                                <label>From </label>
+                                <input type="date" name="from_date" id="from_date" value="<?php if(isset($_GET['from_date'])){ echo $_GET['from_date']; } else {
+                                    echo '2022-01-01';
+                                } ?>" class="form-control" onchange="transactionDate()">
+                                </div>          
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                <label>To </label>
+                                <input type="date" name="to_date" id="to_date" value="<?php if(isset($_GET['to_date'])){ echo $_GET['to_date']; } else {echo date("Y-m-d");} ?>" class="form-control" onchange="transactionDate()" min="2022-01-01">
+                                </div>
+                            </div>
+                            <div class="col-md-3">        
+                                <div class="form-group">        
+                                <label></label> <br>        
+                                <button type="submit" class="form-control" style="color:black; background-color:#7393B3" style="background-color:#7393B3">Filter</button>
+                                </div>               
+                            </div>
+                            <div class="col-md-3">        
+                                <div class="form-group">        
+                                <label></label> <br>        
+                                <div class="dropdown">
+                                    <button class="btn btn-success dropdown-toggle form-control" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Download</button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="export.php?exportTransactions=all#">Sales Today</a></li>
+                                    <li><a class="dropdown-item" href="export.php?exportTransactions=range&from=<?php echo $from_date?>&to=<?php echo $to_date?>#" id=exportRange onclick="changeRange()">Sales in Date Range</a></li>
+                                    </ul>
+                                </div>
+                                </div>               
+                            </div>
+                            </div>              
+                        </form> 
                     </div>
                 
 
@@ -110,15 +146,39 @@ include 'navbar.php';
                         <table class="table table-borderd">
                             <?php
                                 
-                                $sql = "select distinct item_NAME from item order by item_NAME";
+                               $sql = "select distinct item_NAME from item order by item_NAME";
                                 $result = mysqli_query($conn, $sql);
-
-                                
+                                if (isset($_GET['to_date'])) {
+                                    $from_date = $_GET['to_date'];
+                                    $to_date = $_GET['to_date'];
+                                    //unset($_GET['to_date']);
+                                  } else {
                                     $from_date = date("Y-m-d");
                                     $to_date = date("Y-m-d");
+                                  }
+                                
+                                    
                             ?>
                             <thead>
-                                <h5>Daily Sales<?php echo " (".$to_date.")"; ?></h5>
+                                <h5>
+                                    Daily Sales<?php echo " (".$to_date.")"; ?>
+                                    <div style="float:right; width:50%; padding-right:15px;">
+                                        <form action="sales.php" method="GET">
+                                            <div class="row pb-2 mb-2">
+                                            <div class="col-md-8">
+                                                <div class="form-group">
+                                                <input type="date" name="to_date" id="to_date" value="<?php if(isset($_GET['to_date'])){ echo $_GET['to_date']; } else {echo date("Y-m-d");} ?>" class="form-control" onchange="transactionDate()" min="2022-01-01">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">        
+                                                <div class="form-group">              
+                                                <button type="submit" class="form-control" style="color:black; background-color:#7393B3" style="background-color:#7393B3">Filter</button>
+                                                </div>               
+                                            </div>
+                                            </div>                             
+                                        </form> 
+                                    </div>
+                                </h5>
                                 <tr>
                                     <th>Order Date</th>
                                     <th>Order ID</th>
@@ -132,7 +192,7 @@ include 'navbar.php';
                             </thead>
                             <tbody>
                             <?php 
-                                
+
 
                                     $sql = "SELECT item.item_ID, item.item_Name, item.item_unit, item.item_Brand, order_items.order_ID, order_items.orderItems_Quantity, order_items.orderItems_TotalPrice, orders.order_Date, orders.order_Total 
                                             FROM item 
