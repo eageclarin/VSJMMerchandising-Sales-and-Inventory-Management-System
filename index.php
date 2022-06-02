@@ -136,13 +136,15 @@ require_once 'env/auth_check.php';
 	<div class="dropdown " style="padding-right:80px;">
         <a href="#" class="pr-3 d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
           <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-          <strong >User</strong>
+          <strong ><?php echo $_SESSION["customerName"]; ?></strong>
         </a>
         <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1" >
-          <li><a class="dropdown-item" href="#">Settings</a></li>
-          <li><a class="dropdown-item" href="#">Profile</a></li>
-          <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item" href="login.php">Sign out</a></li>
+			<li class=" dropdown-item text-muted">Settings</li>
+          	<li class="dropdown-item text-muted">Profile</li>
+          	<!--<li><a class="dropdown-item" href="#">Settings</a></li>
+          	<li><a class="dropdown-item" href="#">Profile</a></li>-->
+          	<li><hr class="dropdown-divider"></li>
+          	<li><a class="dropdown-item" href="login.php">Sign out</a></li>
         </ul>
       </div>
     </nav>

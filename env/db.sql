@@ -112,6 +112,7 @@ CREATE TABLE return_item(
 
 CREATE TABLE user(
 	user_ID int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	username varchar(100) NOT NULL,
 	user_pword varchar(100) NOT NULL
 );
 
@@ -122,9 +123,9 @@ INSERT INTO branch (
 );
 
 INSERT INTO user (
-	user_ID, user_pword
+	user_ID, username, user_pword
 ) VALUES (
-	1, '1234'),
-	(2, '0825');
+	1, 'user1', '1234'),
+	(2, 'user2','0825');
 
 
