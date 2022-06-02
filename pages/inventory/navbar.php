@@ -21,11 +21,11 @@
    ?>
 
 	<!------------ SIDEBAR ----------->
-    <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px;">
-		<!--<a href="../../index.php" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+    <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark h-100" style="width: 280px;">
+		<a href="../../index.php" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
 		<img src="../../img/logo.png" class="me-2" width="40"/>
 		<span class="fs-5"> VSJM Merchandising</span>
-		</a>-->
+		</a>
 
 		<!------ OTHER PAGES 
 		<div class="mt-3 container w-100">
@@ -88,89 +88,74 @@
 
 			<!-- SHOW LOW ON STOCKS ITEMS AND PENDING DELIVERIES-->
 			<?php
-				//LOW ON STOCKS	
-				$sql = "SELECT * FROM inventory INNER JOIN item ON (inventory.item_ID = item.item_ID) WHERE inventoryItem_Status = 1 AND item_Stock<=10";
-				$result = mysqli_query($conn,$sql);
-				$resultCheck = mysqli_num_rows($result);
-				if ($resultCheck>0){ 
-					echo 'Low on Stocks';
-					echo "<div class='table-wrapper' style='height:auto; max-height:100px;' id='style-1'>";
-					echo '<div class="container flex-column mb-auto gap-2">';
-					while ($row = mysqli_fetch_assoc($result)) {	
-			?>
-						<div class="rounded p-2 py-1 row" style="background-color: #343a40;">
-							<div class="col-9 px-0">
-								<a href="inventory.php"><?php echo $row['item_Name'] ?></a>
-							</div>
-							<div class="col px-0 text-danger text-end">
-								<?php echo $row['item_Stock'] .$row['item_unit'] ?>
-							</div>
-						</div>
-			<?php
-					}
-					echo '</div>';
-					echo '</div>';
-				}
-
-				//PENDING ORDERS
-				$sql1 = "SELECT * FROM supplier_Transactions  INNER JOIN supplier ON (supplier.supplier_ID = supplier_Transactions.supplier_ID ) WHERE transaction_Status = 0";
-				$result1 = mysqli_query($conn,$sql1);
-				$resultCheck1 = mysqli_num_rows($result1);
-				if ($resultCheck1>0){ 
+					//LOW ON STOCKS
 					
-					echo 'Pending Orders';
-					echo "<div class='table-wrapper' style='height:auto; max-height:100px;' id='style-1'>";
-					echo '<ul class="text-wrap nav nav-pills flex-column mb-auto gap-2">';
-					while ($row1 = mysqli_fetch_assoc($result1)) {	
-						echo '<li class="rounded nav-item p-2 py-1" style="background-color: #343a40;">';
-						echo	'<div style="float:left; width:75%;"><a href="pending.php">'
-										.$row1['transaction_ID'] .': ' .$row1['supplier_Name']
-									.'</a></div>
-									<div style="float:right; width:25%; color:#D8172B; padding-right:0px;">'
-										.number_format($row1['transaction_TotalPrice'],2)
-									.'</div>
-								</li>';
+					$sql = "SELECT * FROM inventory INNER JOIN item ON (inventory.item_ID = item.item_ID) WHERE inventoryItem_Status = 1 AND item_Stock<=10";
+					$result = mysqli_query($conn,$sql);
+					$resultCheck = mysqli_num_rows($result);
+					if ($resultCheck>0){ 
+						echo 'Low on Stocks';
+						echo '<div class="container flex-column mb-2 mt-1 gap-2" style="max-height:25%;overflow-y:scroll">';
+					  	while ($row = mysqli_fetch_assoc($result)) {	
+				?>
+							<div class="rounded p-2 py-1 row mb-2" style="background-color: #343a40;">
+								<div class="col-8 px-0">
+									<a href=pages/inventory/inventory.php style="text-decoration:none;"><?php echo $row['item_Name'] ?></a>
+								</div>
+								<div class="col px-0 text-danger text-end">
+									<?php echo $row['item_Stock'] .$row['item_unit'] ?>
+								</div>
+							</div>
+				<?php
 					  	}
-					echo '</ul>';
-					echo "</div>";
-				}
-
-				//PENDING DELIVERIES 	
-				$sql1 = "SELECT * FROM supplier_Transactions  INNER JOIN supplier ON (supplier.supplier_ID = supplier_Transactions.supplier_ID ) WHERE transaction_Status = 1";
-				$result1 = mysqli_query($conn,$sql1);
-				$resultCheck1 = mysqli_num_rows($result1);
-				if ($resultCheck1>0){ 
-					echo 'Deliveries';
-					echo "<div class='table-wrapper' style='height:auto; max-height:100px;' id='style-1'>";
-					echo '<ul class="text-wrap nav nav-pills flex-column mb-auto gap-2">';
-					while ($row1 = mysqli_fetch_assoc($result1)) {	
-						echo '<li class="rounded nav-item p-2 py-1" style="background-color: #343a40;">';
-						echo	'<div style="float:left; width:75%;"><a href="pending.php">'
-										.$row1['transaction_ID'] .': ' .$row1['supplier_Name']
-									.'</a></div>
-									<div style="float:right; width:25%; color:#D8172B;">'
-										.number_format($row1['transaction_TotalPrice'],2)
-									.'</div>
-								</li>';
+						echo '</div>';
 					}
-					echo '</ul>';
-					echo '</div>';
-				}
+
+					//PENDING ORDERS
+					$sql1 = "SELECT * FROM supplier_Transactions INNER JOIN transaction_items ON (supplier_Transactions.transaction_ID = transaction_Items.transaction_ID) INNER JOIN supplier ON (supplier.supplier_ID = supplier_Transactions.supplier_ID ) WHERE transaction_Status = 0";
+					$result1 = mysqli_query($conn,$sql1);
+					$resultCheck1 = mysqli_num_rows($result1);
+					if ($resultCheck1>0){ 
+						echo 'Pending Orders';
+						echo '<div class="container flex-column mb-2 mt-1 gap-2" style="max-height:25%;overflow-y:scroll">';
+					  	while ($row1 = mysqli_fetch_assoc($result1)) {
+				?>			
+							<div class="rounded p-2 py-1 row mb-2" style="background-color: #343a40;">
+								<div class="col-8 px-0">
+									<a href=pages/inventory/pending.php style="text-decoration:none;"><?php echo $row1['transaction_ID'] .': ' .$row1['supplier_Name'] ?></a>
+								</div>
+								<div class="col px-0 text-danger text-end">
+									<?php echo number_format($row1['transaction_TotalPrice'],2) ?>
+								</div>
+							</div>
+				<?php	
+						}
+						echo '</div>';
+					}
+
+					//PENDING DELIVERIES 	
+					$sql1 = "SELECT * FROM supplier_Transactions INNER JOIN transaction_items ON (supplier_Transactions.transaction_ID = transaction_Items.transaction_ID) INNER JOIN supplier ON (supplier.supplier_ID = supplier_Transactions.supplier_ID ) WHERE transaction_Status = 1";
+					$result1 = mysqli_query($conn,$sql1);
+					$resultCheck1 = mysqli_num_rows($result1);
+					if ($resultCheck1>0){ 
+						echo 'Deliveries';
+						echo '<div class="container flex-column mt-1 gap-2" style="max-height:25%;overflow-y:scroll">';
+					  	while ($row1 = mysqli_fetch_assoc($result1)) {	
+				?>
+							<div class="rounded p-2 py-1 row mb-2" style="background-color: #343a40;">
+								<div class="col-8 px-0">
+									<a href=pages/inventory/pending.php style="text-decoration:none;"><?php echo $row1['transaction_ID'] .': ' .$row1['supplier_Name'] ?></a>
+								</div>
+								<div class="col px-0 text-danger text-end">
+									<?php echo number_format($row1['transaction_TotalPrice'],2) ?>
+								</div>
+							</div>
+				<?php
+					  	}
+						echo '</div>';
+					}
 				?>
 		</div>
-		<hr>
-		<div class="dropdown">
-        <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-          <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-          <strong>User</strong>
-        </a>
-        <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-          <li><a class="dropdown-item" href="#">Settings</a></li>
-          <li><a class="dropdown-item" href="#">Profile</a></li>
-          <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item" href="login.php">Sign out</a></li>
-        </ul>
-     </div>
 		<!--
 		<div class="dropdown">
 			<a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">

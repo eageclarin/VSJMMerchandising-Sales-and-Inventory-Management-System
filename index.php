@@ -152,30 +152,31 @@ require_once 'auth_check.php';
 	<main class="h-100">
 	
 	<!------------ SIDEBAR ----------->
-	<div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px;">
+	<div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark h-100" style="width: 280px;">
 		<a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
 		<img src="img/logo.png" class="me-2" width="40"/>
 		<span class="fs-5"> VSJM Merchandising</span>
 		</a>
-		<hr>
+		<hr class="mb-1">
 
 		<!------ REMINDER ------>
 		<ul class="nav nav-pills flex-column mb-auto">
 			<li class="nav-item">
-				<p class="fw-bold fs-4 fst-italic mb-0"> Reminder </p>
+				<p class="fw-bold fs-5 fst-italic mb-0"> Reminder </p>
 				<!-- SHOW LOW ON STOCKS ITEMS AND PENDING DELIVERIES-->
 				<?php
 					//LOW ON STOCKS
-					echo 'Low on Stocks';
+					
 					$sql = "SELECT * FROM inventory INNER JOIN item ON (inventory.item_ID = item.item_ID) WHERE inventoryItem_Status = 1 AND item_Stock<=10";
 					$result = mysqli_query($conn,$sql);
 					$resultCheck = mysqli_num_rows($result);
 					if ($resultCheck>0){ 
-						echo '<div class="container flex-column mb-auto gap-2">';
+						echo 'Low on Stocks';
+						echo '<div class="container flex-column mb-2 mt-1 gap-2" style="max-height:25%;overflow-y:scroll">';
 					  	while ($row = mysqli_fetch_assoc($result)) {	
 				?>
-							<div class="rounded p-2 py-1 row" style="background-color: #343a40;">
-								<div class="col-9 px-0">
+							<div class="rounded p-2 py-1 row mb-2" style="background-color: #343a40;">
+								<div class="col-8 px-0">
 									<a href=pages/inventory/inventory.php style="text-decoration:none;"><?php echo $row['item_Name'] ?></a>
 								</div>
 								<div class="col px-0 text-danger text-end">
@@ -193,18 +194,20 @@ require_once 'auth_check.php';
 					$resultCheck1 = mysqli_num_rows($result1);
 					if ($resultCheck1>0){ 
 						echo 'Pending Orders';
-						echo '<ul class="text-wrap nav nav-pills flex-column mb-auto gap-2">';
-					  	while ($row1 = mysqli_fetch_assoc($result1)) {	
-						  	echo '<li class="rounded nav-item p-2 py-1" style="background-color: #343a40;">';
-							echo	'<div style="float:left; width:80%;"> <a href="pages/inventory/pending.php">'
-										.$row1['transaction_ID'] .': ' .$row1['supplier_Name']
-									.'</a></div>
-									<div style="float:right;width:20%; padding-right:3px; color:#D8172B;">'
-										.number_format($row1['transaction_TotalPrice'],2)
-									.'</div>
-								</li>';
-					  	}
-						echo '</ul>';
+						echo '<div class="container flex-column mb-2 mt-1 gap-2" style="max-height:25%;overflow-y:scroll">';
+					  	while ($row1 = mysqli_fetch_assoc($result1)) {
+				?>			
+							<div class="rounded p-2 py-1 row mb-2" style="background-color: #343a40;">
+								<div class="col-8 px-0">
+									<a href=pages/inventory/pending.php style="text-decoration:none;"><?php echo $row1['transaction_ID'] .': ' .$row1['supplier_Name'] ?></a>
+								</div>
+								<div class="col px-0 text-danger text-end">
+									<?php echo number_format($row1['transaction_TotalPrice'],2) ?>
+								</div>
+							</div>
+				<?php	
+						}
+						echo '</div>';
 					}
 
 					//PENDING DELIVERIES 	
@@ -213,24 +216,26 @@ require_once 'auth_check.php';
 					$resultCheck1 = mysqli_num_rows($result1);
 					if ($resultCheck1>0){ 
 						echo 'Deliveries';
-						echo '<ul class="text-wrap nav nav-pills flex-column mb-auto gap-2">';
+						echo '<div class="container flex-column mt-1 gap-2" style="max-height:25%;overflow-y:scroll">';
 					  	while ($row1 = mysqli_fetch_assoc($result1)) {	
-						  	echo '<li class="rounded nav-item p-2 py-1" style="background-color: #343a40;">';
-							echo	'<div style="float:left; width:80%;"><a href="pages/inventory/pending.php">'
-										.$row1['transaction_ID'] .': ' .$row1['supplier_Name']
-									.'</a></div>
-									<div style="float:right;width:20%; padding-right:3px; color:#D8172B;">'
-										.number_format($row1['transaction_TotalPrice'],2)
-									.'</div>
-								</li>';
+				?>
+							<div class="rounded p-2 py-1 row mb-2" style="background-color: #343a40;">
+								<div class="col-8 px-0">
+									<a href=pages/inventory/pending.php style="text-decoration:none;"><?php echo $row1['transaction_ID'] .': ' .$row1['supplier_Name'] ?></a>
+								</div>
+								<div class="col px-0 text-danger text-end">
+									<?php echo number_format($row1['transaction_TotalPrice'],2) ?>
+								</div>
+							</div>
+				<?php
 					  	}
-						echo '</ul>';
+						echo '</div>';
 					}
 				?>
 				
 			</li>
 		</ul>
-		<a class="nav-link d-grid p-0" href="env/backup.php" >
+		<a class="nav-link d-grid p-0 mt-auto" href="env/backup.php" >
 			<button class="btn btn-light"><i class="bi bi-save"></i> Backup Database</button>
 		</a>
 		<!------ END OF REMINDER ------>
@@ -256,19 +261,19 @@ require_once 'auth_check.php';
 	<!----------- RIGHT SIDE ------------>
 	<div class="container-fluid bg-light w-100">
 		<!-- NAV BAR -->
-		<nav class="navbar pt-3">
-      	<ul class="nav nav-tabs  pb-3"   style="width:100%">
+		<nav class="navbar px-3 py-3">
+      	<ul class="nav nav-tabs  pb-2"   style="width:100%; border:0">
 			<li class="nav-item" >
-			<a class="nav-link link-primary" href="pages/inventory/inventory.php"><i class="bi bi-archive-fill"></i> Inventory</a>
+				<a class="nav-link  " href="pages/inventory/inventory.php"><i class="bi bi-archive-fill"></i> Inventory</a>
 			</li>
 			<li class="nav-item">
-			<a class="nav-link link-success" href="pages/supplier/suppliers.php"><i class="bi bi-people-fill"></i> Suppliers</a>
+				<a class="nav-link link-success" href="pages/supplier/suppliers.php"><i class="bi bi-people-fill"></i> Suppliers</a>
 			</li>
 			<li class="nav-item">
-			<a class="nav-link link-danger" href="pages/sales/sales.php"><i class="bi bi-table"></i> Sales</a>
+				<a class="nav-link link-danger" href="pages/sales/sales.php"><i class="bi bi-table"></i> Sales</a>
 			</li>
 			<li class="nav-item">
-			<a class="nav-link link-warning" href="pages/order/order.php"><i class="bi bi-cart-fill"></i> Order</a>
+				<a class="nav-link link-warning" href="pages/order/order.php"><i class="bi bi-cart-fill"></i> Order</a>
 			</li>
 		
 			<div class="btn-group" style="display:block; margin-left: auto; margin-right:2">
@@ -334,7 +339,7 @@ require_once 'auth_check.php';
 						<div class="col-2">Transaction Date</div>
 						<div class="col-2">Transaction Total Price</div>
 					</div>
-					<div style="overflow-y:scroll; overflow-x:hidden; max-height: 40%;">
+					<div style="overflow-y:scroll; overflow-x:hidden; max-height: 65%;">
 					<?php 
 
 					$sql = "SELECT * FROM supplier_transactions INNER JOIN supplier ON (supplier_transactions.supplier_ID = supplier.supplier_ID) WHERE transaction_Status =0 ;";   
