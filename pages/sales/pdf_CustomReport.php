@@ -11,16 +11,17 @@ class PDF extends FPDF{
         $this->Ln(10);
         $this->Cell(190,10,'Sales Report',50,0,'C');
         $this->Line(10,40,199,40);
-        $this->Ln(30);
+        $this->Ln(20);
+        
     }
 }
 include "conn.php";
 if(isset($_GET['from_date']) && isset($_GET['to_date']))
 {
     $from_date = $_GET['from_date'];
-    //$to_date = $_GET['to_date'];
-    $to_date = date('Y-m-d', strtotime($_GET['to_date'].'+1 day'));
-
+    $to_date = $_GET['to_date'];
+    //$to_date = date('Y-m-d', strtotime($_GET['to_date'].'+1 day'));
+    
 
     $sql = "SELECT item.item_ID, item.item_Name, item.item_unit, item.item_Brand, order_items.order_ID, order_items.orderItems_Quantity, order_items.orderItems_TotalPrice, orders.order_Date, orders.order_Total 
             FROM item 
@@ -31,8 +32,22 @@ if(isset($_GET['from_date']) && isset($_GET['to_date']))
     
     $pdf = new PDF();
     $pdf->AddPage();
+    $pdf->SetFont('Arial','B',12);
+    if ($from_date==$to_date) {
+        $labelDate=date_create($from_date);
+        $labelDate = date_format($labelDate,"F d, Y");
+    } else {
+        $labelDate1=date_create($from_date);
+        $labelDate1 = date_format($labelDate1,"F d, Y");
+        $labelDate2=date_create($to_date);
+        $labelDate2 = date_format($labelDate2,"F d, Y");
+        $labelDate = $labelDate1 ." - " .$labelDate2;
+    }
+    $pdf->Cell(190,10,$labelDate,50,0,'C');
+    $pdf->Line(10,40,199,40);
+    $pdf->Ln(15);
     $pdf->SetFont('Arial','B',8);
-
+    
         if(mysqli_num_rows($result) > 0)
         {
             $sql3 = "SELECT DISTINCT (DATE(order_Date)) from orders WHERE order_Date BETWEEN '$from_date' AND '$to_date'";
@@ -86,8 +101,9 @@ if(isset($_GET['from_date']) && isset($_GET['to_date']))
                                 $pdf->Cell(20,8,$row['order_Total'],1,1);   
                             }
                         }
+                       $pdf ->SetY($y1+6); 
                     }
-                    $pdf ->SetY($y1+6);
+                    
                 }
             }
              

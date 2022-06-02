@@ -8,7 +8,7 @@
     <title>Sales Report</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
@@ -95,7 +95,7 @@ include 'navbar.php';
                                 </div>
                             </div>
                         </form> -->
-                        <form action="sales.php" method="GET">
+                        <form action="pdf_CustomReport.php" method="GET" target="_blank">
                             <div class="row pb-3 mb-3">
                             <div class="col-md-3">        
                                 <div class="form-group">          
@@ -114,19 +114,13 @@ include 'navbar.php';
                             <div class="col-md-3">        
                                 <div class="form-group">        
                                 <label></label> <br>        
-                                <button type="submit" class="form-control" style="color:black; background-color:#7393B3" style="background-color:#7393B3">Filter</button>
+                                <button type="submit" class="form-control" style="color:black; background-color:#7393B3" style="background-color:#7393B3"><i class='fas fa-download'></i> Sales in Date Range</button>
                                 </div>               
                             </div>
                             <div class="col-md-3">        
-                                <div class="form-group">        
-                                <label></label> <br>        
-                                <div class="dropdown">
-                                    <button class="btn btn-success dropdown-toggle form-control" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Download</button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                    <li><a class="dropdown-item" href="export.php?exportTransactions=all#">Sales Today</a></li>
-                                    <li><a class="dropdown-item" href="export.php?exportTransactions=range&from=<?php echo $from_date?>&to=<?php echo $to_date?>#" id=exportRange onclick="changeRange()">Sales in Date Range</a></li>
-                                    </ul>
-                                </div>
+                                <div class="form-group">  
+                                <label></label> <br>              
+                                <button type="btn" class="form-control" style="color:black; background-color:#7393B3" style="background-color:#7393B3" onclick="window.open('pdf_CustomReport.php?from_date=<?php echo date('Y-m-d'); ?>&to_date=<?php echo date('Y-m-d'); ?>')"><i class='fas fa-download'  ></i> Sales Today</button>
                                 </div>               
                             </div>
                             </div>              
