@@ -137,7 +137,7 @@ include 'navbar.php';
             <div class="card mt-4">
                 <div class="card-body">
                     <div class= "container1">
-                        <table class="table table-borderd">
+                        <table class="table pr-3">
                             <?php
                                 
                                $sql = "select distinct item_NAME from item order by item_NAME";
@@ -155,7 +155,11 @@ include 'navbar.php';
                             ?>
                             <thead>
                                 <h5>
-                                    Daily Sales<?php echo " (".$to_date.")"; ?>
+                                    <?php 
+                                    $labelDate2=date_create($to_date);
+                                    $labelDate2 = date_format($labelDate2,"F d, Y");
+                                    ?> 
+                                    Sales<?php echo " (".$labelDate2.")"; ?>
                                     <div style="float:right; width:50%; padding-right:15px;">
                                         <form action="sales.php" method="GET">
                                             <div class="row pb-2 mb-2">
@@ -173,6 +177,18 @@ include 'navbar.php';
                                         </form> 
                                     </div>
                                 </h5>
+                                <!-- TOTAL SALES INFO -->
+                                <?php
+                                    $result = mysqli_query($conn, "SELECT SUM(orderItems_TotalPrice) AS totalSum, COUNT(item_ID) AS totalItems, order_Date FROM order_items INNER JOIN orders on orders.order_ID = order_items.order_ID 
+                                    WHERE order_Date BETWEEN '$from_date' AND '$to_date' ");
+                                    $row = mysqli_fetch_array($result);
+                                    $totalItems = $row['totalItems'];
+                                    $totalSum = $row['totalSum'];
+                                ?>
+                                <p class="text-info"> Total Sales Items: <?php echo $totalItems; ?> <br/>
+                                Total Sales Value (in Pesos): <?php echo number_format($totalSum,2); ?> </p>
+                                <!-- END TOTAL SALES INFO -->
+
                                 <tr>
                                     <th>Order Date</th>
                                     <th>Order ID</th>
@@ -208,7 +224,7 @@ include 'navbar.php';
                                                 <td><?= $row['item_unit']; ?></td>
                                                 <td><?= $row['item_Brand']; ?></td>
                                                 <td><?= $row['orderItems_Quantity']; ?></td>
-                                                <td><?= $row['order_Total']; ?></td>
+                                                <td><?= $row['orderItems_TotalPrice']; ?></td>
                                                 
                                             </tr>
                                             <?php
