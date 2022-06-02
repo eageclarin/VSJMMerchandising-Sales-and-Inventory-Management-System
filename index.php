@@ -2,7 +2,7 @@
 error_reporting(0);
 session_start();
 include_once 'env/conn.php';
-require_once 'env/auth_checkindex.php';
+require_once 'auth_check.php';
 ?>
 
 <html>
@@ -136,13 +136,15 @@ require_once 'env/auth_checkindex.php';
 	<div class="dropdown " style="padding-right:80px;">
         <a href="#" class="pr-3 d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
           <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-          <strong >User</strong>
+          <strong ><?php echo $_SESSION["customerName"]; ?></strong>
         </a>
         <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1" >
-          <li><a class="dropdown-item" href="#">Settings</a></li>
-          <li><a class="dropdown-item" href="#">Profile</a></li>
-          <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item" href="login.php">Sign out</a></li>
+			<li class=" dropdown-item text-muted">Settings</li>
+          	<li class="dropdown-item text-muted">Profile</li>
+          	<!--<li><a class="dropdown-item" href="#">Settings</a></li>
+          	<li><a class="dropdown-item" href="#">Profile</a></li>-->
+          	<li><hr class="dropdown-divider"></li>
+          	<li><a class="dropdown-item" href="login.php">Sign out</a></li>
         </ul>
       </div>
     </nav>
@@ -294,31 +296,46 @@ require_once 'env/auth_checkindex.php';
 				<hr class="mt-1 ">
 				<div class="bg-dark mt-2 rounded shadow-sm">
 					<div class="row text-center text-light border-bottom p-2">
-						<div class="col-4">Item Name</div>
-						<div class="col-2">Stocks Ordered</div>
-						<div class="col-3">Date Ordered</div>
-						<div class="col-3">To be Paid</div>
+						<div class="col-4">TransactionID</div>
+						<div class="col-2">Supplier ID</div>
+						<div class="col-2">Supplier Name</div>
+						<div class="col-2">Transaction Date</div>
+						<div class="col-2">Transaction Total Price</div>
 					</div>
 					<div style="overflow-y:scroll; overflow-x:hidden; max-height: 65%;">
-					<?php /****** palagay na lang po query dito. wala pa yung connect connect sa taas ******/
-					$i = 0;
-					while($i < 10) {
+					<?php 
+
+					$sql = "SELECT * FROM supplier_transactions INNER JOIN supplier ON (supplier_transactions.supplier_ID = supplier.supplier_ID) WHERE transaction_Status =0 ;";   
+					$result = mysqli_query($conn,$sql);
+					$resultCheck = mysqli_num_rows($result); 
+
+					if ($resultCheck>0){
+						while ($row = mysqli_fetch_assoc($result)) {
+						  $n++;
+						  $ID = $row['transaction_ID'];  
+						  $supplier = $row['supplier_ID'];
+						  $supplierName = $row['supplier_Name'];
+						  $transacDate = $row['transaction_Date'];   
+						  $total = $row['transaction_TotalPrice'];                
+						
 					?>	
-						<!-- ***** pachange na langp o values ***** -->
 						<div class="row bg-white text-center border-bottom p-2">
-							<div class="col-4 fw-bold fs-5">name <?php echo $i ?></div> 
-							<div class="col-2 fs-5">Stocks <?php echo $i ?></div>
-							<div class="col-3 fs-5">Date <?php echo $i ?></div>
-							<div class="col-3 fs-5">Pay <?php echo $i ?></div>
+							<div class="col-4 fw-bold fs-5"><?php echo $ID ?></div> 
+							<div class="col-2 fs-5"><?php echo $supplier ?></div>
+							<div class="col-2 fs-5"><?php echo $supplierName ?></div>
+							<div class="col-2 fs-5"><?php echo $transacDate ?></div>
+							<div class="col-2 fs-5"><?php echo $total ?></div>
 						</div>
 					<?php
-						$i++; //eme lang
+						$i++; 
 					}
+				}
 					?>
 					</div>
 				</div>
 			</div>
 		</div>
+				
 		<!------ END OF SUPPLIERS ------>
 
 		<!------ BOTTOM ------>
