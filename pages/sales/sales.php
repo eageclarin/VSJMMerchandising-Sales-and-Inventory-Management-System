@@ -21,9 +21,10 @@
 <div class="d-flex flex-row flex-shrink-0" >
 <?php 
 include "conn.php";
+require_once '../../env/auth_check.php';
 include 'navbar.php'; 
 
-require_once '../../env/auth_check.php';
+
 ?>
 
 
