@@ -1,7 +1,6 @@
 <?php
 error_reporting(0);
 include_once '../../env/conn.php';
-require_once '../../env/auth_check.php';
 $result = mysqli_query($conn, "SELECT SUM(item_Stock) AS totalItems, SUM(item_RetailPrice*item_Stock) AS totalValue FROM inventory WHERE inventoryItem_Status = 1");
 $row = mysqli_fetch_array($result);
 
@@ -95,18 +94,19 @@ if (isset($_POST['edit'])) { //UPDATING INVENTORY
 
     </script> 
 </head>
-  <body >  
+  <body > 
+<div class="fload-container " style="display:flex; padding-bottom:0; height:auto">    
+ <div class="nav"> 
+  <?php include 'navbar.php'; ?>
+  </div>
+
     <!-- NAV BAR -->
-    <nav class="navbar">
-      <ul class="nav nav-tabs">
-        <li class="nav-item">
-          <a href="../../index.php" class="d-flex align-items-center pl-3 mb-3 mb-md-0 me-md-auto text-decoration-none">
-            <img src="../../img/logo.png" class="me-2" width="40"/>
-            <span class="fs-5"> VSJM Merchandising</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="inventory.php">Inventory</a>
+    <div class="container-fluid bg-light" style="padding-right:0;padding-left:0; padding-bottom:0">
+    <nav class="navbar" style=" width:100%">
+      <ul class="nav nav-tabs" style="width:100%">
+        
+        <li class="nav-item" style="padding-left: 2.1%">
+          <a class="nav-link active" aria-current="page" href="inventory.php" >Inventory</a>
         </li>
         <li class="nav-item">
           <a class="nav-link " href="../supplier/suppliers.php">Suppliers</a>
@@ -117,12 +117,12 @@ if (isset($_POST['edit'])) { //UPDATING INVENTORY
         <li class="nav-item">
           <a class="nav-link " href="../order/order.php">Order</a>
         </li>
-      </ul>
-      
-      <div class="dropdown">
+
+
+        <div class="dropdown" style="display:block; margin-left: auto; margin-right:0">
         <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
           <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-          <strong>User</strong>
+          <strong style="color:#3B3B3B">User</strong>
         </a>
         <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
           <li><a class="dropdown-item" href="#">Settings</a></li>
@@ -131,10 +131,12 @@ if (isset($_POST['edit'])) { //UPDATING INVENTORY
           <li><a class="dropdown-item" href="../../login.php">Sign out</a></li>
         </ul>
       </div>
+      </ul>
+      
+      
     </nav>
     <!-- END OF NAV BAR -->
     <main>
-    <?php include 'navbar.php'; ?>
         
     <div class="container-fluid bg-light p-5">
       <!-- EDIT MODAL ############################################################################ -->
@@ -204,7 +206,7 @@ if (isset($_POST['edit'])) { //UPDATING INVENTORY
       <!-- EDIT MODAL ############################################################################ -->
 
 
-      <div id="inventoryHead" class="row mt-3">
+      <div id="inventoryHead" class="row mt-3" >
         <div class="col-7">
           <span class="fs-1 fw-bold"> INVENTORY </span>
         </div>
@@ -258,14 +260,14 @@ if (isset($_POST['edit'])) { //UPDATING INVENTORY
         </div> <!-- END OF FILTERS -->
       
         <!-- DISPLAY LIST OF ITEMS IN INVENTORY -->
-        <div id="display" class="mt-3">
+        <div id="display" class="mt-3" style="padding-bottom:0">
             <?php include "search_sort.php";
                   include 'addpending.php';
                   ?>
         
         </div> <!-- END OF DISPLAY -->
 
-        <div class="mt-2">
+        <div class="mt-2" >
           <div style="color:red; float:left;">*Items highlighted are Low on Stocks</div> 
           
           <!-- ADD NEW ITEM IN INVENTORY BUTTON -->
@@ -277,6 +279,12 @@ if (isset($_POST['edit'])) { //UPDATING INVENTORY
         </div>
 
     </div> <!-- END OF CONTENT -->
+
+
+
+    </div>
+
+    </div>
     </main>
 
     <!-- Simultaneous editing of retail and markup -->
@@ -310,8 +318,7 @@ if (isset($_POST['edit'])) { //UPDATING INVENTORY
           
       });
 
- 
-       //Edit Notif
+      //Edit Notif
       $(document).ready(function(){
       $('#staticBackdrop').on('submit',function() {  
       $.ajax({

@@ -1,7 +1,6 @@
 <?php
 error_reporting(0);
 include_once '../../env/conn.php';
-require_once '../../env/auth_check.php';
 $result = mysqli_query($conn, "SELECT SUM(item_Stock) AS totalItems, SUM(item_RetailPrice*item_Stock) AS totalValue FROM inventory WHERE inventoryItem_Status = 0");
 $row = mysqli_fetch_array($result);
 
@@ -274,7 +273,9 @@ if (isset($_POST['edit'])) { //UPDATING INVENTORY
                 <td style="width:100px;"> <button type="button" class="btn editbtn" style="float:left;"> <i class='fas fa-edit'></i> </button>
                     <form action="archive.php" class="mb-1" method="post">
                         <input type=hidden name=itemID1 value=<?php echo $row['item_ID']?>>
-                        <button onclick='return check()' class="btn" name="return" type="submit" style="float:right; padding-left:0px;"><i class='fas fa-undo-alt'></i></button>
+                        <button class="btn" name="return" type="submit" style="float:right; padding-left:0px;"><i class='fas fa-undo-alt'></i></button>
+                        
+                        
                     </form>
                 </td>    
             </tr>
@@ -410,10 +411,4 @@ if (isset($_POST['edit'])) { //UPDATING INVENTORY
                 document.getElementById("labelID").innerHTML = "Item ID: " + data[0];
               });
            });
-
-          
-          function check(){
-            return confirm('Are you sure you want to restore this item?');
-          }
-        
          </script>

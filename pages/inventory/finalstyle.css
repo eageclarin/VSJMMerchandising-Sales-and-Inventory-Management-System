@@ -1,19 +1,20 @@
 body {
     margin-left: 250px;
-	height: 100%;
-    max-height: 100%;
+	
 }
   
 html {
-    height: -webkit-fill-available;
+   
 }
 
 main {
     display: flex;
     flex-wrap: nowrap;
-    height: 100%;
+    
 }
-
+#report_side:hover{
+  color: #979797;
+}
 
 /*.page{
 	margin-left: 250px;
@@ -38,3 +39,4 @@ th, td {
   border-bottom: 15px solid #ddd;
 
 }
+

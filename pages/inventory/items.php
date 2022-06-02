@@ -1,6 +1,6 @@
 <?php
 include_once '../../env/conn.php';
-require_once '../../env/auth_check.php';
+
 if(isset($_POST['edit'])>0){
     $name = $_POST['editName'];
     $ID = $_POST['editID'];

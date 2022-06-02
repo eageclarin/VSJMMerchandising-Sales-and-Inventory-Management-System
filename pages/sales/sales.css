@@ -1,0 +1,23 @@
+.container1{
+    height: 500px;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+
+.navbar .nav-link:active,
+.navbar .nav-link:focus,
+.navbar .nav-link:hover {
+    background-color: #EEEDE7;
+    border: none;
+    outline: 0;
+    color:#0C2D48 ;
+}
+
+a {
+    text-decoration: none;
+}
+
+#report_side:hover{
+    color: #979797;
+}
