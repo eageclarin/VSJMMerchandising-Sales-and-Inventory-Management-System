@@ -21,7 +21,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
 	$user_pword=$_POST["login_pword"];
 
 
-	$sql="select * from user where user_ID='".$user_ID."' AND user_pword='".$user_pword."' ";
+	$sql="select * from user where username='".$user_ID."' AND user_pword='".$user_pword."' ";
 
 	$result=mysqli_query($data,$sql);
 
@@ -30,7 +30,9 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
 	if($row !== null && $row["user_pword"]=$user_pword)
 	{	
 		$customerID=$row["user_ID"];
+		$customerName = $row["username"];
 		$_SESSION["customerID"]= $customerID;
+		$_SESSION["customerName"]= $customerName;
 		//$_SESSION['login_time'] = time();
 		header("location:index.php");
 	}
