@@ -182,7 +182,7 @@ if(isset($_POST['cancel'])){
         <h3 class="card-title">To be Purchased</h3>
       </div>
       <div class="card-body">
-        <p class="card-text">Items that are not yet ordered</p>
+        <!--<p class="card-text">Items that are not yet ordered from suppliers.</p>-->
         <?php //SHOW PENDING TRANSACTIONS
           $sql = "SELECT * FROM supplier_transactions INNER JOIN supplier ON (supplier_transactions.supplier_ID = supplier.supplier_ID) WHERE transaction_Status =0 ;";   
           $result = mysqli_query($conn,$sql);
@@ -295,7 +295,6 @@ if(isset($_POST['cancel'])){
       <h3 class="card-title">To be Delivered</h3>
     </div>
     <div class="card-body">
-      <p class="card-text">Pending deliveries..</p>
       <?php
         $sql = "SELECT * FROM supplier_transactions INNER JOIN supplier ON (supplier_transactions.supplier_ID = supplier.supplier_ID) WHERE transaction_Status =1 ;";   
         $result = mysqli_query($conn,$sql);
@@ -345,7 +344,7 @@ if(isset($_POST['cancel'])){
                                   <th> Quantity </th>
                                   <th> Unit Price </th>
                                   <th> Total Price </th>
-                                  <th><input type='checkbox' onClick='toggle(this)' /> Select All </th>
+                                  <th class='font-weight-light' style=' font-weight:normal;'>delivered <br/><input type='checkbox' onClick='toggle(this)' /> <span class='text-muted' style='font-size:10px; font-weight:normal; padding:0px;'>Select All</span> </th>
                                 </tr>";
                         //SHOW ITEMS IN TRANSACTIONS
                         $sql1 = "SELECT * FROM transaction_Items INNER JOIN item ON (transaction_Items.item_ID = item.item_ID) WHERE transaction_ID = '$ID' ;";   
