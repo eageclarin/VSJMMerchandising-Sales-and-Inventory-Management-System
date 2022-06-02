@@ -9,7 +9,7 @@ class PDF extends FPDF{
         $this->Cell(30,10,'VSJM Merchandising',50,0,'C');
         $this->SetFont('Arial','B',15);
         $this->Ln(10);
-        $this->Cell(190,10,'Sales Report',50,0,'C');
+        $this->Cell(190,10,'Weekly Sales Report',50,0,'C');
         $this->Line(10,40,199,40);
         $this->Ln(30);
     }
@@ -27,6 +27,39 @@ $res = mysqli_query($conn, $sql);
     $pdf->AddPage();
     $pdf->SetFont('Arial','B',8);
 
+    //QUERY EDITED
+        
+    $pdf->SetFont('Arial','B',8);
+    $pdf->Cell(50,10,'Order Date',1,0,'C');
+    $pdf->Cell(46,10,'Total No. of Orders',1,0,'C');
+    $pdf->Cell(46,10,'Total No. of Items',1,0,'C');
+    $pdf->Cell(46,10,'Total Sales',1,1,'C');
+    $y = $pdf->GetY();
+    $date = date("Y-m-d");
+    $sql = "SELECT YEAR(order_Date) AS year, MONTHNAME(order_Date) AS month, WEEK(order_Date) AS week, order_Date, COUNT(DISTINCT orders.order_ID) AS totalOrders, SUM(orderItems_Quantity) AS totalItems, SUM(orderItems_TotalPrice) AS totalSales FROM orders INNER JOIN order_items ON (orders.order_ID = order_items.order_ID) GROUP BY WEEK(order_Date), MONTH(order_Date), YEAR(order_Date)" ;
+    $result = mysqli_query($conn,$sql);
+    $resultCheck = mysqli_num_rows($result);
+    if ($resultCheck>0){
+      while ($row = mysqli_fetch_assoc($result)) {
+        $pdf->SetFont('Arial','',8);
+        $y= $pdf ->GetY();
+        $pdf->Cell(50,8,"Week ".$row['week']. " (" .$row['month'].", ".$row['year'] .")",1,'C');
+        //$pdf ->Cell(30,5,'');
+        $pdf->Cell(46,8,$row['totalOrders'],1,0);
+        $pdf->Cell(46,8,$row['totalItems'],1,0);
+        $pdf->Cell(46,8,$row['totalSales'],1,1);
+        
+      }
+      $y1=$pdf ->GetY();
+        $pdf ->SetY($y);
+      $pdf ->SetY($y1+10);
+    } else {
+        $pdf->SetFont('Arial','B',10);
+        $pdf->Cell(0,8,"No Record Found",0,'C');
+    }
+    //END OF QUERY EDITED
+    
+        /*
         if(mysqli_num_rows($result) > 0)
         {
             $sql3 = "SELECT DISTINCT WEEK(order_Date), MONTHNAME(order_Date) from orders ORDER BY order_Date";
@@ -91,6 +124,6 @@ $res = mysqli_query($conn, $sql);
         {
             $pdf->SetFont('Arial','B',10);
             $pdf->Cell(0,8,"No Record Found",0,'C');
-        }
+        }*/
 $pdf->Output();
 ?>
