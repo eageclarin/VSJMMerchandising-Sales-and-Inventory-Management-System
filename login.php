@@ -17,20 +17,20 @@ if($data===false)
 
 if($_SERVER["REQUEST_METHOD"]=="POST")
 {
-	$login_ID=$_POST["login_ID"];
-	$login_pword=$_POST["login_pword"];
+	$user_ID=$_POST["user_ID"];
+	$user_pword=$_POST["user_pword"];
 
 
-	$sql="select * from login where login_ID='".$login_ID."' AND login_pword='".$login_pword."' ";
+	$sql="select * from user where user_ID='".$user_ID."' AND user_pword='".$user_pword."' ";
 
 	$result=mysqli_query($data,$sql);
 
 	$row=mysqli_fetch_array($result);
 
-	if($row !== null && $row["login_pword"]=$login_pword)
+	if($row !== null && $row["user_pword"]=$user_pword)
 	{	
 
-		$_SESSION["customerID"]=$customerID;
+		//$_SESSION["customerID"]=$customerID;
 		//$_SESSION['login_time'] = time();
 		header("location:index.php");
 	}
