@@ -109,7 +109,7 @@ require_once 'auth_check.php';
       </div>
     </nav>
      END OF NAV BAR -->
-	     <!----------- NAVIGATION BAR ------------>
+	     <!----------- NAVIGATION BAR
 		 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark shadow">
     <div class="container-fluid">
         <a class="navbar-brand" href="index.php"><img src="img/logo.png" class="me-2" width="30"/>VSJM Merchandising</a>
@@ -141,28 +141,28 @@ require_once 'auth_check.php';
         <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1" >
 			<li class=" dropdown-item text-muted">Settings</li>
           	<li class="dropdown-item text-muted">Profile</li>
-          	<!--<li><a class="dropdown-item" href="#">Settings</a></li>
-          	<li><a class="dropdown-item" href="#">Profile</a></li>-->
+          	<li><a class="dropdown-item" href="#">Settings</a></li>
+          	<li><a class="dropdown-item" href="#">Profile</a></li>
           	<li><hr class="dropdown-divider"></li>
           	<li><a class="dropdown-item" href="login.php">Sign out</a></li>
         </ul>
       </div>
     </nav>
-    <!----------- END NAVIGATION BAR ------------>
+    END NAVIGATION BAR ------------>
 	<main class="h-100">
 	
 	<!------------ SIDEBAR ----------->
 	<div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px;">
-		<!--<a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+		<a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
 		<img src="img/logo.png" class="me-2" width="40"/>
 		<span class="fs-5"> VSJM Merchandising</span>
 		</a>
-		<hr> -->
+		<hr>
 
 		<!------ REMINDER ------>
-		<ul class="nav nav-pills flex-column mb-auto mt-3">
-			<li class="nav-item mt-3">
-				<p class="fw-bold fs-4 fst-italic mb-0 mt-3"> Reminder </p>
+		<ul class="nav nav-pills flex-column mb-auto">
+			<li class="nav-item">
+				<p class="fw-bold fs-4 fst-italic mb-0"> Reminder </p>
 				<!-- SHOW LOW ON STOCKS ITEMS AND PENDING DELIVERIES-->
 				<?php
 					//LOW ON STOCKS
@@ -230,10 +230,12 @@ require_once 'auth_check.php';
 				
 			</li>
 		</ul>
-		<a href="env/backup.php">Backup Database </a>
+		<a class="nav-link d-grid p-0" href="env/backup.php" >
+			<button class="btn btn-light"><i class="bi bi-save"></i> Backup Database</button>
+		</a>
 		<!------ END OF REMINDER ------>
 
-		<!------ USER FUNCTIONS 
+		<!------ USER FUNCTIONS
 		<hr>
 		<div class="dropdown">
 			<a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -247,37 +249,67 @@ require_once 'auth_check.php';
 				<li><a class="dropdown-item" href="#">Sign out</a></li>
 			</ul>
 		</div>
-		 END OF USER FUNCTIONS ------>
+		END OF USER FUNCTIONS ------>
 	</div>
 	<!------------ END OF SIDEBAR ----------->
 
 	<!----------- RIGHT SIDE ------------>
-	<div class="container-fluid bg-light mt-5">
-		<!------ MAIN PAGES ------>
-		<div class="row navbar-expand-md px-3 mt-5 mb-0" style="height:18%">
+	<div class="container-fluid bg-light w-100">
+		<!-- NAV BAR -->
+		<nav class="navbar pt-3">
+      	<ul class="nav nav-tabs  pb-3"   style="width:100%">
+			<li class="nav-item" >
+			<a class="nav-link link-primary" href="pages/inventory/inventory.php"><i class="bi bi-archive-fill"></i> Inventory</a>
+			</li>
+			<li class="nav-item">
+			<a class="nav-link link-success" href="pages/supplier/suppliers.php"><i class="bi bi-people-fill"></i> Suppliers</a>
+			</li>
+			<li class="nav-item">
+			<a class="nav-link link-danger" href="pages/sales/sales.php"><i class="bi bi-table"></i> Sales</a>
+			</li>
+			<li class="nav-item">
+			<a class="nav-link link-warning" href="pages/order/order.php"><i class="bi bi-cart-fill"></i> Order</a>
+			</li>
+		
+			<div class="btn-group" style="display:block; margin-left: auto; margin-right:2">
+				<button type="button" class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" id="dropdownUser1" aria-expanded="false">
+					<img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+					<strong>User</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				</button>
+				<ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start"  aria-labelledby="dropdownUser1">
+				<li><a class="dropdown-item" href="#">Settings</a></li>
+				<li><a class="dropdown-item" href="#">Profile</a></li>
+				<li><hr class="dropdown-divider"></li>
+				<li><a class="dropdown-item" href="login.php">Sign out</a></li>
+				</ul>
+			</div>
+		</ul>
+    	</nav>
+		<!------ MAIN PAGES
+		<div class="row navbar-expand-md px-3 mt-3 mb-0" style="height:20%">
 			<ul class="navbar-nav d-flex">
-				<!-- INVENTORY -->
+				INVENTORY
 				<li class="nav-item flex-fill">
 					<a class="nav-link d-grid h-75" href="pages/inventory/inventory.php">
 						<button class="btn btn-primary fs-5 shadow-sm"><i class="bi bi-archive-fill"></i><br>Inventory</button>
 					</a>
 				</li>
 
-				<!-- SUPPLIERS -->
+				SUPPLIERS
 				<li class="nav-item flex-fill">
 					<a class="nav-link d-grid h-75" href="pages/supplier/suppliers.php">
 						<button class="btn btn-success fs-5 shadow-sm"><i class="bi bi-people-fill"></i><br>Suppliers</button>
 					</a>
 				</li>
 
-				<!-- SALES -->
+				SALES
 				<li class="nav-item flex-fill">
 					<a class="nav-link d-grid h-75" href="pages/sales/sales.php">
 						<button class="btn btn-danger fs-5 shadow-sm"><i class="bi bi-table"></i><br>Reports</button>
 					</a>
 				</li>
 
-				<!-- ORDER -->
+				ORDER
 				<li class="nav-item flex-fill">
 					<a class="nav-link d-grid h-75" href="pages/order/order.php">
 						<button class="btn btn-warning fs-5 shadow-sm"><i class="bi bi-cart-fill"></i><br>Sales Entry</button>
@@ -285,12 +317,12 @@ require_once 'auth_check.php';
 				</li>
 			</ul>
 		</div>
-		<!------ END OF MAIN PAGES ------>
+		END OF MAIN PAGES ------>
 		
 		<?php
 		?>
 		<!------ ORDERED FROM SUPPLIERS ------>
-		<div class="row px-3 h-50 mt-0" style="height:40%;">
+		<div class="row px-3 mt-2" style="height:60%">
 			<div class="col">
 				<span class="fs-5 pb-1 fw-bold"> Suppliers </span>
 				<hr class="mt-1 ">
@@ -302,7 +334,7 @@ require_once 'auth_check.php';
 						<div class="col-2">Transaction Date</div>
 						<div class="col-2">Transaction Total Price</div>
 					</div>
-					<div style="overflow-y:scroll; overflow-x:hidden; max-height: 65%;">
+					<div style="overflow-y:scroll; overflow-x:hidden; max-height: 40%;">
 					<?php 
 
 					$sql = "SELECT * FROM supplier_transactions INNER JOIN supplier ON (supplier_transactions.supplier_ID = supplier.supplier_ID) WHERE transaction_Status =0 ;";   
@@ -339,7 +371,7 @@ require_once 'auth_check.php';
 		<!------ END OF SUPPLIERS ------>
 
 		<!------ BOTTOM ------>
-		<div class="row px-3 pt-0 mt-0" style="height:25%">
+		<div class="row px-3 pt-0 mt-4" style="height:25%">
 			<!-- SALES -->
 			<?php 
 			$result = mysqli_query($conn, "SELECT COUNT(order_ID) as orderCount, SUM(order_Total) AS orderTotal FROM orders");
