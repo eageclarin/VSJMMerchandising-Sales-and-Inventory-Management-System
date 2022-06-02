@@ -30,9 +30,15 @@
 	
 </head>
 <body>
+<!-- NAV BAR -->
+
+      
+      
+
+  
 	<main >
     <?php include 'navbar.php'; ?>
-
+	
 
 	<div class="container-fluid bg-light p-5">
         <!-- EDIT MODAL ############################################################################ -->

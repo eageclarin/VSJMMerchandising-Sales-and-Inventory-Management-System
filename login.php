@@ -50,7 +50,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-	<link rel="stylesheet" href="finalstyle.css">
+	<link rel="stylesheet" href="logincss.css">
 	
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
@@ -64,8 +64,13 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.8.0/gsap.min.js"></script>
 
 
-<body>	
-	<div class="col bg-white border shadow-sm p-5" style="border-radius: 10px">
+<body>
+	<div class = "w-50 mx-auto">
+		<img src="img/logo.png" class="rounded mx-auto d-block" width="130"/> 
+		<br>
+		
+	</div>
+	<div class="w-50 mx-auto" style="border-radius: 15px">
 	
 	<div class="fs-3 fw-bold text-center"> LOGIN </div>
 		<hr>
