@@ -23,6 +23,7 @@
 include "conn.php";
 include 'navbar.php'; 
 
+require_once '../../env/auth_check.php';
 ?>
 
 
