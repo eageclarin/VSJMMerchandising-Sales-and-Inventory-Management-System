@@ -5,7 +5,7 @@ $password="";
 $db="VSJM";
 
 session_start();
-
+unset($_SESSION["customerID"]);
 
 $data=mysqli_connect($host,$user,$password,$db);
 
@@ -29,8 +29,8 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
 
 	if($row !== null && $row["user_pword"]=$user_pword)
 	{	
-
-		$_SESSION["customerID"]=$customerID;
+		$customerID=$row["user_ID"];
+		$_SESSION["customerID"]= $customerID;
 		//$_SESSION['login_time'] = time();
 		header("location:index.php");
 	}
