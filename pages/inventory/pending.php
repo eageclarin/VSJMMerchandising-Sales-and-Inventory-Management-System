@@ -1,6 +1,7 @@
 <?php
 
 include_once '../../env/conn.php';
+require_once '../../env/auth_check.php';
 $n=0;
 $k=0;
 

@@ -1,6 +1,7 @@
 <?php
 error_reporting(0);
 include_once '../../env/conn.php';
+require_once '../../env/auth_check.php';
 $result = mysqli_query($conn, "SELECT SUM(item_Stock) AS totalItems, SUM(item_RetailPrice*item_Stock) AS totalValue FROM inventory WHERE inventoryItem_Status = 0");
 $row = mysqli_fetch_array($result);
 
