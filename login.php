@@ -19,7 +19,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
 {
 	$user_ID=$_POST["login_ID"];
 	$user_pword=$_POST["login_pword"];
-
+	$user_pword = md5($user_pword);
 
 	$sql="select * from user where username='".$user_ID."' AND user_pword='".$user_pword."' ";
 
