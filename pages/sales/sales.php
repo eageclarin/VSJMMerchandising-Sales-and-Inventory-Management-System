@@ -31,7 +31,10 @@ include 'navbar.php';
             <div class="col-md-12">
                 <div class="card mt-3">
                     <div class="card-header">
-                        <h4>Sales Report</h4>
+                        <h4 style="float:left;">Sales Report</h4>
+                        <form action="export.php" method="post">
+                            <button class="btn btn-success" style="float:right; margin-right:10px" name="export" type="submit" ><i class='fas fa-download'></i> Sales Report</button>
+                        </form>
                     </div>
                     <div class="card-body">
                     
@@ -63,6 +66,7 @@ include 'navbar.php';
                                         </div>
                                     </a>
                                 </div>
+                                
                             </div>
                         </form>
                     </div>
