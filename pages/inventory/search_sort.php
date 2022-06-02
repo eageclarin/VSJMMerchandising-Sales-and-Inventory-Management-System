@@ -236,6 +236,16 @@
     echo "</tbody></table></div>";
     $onSalability == false;
 ?>
+
+
+
+
+<script>
+        function checkdelete(){
+        return confirm('Are you sure you want to delete this record?');
+        }
+</script>
+
 <!--
 <script>
            $(document).ready(function(){

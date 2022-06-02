@@ -216,8 +216,8 @@ if(isset($_POST['cancel'])){
                             <!--ORDER BUTTON-->
                             <form action="pending.php" class="mb-1" method="post">
                                 <input type=hidden name=transaction value=<?php echo $ID?>>
-                                <button class="btn " name="cancel" type="submit" style="float:right;" ><i class='fas fa-times'></i></button>
-                                <button class="btn " name="order" type="submit" style="float:right;"><i class='fas fa-check'></i></button>
+                                <button onclick='return checkdelete()' class="btn " name="cancel" type="submit" style="float:right;" ><i class='fas fa-times'></i></button>
+                                <button onclick='return check()' class="btn " name="order" type="submit" style="float:right;"><i class='fas fa-check'></i></button>
                             </form>
                             
                             </div>
@@ -267,7 +267,7 @@ if(isset($_POST['cancel'])){
                                           <input type=hidden name=itemID id= itemID value=<?php echo $item?>>
                                           <input type=hidden name=itemCost id= itemCost<?php echo $ID.$item?> value=<?php echo $row1['transactionItems_CostPrice']?>>
                                           <input type=hidden name=transID id=transID value=<?php echo $ID?>>
-                                          <button class="btn" name="delete" type="submit" ><i class='fas fa-trash'></i></button>
+                                          <button onclick='checkItem()' class="btn" name="delete" type="submit" ><i class='fas fa-trash'></i></button>
                                           <!--
                                           <button class="btn-primary" name="edit" type="submit" >Edit</button> -->                    
                                         </td>      
@@ -321,8 +321,8 @@ if(isset($_POST['cancel'])){
                             <div style="float:right; width:15%;">
                             <!--DELIVERED BUTTON-->
                             <input type=hidden name=transaction value=<?php echo $ID?>>
-                            <button class="btn" name="cancel" type="submit" style="float:right;"><i class='fas fa-times'></i></button>
-                            <button class="btn " name="deliver" type="submit" style="float:right;"><i class='fas fa-check'></i></button>
+                            <button  onclick='return checkdelete2()' class="btn" name="cancel" type="submit" style="float:right;"><i class='fas fa-times'></i></button>
+                            <button  onclick='return check2()'class="btn " name="deliver" type="submit" style="float:right;"><i class='fas fa-check'></i></button>
                             
                             </div>
                             &emsp; &emsp; &emsp; &emsp; Supplier: <?php echo $supplierName; ?>
@@ -398,6 +398,29 @@ if(isset($_POST['cancel'])){
       checkboxes[i].checked = source.checked;
     }
   }
+
+ 
+  function checkdelete(){
+      return confirm('Are you sure you want to delete this transaction?');
+  }
+
+  function check(){
+      return confirm('Are you sure you want to proceed with this transaction?');
+  }
+
+  function checkItem(){
+      return confirm('Are you sure you want to delete this item?');
+  }
+
+  function checkdelete2(){
+      return confirm('Are you sure you want to delete this transaction?');
+  }
+
+  function check2(){
+      return confirm('Are you sure you want to proceed with this transaction?');
+  }
+
+ 
 </script>
 
 </body>
