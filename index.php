@@ -70,7 +70,7 @@ include_once 'env/conn.php';
 	</script>
 </head>	
 <body>
-	    <!-- NAV BAR -->
+	    <!-- NAV BAR 
 		<nav class="navbar">
       <ul class="nav nav-tabs">
         <li class="nav-item">
@@ -106,21 +106,59 @@ include_once 'env/conn.php';
         </ul>
       </div>
     </nav>
-    <!-- END OF NAV BAR -->
+     END OF NAV BAR -->
+	     <!----------- NAVIGATION BAR ------------>
+		 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark shadow">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="index.php"><img src="img/logo.png" class="me-2" width="30"/>VSJM Merchandising</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+            <li class="nav-item">
+                <a class="nav-link" href="pages/inventory/inventory.php">Inventory</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link"  href="pages/supplier/suppliers.php">Supplier</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link"  href="pages/sales/sales.php">Report</a>
+            </li>
+			<li class="nav-item">
+                <a class="nav-link"  href="pages/sales/sales.php">Sales Entry</a>
+            </li>
+        </ul>
+        </div>
+    </div>
+	<div class="dropdown " style="padding-right:80px;">
+        <a href="#" class="pr-3 d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+          <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+          <strong >User</strong>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1" >
+          <li><a class="dropdown-item" href="#">Settings</a></li>
+          <li><a class="dropdown-item" href="#">Profile</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="login.php">Sign out</a></li>
+        </ul>
+      </div>
+    </nav>
+    <!----------- END NAVIGATION BAR ------------>
 	<main class="h-100">
 	
 	<!------------ SIDEBAR ----------->
 	<div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px;">
-		<a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+		<!--<a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
 		<img src="img/logo.png" class="me-2" width="40"/>
 		<span class="fs-5"> VSJM Merchandising</span>
 		</a>
-		<hr>
+		<hr> -->
 
 		<!------ REMINDER ------>
-		<ul class="nav nav-pills flex-column mb-auto">
-			<li class="nav-item">
-				<p class="fw-bold fs-4 fst-italic mb-0"> Reminder </p>
+		<ul class="nav nav-pills flex-column mb-auto mt-3">
+			<li class="nav-item mt-3">
+				<p class="fw-bold fs-4 fst-italic mb-0 mt-3"> Reminder </p>
 				<!-- SHOW LOW ON STOCKS ITEMS AND PENDING DELIVERIES-->
 				<?php
 					//LOW ON STOCKS
@@ -188,9 +226,10 @@ include_once 'env/conn.php';
 				
 			</li>
 		</ul>
+		<a href="env/backup.php">Backup Database </a>
 		<!------ END OF REMINDER ------>
 
-		<!------ USER FUNCTIONS ------>
+		<!------ USER FUNCTIONS 
 		<hr>
 		<div class="dropdown">
 			<a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -204,14 +243,14 @@ include_once 'env/conn.php';
 				<li><a class="dropdown-item" href="#">Sign out</a></li>
 			</ul>
 		</div>
-		<!------ END OF USER FUNCTIONS ------>
+		 END OF USER FUNCTIONS ------>
 	</div>
 	<!------------ END OF SIDEBAR ----------->
 
 	<!----------- RIGHT SIDE ------------>
-	<div class="container-fluid bg-light">
+	<div class="container-fluid bg-light mt-5">
 		<!------ MAIN PAGES ------>
-		<div class="row navbar-expand-md px-3 mt-3" style="height:20%">
+		<div class="row navbar-expand-md px-3 mt-5 mb-0" style="height:18%">
 			<ul class="navbar-nav d-flex">
 				<!-- INVENTORY -->
 				<li class="nav-item flex-fill">
@@ -243,11 +282,11 @@ include_once 'env/conn.php';
 			</ul>
 		</div>
 		<!------ END OF MAIN PAGES ------>
-		<a href="env/backup.php">Backup Database </a>
+		
 		<?php
 		?>
 		<!------ ORDERED FROM SUPPLIERS ------>
-		<div class="row px-3 h-50">
+		<div class="row px-3 h-50 mt-0" style="height:40%;">
 			<div class="col">
 				<span class="fs-5 pb-1 fw-bold"> Suppliers </span>
 				<hr class="mt-1 ">
@@ -258,7 +297,7 @@ include_once 'env/conn.php';
 						<div class="col-3">Date Ordered</div>
 						<div class="col-3">To be Paid</div>
 					</div>
-					<div style="overflow-y:scroll; overflow-x:hidden; max-height: 65%">
+					<div style="overflow-y:scroll; overflow-x:hidden; max-height: 65%;">
 					<?php /****** palagay na lang po query dito. wala pa yung connect connect sa taas ******/
 					$i = 0;
 					while($i < 10) {
@@ -281,7 +320,7 @@ include_once 'env/conn.php';
 		<!------ END OF SUPPLIERS ------>
 
 		<!------ BOTTOM ------>
-		<div class="row px-3" style="height:25%">
+		<div class="row px-3 pt-0 mt-0" style="height:25%">
 			<!-- SALES -->
 			<?php 
 			$result = mysqli_query($conn, "SELECT COUNT(order_ID) as orderCount, SUM(order_Total) AS orderTotal FROM orders");
