@@ -1,12 +1,29 @@
+body {
+    height: 100%;
+    min-height: 100%;
+}
+  
+html {
+    min-height: 100%;
+    height: -webkit-fill-available;
+}
+
+main {
+    display: flex;
+    flex-wrap: nowrap;
+    min-height: 100%;
+}
+
 .container1{
     height: 500px;
     overflow: hidden;
     overflow-y: scroll;
 }
 
+/*
 .container{
     padding-bottom: 60px;
-}
+}*/
 
 a:link {
     text-decoration: none;
@@ -32,4 +49,52 @@ a:link {
 #reminder:hover{
     opacity: 70%;
     cursor: pointer;
+}
+
+.chart-container {
+    width: 100%;
+    height: 80%;
+    margin: auto;
+  }
+
+  #head {
+      height: 200px;
+  }
+
+  .chart {
+      height: 100px;
+  }
+
+  #inventoryHead {
+      float:left;
+      width: 50%;
+  }
+ 
+  #monthly {
+      width: 50%;
+    float:right;
+}
+
+#revenue {
+    float:left;
+    width: 48%;
+    margin-top: 30px;
+}
+
+#weekly{
+    float: right;
+    height:100%;
+    width: 42%
+}
+
+#exportBtn{
+    float: left;
+    height: 150px;
+    width: 45%
+}
+
+#group {
+    float:left;
+    width: 48%;
+    margin-top: 10px;
 }

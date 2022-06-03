@@ -25,19 +25,18 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
-<body>
 
-<div class="d-flex flex-row flex-shrink-0" >
+
 <?php 
 include "conn.php";
 require_once '../../env/auth_check.php';
 
 
 ?>
-
-
-<div class="nav"> 
-    <?php include 'navbar.php'; ?>
+<body>
+<main>
+    <div class="nav"> 
+        <?php include 'navbar.php'; ?>
     </div>   
 
     <!-- NAV BAR -->
@@ -72,15 +71,67 @@ require_once '../../env/auth_check.php';
 			</div>
       </ul>
     </nav>
-        <div class="container" style="width: 95%;">
-            <div class="col-md-12">
+    <div class="container-fluid bg-light p-5 pt-2">
+        <div id="head">
+        <div id="inventoryHead" class="row mt-3" >
+                <span class="fs-1 fw-bold"> Sales Report </span>
+        </div> <!-- END OF INVENTORY HEAD -->
+
+        <div id="monthly">
+            <div class="p-3 bg-white rounded border rounded shadow-sm">
+                <div class="card chart-container">
+                    <canvas id="chart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="p-3 bg-white rounded border rounded shadow-sm " id="revenue">
+            <h5>Total items: --</h5>
+            <h5 class="mb-0">Revenue: --</h5>
+        </div>
+        <div id="group">
+            <div id="exportBtn">
+                <button class="btn btn-primary" style="float:right; width:100%; margin-bottom:10px" name="export" type="submit" ><i class='fas fa-download'></i> Summary</button>
+                <button class="btn btn-success" style="float:right; width:100%; margin-bottom:10px" name="export" type="submit" ><i class='fas fa-download'></i> Sales Report</button>
+                <form action="pdf_CustomReport.php" method="GET" target="_blank">
+                    <div class="row pb-3 mb-3">
+                         <div class="col-md-3">        
+                            <div class="form-group">          
+                                <label>From </label>
+                                <input type="date" name="from_date" id="from_date" value="<?php if(isset($_GET['from_date'])){ echo $_GET['from_date']; } else {
+                                    echo '2022-01-01';
+                                } ?>" class="form-control" onchange="transactionDate()">
+                            </div>          
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>To </label>
+                                <input type="date" name="to_date" id="to_date" value="<?php if(isset($_GET['to_date'])){ echo $_GET['to_date']; } else {echo date("Y-m-d");} ?>" class="form-control" onchange="transactionDate()" min="2022-01-01">
+                            </div>
+                        </div>
+                    </div>              
+                </form> 
+
+            </div>
+            <div class="p-3 bg-white rounded border rounded shadow-sm " id="weekly">
+                <div class="card chart-container">
+                    <canvas id="chart2"></canvas>
+                </div>
+            </div>
+        </div>
+        </div>
+        
+        <br/>
+        
+            <div class="col-md-12" style="float:left;">
                 <div class="card mt-3">
+                    <!--
                     <div class="card-header">
                         <h4 style="float:left;">Sales Report</h4>
                         <form action="export.php" method="post">
                             <button class="btn btn-success" style="float:right; margin-right:10px" name="export" type="submit" ><i class='fas fa-download'></i> Sales Report</button>
                         </form>
                     </div>
+                        
                     <div class="card-body">
                     
                         <form method="GET"  action="pdf_DailyReport.php"  target="_blank">
@@ -114,15 +165,15 @@ require_once '../../env/auth_check.php';
                                 
                             </div>
                         </form>
-                    </div>
+                    </div>-->
                     
 
-                    
+                   <!-- 
                     <div class="card-header">
                         <h5>Custom Date</h5>
-                    </div>
-                    <div class="card-body">
-                        <!--
+                    </div>-->
+                    <!--<div class="card-body">
+                        
                         <form action="pdf_CustomReport.php" method="GET" target="_blank">
                             <div class="row">
                                 <div class="col-md-4">
@@ -144,7 +195,7 @@ require_once '../../env/auth_check.php';
                                     </div>
                                 </div>
                             </div>
-                        </form> -->
+                        </form> 
                         <form action="pdf_CustomReport.php" method="GET" target="_blank">
                             <div class="row pb-3 mb-3">
                             <div class="col-md-3">        
@@ -175,7 +226,7 @@ require_once '../../env/auth_check.php';
                             </div>
                             </div>              
                         </form> 
-                    </div>
+                    </div>-->
                 
 
 
@@ -297,10 +348,68 @@ require_once '../../env/auth_check.php';
             </div>
 
 
-        </div>
+        
     </div>
+                             
+    </main>
+    <script
+src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js">
+</script>
+<script>
+      const ctx = document.getElementById("chart").getContext('2d');
+      const myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ["January", "February", "March",
+          "April", "May", "June", "July", "August", "September", "October",
+          "November", "December"],
+          datasets: [{
+            label: 'Average Daily Sales',
+            backgroundColor: 'rgba(161, 198, 247, 1)',
+            borderColor: 'rgb(47, 128, 237)',
+            data: [3000, 4000, 2000, 5000, 8000, 9000, 2000,3000, 4000, 2000, 5000, 8000],
+          }]
+        },
+        options: {
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true,
+              }
+            }]
+          }
+        },
+      });
 
 
+      
+</script>
+
+<script>
+      const ctx2 = document.getElementById("chart2").getContext('2d');
+      const myChart2 = new Chart(ctx2, {
+        type: 'bar',
+        data: {
+          labels: ["S","M", "T", "W", "Th",
+          "F", "S"],
+          datasets: [{
+            label: 'This Week',
+            backgroundColor: 'rgba(161, 198, 247, 1)',
+            borderColor: 'rgb(47, 128, 237)',
+            data: [300, 400, 200, 500, 800, 900, 200],
+          }]
+        },
+        options: {
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true,
+              }
+            }]
+          }
+        },
+      });
+</script>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
