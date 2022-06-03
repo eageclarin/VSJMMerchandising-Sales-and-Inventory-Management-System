@@ -2,6 +2,7 @@
     session_start();
 	include_once '../../env/conn.php';
 	require_once '../../env/auth_check.php';
+    $str ="";   
     /*-------- VARIABLES --------*/
     $button = $updateStyle = $undo = "";
     $update = "-";
@@ -279,6 +280,9 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link"  href="../sales/sales.php">Sales</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link"  href="order.php">Sales Entry</a>
             </li>
         </ul>
         </div>

@@ -56,15 +56,15 @@
         </li>
 
         <div class="btn-group" style="display:block; margin-left: auto; margin-right:5">
-				<button type="button" class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" id="dropdownUser1" aria-expanded="false">
+				<button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" id="dropdownUser1" aria-expanded="false">
 					<img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-					<strong>User</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<strong><?php echo $_SESSION["customerName"]; ?></strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				</button>
 				<ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start"  aria-labelledby="dropdownUser1">
 				<li><a class="dropdown-item" href="#">Settings</a></li>
 				<li><a class="dropdown-item" href="#">Profile</a></li>
 				<li><hr class="dropdown-divider"></li>
-				<li><a class="dropdown-item" href="login.php">Sign out</a></li>
+				<li><a class="dropdown-item" href="../../login.php">Sign out</a></li>
 				</ul>
 			</div>
       </ul>
