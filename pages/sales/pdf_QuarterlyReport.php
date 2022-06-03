@@ -42,7 +42,7 @@ $result = mysqli_query($conn, $sql);
         while ($row = mysqli_fetch_assoc($result)) {
             $pdf->SetFont('Arial','',8);
             $y= $pdf ->GetY();
-            $pdf->Cell(50,8,'Quarter '. $row['quarter']." (".$row['year'] .")",1,'C');
+            $pdf->Cell(50,8,'Quarter '. $row['quarter']." (".$row['year'] .")",1,0,'C');
             //$pdf ->Cell(30,5,'');
             $pdf->Cell(46,8,$row['totalOrders'],1,0);
             $pdf->Cell(46,8,$row['totalItems'],1,0);
