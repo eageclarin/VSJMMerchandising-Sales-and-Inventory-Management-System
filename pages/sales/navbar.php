@@ -8,13 +8,7 @@
 		}
    ?>
 
-    <style>
-      .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
-        background-color: #dc3545;
-        border-color: #dc3545;
-        color: #fff;
-      }
-    </style>
+
 	<!------------ SIDEBAR ----------->
     <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px;height:100%;">
 		<a href="../../index.php" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
@@ -53,8 +47,8 @@
 				</a>
 			</li>
 			<li class="nav-item">
-				<a href="supplieritem.php" class="nav-link <?php echo $si ?>">
-				<i class="bi bi-receipt"></i> Bills
+				<a href="#" class="nav-link <?php echo $si ?>">
+				<i class="bi bi-receipt"></i> Other Reports
 				</a>
 			</li>
 		</ul>
@@ -70,7 +64,7 @@
 				$result = mysqli_query($conn,$sql);
 				$resultCheck = mysqli_num_rows($result);
 				if ($resultCheck>0){ 
-					echo '<strong>Low on Stocks</strong>';
+					echo '<span class="text-warning mt-3 pb-2">Low on Stocks</span>';
 					echo '<div class="container flex-column mb-2 gap-2" style="max-height:150px;overflow-y:scroll">';
 					while ($row = mysqli_fetch_assoc($result)) {	
 			?>
@@ -92,7 +86,7 @@
 				$result1 = mysqli_query($conn,$sql1);
 				$resultCheck1 = mysqli_num_rows($result1);
 				if ($resultCheck1>0){ 
-					echo '<strong>Pending Orders</strong>';
+					echo '<span class="text-warning mt-3 pb-2">Pending Orders</span>';
 					echo '<div class="container flex-column mb-2 gap-2" style="max-height:150px;overflow-y:scroll">';
 					while ($row1 = mysqli_fetch_assoc($result1)) {	
 			?>
@@ -115,8 +109,8 @@
 				$result1 = mysqli_query($conn,$sql1);
 				$resultCheck1 = mysqli_num_rows($result1);
 				if ($resultCheck1>0){ 
-					echo '<storng>Deliveries</strong>';
-					echo '<div class="container flex-column mb-auto gap-2"> style="max-height:150px;overflow-y:scroll"';
+					echo '<span class="text-warning mt-3 pb-2">Deliveries</span>';
+					echo '<div class="container flex-column mb-auto gap-2" style="max-height:150px;overflow-y:scroll">';
 					while ($row1 = mysqli_fetch_assoc($result1)) {	
 			?>
 						<div class="rounded p-2 py-1 row mb-2" style="background-color: #343a40;">
