@@ -29,6 +29,11 @@ main {
     text-decoration: none;
   }
 
+  a:link {
+      text-decoration: none;
+      color: azure
+  }
+
   .table-wrapper{
     width: 100%;
     height:500px;
