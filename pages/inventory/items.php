@@ -312,13 +312,14 @@ if(isset($_POST['edit'])>0){
             
 
 <div class="fs-1 fw-bold text-center pt-5"> LIST OF ITEMS </div>
+<div class="card mt-3 mb-3" style="float:left; width:100%">
 <?php
 
 $sql = "SELECT * FROM item;";                                    
 $result = mysqli_query($conn,$sql);
 $resultCheck = mysqli_num_rows($result);
        
-echo "<div class='table-wrapper mt-3'><table class='table table-hover'> 
+echo "<div class='table-wrapper p-3'><table class='table table-hover'> 
         <thead> 
         <tr>
             <th> ID </th>
@@ -365,6 +366,7 @@ mysqli_close($conn);
 echo "</tbody></table></div>";
 
 ?>
+</div>
 <button class='btn btn-primary additembtn p-2 mt-3' type="button">Add Item </button> 
 </div>
 </main>

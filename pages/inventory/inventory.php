@@ -257,12 +257,10 @@ if (isset($_POST['edit'])) { //UPDATING INVENTORY
       
         <!-- DISPLAY LIST OF ITEMS IN INVENTORY -->
         <div class="card mt-3 mb-3" style="float:left; width:100%">
-        
         <div id="display" class="p-3" style="padding-bottom:0">
             <?php include "search_sort.php";
                   include 'addpending.php';
                   ?>
-        
         </div>
         </div> <!-- END OF DISPLAY -->
 
