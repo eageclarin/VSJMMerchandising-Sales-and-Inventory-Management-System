@@ -264,18 +264,14 @@
 <body>
     <!----------- NAVIGATION BAR ------------>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark p-3">
-    <div class="container-fluid">
-        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+        <a href="../../index.php" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
 		<img src="../../img/logo.png" class="me-2" width="40"/>
 		<span class="fs-5"> VSJM Merchandising</span>
 		</a>
 		<hr class="mb-1">
-        <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="collapse navbar-collapse px-3" id="navbarCollapse">
         <ul class="navbar-nav me-auto mb-2 mb-md-0">
-            <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="../../index.php">Home</a>
-            </li>
-            <li class="nav-item">
+            <li class="nav-item ml-3">
                 <a class="nav-link" href="../inventory/inventory.php">Inventory</a>
             </li>
             <li class="nav-item">
@@ -286,19 +282,19 @@
             </li>
         </ul>
         </div>
-    </div>
-	<div class="dropdown">
-        <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-          <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-          <strong>User</strong>
-        </a>
-        <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-          <li><a class="dropdown-item" href="#">Settings</a></li>
-          <li><a class="dropdown-item" href="#">Profile</a></li>
-          <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item" href="../../../login.php">Sign out</a></li>
-        </ul>
-      </div>
+
+	<div class="btn-group" style="display:block; margin-left: auto; margin-right:2">
+				<button type="button" class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" id="dropdownUser1" aria-expanded="false">
+					<img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+					<strong><?php echo $_SESSION["customerName"]; ?></strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				</button>
+				<ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start shadow"  aria-labelledby="dropdownUser1">
+				<li><a class="dropdown-item" href="#">Settings</a></li>
+				<li><a class="dropdown-item" href="#">Profile</a></li>
+				<li><hr class="dropdown-divider"></li>
+				<li><a class="dropdown-item" href="login.php">Sign out</a></li>
+				</ul>
+			</div>
     </nav>
     <!----------- END NAVIGATION BAR ------------>
 
