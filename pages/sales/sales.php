@@ -71,70 +71,81 @@ require_once '../../env/auth_check.php';
 			</div>
       </ul>
     </nav>
+    <!-- END OF NAVBAR -->
+
     <div class="container-fluid bg-light p-5 pt-2 mb-0">
         <div id="head">
-        <div id="inventoryHead" class="row mt-3" >
+            <!--Heading -->
+            <div id="inventoryHead" class="row mt-3" >
                 <span class="fs-1 fw-bold"> SALES REPORT </span>
-        </div> <!-- END OF INVENTORY HEAD -->
-
-        <div id="monthly">
-            <div class="p-3 bg-white rounded border rounded shadow-sm">
-                <div class="card chart-container">
-                    <canvas id="chart"></canvas>
+            </div> 
+            
+            <!-- Average Daily Sales Chart -->
+            <div id="monthly">
+                <div class="p-3 bg-white rounded border rounded shadow-sm">
+                    <div class="card chart-container">
+                        <canvas id="chart"></canvas>
+                    </div>
                 </div>
             </div>
-        </div>
-        
-        <div id="group">
-            <div class="p-3 bg-white rounded border rounded shadow-sm" id="weekly" style="margin-right:15px; height:100%;">
-                <strong> NUMBER OF SALES </strong> <br/>
-                <span class="text-primary fs-3"> 210 </span> <br/>
-                <strong> REVENUE </strong> <br/>
-                <span class="text-primary fs-3"> Php 21000.00 </span>
-            </div>
-            <div class="p-3 bg-white rounded border rounded shadow-sm" id="weekly" style="float:right;">
-                <div class="card chart-container">
-                    <canvas id="chart2"></canvas>
+            
+            <div id="group">
+                <!-- SALES INFO -->
+                <div class="p-3 bg-white rounded border rounded shadow-sm" id="weekly" style="margin-right:15px; height:100%;">
+                    <strong> NUMBER OF SALES </strong> <br/>
+                    <span class="text-primary fs-3"> 210 </span> <br/>
+                    <strong> REVENUE </strong> <br/>
+                    <span class="text-primary fs-3"> Php 21000.00 </span>
                 </div>
-            </div>
 
-            <div id="exportBtn">
-                <form action="export.php" method="post">
-                    <button class="btn btn-success" style="float:left; width:48%; margin-bottom:10px; margin-right:15px;" name="export" type="submit" ><i class='fas fa-download'></i> Sales Report</button> 
-                </form>
+                <!-- This Week's Sales -->
+                <div class="p-3 bg-white rounded border rounded shadow-sm" id="weekly" style="float:right;">
+                    <div class="card chart-container">
+                        <canvas id="chart2"></canvas>
+                    </div>
+                </div>
 
-                <form action="pdf_CustomReport.php" method="GET" target="_blank">
-                    <button class="btn btn-primary dropdown-toggle" style="float:right; width:48%; margin-bottom:10px; " name="export" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" ><i class='fas fa-download' ></i> Summary</button>   
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="export.php?exportTransactions=all#">Daily Sales</a></li>
-                        <li><a class="dropdown-item" href="pdf_WeeklyReport.php"  target="_blank">Weekly Sales</a></li>
-                        <li><a class="dropdown-item" href="pdf_MonthlyReport.php"  target="_blank">Monthly Sales</a></li>
-                        <li><a class="dropdown-item" href="pdf_QuarterlyReport.php" target="_blank">Quarterly Sales</a></li>
-                        <li><a class="dropdown-item" href="export.php?exportTransactions=range&from=<?php echo $from_date?>&to=<?php echo $to_date?>#" id=exportRange onclick="changeRange()">Sales in Date Range</a></li>
-                    </ul>
-                    
-                    <div class="row pb-3 mb-0">
+                <!-- Buttons -->
+                <div id="exportBtn">
+                    <!-- Download Sales Report Excel File -->
+                    <form action="export.php" method="post">
+                        <button class="btn btn-success" style="float:left; width:48%; margin-bottom:10px; margin-right:15px;" name="export" type="submit" ><i class='fas fa-download'></i> Sales Report</button> 
+                    </form>
+
+                    <!-- Summaries in PDF -->
+                    <form action="pdf_CustomReport.php" method="GET" target="_blank">
+                        <button class="btn btn-primary dropdown-toggle" style="float:right; width:48%; margin-bottom:10px; " name="export" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" ><i class='fas fa-download' ></i> Summary</button>   
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item" href="pdf_DailyReport.php"  target="_blank">Daily Sales</a></li>
+                            <li><a class="dropdown-item" href="pdf_WeeklyReport.php"  target="_blank">Weekly Sales</a></li>
+                            <li><a class="dropdown-item" href="pdf_MonthlyReport.php"  target="_blank">Monthly Sales</a></li>
+                            <li><a class="dropdown-item" href="pdf_QuarterlyReport.php" target="_blank">Quarterly Sales</a></li>
+                            <li><a class="dropdown-item" href="export.php?exportTransactions=range&from=<?php echo $from_date?>&to=<?php echo $to_date?>#" id=exportRange onclick="changeRange()">Sales in Date Range</a></li>
+                        </ul>
                         
-                        <div class="col-md-6">       
-                            <div class="form-floating">   
-                            <label style="padding-top:6px;"><small>From </small> </label>      
-                                <input type="date" name="from_date" id="from_date" value="<?php if(isset($_GET['from_date'])){ echo $_GET['from_date']; } else {
-                                    echo '2022-01-01';
-                                } ?>" class="form-control" onchange="transactionDate()" style="padding:0px;padding-left:65px; padding-right:10px; height:40px;">
-                            </div>          
-                        </div>
-                        
-                        <div class="col-md-6">
-                            <div class="form-floating">
-                            <label style="padding-top:6px;"><small>To</small> </label>
-                                <input type="date" name="to_date" id="to_date" value="<?php if(isset($_GET['to_date'])){ echo $_GET['to_date']; } else {echo date("Y-m-d");} ?>" class="form-control" onchange="transactionDate()" min="2022-01-01" style="padding:0px;padding-left:65px; padding-right:10px; height:40px;">
+                        <!-- Choose Date -->
+                        <div class="row pb-3 mb-0">
+                            <div class="col-md-6">       
+                                <div class="form-floating">   
+                                    <label style="padding-top:6px;"><small>From </small> </label>      
+                                    <input type="date" name="from_date" id="from_date" value="<?php if(isset($_GET['from_date'])){ echo $_GET['from_date']; } else {
+                                        echo '2022-01-01';
+                                    } ?>" class="form-control" onchange="transactionDate()" style="padding:0px;padding-left:65px; padding-right:10px; height:40px;">
+                                </div>          
+                            </div> 
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <label style="padding-top:6px;"><small>To</small> </label>
+                                    <input type="date" name="to_date" id="to_date" value="<?php if(isset($_GET['to_date'])){ echo $_GET['to_date']; } else {echo date("Y-m-d");} ?>" class="form-control" onchange="transactionDate()" min="2022-01-01" style="padding:0px;padding-left:65px; padding-right:10px; height:40px;">
+                                </div>
                             </div>
-                        </div>
-                    </div>                
-                </form> 
-            </div> <!-- END exportBtn-->
-        </div><!-- END group -->
-    </div><!-- END head -->
+                        </div>   
+
+                    </form> 
+
+                </div> <!-- END OF exportBtn-->
+            </div><!-- END OF group -->
+        </div><!-- END OF head -->
 
             <!--<div class="col-md-12" style="float:left;">
                 <div class="card mt-3">
@@ -246,50 +257,49 @@ require_once '../../env/auth_check.php';
                 </div>
             </div>-->
 
-            <div class="card mt-0" style="float:left; width:100%">
-                <div class="card-body">
-                    <div class= "container1">
-                        <table class="table pr-3">
-                            <?php
-                                
-                               $sql = "select distinct item_NAME from item order by item_NAME";
-                                $result = mysqli_query($conn, $sql);
-                                if (isset($_GET['to_date'])) {
-                                    $from_date = $_GET['to_date'];
-                                    $to_date = $_GET['to_date'];
-                                    //unset($_GET['to_date']);
-                                  } else {
-                                    $from_date = date("Y-m-d");
-                                    $to_date = date("Y-m-d");
-                                  }
-                                
-                                    
-                            ?>
-                            <thead>
-                                <h5>
-                                    <?php 
-                                    $labelDate2=date_create($to_date);
-                                    $labelDate2 = date_format($labelDate2,"F d, Y");
-                                    ?> 
-                                    Sales<?php echo " (".$labelDate2.")"; ?>
-                                    <div style="float:right; width:50%; padding-right:15px;">
-                                        <form action="sales.php" method="GET">
-                                            <div class="row pb-2 mb-2">
-                                            <div class="col-md-8">
-                                                <div class="form-group">
+        <!-- Daily Sales Table -->
+        <div class="card mt-0" style="float:left; width:100%">
+            <div class="card-body">
+                <div class= "container1">
+                    <table class="table pr-3">
+                        <?php     
+                           $sql = "select distinct item_NAME from item order by item_NAME";
+                            $result = mysqli_query($conn, $sql);
+                            if (isset($_GET['to_date'])) {
+                                $from_date = $_GET['to_date'];
+                                $to_date = $_GET['to_date'];
+                                //unset($_GET['to_date']);
+                            } else {
+                                $from_date = date("Y-m-d");
+                                $to_date = date("Y-m-d");
+                            }         
+                        ?>
+                        <thead>
+                            <h5>
+                            <?php 
+                                $labelDate2=date_create($to_date);
+                                $labelDate2 = date_format($labelDate2,"F d, Y");
+                            ?> 
+                            Sales<?php echo " (".$labelDate2.")"; ?>
+                            <!-- FILTER DATE -->
+                            <div style="float:right; width:50%; padding-right:15px;">
+                                <form action="sales.php" method="GET">
+                                    <div class="row pb-2 mb-2">
+                                        <div class="col-md-8">
+                                            <div class="form-group">
                                                 <input type="date" name="to_date" id="to_date" value="<?php if(isset($_GET['to_date'])){ echo $_GET['to_date']; } else {echo date("Y-m-d");} ?>" class="form-control" onchange="transactionDate()" min="2022-01-01">
-                                                </div>
                                             </div>
-                                            <div class="col-md-4">        
-                                                <div class="form-group">              
+                                        </div>
+                                        <div class="col-md-4">        
+                                            <div class="form-group">              
                                                 <button type="submit" class="form-control" style="color:black; background-color:#7393B3" style="background-color:#7393B3">Filter</button>
-                                                </div>               
-                                            </div>
-                                            </div>                             
-                                        </form> 
-                                    </div>
-                                </h5>
-                                <!-- TOTAL SALES INFO -->
+                                            </div>               
+                                        </div>
+                                    </div>                             
+                                </form> 
+                            </div>
+                            </h5>
+                            <!-- TOTAL SALES INFO -->
                                 <?php
                                     $result = mysqli_query($conn, "SELECT SUM(orderItems_TotalPrice) AS totalSum, COUNT(item_ID) AS totalItems, order_Date FROM order_items INNER JOIN orders on orders.order_ID = order_items.order_ID 
                                     WHERE order_Date BETWEEN '$from_date' AND '$to_date' ");
@@ -354,18 +364,15 @@ require_once '../../env/auth_check.php';
                             ?>
                             </tbody>
                         </table>
-                    </div>
-                </div>
-            </div>
+                    </div><!-- container1 -->
+                </div><!-- card-body -->
+            </div><!-- card -->
 
-
-        
-    </div>
+    </div> <!-- container-fluid -->
                              
-    </main>
-    <script
-src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js">
-</script>
+ </main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"> </script>
 <script>
       const ctx = document.getElementById("chart").getContext('2d');
       const myChart = new Chart(ctx, {
@@ -421,7 +428,8 @@ src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js">
         },
       });
 </script>
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
