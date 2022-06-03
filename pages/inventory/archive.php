@@ -99,7 +99,7 @@ if (isset($_POST['edit'])) { //UPDATING INVENTORY
         </ul>
         </nav>
     <!-- END OF NAV BAR --> 
-    <div class="container-fluid bg-light p-5">
+    <div class="container-fluid bg-light p-5  pt-2">
       <!-- EDIT MODAL ############################################################################ -->
       <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">

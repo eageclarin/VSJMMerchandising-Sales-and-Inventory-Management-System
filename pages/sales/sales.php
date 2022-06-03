@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sales Report</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="style.css">
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 
@@ -22,14 +23,48 @@
 <?php 
 include "conn.php";
 require_once '../../env/auth_check.php';
-include 'navbar.php'; 
 
 
 ?>
 
 
-	
-        <div class="container" style="width: 80%;">
+<div class="nav"> 
+    <?php include 'navbar.php'; ?>
+    </div>   
+
+    <!-- NAV BAR -->
+    <div class="container-fluid bg-light" style="padding-right:0;padding-left:0; padding-bottom:0">
+    <nav class="navbar  px-3 py-3" style=" width:100%">
+      <ul class="nav nav-tabs pb-2" style="width:100%">
+        
+        <li class="nav-item" style="padding-left: 2.1%">
+          <a class="nav-link " aria-current="page" href="../inventory/inventory.php" ><i class="bi bi-archive-fill"></i> Inventory</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="../supplier/suppliers.php"><i class="bi bi-people-fill"></i> Suppliers</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="../sales/sales.php"><i class="bi bi-table"></i> Sales</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="../order/order.php"><i class="bi bi-cart-fill"></i> Sales Entry</a>
+        </li>
+
+        <div class="btn-group" style="display:block; margin-left: auto; margin-right:5">
+				<button type="button" class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" id="dropdownUser1" aria-expanded="false">
+					<img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+					<strong>User</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				</button>
+				<ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start"  aria-labelledby="dropdownUser1">
+				<li><a class="dropdown-item" href="#">Settings</a></li>
+				<li><a class="dropdown-item" href="#">Profile</a></li>
+				<li><hr class="dropdown-divider"></li>
+				<li><a class="dropdown-item" href="login.php">Sign out</a></li>
+				</ul>
+			</div>
+      </ul>
+    </nav>
+        <div class="container" style="width: 95%;">
             <div class="col-md-12">
                 <div class="card mt-3">
                     <div class="card-header">

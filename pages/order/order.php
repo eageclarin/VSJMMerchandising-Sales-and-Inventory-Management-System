@@ -275,7 +275,7 @@
                 <a class="nav-link" href="../inventory/inventory.php">Inventory</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link"  href="../supplier/supplier.php">Supplier</a>
+                <a class="nav-link"  href="../supplier/suppliers.php">Supplier</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link"  href="../sales/sales.php">Sales</a>
@@ -303,7 +303,7 @@
         <!------ TITLE ------>
         <div class="row w-100" style="height:20%">
             <div class="col position-relative">
-                <span class="position-absolute top-50 start-50 translate-middle fs-1 fw-bold"> ORDER </span>
+                <span class="position-absolute top-50 start-50 translate-middle fs-1 fw-bold"> SALES ENTRY </span>
             </div>
         </div>
 

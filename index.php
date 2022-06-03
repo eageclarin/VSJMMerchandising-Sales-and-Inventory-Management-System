@@ -170,14 +170,14 @@ require_once 'auth_check.php';
 				$result = mysqli_query($conn,$sql);
 				$resultCheck = mysqli_num_rows($result);
 				if ($resultCheck>0){ 
-					echo 'Low on Stocks';
+					echo '<strong>Low on Stocks</strong>';
 					echo "<div class='table-wrapper' style='height:auto; max-height:150px;' id='style-1'>";
 					echo '<div class="container flex-column mb-auto gap-2">';
 					while ($row = mysqli_fetch_assoc($result)) {	
 			?>
 						<div class="rounded p-2 py-1 row mb-2" style="background-color: #343a40;">
 							<div class="col-9 px-0">
-								<a href="inventory.php"><?php echo $row['item_Name'] ?></a>
+								<a href="inventory.php" class="text-white"><?php echo $row['item_Name'] ?></a>
 							</div>
 							<div class="col px-0 text-danger text-end">
 								<?php echo $row['item_Stock'] .$row['item_unit'] ?>
@@ -195,14 +195,14 @@ require_once 'auth_check.php';
 				$resultCheck1 = mysqli_num_rows($result1);
 				if ($resultCheck1>0){ 
 					
-					echo 'Pending Orders';
+					echo '<strong>Pending Orders</strong>';
 					echo "<div class='table-wrapper' style='height:auto; max-height:150px;' id='style-1'>";
 					echo '<div class="container flex-column mb-auto gap-2">';
 					while ($row1 = mysqli_fetch_assoc($result1)) {	
 			?>
 						<div class="rounded p-2 py-1 row mb-2" style="background-color: #343a40;">
 							<div class="col-9 px-0">
-								<a href="pending.php"><?php echo $row1['transaction_ID'] .': ' .$row1['supplier_Name'] ?></a>
+								<a href="pending.php" class="text-white"><?php echo $row1['transaction_ID'] .': ' .$row1['supplier_Name'] ?></a>
 							</div>
 							<div class="col px-0 text-danger text-end">
 								<?php echo number_format($row1['transaction_TotalPrice'],2) ?>
@@ -220,14 +220,14 @@ require_once 'auth_check.php';
 				$result1 = mysqli_query($conn,$sql1);
 				$resultCheck1 = mysqli_num_rows($result1);
 				if ($resultCheck1>0){ 
-					echo 'Deliveries';
+					echo '<strong>Deliveries</strong>';
 					echo "<div class='table-wrapper' style='height:auto; max-height:150px;' id='style-1'>";
 					echo '<div class="container flex-column mb-auto gap-2">';
 					while ($row1 = mysqli_fetch_assoc($result1)) {	
 			?>
 						<div class="rounded p-2 py-1 row mb-2" style="background-color: #343a40;">
 							<div class="col-9 px-0">
-								<a href="pending.php"><?php echo $row1['transaction_ID'] .': ' .$row1['supplier_Name'] ?></a>
+								<a href="pending.php" class="text-white"><?php echo $row1['transaction_ID'] .': ' .$row1['supplier_Name'] ?></a>
 							</div>
 							<div class="col px-0 text-danger text-end">
 								<?php echo number_format($row1['transaction_TotalPrice'],2) ?>
@@ -280,7 +280,7 @@ require_once 'auth_check.php';
 				<a class="nav-link link-danger" href="pages/sales/sales.php"><i class="bi bi-table"></i> Sales</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link link-warning" href="pages/order/order.php"><i class="bi bi-cart-fill"></i> Order</a>
+				<a class="nav-link link-warning" href="pages/order/order.php"><i class="bi bi-cart-fill"></i> Sales Entry</a>
 			</li>
 		
 			<div class="btn-group" style="display:block; margin-left: auto; margin-right:2">

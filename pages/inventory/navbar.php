@@ -1,6 +1,6 @@
 	<?php
 		$url = substr($_SERVER["SCRIPT_NAME"],strrpos($_SERVER["SCRIPT_NAME"],"/")+1);
-		$in = $c = $t = $s = $it = $r = $p = 'text-white';
+		$in = $c = $t = $s = $it = $r = $p = $a = 'text-white';
 		if ($url == 'inventory.php') {
 			$in = 'active';
 		} else if ($url == 'categbrands.php') {
@@ -78,7 +78,7 @@
 				<a href="returnitem.php" class="nav-link <?php echo $r ?>"> <i class="bi bi-arrow-return-left"></i> Returns </a>
 			</li>
 			<li class="nav-item">
-				<a href="archive.php" class="nav-link <?php echo $a ?>"> <i class="bi bi-archive"></i> Archive </a>
+			<a href="archive.php" class="nav-link <?php echo $a ?>"> <i class="bi bi-archive"></i> Archive </a>
 			</li>
 		</ul>
 		<!------ END OF TABS ------>
@@ -93,14 +93,14 @@
 				$result = mysqli_query($conn,$sql);
 				$resultCheck = mysqli_num_rows($result);
 				if ($resultCheck>0){ 
-					echo 'Low on Stocks';
+					echo '<strong>Low on Stocks</strong>';
 					echo "<div class='table-wrapper' style='height:auto; max-height:100px;' id='style-1'>";
 					echo '<div class="container flex-column mb-auto gap-2">';
 					while ($row = mysqli_fetch_assoc($result)) {	
 			?>
 						<div class="rounded p-2 py-1 row mb-2" style="background-color: #343a40;">
 							<div class="col-9 px-0">
-								<a href="inventory.php"><?php echo $row['item_Name'] ?></a>
+								<a href="inventory.php" class="text-white"><?php echo $row['item_Name'] ?></a>
 							</div>
 							<div class="col px-0 text-danger text-end">
 								<?php echo $row['item_Stock'] .$row['item_unit'] ?>
@@ -118,14 +118,14 @@
 				$resultCheck1 = mysqli_num_rows($result1);
 				if ($resultCheck1>0){ 
 					
-					echo 'Pending Orders';
+					echo '<strong>Pending Orders</strong>';
 					echo "<div class='table-wrapper' style='height:auto; max-height:100px;' id='style-1'>";
 					echo '<div class="container flex-column mb-auto gap-2">';
 					while ($row1 = mysqli_fetch_assoc($result1)) {	
 			?>
 						<div class="rounded p-2 py-1 row mb-2" style="background-color: #343a40;">
 							<div class="col-9 px-0">
-								<a href="pending.php"><?php echo $row1['transaction_ID'] .': ' .$row1['supplier_Name'] ?></a>
+								<a href="pending.php" class="text-white"><?php echo $row1['transaction_ID'] .': ' .$row1['supplier_Name'] ?></a>
 							</div>
 							<div class="col px-0 text-danger text-end">
 								<?php echo number_format($row1['transaction_TotalPrice'],2) ?>
@@ -143,14 +143,14 @@
 				$result1 = mysqli_query($conn,$sql1);
 				$resultCheck1 = mysqli_num_rows($result1);
 				if ($resultCheck1>0){ 
-					echo 'Deliveries';
+					echo '<strong>Deliveries</strong>';
 					echo "<div class='table-wrapper' style='height:auto; max-height:100px;' id='style-1'>";
 					echo '<div class="container flex-column mb-auto gap-2">';
 					while ($row1 = mysqli_fetch_assoc($result1)) {	
 			?>
 						<div class="rounded p-2 py-1 row mb-2" style="background-color: #343a40;">
 							<div class="col-9 px-0">
-								<a href="pending.php"><?php echo $row1['transaction_ID'] .': ' .$row1['supplier_Name'] ?></a>
+								<a href="pending.php" class="text-white"><?php echo $row1['transaction_ID'] .': ' .$row1['supplier_Name'] ?></a>
 							</div>
 							<div class="col px-0 text-danger text-end">
 								<?php echo number_format($row1['transaction_TotalPrice'],2) ?>

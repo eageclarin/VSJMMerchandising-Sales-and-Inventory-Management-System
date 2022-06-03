@@ -55,7 +55,7 @@ $to_date=date("Y-m-d");
           <a class="nav-link " href="../sales/sales.php"><i class="bi bi-table"></i> Sales</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="../order/order.php"><i class="bi bi-cart-fill"></i> Order</a>
+          <a class="nav-link " href="../order/order.php"><i class="bi bi-cart-fill"></i> Sales Entry</a>
         </li>
 
         <div class="btn-group" style="display:block; margin-left: auto; margin-right:2">
@@ -79,7 +79,7 @@ $to_date=date("Y-m-d");
 
 
         
-  <div class="container-fluid bg-light p-5">
+  <div class="container-fluid bg-light p-5 pt-2">
     <span class="fs-1 fw-bold"> TRANSACTIONS </span>
     <p> Completed and undelivered transactions are shown here</p>
                        

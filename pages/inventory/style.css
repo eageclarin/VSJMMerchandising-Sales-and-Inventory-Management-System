@@ -15,12 +15,12 @@ main {
 }
 
 .navbar{
-    width:100%;
-    height: 50px;
-    position:fixed;
-    
-    transition: 0.4s;
-    box-shadow: inset;
+  width:250px;
+
+  position:fixed;
+  
+  transition: 0.4s;
+  box-shadow: inset;
 }
 /*.navbar .nav-link {
     font-size: 1.25em;

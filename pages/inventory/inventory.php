@@ -115,7 +115,7 @@ if (isset($_POST['edit'])) { //UPDATING INVENTORY
           <a class="nav-link " href="../sales/sales.php"><i class="bi bi-table"></i> Sales</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="../order/order.php"><i class="bi bi-cart-fill"></i> Order</a>
+          <a class="nav-link " href="../order/order.php"><i class="bi bi-cart-fill"></i> Sales Entry</a>
         </li>
 
         <div class="btn-group" style="display:block; margin-left: auto; margin-right:5">
@@ -133,7 +133,7 @@ if (isset($_POST['edit'])) { //UPDATING INVENTORY
       </ul>
     </nav>
     <!-- END OF NAV BAR --> 
-    <div class="container-fluid bg-light p-5">
+    <div class="container-fluid bg-light p-5 pt-2">
       <!-- EDIT MODAL ############################################################################ -->
       <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
