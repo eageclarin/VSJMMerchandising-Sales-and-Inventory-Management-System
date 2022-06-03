@@ -65,7 +65,7 @@
 				$resultCheck = mysqli_num_rows($result);
 				if ($resultCheck>0){ 
 					echo '<span class="text-warning mt-3 pb-2">Low on Stocks</span>';
-					echo "<div class='table-wrapper' style='height:auto; max-height:100px;' id='style-1'>";
+					echo "<div class='table-wrapper' style='height:auto; max-height:150px;' id='style-1'>";
 					echo '<div class="container flex-column mb-auto gap-2">';
 					while ($row = mysqli_fetch_assoc($result)) {	
 			?>
@@ -90,7 +90,7 @@
 				if ($resultCheck1>0){ 
 					
 					echo '<span class="text-warning mt-3 pb-2">Pending Orders</span>';
-					echo "<div class='table-wrapper' style='height:auto; max-height:100px;' id='style-1'>";
+					echo "<div class='table-wrapper' style='height:auto; max-height:150px;' id='style-1'>";
 					echo '<div class="container flex-column mb-auto gap-2">';
 					while ($row1 = mysqli_fetch_assoc($result1)) {	
 			?>
@@ -115,7 +115,7 @@
 				$resultCheck1 = mysqli_num_rows($result1);
 				if ($resultCheck1>0){ 
 					echo '<span class="text-warning mt-3 pb-2">Deliveries</span>';
-					echo "<div class='table-wrapper' style='height:auto; max-height:100px;' id='style-1'>";
+					echo "<div class='table-wrapper' style='height:auto; max-height:150px;' id='style-1'>";
 					echo '<div class="container flex-column mb-auto gap-2">';
 					while ($row1 = mysqli_fetch_assoc($result1)) {	
 			?>
