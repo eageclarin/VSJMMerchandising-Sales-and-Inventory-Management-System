@@ -246,7 +246,7 @@
         }
 </script>
 
-<!--
+
 <script>
            $(document).ready(function(){
               $('.editbtn').on('click',function(){
@@ -276,4 +276,4 @@
            function checkdelete(){
                 return confirm('Are you sure you want to delete this record?');
             }
-         </script>-->
+         </script>
