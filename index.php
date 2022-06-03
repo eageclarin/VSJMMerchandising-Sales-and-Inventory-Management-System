@@ -177,7 +177,7 @@ require_once 'auth_check.php';
 			?>
 						<div class="rounded p-2 py-1 row mb-2" style="background-color: #343a40;">
 							<div class="col-9 px-0">
-								<a href="inventory.php"><?php echo $row['item_Name'] ?></a>
+								<a href="pages/inventory/inventory.php"><?php echo $row['item_Name'] ?></a>
 							</div>
 							<div class="col px-0 text-danger text-end">
 								<?php echo $row['item_Stock'] .$row['item_unit'] ?>
@@ -202,7 +202,7 @@ require_once 'auth_check.php';
 			?>
 						<div class="rounded p-2 py-1 row mb-2" style="background-color: #343a40;">
 							<div class="col-9 px-0">
-								<a href="pending.php"><?php echo $row1['transaction_ID'] .': ' .$row1['supplier_Name'] ?></a>
+								<a href="pages/inventory/pending.php"><?php echo $row1['transaction_ID'] .': ' .$row1['supplier_Name'] ?></a>
 							</div>
 							<div class="col px-0 text-danger text-end">
 								<?php echo number_format($row1['transaction_TotalPrice'],2) ?>
@@ -227,7 +227,7 @@ require_once 'auth_check.php';
 			?>
 						<div class="rounded p-2 py-1 row mb-2" style="background-color: #343a40;">
 							<div class="col-9 px-0">
-								<a href="pending.php"><?php echo $row1['transaction_ID'] .': ' .$row1['supplier_Name'] ?></a>
+								<a href="pages/inventory/pending.php"><?php echo $row1['transaction_ID'] .': ' .$row1['supplier_Name'] ?></a>
 							</div>
 							<div class="col px-0 text-danger text-end">
 								<?php echo number_format($row1['transaction_TotalPrice'],2) ?>
