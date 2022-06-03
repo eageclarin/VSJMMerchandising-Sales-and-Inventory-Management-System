@@ -15,7 +15,7 @@ main {
 }
 
 .container1{
-    height: 500px;
+    height: 300px;
     overflow: hidden;
     overflow-y: scroll;
 }
@@ -53,12 +53,13 @@ a:link {
 
 .chart-container {
     width: 100%;
-    height: 80%;
+    height: 100%;
     margin: auto;
   }
 
   #head {
-      height: 200px;
+      height: 100px;
+      margin-bottom: 0px;
   }
 
   .chart {
@@ -82,19 +83,21 @@ a:link {
 }
 
 #weekly{
-    float: right;
+    float: left;
     height:100%;
-    width: 42%
+    width: 48%
 }
 
 #exportBtn{
     float: left;
     height: 150px;
-    width: 45%
+    width: 100%;
+    margin-top: 10px;
 }
 
 #group {
     float:left;
     width: 48%;
     margin-top: 10px;
+    
 }
