@@ -263,12 +263,13 @@
 </head>
 <body>
     <!----------- NAVIGATION BAR ------------>
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark p-3">
     <div class="container-fluid">
-        <a class="navbar-brand" href="../../index.php">VSJM Merchandising</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-        </button>
+        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+		<img src="../../img/logo.png" class="me-2" width="40"/>
+		<span class="fs-5"> VSJM Merchandising</span>
+		</a>
+		<hr class="mb-1">
         <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav me-auto mb-2 mb-md-0">
             <li class="nav-item">
@@ -311,9 +312,9 @@
         </div>
 
         <!------ ORDER FUNCTIONS ------>
-        <div class="row w-100" style="height:80%">
+        <div class="row w-100 mx-auto" style="height:80%">
             <!------ ITEMS ------>
-            <div class="col-6">
+            <div class="col-6 mr-2">
                 <!------ CATEG SORT SEARCH ------>
                 <div class="row">
                     <div class="col-7">
