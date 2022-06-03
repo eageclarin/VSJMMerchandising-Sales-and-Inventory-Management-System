@@ -175,7 +175,7 @@ require_once 'auth_check.php';
 					echo '<div class="container flex-column mb-auto gap-2">';
 					while ($row = mysqli_fetch_assoc($result)) {	
 			?>
-						<div class="rounded p-2 py-1 row mb-2" style="background-color: #343a40;">
+						<div class="rounded p-2 py-1 row mb-2" style="background-color: #343a40;" id="reminder">
 							<div class="col-9 px-0 text-muted" >
 								<a href="pages/inventory/inventory.php" class="text-light"><?php echo $row['item_Name'] ?></a>
 							</div>
@@ -200,7 +200,7 @@ require_once 'auth_check.php';
 					echo '<div class="container flex-column mb-auto gap-2">';
 					while ($row1 = mysqli_fetch_assoc($result1)) {	
 			?>
-						<div class="rounded p-2 py-1 row mb-2" style="background-color: #343a40;">
+						<div class="rounded p-2 py-1 row mb-2" style="background-color: #343a40;" id="reminder">
 							<div class="col-9 px-0">
 								<a href="pages/inventory/pending.php" class="text-light"><?php echo $row1['transaction_ID'] .': ' .$row1['supplier_Name'] ?></a>
 							</div>
@@ -225,7 +225,7 @@ require_once 'auth_check.php';
 					echo '<div class="container flex-column mb-auto gap-2">';
 					while ($row1 = mysqli_fetch_assoc($result1)) {	
 			?>
-						<div class="rounded p-2 py-1 row mb-2" style="background-color: #343a40;">
+						<div class="rounded p-2 py-1 row mb-2" style="background-color: #343a40;" id="reminder">
 							<div class="col-9 px-0">
 								<a href="pages/inventory/pending.php" class="text-light"><?php echo $row1['transaction_ID'] .': ' .$row1['supplier_Name'] ?></a>
 							</div>
