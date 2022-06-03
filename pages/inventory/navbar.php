@@ -1,6 +1,6 @@
 	<?php
 		$url = substr($_SERVER["SCRIPT_NAME"],strrpos($_SERVER["SCRIPT_NAME"],"/")+1);
-		$in = $c = $t = $s = $it = $r = $p = 'text-white';
+		$in = $c = $t = $s = $it = $r = $p = $a = 'text-white';
 		if ($url == 'inventory.php') {
 			$in = 'active';
 		} else if ($url == 'categbrands.php') {

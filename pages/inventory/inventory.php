@@ -124,7 +124,7 @@ if (isset($_POST['edit'])) { //UPDATING INVENTORY
 					<img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
 					<strong><?php echo $_SESSION["customerName"]; ?></strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				</button>
-				<ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start"  aria-labelledby="dropdownUser1">
+				<ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start shadow"  aria-labelledby="dropdownUser1">
 				<li><a class="dropdown-item" href="#">Settings</a></li>
 				<li><a class="dropdown-item" href="#">Profile</a></li>
 				<li><hr class="dropdown-divider"></li>
