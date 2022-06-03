@@ -187,7 +187,7 @@ if(isset($_POST['cancel'])){
           <a class="nav-link " href="../sales/sales.php"><i class="bi bi-table"></i> Sales</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="../order/order.php"><i class="bi bi-cart-fill"></i> Order</a>
+          <a class="nav-link " href="../order/order.php"><i class="bi bi-cart-fill"></i> Sales Entry</a>
         </li>
 
         <div class="btn-group" style="display:block; margin-left: auto; margin-right:2">
@@ -208,7 +208,7 @@ if(isset($_POST['cancel'])){
     </nav>
     <!-- END OF NAV BAR --> 
 
-    <div class="container-fluid bg-light p-5">
+    <div class="container-fluid bg-light p-5 pt-2">
     <h1> Pending Orders</h1>
 
     <!-- TO BE PURCHASED CARD -->

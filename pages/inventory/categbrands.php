@@ -63,7 +63,7 @@ require_once '../../env/auth_check.php';
     </nav>
     <!-- END OF NAV BAR --> 
         
-        <div class="container-fluid bg-light p-5">
+        <div class="container-fluid bg-light p-5 pt-2">
             <div class="row">
                 <div class="col">
                     <div class="fs-1 fw-bold rounded-top bg-dark text-info px-4"> CATEGORIES </div>

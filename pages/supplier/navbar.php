@@ -15,18 +15,40 @@
 		<img src="../../img/logo.png" class="me-2" width="40"/>
 		<span class="fs-5"> VSJM Merchandising</span>
 		</a>
+
+		<!------ OTHER PAGES 
+		<div class="mt-3 container w-100">
+			<div class="row d-flex justify-content-between">
+				<div class="col-auto p-0">
+					<a href="../inventory/inventory.php">
+						<button class="btn btn-primary">Inventory</button>
+					</a>
+				</div>
+				<div class="col-auto p-0">
+					<a href="../sales/sales.php">
+						<button class="btn btn-danger">Sales</button>
+					</a>
+				</div>
+				<div class="col-auto p-0">
+					<a href="../order/order.php">
+						<button class="btn btn-warning">Order</button>
+					</a>
+				</div>
+			</div>
+		</div>
+		END OF OTHER PAGES ------>
 		<hr>
 
 		<!------ TABS ------>
 		<ul class="nav nav-pills flex-column mb-auto">
 			<li class="nav-item">
 				<a href="suppliers.php" class="nav-link <?php echo $s ?>">
-				  <i class="bi bi-archive"></i> Suppliers
+				<i class="bi bi-people-fill"></i> Suppliers
 				</a>
 			</li>
 			<li class="nav-item">
 				<a href="supplieritem.php" class="nav-link <?php echo $si ?>">
-					<i class="bi bi-grid"></i> Supplier Items
+				<i class="bi bi-collection"></i> Supplier Items
 				</a>
 			</li>
 		</ul>
@@ -111,6 +133,7 @@
 					echo '</div>';
 				}
 				?>
+		</div>
 		</div>
 	</div>
 	<!------------ END OF SIDEBAR ----------->
