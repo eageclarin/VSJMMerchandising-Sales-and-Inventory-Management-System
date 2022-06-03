@@ -46,14 +46,14 @@ main {
     margin: auto;
     padding: auto;
 } */
-
+/*
 .nav .nav-link:active,
 .nav .nav-link:focus,
 .nav .nav-link:hover {
     background-color: #343a40;
     border: none;
 }
-
+*/
 #content{
     margin-left: 260px;
     padding: 50px;
@@ -285,3 +285,12 @@ main {
   .fa:hover {
     opacity: 0.7;
   }
+
+  #reminder:hover{
+    opacity: 70%;
+    cursor: pointer;
+}
+
+a:link {
+  text-decoration: none;
+}
