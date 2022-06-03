@@ -118,7 +118,7 @@ if (isset($_POST['edit'])) { //UPDATING INVENTORY
           <a class="nav-link " href="../order/order.php"><i class="bi bi-cart-fill"></i> Order</a>
         </li>
 
-        <div class="btn-group" style="display:block; margin-left: auto; margin-right:2">
+        <div class="btn-group" style="display:block; margin-left: auto; margin-right:5">
 				<button type="button" class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" id="dropdownUser1" aria-expanded="false">
 					<img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
 					<strong>User</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -131,8 +131,6 @@ if (isset($_POST['edit'])) { //UPDATING INVENTORY
 				</ul>
 			</div>
       </ul>
-      
-      
     </nav>
     <!-- END OF NAV BAR --> 
     <div class="container-fluid bg-light p-5">
@@ -208,7 +206,7 @@ if (isset($_POST['edit'])) { //UPDATING INVENTORY
           <span class="fs-1 fw-bold"> INVENTORY </span>
         </div>
 
-        <div class="col-5 py-auto mr-3 align-self-end">
+        <div class="col-5 py-auto align-self-end">
           <div class="p-3 bg-white rounded border rounded shadow-sm ">
             <h5>Total items: <?php echo number_format($totalItems) ?> </h5>
             <h5 class="mb-0">Total Value (in Pesos): <?php echo number_format($totalValue,2) ?></h5>

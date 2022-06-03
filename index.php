@@ -149,7 +149,7 @@ require_once 'auth_check.php';
       </div>
     </nav>
     END NAVIGATION BAR ------------>
-	<main class="h-100">
+	<main>
 	
 	<!------------ SIDEBAR ----------->
 	<div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark h-100" style="width: 280px;">

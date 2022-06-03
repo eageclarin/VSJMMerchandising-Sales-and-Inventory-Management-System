@@ -64,9 +64,41 @@ if (isset($_POST['edit'])) { //UPDATING INVENTORY
 
   
   <body >  
-    <main class="h-100">
+    <main>
     <?php include 'navbar.php'; ?>
-        
+            <!-- NAV BAR -->
+            <div class="container-fluid bg-light" style="padding-right:0;padding-left:0; padding-bottom:0">
+        <nav class="navbar  px-3 py-3" style=" width:100%">
+        <ul class="nav nav-tabs pb-2" style="width:100%">
+            
+            <li class="nav-item" style="padding-left: 2.1%">
+            <a class="nav-link active" aria-current="page" href="inventory.php" ><i class="bi bi-archive-fill"></i> Inventory</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link " href="../supplier/suppliers.php"><i class="bi bi-people-fill"></i> Suppliers</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link " href="../sales/sales.php"><i class="bi bi-table"></i> Sales</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link " href="../order/order.php"><i class="bi bi-cart-fill"></i> Order</a>
+            </li>
+
+            <div class="btn-group" style="display:block; margin-left: auto; margin-right:2">
+                    <button type="button" class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" id="dropdownUser1" aria-expanded="false">
+                        <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+                        <strong>User</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start"  aria-labelledby="dropdownUser1">
+                    <li><a class="dropdown-item" href="#">Settings</a></li>
+                    <li><a class="dropdown-item" href="#">Profile</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="login.php">Sign out</a></li>
+                    </ul>
+                </div>
+        </ul>
+        </nav>
+    <!-- END OF NAV BAR --> 
     <div class="container-fluid bg-light p-5">
       <!-- EDIT MODAL ############################################################################ -->
       <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
