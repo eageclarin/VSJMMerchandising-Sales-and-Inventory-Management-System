@@ -241,7 +241,7 @@ if(isset($_POST['cancel'])){
                         <h2 class="handle">
                             <label for="collapse<?php echo $n?>"> <?php echo "Transaction ID: ".$ID; ?> 
                             
-                            <div style="float:right; width:25%;">
+                            <div style="float:right; width:25%; min-width:130px;">
                             <!-- EXPORT BUTTON -->
                             <form action="export.php" method="post">
                                 <input type=hidden name=ExportTransactionID value=<?php echo $ID?>>
@@ -352,7 +352,7 @@ if(isset($_POST['cancel'])){
                         <input type="checkbox" name="collapse" id="#collapseDeli<?php echo $k?>" >
                         <h2 class="handle">
                             <label for="#collapseDeli<?php echo $k?>"> <?php echo "Transaction ID: ".$ID; ?> 
-                            <div style="float:right; width:15%;">
+                            <div style="float:right; width:15%; min-width:80px;">
                             <!--DELIVERED BUTTON-->
                             <input type=hidden name=transaction value=<?php echo $ID?>>
                             <button  onclick='return checkdelete2()' class="btn" name="cancel" type="submit" style="float:right;"><i class='fas fa-times'></i></button>
