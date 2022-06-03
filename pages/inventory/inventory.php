@@ -256,11 +256,14 @@ if (isset($_POST['edit'])) { //UPDATING INVENTORY
         </div> <!-- END OF FILTERS -->
       
         <!-- DISPLAY LIST OF ITEMS IN INVENTORY -->
-        <div id="display" class="mt-3" style="padding-bottom:0">
+        <div class="card mt-3 mb-3" style="float:left; width:100%">
+        
+        <div id="display" class="p-3" style="padding-bottom:0">
             <?php include "search_sort.php";
                   include 'addpending.php';
                   ?>
         
+        </div>
         </div> <!-- END OF DISPLAY -->
 
         <div class="mt-2" >
