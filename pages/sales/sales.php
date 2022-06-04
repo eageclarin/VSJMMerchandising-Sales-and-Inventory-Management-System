@@ -112,9 +112,28 @@ require_once '../../env/auth_check.php';
                         <button class="btn btn-success" style="float:left; width:48%; margin-bottom:10px; margin-right:15px;" name="export" type="submit" ><i class='fas fa-download'></i> Sales Report</button> 
                     </form>
 
+                    
                     <!-- Summaries in PDF -->
+                    
                     <form action="pdf_CustomReport.php" method="GET" target="_blank">
-                        <button class="btn btn-primary dropdown-toggle" style="float:right; width:48%; margin-bottom:10px; " name="export" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" ><i class='fas fa-download' ></i> Summary</button>   
+
+                        <!-- Choose Date -->
+                        <div class="p-1 mb-0 rounded border shadow-sm" style="float:right;width:48%;">
+                            <small class="font-weight-bold" style="padding-left:2px; badding-bottom:0px; font-weight:bold;">Custom Date</small>
+                                <div class="form-floating">   
+                                    <label style="padding-top:1px;"><small>From </small> </label>      
+                                    <input type="date" name="from_date" id="from_date" value="<?php if(isset($_GET['from_date'])){ echo $_GET['from_date']; } else {
+                                        echo '2022-01-01';
+                                    } ?>" class="form-control" onchange="transactionDate()" style="padding:0px;padding-left:65px; padding-right:10px; height:30px; font-size:14px;">
+                                </div>          
+                                <div class="pt-1 form-floating">
+                                    <label style="padding-top:6px;"><small>To</small> </label>
+                                    <input type="date" name="to_date" id="to_date" value="<?php if(isset($_GET['to_date'])){ echo $_GET['to_date']; } else {echo date("Y-m-d");} ?>" class="form-control" onchange="transactionDate()" min="2022-01-01" style="padding:0px;padding-left:65px; padding-right:10px; height:30px; font-size:14px;">
+                                </div>
+                        </div> 
+                        
+                        <!--summary button -->
+                        <button class="btn btn-primary dropdown-toggle" style="float:left; width:48%; margin-bottom:10px; " name="export" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" ><i class='fas fa-download' ></i> Summary</button>   
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                             <li><a class="dropdown-item" href="pdf_DailyReport.php"  target="_blank">Daily Sales</a></li>
                             <li><a class="dropdown-item" href="pdf_WeeklyReport.php"  target="_blank">Weekly Sales</a></li>
@@ -122,24 +141,7 @@ require_once '../../env/auth_check.php';
                             <li><a class="dropdown-item" href="pdf_QuarterlyReport.php" target="_blank">Quarterly Sales</a></li>
                             <li><a class="dropdown-item" href="export.php?exportTransactions=range&from=<?php echo $from_date?>&to=<?php echo $to_date?>#" id=exportRange onclick="changeRange()">Sales in Date Range</a></li>
                         </ul>
-                        
-                        <!-- Choose Date -->
-                        <div class="row pb-3 mb-0">
-                            <div class="col-md-6">       
-                                <div class="form-floating">   
-                                    <label style="padding-top:6px;"><small>From </small> </label>      
-                                    <input type="date" name="from_date" id="from_date" value="<?php if(isset($_GET['from_date'])){ echo $_GET['from_date']; } else {
-                                        echo '2022-01-01';
-                                    } ?>" class="form-control" onchange="transactionDate()" style="padding:0px;padding-left:65px; padding-right:10px; height:40px;">
-                                </div>          
-                            </div> 
-                            <div class="col-md-6">
-                                <div class="form-floating">
-                                    <label style="padding-top:6px;"><small>To</small> </label>
-                                    <input type="date" name="to_date" id="to_date" value="<?php if(isset($_GET['to_date'])){ echo $_GET['to_date']; } else {echo date("Y-m-d");} ?>" class="form-control" onchange="transactionDate()" min="2022-01-01" style="padding:0px;padding-left:65px; padding-right:10px; height:40px;">
-                                </div>
-                            </div>
-                        </div>   
+                          
 
                     </form> 
 
