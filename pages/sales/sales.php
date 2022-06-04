@@ -31,8 +31,12 @@
 include "conn.php";
 require_once '../../env/auth_check.php';
 
-
+$result = mysqli_query($conn, "SELECT SUM(orderItems_TotalPrice) AS totalSum, COUNT(item_ID) AS totalItems, order_Date FROM order_items INNER JOIN orders on orders.order_ID = order_items.order_ID ");
+$row = mysqli_fetch_array($result);
+$totalItems = $row['totalItems'];
+$totalSum = $row['totalSum'];
 ?>
+
 <body>
 <main>
     <div class="nav"> 
@@ -93,9 +97,9 @@ require_once '../../env/auth_check.php';
                 <!-- SALES INFO -->
                 <div class="p-3 bg-white rounded border rounded shadow-sm" id="weekly" style="margin-right:15px; height:100%;">
                     <strong> NUMBER OF SALES </strong> <br/>
-                    <span class="text-primary fs-3"> 210 </span> <br/>
+                    <span class="text-primary fs-3"><?php echo $totalItems;?> <i class="fas fa-coins pt-2" style="float:right;"></i></span> <br/>
                     <strong> REVENUE </strong> <br/>
-                    <span class="text-primary fs-3"> Php 21000.00 </span>
+                    <span class="text-primary fs-3"> Php <?php echo $totalSum;?><i class='fas fa-wallet pt-2' style="float:right;"></i></span> 
                 </div>
 
                 <!-- This Week's Sales -->
@@ -307,11 +311,11 @@ require_once '../../env/auth_check.php';
                                     $result = mysqli_query($conn, "SELECT SUM(orderItems_TotalPrice) AS totalSum, COUNT(item_ID) AS totalItems, order_Date FROM order_items INNER JOIN orders on orders.order_ID = order_items.order_ID 
                                     WHERE order_Date BETWEEN '$from_date' AND '$to_date' ");
                                     $row = mysqli_fetch_array($result);
-                                    $totalItems = $row['totalItems'];
-                                    $totalSum = $row['totalSum'];
+                                    $totalItems_Day = $row['totalItems'];
+                                    $totalSum_Day = $row['totalSum'];
                                 ?>
-                                <p class="text-info"> Total Sales Items: <?php echo $totalItems; ?> <br/>
-                                REVENUE: Php <?php  echo number_format($totalSum,2); ?> </p>
+                                <p class="text-info"> Total Sales Items: <?php echo $totalItems_Day; ?> <br/>
+                                REVENUE: Php <?php  echo number_format($totalSum_Day,2); ?> </p>
                                 <!-- END TOTAL SALES INFO -->
 
                                 <tr>
