@@ -1,5 +1,4 @@
 <?php
-    session_start();
 	include_once '../../env/conn.php';
 	require_once '../../env/auth_check.php';
     $str ="";   
