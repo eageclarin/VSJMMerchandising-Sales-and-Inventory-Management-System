@@ -379,6 +379,27 @@ $totalSum = $row['totalSum'];
                              
  </main>
 
+<?php //CHART QUERIES
+    //THIS WEEK
+    $days = array(0,0,0,0,0,0);
+    $date = date("Y-m-d");
+    $week=date_create($date);
+    $week = date_format($week,"W");
+    $sql = "SELECT SUM(order_Total) AS orderTotal, order_Date FROM orders WHERE WEEK(order_Date) = '$week' GROUP BY order_Date;";                                    
+    $result = mysqli_query($conn,$sql);
+    $resultCheck = mysqli_num_rows($result);
+    if ($resultCheck>0){
+        while ($row = mysqli_fetch_assoc($result)) {
+            $index=date_create($row['order_Date']);
+            $index = date_format($index,"w");
+            $days[$index] = $row['orderTotal'];
+        }
+    }
+
+    //AVERAGE DAILY SALES
+    $ctr = array(1,2,9,4,5);
+?>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"> </script>
 <script>
       const ctx = document.getElementById("chart").getContext('2d');
@@ -410,8 +431,10 @@ $totalSum = $row['totalSum'];
       
 </script>
 
+
 <script>
       const ctx2 = document.getElementById("chart2").getContext('2d');
+      const arr = <?php echo json_encode($days);?>;
       const myChart2 = new Chart(ctx2, {
         type: 'bar',
         data: {
@@ -421,7 +444,7 @@ $totalSum = $row['totalSum'];
             label: 'This Week',
             backgroundColor: 'rgba(161, 198, 247, 1)',
             borderColor: 'rgb(47, 128, 237)',
-            data: [300, 400, 200, 500, 800, 900, 200],
+            data: arr,
           }]
         },
         options: {
