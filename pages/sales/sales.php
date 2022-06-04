@@ -143,7 +143,7 @@ $totalSum = $row['totalSum'];
                             <li><a class="dropdown-item" href="pdf_WeeklyReport.php"  target="_blank">Weekly Sales</a></li>
                             <li><a class="dropdown-item" href="pdf_MonthlyReport.php"  target="_blank">Monthly Sales</a></li>
                             <li><a class="dropdown-item" href="pdf_QuarterlyReport.php" target="_blank">Quarterly Sales</a></li>
-                            <li><a class="dropdown-item" href="pdf_CustomReport.php?from_date=<?php echo date('Y-m-d'); ?>&to_date=<?php echo date('Y-m-d'); ?>" target="_blank">Sales Today</a></li>
+                            <li><a class="dropdown-item" href="pdf_TodaysReport.php?from_date=<?php echo date('Y-m-d'); ?>&to_date=<?php echo date('Y-m-d'); ?>" target="_blank">Sales Today</a></li>
                             <li><button class="dropdown-item" type="submit">Sales in Date Range</button></li>
                         </ul>
                           
