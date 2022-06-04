@@ -396,13 +396,29 @@ $totalSum = $row['totalSum'];
         }
     }
 
-    //AVERAGE DAILY SALES
-    $ctr = array(1,2,9,4,5);
-?>
+    //AVERAGE DAILY SALES MONTHLY
+    $months = array(0,0,0,0,0,0,0,0,0,0,0,0);
+    $date = date("Y-m-d");
+    $year=date_create($date);
+    $year = date_format($year,"Y");
+    $sql = "SELECT AVG(daily) AS daily, orderDate FROM (SELECT SUM(order_Total) as daily, order_Date AS orderDate FROM orders WHERE YEAR(order_Date)='$year' GROUP BY order_Date) AS average GROUP BY MONTH(orderDate);";                                    
+    $result = mysqli_query($conn,$sql);
+    $resultCheck = mysqli_num_rows($result);
+    if ($resultCheck>0){
+        while ($row = mysqli_fetch_assoc($result)) {
+            $index=date_create($row['orderDate']);
+            $index = date_format($index,"m");
+            $index = intval(ltrim($index, '0'));
+            $months[$index-1] = $row['daily'];
+        }
+    }
 
+?>
+<!-- FOR CHARTS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"> </script>
 <script>
       const ctx = document.getElementById("chart").getContext('2d');
+      const arr1 = <?php echo json_encode($months);?>;
       const myChart = new Chart(ctx, {
         type: 'line',
         data: {
@@ -413,7 +429,7 @@ $totalSum = $row['totalSum'];
             label: 'Average Daily Sales',
             backgroundColor: 'rgba(161, 198, 247, 1)',
             borderColor: 'rgb(47, 128, 237)',
-            data: [3000, 4000, 2000, 5000, 8000, 9000, 2000,3000, 4000, 2000, 5000, 8000],
+            data: arr1,
           }]
         },
         options: {
@@ -425,13 +441,8 @@ $totalSum = $row['totalSum'];
             }]
           }
         },
-      });
-
-
-      
+      });  
 </script>
-
-
 <script>
       const ctx2 = document.getElementById("chart2").getContext('2d');
       const arr = <?php echo json_encode($days);?>;
@@ -458,6 +469,7 @@ $totalSum = $row['totalSum'];
         },
       });
 </script>
+<!-- END OF CHARTS -->
 
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
