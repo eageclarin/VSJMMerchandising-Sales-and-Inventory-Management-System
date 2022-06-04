@@ -31,7 +31,7 @@
 include "conn.php";
 require_once '../../env/auth_check.php';
 
-$result = mysqli_query($conn, "SELECT SUM(orderItems_TotalPrice) AS totalSum, COUNT(item_ID) AS totalItems, order_Date FROM order_items INNER JOIN orders on orders.order_ID = order_items.order_ID ");
+$result = mysqli_query($conn, "SELECT SUM(order_Total) AS totalSum, COUNT(item_ID) AS totalItems, order_Date FROM order_items INNER JOIN orders on orders.order_ID = order_items.order_ID ");
 $row = mysqli_fetch_array($result);
 $totalItems = $row['totalItems'];
 $totalSum = $row['totalSum'];
