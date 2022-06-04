@@ -139,7 +139,8 @@ require_once '../../env/auth_check.php';
                             <li><a class="dropdown-item" href="pdf_WeeklyReport.php"  target="_blank">Weekly Sales</a></li>
                             <li><a class="dropdown-item" href="pdf_MonthlyReport.php"  target="_blank">Monthly Sales</a></li>
                             <li><a class="dropdown-item" href="pdf_QuarterlyReport.php" target="_blank">Quarterly Sales</a></li>
-                            <li><a class="dropdown-item" href="export.php?exportTransactions=range&from=<?php echo $from_date?>&to=<?php echo $to_date?>#" id=exportRange onclick="changeRange()">Sales in Date Range</a></li>
+                            <li><a class="dropdown-item" href="pdf_CustomReport.php?from_date=<?php echo date('Y-m-d'); ?>&to_date=<?php echo date('Y-m-d'); ?>" target="_blank">Sales Today</a></li>
+                            <li><button class="dropdown-item" type="submit">Sales in Date Range</button></li>
                         </ul>
                           
 
