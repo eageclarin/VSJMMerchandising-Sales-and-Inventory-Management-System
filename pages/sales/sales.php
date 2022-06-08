@@ -31,7 +31,7 @@
 include "conn.php";
 require_once '../../env/auth_check.php';
 
-$result = mysqli_query($conn, "SELECT SUM(order_Total) AS totalSum, COUNT(item_ID) AS totalItems, order_Date FROM order_items INNER JOIN orders on orders.order_ID = order_items.order_ID ");
+$result = mysqli_query($conn, "SELECT SUM(orderItems_TotalPrice) AS totalSum, COUNT(item_ID) AS totalItems, order_Date FROM order_items INNER JOIN orders on orders.order_ID = order_items.order_ID");
 $row = mysqli_fetch_array($result);
 $totalItems = $row['totalItems'];
 $totalSum = $row['totalSum'];
@@ -272,9 +272,9 @@ $totalSum = $row['totalSum'];
                         <?php     
                            $sql = "select distinct item_NAME from item order by item_NAME";
                             $result = mysqli_query($conn, $sql);
-                            if (isset($_GET['to_date'])) {
-                                $from_date = $_GET['to_date'];
-                                $to_date = $_GET['to_date'];
+                            if (isset($_GET['to_date1'])) {
+                                $from_date = $_GET['to_date1'];
+                                $to_date = $_GET['to_date1'];
                                 //unset($_GET['to_date']);
                             } else {
                                 $from_date = date("Y-m-d");
@@ -294,7 +294,7 @@ $totalSum = $row['totalSum'];
                                     <div class="row pb-2 mb-2">
                                         <div class="col-md-8">
                                             <div class="form-group">
-                                                <input type="date" name="to_date" id="to_date" value="<?php if(isset($_GET['to_date'])){ echo $_GET['to_date']; } else {echo date("Y-m-d");} ?>" class="form-control" onchange="transactionDate()" min="2022-01-01">
+                                                <input type="date" name="to_date1" id="to_date1" value="<?php if(isset($_GET['to_date1'])){ echo $_GET['to_date1']; } else {echo date("Y-m-d");} ?>" class="form-control" onchange="transactionDate()" min="2022-01-01">
                                             </div>
                                         </div>
                                         <div class="col-md-4">        
@@ -308,7 +308,7 @@ $totalSum = $row['totalSum'];
                             </h5>
                             <!-- TOTAL SALES INFO -->
                                 <?php
-                                    $result = mysqli_query($conn, "SELECT SUM(order_Total) AS totalSum, COUNT(item_ID) AS totalItems, order_Date FROM order_items INNER JOIN orders on orders.order_ID = order_items.order_ID 
+                                    $result = mysqli_query($conn, "SELECT SUM(orderItems_TotalPrice) AS totalSum, COUNT(item_ID) AS totalItems, order_Date FROM order_items INNER JOIN orders on orders.order_ID = order_items.order_ID 
                                     WHERE order_Date BETWEEN '$from_date' AND '$to_date' ");
                                     $row = mysqli_fetch_array($result);
                                     $totalItems_Day = $row['totalItems'];

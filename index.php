@@ -3,6 +3,28 @@ error_reporting(0);
 session_start();
 include_once 'env/conn.php';
 require_once 'auth_check.php';
+
+$result = mysqli_query($conn, "SELECT SUM(orderItems_TotalPrice) AS totalSum, COUNT(item_ID) AS totalItems, order_Date FROM order_items INNER JOIN orders on orders.order_ID = order_items.order_ID ");
+$row = mysqli_fetch_array($result);
+$totalItems = $row['totalItems'];
+$totalSum = $row['totalSum'];
+
+    //AVERAGE DAILY SALES MONTHLY
+    $months = array(0,0,0,0,0,0,0,0,0,0,0,0);
+    $date = date("Y-m-d");
+    $year=date_create($date);
+    $year = date_format($year,"Y");
+    $sql = "SELECT AVG(daily) AS daily, orderDate FROM (SELECT SUM(order_Total) as daily, order_Date AS orderDate FROM orders WHERE YEAR(order_Date)='$year' GROUP BY order_Date) AS average GROUP BY MONTH(orderDate);";                                    
+    $result = mysqli_query($conn,$sql);
+    $resultCheck = mysqli_num_rows($result);
+    if ($resultCheck>0){
+        while ($row = mysqli_fetch_assoc($result)) {
+            $index=date_create($row['orderDate']);
+            $index = date_format($index,"m");
+            $index = intval(ltrim($index, '0'));
+            $months[$index-1] = $row['daily'];
+        }
+    }
 ?>
 
 <html>
@@ -15,6 +37,7 @@ require_once 'auth_check.php';
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 
 	<!-- JQUERY/BOOTSTRAP -->
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -335,7 +358,7 @@ require_once 'auth_check.php';
 		?>
 		<!------ ORDERED FROM SUPPLIERS ------>
 		<div class="row px-3 mt-2" style="height:60%">
-			<div class="col">
+			<div class="col-md-8">
 				<span class="fs-5 pb-1 fw-bold"> Pending Purchases  </span>(from Suppliers)
 				<hr class="mt-1 ">
 				<div class="bg-dark mt-2 rounded shadow-sm table-hover">
@@ -364,11 +387,11 @@ require_once 'auth_check.php';
 						
 					?>	
 						<div class="row bg-white text-center border-bottom p-2" onclick="location.href='pages/inventory/pending.php'"> 
-							<div class="col-2 fw-bold fs-5"><?php echo $ID ?></div> 
-							<div class="col-2 fs-5"><?php echo $supplier ?></div>
-							<div class="col-3 fs-5"><?php echo $supplierName ?></div>
-							<div class="col-3 fs-5"><?php echo $transacDate ?></div>
-							<div class="col-2 fs-5"><?php echo $total ?></div>
+							<div class="col-2 fw-bold "><?php echo $ID ?></div> 
+							<div class="col-2 "><?php echo $supplier ?></div>
+							<div class="col-3 "><?php echo $supplierName ?></div>
+							<div class="col-3 "><?php echo $transacDate ?></div>
+							<div class="col-2 "><?php echo $total ?></div>
 						</div>
 					<?php
 						$i++; 
@@ -378,15 +401,34 @@ require_once 'auth_check.php';
 					</div>
 				</div>
 			</div>
+			<div class="col-md-4">
+				<!-- SALES INFO -->
+                <div class="p-3 bg-white rounded border rounded shadow-sm" style="height:35%; margin-bottom:20px; margin-top:30px;">
+                    <strong> NUMBER OF SALES </strong> <br/>
+                    <span class="text-primary fs-3"><?php echo $totalItems;?> <i class="fas fa-coins pt-2" style="float:right;"></i></span> <br/>
+                    <strong> REVENUE </strong> <br/>
+                    <span class="text-primary fs-3"> Php <?php echo number_format($totalSum,2);?><i class='fas fa-wallet pt-2' style="float:right;"></i></span> 
+                </div>
+
+				<div class="p-3 bg-white rounded border rounded shadow-sm" style="height:50%;">
+					<div class="card chart-container">
+						<canvas id="chart"></canvas>
+					</div>
+				</div>
+
+			</div>
+
 		</div>
 				
 		<!------ END OF SUPPLIERS ------>
+		<!-- MONTHLY SALES -->
 
 		<!------ BOTTOM ------>
 		<div class="row px-3 pt-0 mt-4" style="height:25%">
 			<!-- SALES -->
 			<?php 
-			$result = mysqli_query($conn, "SELECT COUNT(order_ID) as orderCount, SUM(order_Total) AS orderTotal FROM orders");
+			$today= date("Y-m-d");
+			$result = mysqli_query($conn, "SELECT COUNT(order_ID) as orderCount, SUM(order_Total) AS orderTotal FROM orders WHERE order_Date BETWEEN '$today' AND '$today'");
 			$row = mysqli_fetch_array($result);
 			
 			$orderCount = $row['orderCount'];
@@ -394,7 +436,7 @@ require_once 'auth_check.php';
 			?>
 
 			<div class="col-7">
-				<span class="fs-5 pb-1 fw-bold"> Sales </span>
+				<span class="fs-5 pb-1 fw-bold"> Sales Today</span>
 				<hr class="mt-1">
 				<div class="bg-white text-center mt-2 rounded shadow-sm">
 					<div class="row h-50">
@@ -416,5 +458,36 @@ require_once 'auth_check.php';
 		<!------ END OF BOTTOM ------>
 	</div>
 	</main>
+
+<!-- FOR CHARTS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"> </script>
+<script>
+      const ctx = document.getElementById("chart").getContext('2d');
+      const arr1 = <?php echo json_encode($months);?>;
+      const myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ["January", "February", "March",
+          "April", "May", "June", "July", "August", "September", "October",
+          "November", "December"],
+          datasets: [{
+            label: 'Average Daily Sales',
+            backgroundColor: 'rgba(161, 198, 247, 1)',
+            borderColor: 'rgb(47, 128, 237)',
+            data: arr1,
+          }]
+        },
+        options: {
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true,
+              }
+            }]
+          }
+        },
+      });  
+</script>
+
 </body>
 </html>
