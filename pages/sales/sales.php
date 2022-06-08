@@ -99,7 +99,7 @@ $totalSum = $row['totalSum'];
                     <strong> NUMBER OF SALES </strong> <br/>
                     <span class="text-primary fs-3"><?php echo $totalItems;?> <i class="fas fa-coins pt-2" style="float:right;"></i></span> <br/>
                     <strong> REVENUE </strong> <br/>
-                    <span class="text-primary fs-3"> Php <?php echo $totalSum;?><i class='fas fa-wallet pt-2' style="float:right;"></i></span> 
+                    <span class="text-primary fs-3"> Php <?php echo number_format($totalSum,2);?><i class='fas fa-wallet pt-2' style="float:right;"></i></span> 
                 </div>
 
                 <!-- This Week's Sales -->
@@ -308,7 +308,7 @@ $totalSum = $row['totalSum'];
                             </h5>
                             <!-- TOTAL SALES INFO -->
                                 <?php
-                                    $result = mysqli_query($conn, "SELECT SUM(orderItems_TotalPrice) AS totalSum, COUNT(item_ID) AS totalItems, order_Date FROM order_items INNER JOIN orders on orders.order_ID = order_items.order_ID 
+                                    $result = mysqli_query($conn, "SELECT SUM(order_Total) AS totalSum, COUNT(item_ID) AS totalItems, order_Date FROM order_items INNER JOIN orders on orders.order_ID = order_items.order_ID 
                                     WHERE order_Date BETWEEN '$from_date' AND '$to_date' ");
                                     $row = mysqli_fetch_array($result);
                                     $totalItems_Day = $row['totalItems'];
