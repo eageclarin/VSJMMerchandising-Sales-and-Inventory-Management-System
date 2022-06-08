@@ -8,6 +8,11 @@ $row = mysqli_fetch_array($result);
 $totalItems = $row['totalItems'];
 $totalValue = $row['totalValue'];
 
+$result = mysqli_query($conn, "SELECT SUM(transaction_TotalPrice) AS cost FROM `supplier_transactions`WHERE transaction_Status=2");
+$row = mysqli_fetch_array($result);
+
+$totalCost = $row['totalCost'];
+
 
 if (isset($_POST['edit'])) { //UPDATING INVENTORY
   //echo $_POST['editID'];
@@ -207,10 +212,14 @@ if (isset($_POST['edit'])) { //UPDATING INVENTORY
           <span class="fs-1 fw-bold"> INVENTORY </span>
         </div>
 
-        <div class="col-5 py-auto align-self-end">
-          <div class="p-3 bg-white rounded border rounded shadow-sm ">
-            <h5>Total items: <?php echo number_format($totalItems) ?> </h5>
-            <h5 class="mb-0">Total Value (in Pesos): <?php echo number_format($totalValue,2) ?></h5>
+        <div class="col-5" style="float:right;">
+          <div class="p-3 bg-white rounded border rounded shadow-sm " style="width:49%;float:left;height:80px;">
+            <strong>Total items:</strong> <span class="text-primary fs-6"><?php echo number_format($totalItems);?></span> </br>
+            <strong class="mb-0">Total Assets: </strong><span class="text-primary fs-6"> Php <?php echo number_format($totalValue,2) ?> </span>
+          </div>
+          <div class="p-3 bg-white rounded border rounded shadow-sm mr-2" style="width:49%; float:right;height:80px;">
+          <strong>Total Cost of Items: </strong></br>
+             <span class="text-primary fs-5"> Php <?php echo number_format($totalCost,2) ?> </span>
           </div>
         </div>
       </div> <!-- END OF INVENTORY HEAD -->

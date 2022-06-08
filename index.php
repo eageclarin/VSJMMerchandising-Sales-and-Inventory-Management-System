@@ -303,7 +303,7 @@ $totalSum = $row['totalSum'];
 				<a class="nav-link link-danger" href="pages/sales/sales.php"><i class="bi bi-table"></i> Sales</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link link-warning" href="pages/order/order.php"><i class="bi bi-cart-fill"></i> Order</a>
+				<a class="nav-link link-warning" href="pages/order/order.php"><i class="bi bi-cart-fill"></i> Sales Entry</a>
 			</li>
 		
 			<div class="btn-group" style="display:block; margin-left: auto; margin-right:2">
