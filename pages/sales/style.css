@@ -58,8 +58,10 @@ a:link {
   }
 
   #head {
-      height: 100px;
+      margin-top: 20px;;
+      height: 350px;
       margin-bottom: 0px;
+      margin-bottom: 15px;
   }
 
   .chart {
@@ -69,10 +71,12 @@ a:link {
   #inventoryHead {
       float:left;
       width: 50%;
+      height: 15%;
   }
  
   #monthly {
       width: 50%;
+      height: 350px;
     float:right;
 }
 
@@ -84,20 +88,27 @@ a:link {
 
 #weekly{
     float: left;
-    height:100%;
-    width: 48%
+    height:60%;
+    width: 48%;
+    padding-right: 2%;
 }
 
 #exportBtn{
     float: left;
-    height: 150px;
+    height: 40%;
     width: 100%;
-    margin-top: 10px;
+    padding-top: 15px;
+    padding-bottom: 0px;
+}
+
+#exportBtn button {
+    height: 42px;
 }
 
 #group {
     float:left;
-    width: 48%;
-    margin-top: 10px;
-    
+    width: 50%;
+    height: 82.5%;
+    padding-right: 2%;
+    margin-top: 10px;   
 }

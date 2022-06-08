@@ -80,13 +80,13 @@ $totalSum = $row['totalSum'];
     <div class="container-fluid bg-light p-5 pt-2 mb-0">
         <div id="head">
             <!--Heading -->
-            <div id="inventoryHead" class="row mt-3" >
+            <div id="inventoryHead" >
                 <span class="fs-1 fw-bold"> SALES REPORT </span>
             </div> 
             
             <!-- Average Daily Sales Chart -->
             <div id="monthly">
-                <div class="p-3 bg-white rounded border rounded shadow-sm">
+                <div class="p-3 bg-white rounded border rounded shadow-sm" style="height:100%;">
                     <div class="card chart-container">
                         <canvas id="chart"></canvas>
                     </div>
@@ -95,7 +95,7 @@ $totalSum = $row['totalSum'];
             
             <div id="group">
                 <!-- SALES INFO -->
-                <div class="p-3 bg-white rounded border rounded shadow-sm" id="weekly" style="margin-right:15px; height:100%;">
+                <div class="p-3 bg-white rounded border rounded shadow-sm" id="weekly">
                     <strong> NUMBER OF SALES </strong> <br/>
                     <span class="text-primary fs-3"><?php echo $totalItems;?> <i class="fas fa-coins pt-2" style="float:right;"></i></span> <br/>
                     <strong> REVENUE </strong> <br/>
@@ -113,7 +113,7 @@ $totalSum = $row['totalSum'];
                 <div id="exportBtn">
                     <!-- Download Sales Report Excel File -->
                     <form action="export.php" method="post">
-                        <button class="btn btn-success" style="float:left; width:48%; margin-bottom:10px; margin-right:15px;" name="export" type="submit" ><i class='fas fa-download'></i> Sales Report</button> 
+                        <button class="btn btn-success" style="float:left; width:48%; margin-bottom:15px; margin-right:15px;" name="export" type="submit" ><i class='fas fa-download'></i> Sales Report</button> 
                     </form>
 
                     
@@ -314,8 +314,9 @@ $totalSum = $row['totalSum'];
                                     $totalItems_Day = $row['totalItems'];
                                     $totalSum_Day = $row['totalSum'];
                                 ?>
-                                <p class="text-info"> Total Sales Items: <?php echo $totalItems_Day; ?> <br/>
-                                REVENUE: Php <?php  echo number_format($totalSum_Day,2); ?> </p>
+                                <p class="text-info"> Number of Sales: <?php echo $totalItems_Day; ?>  &nbsp;<i class="fas fa-coins pt-2" ></i></span> 
+                                &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                                Revenue: Php <?php  echo number_format($totalSum_Day,2); ?> &nbsp;<i class='fas fa-wallet pt-2' ></i></span></p>
                                 <!-- END TOTAL SALES INFO -->
 
                                 <tr>
