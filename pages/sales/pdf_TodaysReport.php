@@ -50,6 +50,19 @@ if(isset($_GET['from_date']) && isset($_GET['to_date']))
     
         if(mysqli_num_rows($result) > 0)
         {
+            $pdf->SetFont('Arial','B',10);
+            $pdf->Ln(8);
+            $pdf->SetFont('Arial','B',8);
+            $pdf->Cell(30,10,'Order Date',1,0);
+            $pdf->Cell(15,10,'Order ID',1,0);
+            $pdf->Cell(15,10,'Item ID',1,0);
+            $pdf->Cell(45,10,'Item Name',1,0);
+            $pdf->Cell(15,10,'Item Unit',1,0);
+            $pdf->Cell(30,10,'Item Brand',1,0);
+            $pdf->Cell(20,10,'Quantity',1,0);
+            $pdf->Cell(20,10,'Order Total',1,1);
+            $y = $pdf->GetY();
+
             $sql3 = "SELECT DISTINCT (DATE(order_Date)) from orders WHERE order_Date BETWEEN '$from_date' AND '$to_date'";
             $result3 = mysqli_query($conn, $sql3);
 
@@ -67,18 +80,7 @@ if(isset($_GET['from_date']) && isset($_GET['to_date']))
                     $date2 = date("Y-m-d", strtotime($row['order_Date']));
                     if($date2 == $date)
                     {
-                        $pdf->SetFont('Arial','B',10);
-                        $pdf->Cell(0,8,"Order ID:".$row['order_ID'],1,0,'C');
-                        $pdf->Ln(8);
-                        $pdf->SetFont('Arial','B',8);
-                        $pdf->Cell(30,10,'Order Date',1,0);
-                        $pdf->Cell(20,10,'Item ID',1,0);
-                        $pdf->Cell(45,10,'Item Name',1,0);
-                        $pdf->Cell(25,10,'Item Unit',1,0);
-                        $pdf->Cell(30,10,'Item Brand',1,0);
-                        $pdf->Cell(20,10,'Quantity',1,0);
-                        $pdf->Cell(20,10,'Order Total',1,1);
-                        $y = $pdf->GetY();
+                        
 
                         $result2 = mysqli_query($conn, $sql);
                         $current = $row['order_ID'];
@@ -93,15 +95,16 @@ if(isset($_GET['from_date']) && isset($_GET['to_date']))
                                 $pdf->MultiCell(30,8,$row['order_Date'],1,'L');
                                 $y1=$pdf ->GetY();
                                 $pdf ->SetY($y);
-                                $pdf ->Cell(30,5,'');$pdf->Cell(20,8,$row['item_ID'],1,0);
+                                $pdf ->Cell(30,5,'');
+                                $pdf->Cell(15,8,$row['order_ID'],1,0);
+                                $pdf->Cell(15,8,$row['item_ID'],1,0);
                                 $pdf->Cell(45,8,$row['item_Name'],1,0);
-                                $pdf->Cell(25,8,$row['item_unit'],1,0);
+                                $pdf->Cell(15,8,$row['item_unit'],1,0);
                                 $pdf->Cell(30,8,$row['item_Brand'],1,0);
                                 $pdf->Cell(20,8,$row['orderItems_Quantity'],1,0);
                                 $pdf->Cell(20,8,$row['orderItems_TotalPrice'],1,1);   
                             }
                         }
-                       $pdf ->SetY($y1+6); 
                     }
                     
                 }
@@ -120,3 +123,4 @@ if(isset($_GET['from_date']) && isset($_GET['to_date']))
 
 $pdf->Output();
 ?>
+
