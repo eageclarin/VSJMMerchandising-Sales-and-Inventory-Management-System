@@ -2,6 +2,7 @@
 	<head>
 		<?php
 			include_once '../../env/conn.php';
+			require_once '../../env/auth_check.php';
 
 			if(isset($_POST['order'])){
 				$_SESSION['orderItemID'] = $_POST['orderItemID'];
@@ -313,11 +314,11 @@
 					<div class="mb-1 mt-1"> 
                     <label for="editQuantity" >Item Quantity: </label>
                     <div>
-                        <input type="text" class="form-control"  id="editQuantity" name="editQuantity" placeholder="Enter">
+                        <input type="number" class="form-control"  id="editQuantity" name="editQuantity" placeholder="Enter">
                     </div> 
                     <label for="editItemCost" >Item Cost Price: </label>
                     <div>
-                        <input type="text" class="form-control"  id="editItemCost" name="editItemCost" placeholder="Enter">
+                        <input type="number" step="0.01" class="form-control"  id="editItemCost" name="editItemCost" placeholder="Enter">
                     </div> 
                     <label for="editDate" >Transaction Date: </label>
                     <div>
@@ -343,7 +344,7 @@
                     </div> 
 					<label for="editTotalPrice" >Transaction Total Price: </label>
 					<div>
-                        <input type="text" class="form-control"  id="editTotalPrice" name="editTotalPrice" placeholder="Enter">
+                        <input type="number" step="0.01" class="form-control"  id="editTotalPrice" name="editTotalPrice" placeholder="Enter">
                     </div>
                     </div> <!-- MB-1 MT-1 -->
                 </div> <!-- MODAL-BODY -->
@@ -578,20 +579,22 @@
 									<?php
 										include_once '../../env/conn.php';
 								
-										if(isset($_GET['supplier_chosen'])){
+										/*if(isset($_GET['supplier_chosen'])){
 											$supplier_ID = $_GET['supplier_chosen'];					
 										}else if(isset($_POST['supplier_ID'])){
 											$supplier_ID = $_POST['supplier_ID'];
 										}else{
 											$supplier_ID = 1;
 										}
+										*/
+
 									?>	
 										<p>
 											Supplier:
 											<?php
-												$query = "SELECT * from supplier";
+												$query = "SELECT * from supplier where supplier_ID = ".$supplier_chosen;
 													$result = mysqli_query($conn,$query);
-													if(mysqli_num_rows($result) > 0){
+													/*if(mysqli_num_rows($result) > 0){
 														echo "<select name='supplier_ID' name='supplier_ID'>";
 															while($row = mysqli_fetch_assoc($result)){
 																echo "<option value='".$row['supplier_ID']."'";
@@ -605,15 +608,24 @@
 															}
 															echo "</select><br>";
 													}
+													*/
+													if(mysqli_num_rows($result) > 0){
+														while($row = mysqli_fetch_assoc($result)){
+															echo $row['supplier_Name'];
+
+														}
+													}
+													
 											?>
+											<input type="hidden" name="supplier_ID" class="form-control" value="<?php echo $supplier_chosen?>"></p>
 										</p>
 
-									
+										
 
 										<p>
 											Item:
 											<?php
-											$query = "SELECT * from item";
+											$query = "SELECT * from item inner join supplier_item on supplier_item.item_ID = item.item_ID where supplier_item.supplier_ID = ".$supplier_chosen;
 												$result = mysqli_query($conn,$query);
 												if(mysqli_num_rows($result) > 0){
 													echo "<select id='item_ID' name='item_ID'>";
@@ -625,14 +637,15 @@
 											date_default_timezone_set('Asia/Taipei');
 											?>
 										</p>
-										<p>Item Quantity: <input type="text" name="transactionItems_Quantity" class="form-control" placeholder="Enter"></p>
-										<p>Item Cost Price: Php <input type="text" name="transactionItems_CostPrice" class="form-control" placeholder="Enter"></p>
+										<p>Item Quantity: <input type="number" name="transactionItems_Quantity" class="form-control" placeholder="Enter"></p>
+
+										<p>Item Cost Price: <input type="number" step="0.01" name="transactionItems_CostPrice" class="form-control" placeholder="Enter"></p>
 										<p>Transaction Date: <input type="datetime-local" name="transaction_Date" class="form-control" value="<?php date('yyyy-MM-ddThh:mm'); ?>" /></p>
 										<p>Transaction Status: <select name="transaction_Status" id="transaction_Status">
 										<option value="1">Successful</option>
 										<option value="0">Failed</option>
 										</select><p>
-										<p>Transaction Total Price: Php <input type="text" name="transaction_TotalPrice" class="form-control" placeholder="Enter"><p>
+										<p>Additional Fees (optional):<input type="number" step="0.01" name="transaction_TotalPrice" class="form-control" placeholder="Enter"><p>
 									
 								</div>
 								<div class="modal-footer pb-0">
