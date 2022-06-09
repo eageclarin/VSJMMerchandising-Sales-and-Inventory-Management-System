@@ -282,7 +282,22 @@
                 $select.value = data[7];
                 document.getElementById("labelID").innerHTML = "Item ID: " + data[0];
               });
+
+              $('.delete1btn').on('click',function(){
+                $('#confirmDelete').modal('show');
+                $tr = $(this).closest('tr');
+
+                var data = $tr.children("td").map(function () {
+                    return $(this).text();
+                }).get();
+
+                $('#deleteID').val(data[0]);
+                document.getElementById("deleteName").innerHTML = data[1] ;
+
+            });
+
            });
+           
 
            function checkdelete(){
                 return confirm('Are you sure you want to delete this record?');
