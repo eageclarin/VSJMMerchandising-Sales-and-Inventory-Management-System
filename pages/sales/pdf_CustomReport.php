@@ -48,75 +48,44 @@ if(isset($_GET['from_date']) && isset($_GET['to_date']))
     $pdf->Ln(15);
     $pdf->SetFont('Arial','B',8);
     
-        if(mysqli_num_rows($result) > 0)
-        {
-            $sql3 = "SELECT DISTINCT (DATE(order_Date)) from orders WHERE order_Date BETWEEN '$from_date' AND '$to_date'";
-            $result3 = mysqli_query($conn, $sql3);
-
-            foreach($result3 as $row)
-            {
-                $date = date("Y-m-d", strtotime($row['(DATE(order_Date))']));
-                $sql1 = "SELECT DISTINCT order_items.order_ID, orders.order_Date  
-                            FROM order_items
-                            INNER JOIN orders on orders.order_ID = order_items.order_ID";
-                $result1 = mysqli_query($conn, $sql1);
-
-
-                foreach($result1 as $row)
-                {
-                    $date2 = date("Y-m-d", strtotime($row['order_Date']));
-                    if($date2 == $date)
-                    {
-                        $pdf->SetFont('Arial','B',10);
-                        $pdf->Cell(0,8,"Order ID:".$row['order_ID'],1,0,'C');
-                        $pdf->Ln(8);
-                        $pdf->SetFont('Arial','B',8);
-                        $pdf->Cell(30,10,'Order Date',1,0);
-                        $pdf->Cell(20,10,'Item ID',1,0);
-                        $pdf->Cell(45,10,'Item Name',1,0);
-                        $pdf->Cell(25,10,'Item Unit',1,0);
-                        $pdf->Cell(30,10,'Item Brand',1,0);
-                        $pdf->Cell(20,10,'Quantity',1,0);
-                        $pdf->Cell(20,10,'Order Total',1,1);
-                        $y = $pdf->GetY();
-
-                        $result2 = mysqli_query($conn, $sql);
-                        $current = $row['order_ID'];
-
-                        foreach($result as $row)
-                        {
-                            $previous = $row['order_ID'];
-                            if($current == $previous)
-                            {
-                                $pdf->SetFont('Arial','',8);
-                                $y= $pdf ->GetY();
-                                $pdf->MultiCell(30,8,$row['order_Date'],1,'L');
-                                $y1=$pdf ->GetY();
-                                $pdf ->SetY($y);
-                                $pdf ->Cell(30,5,'');$pdf->Cell(20,8,$row['item_ID'],1,0);
-                                $pdf->Cell(45,8,$row['item_Name'],1,0);
-                                $pdf->Cell(25,8,$row['item_unit'],1,0);
-                                $pdf->Cell(30,8,$row['item_Brand'],1,0);
-                                $pdf->Cell(20,8,$row['orderItems_Quantity'],1,0);
-                                $pdf->Cell(20,8,$row['order_Total'],1,1);   
-                            }
-                        }
-                       $pdf ->SetY($y1+6); 
-                    }
-                    
-                }
+    if(mysqli_num_rows($result) > 0)
+    {
+        $sql2 = "SELECT order_Date, COUNT(DISTINCT orders.order_ID) AS totalOrders, SUM(orderItems_Quantity) AS totalItems, SUM(orderItems_TotalPrice) AS totalSales FROM orders INNER JOIN order_items ON (orders.order_ID = order_items.order_ID) WHERE order_Date BETWEEN '$from_date' AND '$to_date' GROUP BY order_Date;";
+        $result2 = mysqli_query($conn, $sql2);
+  
+            $pdf->SetFont('Arial','B',8);
+            $pdf->Cell(50,10,'Order Date',1,0,'C');
+            $pdf->Cell(46,10,'Total No. of Orders',1,0,'C');
+            $pdf->Cell(46,10,'Total No. of Items',1,0,'C');
+            $pdf->Cell(46,10,'Total Sales',1,1,'C');
+            $y = $pdf->GetY();
+            $date = date("Y-m-d");
+            $result = mysqli_query($conn,$sql);
+            $resultCheck = mysqli_num_rows($result);
+            if ($resultCheck>0){
+                while ($row = mysqli_fetch_assoc($result2)) {
+                    $pdf->SetFont('Arial','',8);
+                    $y= $pdf ->GetY();
+                    $pdf->Cell(50,8,$row['order_Date'],1,0,'C');
+                    $pdf->Cell(46,8,$row['totalOrders'],1,0);
+                    $pdf->Cell(46,8,$row['totalItems'],1,0);
+                    $pdf->Cell(46,8,$row['totalSales'],1,1);
+                
             }
-             
-        }
-        else{
-            $pdf->SetFont('Arial','B',10);
-            $pdf->Cell(0,8,"No Record Found",0,'C');
-            //$pdf->Cell(0,8,$to_date,1,0,'C');
-            
-        }
+            $y1=$pdf ->GetY();
+                $pdf ->SetY($y);
+            $pdf ->SetY($y1+10);
+            } else {
+                $pdf->SetFont('Arial','B',10);
+                $pdf->Cell(0,8,"No Record Found",0,'C');
+            }
+
+    }
+
 //cho $to_date;
 //echo $from_date;
 }
 
 $pdf->Output();
 ?>
+
