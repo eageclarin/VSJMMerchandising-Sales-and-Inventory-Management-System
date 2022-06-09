@@ -428,7 +428,8 @@ $totalSum = $row['totalSum'];
 			<!-- SALES -->
 			<?php 
 			$today= date("Y-m-d");
-			$result = mysqli_query($conn, "SELECT COUNT(order_ID) as orderCount, SUM(order_Total) AS orderTotal FROM orders WHERE order_Date BETWEEN '$today' AND '$today'");
+			$today1= date("Y-m-d", strtotime('+1 day'));
+			$result = mysqli_query($conn, "SELECT COUNT(order_ID) as orderCount, SUM(order_Total) AS orderTotal FROM orders WHERE order_Date BETWEEN '$today' AND '$today1'");
 			$row = mysqli_fetch_array($result);
 			
 			$orderCount = $row['orderCount'];
