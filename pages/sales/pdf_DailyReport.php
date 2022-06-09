@@ -36,14 +36,14 @@ include "conn.php";
         $pdf->Cell(46,10,'Total Sales',1,1,'C');
         $y = $pdf->GetY();
         $date = date("Y-m-d");
-        $sql = "SELECT order_Date, COUNT(DISTINCT orders.order_ID) AS totalOrders, SUM(orderItems_Quantity) AS totalItems, SUM(orderItems_TotalPrice) AS totalSales FROM orders INNER JOIN order_items ON (orders.order_ID = order_items.order_ID) GROUP BY DAY(order_Date);" ;
+        $sql = "SELECT order_Date, YEAR(order_Date) as year, MONTHNAME(order_Date) as month, DAY(order_Date) as day,  COUNT(DISTINCT orders.order_ID) AS totalOrders, SUM(orderItems_Quantity) AS totalItems, SUM(orderItems_TotalPrice) AS totalSales FROM orders INNER JOIN order_items ON (orders.order_ID = order_items.order_ID) GROUP BY DAY(order_Date);" ;
         $result = mysqli_query($conn,$sql);
         $resultCheck = mysqli_num_rows($result);
         if ($resultCheck>0){
           while ($row = mysqli_fetch_assoc($result)) {
             $pdf->SetFont('Arial','',8);
             $y= $pdf ->GetY();
-            $pdf->Cell(50,8,$row['order_Date'],1,0,'C');
+            $pdf->Cell(50,8,$row['month']. " " .$row['day'] .", ".$row['year'],1,0,'C');
             //$pdf ->Cell(30,5,'');
             $pdf->Cell(46,8,$row['totalOrders'],1,0);
             $pdf->Cell(46,8,$row['totalItems'],1,0);
