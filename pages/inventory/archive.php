@@ -13,9 +13,13 @@ if (isset($_POST['return'])) {
     $return = "UPDATE inventory SET inventoryItem_Status = 1 WHERE item_ID = '$item';";
     $sqlReturn = mysqli_query($conn,$return);
 }
+if (isset($_POST['delete'])) {
+  $item = $_POST['itemID1'];
+  $return = "DELETE FROM inventory WHERE item_ID='$item';";
+  $sqlReturn = mysqli_query($conn,$return);
+}
 
 if (isset($_POST['edit'])) { //UPDATING INVENTORY
-  echo $_POST['editID'];
   $itemID = $_POST['editID'];
   $item_Name =$_POST['editName'];
   $item_Unit =$_POST['editUnit'];
@@ -37,6 +41,29 @@ if (isset($_POST['edit'])) { //UPDATING INVENTORY
   //header("Location: ./inventory.php");
 }
 
+if (isset($_POST['restoreAll'])) {
+  $updateStatus = "UPDATE inventory SET inventoryItem_Status = 1 WHERE inventoryItem_Status=0;";
+  $sqlUpdate = mysqli_query($conn,$updateStatus);
+}
+
+if (isset($_POST['deleteAll'])) {
+  $updateStatus = "DELETE FROM inventory WHERE inventoryItem_Status=0;";
+  $sqlUpdate = mysqli_query($conn,$updateStatus);
+}
+
+if (isset($_POST['restoreSelected'])) {
+  foreach($_POST['check_list'] as $selected){
+    $updateStatus = "UPDATE inventory SET inventoryItem_Status = 1 WHERE item_ID = '$selected';";
+    $sqlUpdate = mysqli_query($conn,$updateStatus);
+  }
+}
+
+if (isset($_POST['deleteSelected'])) {
+  foreach($_POST['check_list'] as $selected){
+    $updateStatus = "DELETE FROM inventory WHERE item_ID='$selected';";
+    $sqlUpdate = mysqli_query($conn,$updateStatus);
+  }
+}
 
 ?>
 
@@ -166,6 +193,51 @@ if (isset($_POST['edit'])) { //UPDATING INVENTORY
       </div> <!-- MODAL-FADE-->
       <!-- EDIT MODAL ############################################################################ -->
 
+        <!-- DELETE MODAL ############################################################################ -->
+          <div class="modal fade" id="confirmDelete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+        <div class="modal-dialog panel-warning" style="top:25%;">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title text-danger" id="confirmDeleteLabel">Delete All Archived Items</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div> <!-- MODAL-HEADER -->
+            
+            <form id="deleteform" action="archive.php" method="post" class="form-inline" > 
+              <div class="modal-body mb-2">   
+                  <label > Are you sure you want to <strong>permanently remove</strong> these items from the inventory? This is irreversible. </label>                  
+              </div> <!-- MODAL-BODY -->
+              <div class="modal-footer pb-0">
+                  <input type="hidden" name="url" value="archive.php">
+                  <input  type="submit" value="Delete" name="deleteAll" class="form-control btn btn-danger" style="width:150px;" > 
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              </div> <!-- MODAL FOOTER -->
+            </form>  
+          </div> <!-- MODAL-CONTENT -->
+        </div> <!-- MODAL-DIALOG -->
+      </div> <!-- MODAL-FADE-->
+      <!-- DELETE MODAL ############################################################################ -->
+
+      <!-- DELETE MODAL SELECTED ############################################################################ -->
+      <div class="modal fade" id="confirmDelete1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+        <div class="modal-dialog panel-warning" style="top:25%;">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title text-danger" id="confirmDeleteLabel">Delete Selected Items</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div> <!-- MODAL-HEADER -->
+            
+              <div class="modal-body mb-2">   
+                  <label > Are you sure you want to <strong>permanently remove</strong> selected items from the inventory? This is irreversible. </label>                  
+              </div> <!-- MODAL-BODY -->
+              <div class="modal-footer pb-0">
+                  <input  type="submit" value="Delete" name="deleteSelected" id="deleteSelected" class="form-control btn btn-danger" style="width:150px;" form='selectedForm'> 
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              </div> <!-- MODAL FOOTER --> 
+          </div> <!-- MODAL-CONTENT -->
+        </div> <!-- MODAL-DIALOG -->
+      </div> <!-- MODAL-FADE-->
+      <!-- DELETE MODAL SELECTED ############################################################################ -->
+
 
       <div id="inventoryHead" class="row"> 
         <div class="col-7">
@@ -180,8 +252,8 @@ if (isset($_POST['edit'])) { //UPDATING INVENTORY
         </div>
       </div> <!-- END OF INVENTORY HEAD -->
       
-        <div id="filters" class="row mt-3">
-          <!-- CHOOSING CATEGORY -->
+        <!-- <div id="filters" class="row mt-3">
+          <!-- CHOOSING CATEGORY 
           <div id="categoryContainer" class="col-7">
             <div class="form-group row"> 
               <label for="categ1" class="col-auto col-form-label fw-bold">Category:</label>
@@ -203,21 +275,34 @@ if (isset($_POST['edit'])) { //UPDATING INVENTORY
                 <option value="PriceDesc"> <span>&#8595;</span>Price</option>
                 <option value="item_Stock">Stocks</option>
                 <option value="Salability">Salability</option>
-              </select> <!-- END OF SORTING -->
+              </select> <!-- END OF SORTING 
             </div>
-          </div><!-- END OF CATEGORY CONTAINER -->
+          </div><!-- END OF CATEGORY CONTAINER 
             
-          <!-- SEARCH TAB -->
+          <!-- SEARCH TAB 
           <div id="searchSortContainer" class="col">
             <div class="form-group row">
               <div class="col">
                 <input type="text" id="search1" class="form-control w-100" autocomplete="off" onkeyup="search()" placeholder="Search for items, brand, category...">
               </div>
-              <!-- SORTING -->
+              <!-- SORTING 
               </div>
           </div>
-        </div> <!-- END OF FILTERS -->
-      
+        </div> <!-- END OF FILTERS --> 
+        <div class="mt-2" >
+          <div style="float:left;">
+          <input type='checkbox' onClick='toggle(this)' form='selectedForm' style="margin-top:12px;"/><strong class="fs-6 pt-2" style="padding-left:10px; padding-right:20px;">Select All</strong>
+            <button class="btn  deletebtnSelect btn-outline-secondary" style="float:right; margin-right:10px" name="deletebtnSelect" id="deletebtnSelect" ><i class='fas fa-trash'></i>  Delete Selected</button>
+            <button class="btn btn-outline-secondary " style="float:right; margin-right:10px" name="restoreSelected" type="submit" form='selectedForm'><i class='fas fa-undo-alt'></i>  Restore Selected</button>
+            
+        </div> 
+          
+          <!-- DOWNLOAD ITEMS IN INVENTORY -->
+          <form action="archive.php" method="post">
+            <button class="btn btn-success" style="float:right; margin-right:10px" name="restoreAll" type="submit" >Restore All</button>
+          </form>
+          <button class="btn deletebtn btn-dark" style="float:right; margin-right:10px" name="deletebtn" id="deletebtn"  type="submit" >Delete All</button> <br/>
+        </div>
         <!-- DISPLAY LIST OF ITEMS IN INVENTORY -->
         <div id="display" class="mt-3">
             <?php 
@@ -259,10 +344,10 @@ if (isset($_POST['edit'])) { //UPDATING INVENTORY
     // SHOW RESULT OF QUERY
     $result = mysqli_query($conn,$sql);
     $resultCheck = mysqli_num_rows($result);
-        
     echo "<div class='table-wrapper'><table class='table table-hover'> 
            <thead> 
             <tr>
+                <th> </th>
                 <th> ID </th>
                 <th> Item </th>
                 <th> Unit </th>
@@ -281,6 +366,7 @@ if (isset($_POST['edit'])) { //UPDATING INVENTORY
                      <tbody>";
             
     if ($resultCheck>0){
+      echo '<form action="archive.php" class="mb-1" method="post" id="selectedForm">';
         while ($row = mysqli_fetch_assoc($result)) {
           if ($row['item_Stock']<=10){ //LOW ON STOCK ======================================
                 echo "<tr class='table-danger'>";
@@ -291,7 +377,7 @@ if (isset($_POST['edit'])) { //UPDATING INVENTORY
                 } else{   //NOT LOW ON STOCK =================================================
                     echo '<tr>';
                 }   
-
+                echo "<td> <input type='checkbox' name='check_list[]' value=". $row['item_ID'] ." > </td>";
                 echo "<td>" .$row['item_ID']. "</td>";  
                 echo "<td>". $row['item_Name']. "</td>";  
                 echo "<td>" .$row['item_unit']. "</td>";  
@@ -303,17 +389,18 @@ if (isset($_POST['edit'])) { //UPDATING INVENTORY
                 echo "<td>" .$row['item_Category']. "</td>";  
                 echo "<td>" .$row['sales_sum']. "</td>";  
                 ?>
-                <!--DELETE AND EDIT BUTTON-->
-                <td style="width:100px;"> <button type="button" class="btn editbtn" style="float:left;"> <i class='fas fa-edit'></i> </button>
-                    <form action="archive.php" class="mb-1" method="post">
-                        <input type=hidden name=itemID1 value=<?php echo $row['item_ID']?>>
-                        <button onclick='return check()' class="btn" name="return" type="submit" style="float:right; padding-left:0px;"><i class='fas fa-undo-alt'></i></button>
-                    </form>
-                </td>    
+                <!--RESTORE AND EDIT BUTTON-->
+                <form action="archive.php" class="mb-1" method="post">
+                <td > <button type="button" class="btn editbtn" style="float:right;"> <i class='fas fa-edit'></i> </button> </td> 
+                <input type=hidden name=itemID1 value=<?php echo $row['item_ID']?>>
+                <td> <button  class="btn" name="return" type="submit" style="float:right; padding-left:0px;"><i class='fas fa-undo-alt'></i></button> </td>
+                <td><button onclick='return check()' class="btn" name="delete" type="submit" style="float:right; padding-left:0px;"><i class='fas fa-trash'></i></button></td>    
+              </form>
             </tr>
             
         <?php  
         } // END OF WHILE
+        echo "</form>";
     } else {
         echo mysqli_error($conn);
     }// END OF RESULTCHECK
@@ -327,14 +414,16 @@ if (isset($_POST['edit'])) { //UPDATING INVENTORY
         
         </div> <!-- END OF DISPLAY -->
 
-        <div class="mt-2">
-          
-          
-        </div>
-
     </div> <!-- END OF CONTENT -->
   </main>
          <script>
+             function toggle(source) {
+              checkboxes = document.getElementsByName('check_list[]');
+              for(var i=0, n=checkboxes.length;i<n;i++) {
+                checkboxes[i].checked = source.checked;
+              }
+            }
+
            $(document).ready(function(){
               $('.editbtn').on('click',function(){
                 $('#staticBackdrop').modal('show');
@@ -442,11 +531,54 @@ if (isset($_POST['edit'])) { //UPDATING INVENTORY
                 $select.value = data[7];
                 document.getElementById("labelID").innerHTML = "Item ID: " + data[0];
               });
+
+              $('.deletebtn').on('click',function(){
+                $('#confirmDelete').modal('show');
+              });
+
+              $('.deletebtnSelect').on('click',function(){
+                $('#confirmDelete1').modal('show');
+              });
+
+              //Delete Notif
+              $('#confirmDelete').on('submit',function() {  
+              $.ajax({
+                url:'archive.php', 
+                data:$(this).serialize(),
+                type:'POST',
+                success:function(data){
+                  console.log(data);
+                  swal("Deleted!", "Items are permanently removed from inventory.", "success");
+                },
+                error:function(data){
+                  swal("Oops...", "Something went wrong :(", "error");
+                }
+                });
+                $("#confirmDelete").delay(10000).fadeOut("slow");
+              });
+
+              $('#deleteSelected').on('click',function() {  
+              $.ajax({
+                url:'archive.php', 
+                data:$(this).serialize(),
+                type:'POST',
+                success:function(data){
+                  console.log(data);
+                  swal("Deleted!", "Items are permanently removed from inventory.", "success");
+                },
+                error:function(data){
+                  swal("Oops...", "Something went wrong :(", "error");
+                }
+                });
+                $("#confirmDelete1").delay(10000).fadeOut("slow");
+              });
+      
+
            });
 
           
           function check(){
-            return confirm('Are you sure you want to restore this item?');
+            return confirm('Are you sure you want to delete this item?');
           }
         
          </script>

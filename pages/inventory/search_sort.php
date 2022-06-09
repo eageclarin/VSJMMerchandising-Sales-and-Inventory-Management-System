@@ -23,7 +23,7 @@
         
         unset($_SESSION['delete2']);
     }
-    // EDIT AN ITEM FROM INVENTORY
+    // EDIT AN ITEM FROM INVENTORY ===== THIS FUNCTION IS IN INVENTORY.PHP =================================
     if(isset($_POST['edit'])){
         $_SESSION['itemID'] = $_POST['itemID'];
         header("Location: ./editinventory.php");
@@ -219,13 +219,13 @@
                 <!--<td>
                     <form action="search_sort.php" class="mb-1" method="post">
                         
-                        <button onclick='return checkdelete()' class="btn p-0" name="delete1" type="submit" <?php if($onSalability==true && $row['inventoryItem_Status']==0){echo 'disabled';} ?>><i class='fas fa-trash'></i></button> 
+                        <button onclick='return checkdelete()' class="btn p-0" name="delete1" type="submit" <?php //if($onSalability==true && $row['inventoryItem_Status']==0){echo 'disabled';} ?>><i class='fas fa-trash'></i></button> 
                         
-                        <input type=hidden name=itemID1 value=<?php echo $row['item_ID']?>>
+                        <input type=hidden name=itemID1 value=<?php //echo $row['item_ID']?>>
                     </form>
                 </td>-->
                 <td>
-                    <!--<button class='table-see' onclick="location.href='../supplier/supplieritem.php?item_Name='<?php echo $row['item_Name']?>' ">Suppliers</button>-->
+                    <!--<button class='table-see' onclick="location.href='../supplier/supplieritem.php?item_Name='<?php //echo $row['item_Name']?>' ">Suppliers</button>-->
                     <!--<?php //echo "<a href=\"../supplier/supplieritem.php?item_Name='".$row['item_Name']."'\">"; ?>-->
                     <a href="../supplier/supplieritem.php?item_Name=<?php echo $row['item_Name']; ?>" >
                         <button class="btn p-0"  ><i class='fas fa-shopping-cart'></i></button>
