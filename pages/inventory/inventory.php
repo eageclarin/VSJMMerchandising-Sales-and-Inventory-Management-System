@@ -97,6 +97,20 @@ if (isset($_POST['edit'])) { //UPDATING INVENTORY
                 $('#hiddenmarkup').val(data[5]);
                 document.getElementById("labelID").innerHTML = "Item ID: " + data[0];
             });
+
+            $('.delete1btn').on('click',function(){
+                $('#confirmDelete').modal('show');
+                $tr = $(this).closest('tr');
+
+                var data = $tr.children("td").map(function () {
+                    return $(this).text();
+                }).get();
+
+                $('#deleteID').val(data[0]);
+                document.getElementById("deleteName").innerHTML = data[1] ;
+
+            });
+
         });
 
     </script> 
@@ -206,6 +220,31 @@ if (isset($_POST['edit'])) { //UPDATING INVENTORY
         </div> <!-- MODAL-DIALOG -->
       </div> <!-- MODAL-FADE-->
       <!-- EDIT MODAL ############################################################################ -->
+
+      <!-- DELETE MODAL ############################################################################ -->
+      <div class="modal fade" id="confirmDelete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+        <div class="modal-dialog" style="top:25%;">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="confirmDeleteLabel">Delete Item</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div> <!-- MODAL-HEADER -->
+            
+            <form id="deleteform" action="search_sort.php" method="post" class="form-inline" > 
+              <div class="modal-body mb-2">   
+                <input type="hidden"  id="deleteID" name="deleteID" placeholder="Enter"> 
+                  <label >Are you sure you want to delete <strong id="deleteName" name="deleteName"> item </strong>? This item will be moved to trash. </label>                  
+              </div> <!-- MODAL-BODY -->
+              <div class="modal-footer pb-0">
+                  <input type="hidden" name="url" value="inventory.php">
+                  <input  type="submit" value="Delete" name="delete2" class="form-control btn btn-primary" style="width:150px" > 
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              </div> <!-- MODAL FOOTER -->
+            </form>  
+          </div> <!-- MODAL-CONTENT -->
+        </div> <!-- MODAL-DIALOG -->
+      </div> <!-- MODAL-FADE-->
+      <!-- DELETE MODAL ############################################################################ -->
 
 
       <div id="inventoryHead" class="row mt-3" >
@@ -342,6 +381,23 @@ if (isset($_POST['edit'])) { //UPDATING INVENTORY
         });
         $("#staticBackdrop").delay(10000).fadeOut("slow");
       });
+
+      $('#confirmDelete').on('submit',function() {  
+      $.ajax({
+        url:'search_sort.php', 
+        data:$(this).serialize(),
+        type:'POST',
+        success:function(data){
+          console.log(data);
+          swal("Deleted!", "Item moved to trash.", "success");
+        },
+        error:function(data){
+          swal("Oops...", "Something went wrong :(", "error");
+        }
+        });
+        $("#confirmDelete").delay(10000).fadeOut("slow");
+      });
+
       });
       
     </script>

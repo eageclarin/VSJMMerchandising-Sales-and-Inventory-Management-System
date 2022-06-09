@@ -4,9 +4,9 @@
    
     
     // DELETE ITEM FROM INVENTORY
-    if (isset($_POST['delete1'])) {
-        echo "delete clicked";
-        $itemID = $_POST['itemID1'];
+    if (isset($_POST['delete2'])) {
+        //echo "delete clicked";
+        $itemID = $_POST['deleteID'];
         $deleteItem = "UPDATE inventory SET inventoryItem_Status = 0 WHERE branch_ID =1 AND item_ID = '$itemID';";
         $sqlDelete = mysqli_query($conn,$deleteItem);
         if ($sqlDelete) {
@@ -15,7 +15,7 @@
           echo mysqli_error($conn);
         }
         header("Location: ./inventory.php");
-        unset($_SESSION['delete1']);
+        unset($_SESSION['delete2']);
     }
     // EDIT AN ITEM FROM INVENTORY
     if(isset($_POST['edit'])){
@@ -208,11 +208,16 @@
                     </button>
                 </td>
                 <td>
+                    <button class="btn delete1btn p-0" <?php if($onSalability==true && $row['inventoryItem_Status']==0){echo 'disabled';} ?>><i class='fas fa-trash'></i></button>
+                </td>
+                <!--<td>
                     <form action="search_sort.php" class="mb-1" method="post">
-                        <button onclick='return checkdelete()' class="btn p-0" name="delete1" type="submit" <?php if($onSalability==true && $row['inventoryItem_Status']==0){echo 'disabled';} ?>><i class='fas fa-trash'></i></button>
+                        
+                        <button onclick='return checkdelete()' class="btn p-0" name="delete1" type="submit" <?php if($onSalability==true && $row['inventoryItem_Status']==0){echo 'disabled';} ?>><i class='fas fa-trash'></i></button> 
+                        
                         <input type=hidden name=itemID1 value=<?php echo $row['item_ID']?>>
                     </form>
-                </td>
+                </td>-->
                 <td>
                     <!--<button class='table-see' onclick="location.href='../supplier/supplieritem.php?item_Name='<?php echo $row['item_Name']?>' ">Suppliers</button>-->
                     <!--<?php //echo "<a href=\"../supplier/supplieritem.php?item_Name='".$row['item_Name']."'\">"; ?>-->
