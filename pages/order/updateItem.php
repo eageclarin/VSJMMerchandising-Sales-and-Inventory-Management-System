@@ -43,7 +43,7 @@
     
                 break;
             case "order":
-                    $date = date('Y-m-d');
+                    $date = date('Y-m-d H:i:s');
                     $totalPrice = $_POST['total'];
                     
                     //insert into orders

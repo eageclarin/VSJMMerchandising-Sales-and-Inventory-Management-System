@@ -36,7 +36,7 @@ include "conn.php";
         $pdf->Cell(46,10,'Total Sales',1,1,'C');
         $y = $pdf->GetY();
         $date = date("Y-m-d");
-        $sql = "SELECT order_Date, COUNT(DISTINCT orders.order_ID) AS totalOrders, SUM(orderItems_Quantity) AS totalItems, SUM(orderItems_TotalPrice) AS totalSales FROM orders INNER JOIN order_items ON (orders.order_ID = order_items.order_ID) GROUP BY order_Date;" ;
+        $sql = "SELECT order_Date, COUNT(DISTINCT orders.order_ID) AS totalOrders, SUM(orderItems_Quantity) AS totalItems, SUM(orderItems_TotalPrice) AS totalSales FROM orders INNER JOIN order_items ON (orders.order_ID = order_items.order_ID) GROUP BY DAY(order_Date);" ;
         $result = mysqli_query($conn,$sql);
         $resultCheck = mysqli_num_rows($result);
         if ($resultCheck>0){

@@ -20,7 +20,9 @@ if(isset($_GET['from_date']) && isset($_GET['to_date']))
 {
     $from_date = $_GET['from_date'];
     $to_date = $_GET['to_date'];
-    //$to_date = date('Y-m-d', strtotime($_GET['to_date'].'+1 day'));
+    //$to_date1=date_create($to_date);
+    //$to_date1 = date($to_date1, strtotime('+1 day'));
+    $to_date = date('Y-m-d', strtotime($_GET['to_date'].'+1 day'));
     
 
     $sql = "SELECT item.item_ID, item.item_Name, item.item_unit, item.item_Brand, order_items.order_ID, order_items.orderItems_Quantity, order_items.orderItems_TotalPrice, orders.order_Date, orders.order_Total 

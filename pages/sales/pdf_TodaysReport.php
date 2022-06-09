@@ -19,7 +19,9 @@ include "conn.php";
 if(isset($_GET['from_date']) && isset($_GET['to_date']))
 {
     $from_date = $_GET['from_date'];
-    $to_date = $_GET['to_date'];
+    $date = $_GET['to_date'];
+    $to_date = date($date, strtotime('+1 day'));
+    $to_date = date("Y-m-d",strtotime('+1 day'));
     //$to_date = date('Y-m-d', strtotime($_GET['to_date'].'+1 day'));
     
 

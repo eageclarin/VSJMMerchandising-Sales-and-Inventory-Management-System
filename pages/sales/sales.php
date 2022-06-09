@@ -278,7 +278,7 @@ $totalSum = $row['totalSum'];
                                 //unset($_GET['to_date']);
                             } else {
                                 $from_date = date("Y-m-d");
-                                $to_date = date("Y-m-d");
+                                $to_date = date("Y-m-d",strtotime('+1 day'));
                             }         
                         ?>
                         <thead>
