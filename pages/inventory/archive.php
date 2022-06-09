@@ -13,9 +13,16 @@ if (isset($_POST['return'])) {
     $return = "UPDATE inventory SET inventoryItem_Status = 1 WHERE item_ID = '$item';";
     $sqlReturn = mysqli_query($conn,$return);
 }
+/*
 if (isset($_POST['delete'])) {
   $item = $_POST['itemID1'];
   $return = "DELETE FROM inventory WHERE item_ID='$item';";
+  $sqlReturn = mysqli_query($conn,$return);
+}*/
+
+if (isset($_POST['delete2'])) {
+  $itemID = $_POST['deleteID'];
+  $return = "DELETE FROM inventory WHERE item_ID='$itemID';";
   $sqlReturn = mysqli_query($conn,$return);
 }
 
@@ -238,6 +245,30 @@ if (isset($_POST['deleteSelected'])) {
       </div> <!-- MODAL-FADE-->
       <!-- DELETE MODAL SELECTED ############################################################################ -->
 
+       <!-- DELETE MODAL INDIV ############################################################################ -->
+       <div class="modal fade" id="confirmDelete2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+        <div class="modal-dialog panel-warning" style="top:25%;">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="confirmDeleteLabel">Delete Item</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div> <!-- MODAL-HEADER -->
+            
+            <form id="deleteform" action="archive.php" method="post" class="form-inline" > 
+              <div class="modal-body mb-2">   
+                <input type="hidden"  id="deleteID" name="deleteID" placeholder="Enter"> 
+                  <label >Are you sure you want to permanently delete <strong id="deleteName" name="deleteName"> item </strong>? This is irreversible. </label>                  
+              </div> <!-- MODAL-BODY -->
+              <div class="modal-footer pb-0">
+                  <input  type="submit" value="Delete" name="delete2" class="form-control btn btn-danger" style="width:150px" > 
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              </div> <!-- MODAL FOOTER -->
+            </form>  
+          </div> <!-- MODAL-CONTENT -->
+        </div> <!-- MODAL-DIALOG -->
+      </div> <!-- MODAL-FADE-->
+      <!-- DELETE MODAL INDIV ############################################################################ -->
+
 
       <div id="inventoryHead" class="row"> 
         <div class="col-7">
@@ -377,7 +408,7 @@ if (isset($_POST['deleteSelected'])) {
                 } else{   //NOT LOW ON STOCK =================================================
                     echo '<tr>';
                 }   
-                echo "<td> <input type='checkbox' name='check_list[]' value=". $row['item_ID'] ." > </td>";
+                echo "<td> <input type='checkbox' name='check_list[]' value=". $row['item_ID'] ." form='selectedForm' > </td>";
                 echo "<td>" .$row['item_ID']. "</td>";  
                 echo "<td>". $row['item_Name']. "</td>";  
                 echo "<td>" .$row['item_unit']. "</td>";  
@@ -394,8 +425,12 @@ if (isset($_POST['deleteSelected'])) {
                 <td > <button type="button" class="btn editbtn" style="float:right;"> <i class='fas fa-edit'></i> </button> </td> 
                 <input type=hidden name=itemID1 value=<?php echo $row['item_ID']?>>
                 <td> <button  class="btn" name="return" type="submit" style="float:right; padding-left:0px;"><i class='fas fa-undo-alt'></i></button> </td>
-                <td><button onclick='return check()' class="btn" name="delete" type="submit" style="float:right; padding-left:0px;"><i class='fas fa-trash'></i></button></td>    
+                <!--<td><button onclick='return check()' class="btn" name="delete" type="submit" style="float:right; padding-left:0px;"><i class='fas fa-trash'></i></button></td>  -->  
+                
               </form>
+              <td>
+                    <button class="btn delete1btn"><i class='fas fa-trash'></i></button>
+                </td>
             </tr>
             
         <?php  
@@ -423,7 +458,7 @@ if (isset($_POST['deleteSelected'])) {
                 checkboxes[i].checked = source.checked;
               }
             }
-
+            /*
            $(document).ready(function(){
               $('.editbtn').on('click',function(){
                 $('#staticBackdrop').modal('show');
@@ -449,7 +484,7 @@ if (isset($_POST['deleteSelected'])) {
                 $('#hiddenmarkup').val(data[5]);
                 document.getElementById("labelID").innerHTML = "Item ID: " + data[0];
               });
-           });
+           });*/
 
            
          </script>   
@@ -519,18 +554,31 @@ if (isset($_POST['deleteSelected'])) {
 
                 console.log(data);
 
-                $('#editID').val(data[0]);
-                $('#editName').val(data[1]);
-                $('#editUnit').val(data[2]);
-                $('#editBrand').val(data[3]);
-                $('#editRetail').val(data[4]);
-                $('#editMarkup').val(data[5]);
-                $('#editStock').val(data[6]);
-                $('#editCategory').val(data[7]);
+                $('#editID').val(data[1]);
+                $('#editName').val(data[2]);
+                $('#editUnit').val(data[3]);
+                $('#editBrand').val(data[4]);
+                $('#editRetail').val(data[5]);
+                $('#editMarkup').val(data[6]);
+                $('#editStock').val(data[7]);
+                $('#editCategory').val(data[8]);
                 const $select = document.querySelector('#item_Category');
-                $select.value = data[7];
-                document.getElementById("labelID").innerHTML = "Item ID: " + data[0];
+                $select.value = data[8];
+                document.getElementById("labelID").innerHTML = "Item ID: " + data[1];
               });
+
+              $('.delete1btn').on('click',function(){
+                $('#confirmDelete2').modal('show');
+                $tr = $(this).closest('tr');
+
+                var data = $tr.children("td").map(function () {
+                    return $(this).text();
+                }).get();
+
+                $('#deleteID').val(data[1]);
+                document.getElementById("deleteName").innerHTML = data[2] ;
+
+            });
 
               $('.deletebtn').on('click',function(){
                 $('#confirmDelete').modal('show');
