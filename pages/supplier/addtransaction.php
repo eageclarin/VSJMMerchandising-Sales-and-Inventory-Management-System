@@ -25,11 +25,13 @@
 			    $supplierItem_CostPrice= $_POST['transactionItems_CostPrice'];
 			    $transactionItems_CostPrice= $_POST['transactionItems_CostPrice'];
 			    $transaction_Date= $_POST['transaction_Date'];
-			    $transaction_TotalPrice= $_POST['transaction_TotalPrice'];
+			    
 			    $transaction_Status = $_POST['transaction_Status'];
 			    
 			     
 			    $transactionItems_TotalPrice = $transactionItems_Quantity * $transactionItems_CostPrice;
+
+			    $transaction_TotalPrice= $_POST['transaction_TotalPrice']+$transactionItems_TotalPrice;
 
 
 			    $insert = mysqli_query($db,"INSERT INTO supplier_transactions". "(supplier_ID, transaction_Date, transaction_Status, transaction_TotalPrice) ". "
