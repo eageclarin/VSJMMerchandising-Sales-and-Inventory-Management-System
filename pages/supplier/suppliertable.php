@@ -696,7 +696,7 @@
 							<tbody>
 							<?php
 								
-								$sql = "SELECT * from item inner join supplier_item on item.item_ID=supplier_item.item_ID where supplier_ID = ".$supplier_chosen."";
+								$sql = "SELECT * from item inner join supplier_item on item.item_ID=supplier_item.item_ID inner join supplier on supplier.supplier_ID=supplier_item.supplier_ID where supplier_item.supplier_ID = ".$supplier_chosen."";
 								
 								$result = $conn-> query($sql) or die($conn->error);
 
@@ -718,8 +718,15 @@
 													<form action="suppliertable.php" class="mb-1" method="post">
 													<input type=hidden name=orderItemID value=<?php echo $row['item_ID']?>>
 													<input type=hidden name=orderItemSupp value=<?php echo $supplier_chosen?>>
-													<!--<a href="../inventory/addinventory.php"> <button class="btn-primary" name="order" type="submit">Order</button></a>-->
-													<button type="button" class="btn btn-success editbtn p-2" style="float:left;"><i class="fa fa-shopping-cart"></i> Buy</i></button>
+													<!--<a href="../inventory/addinventory.php"> <button class="btn-primary" name="order" type="submit">Order</button></a>
+													<button type="button" class="btn btn-success editbtn p-2" style="float:left;"><i class="fa fa-shopping-cart"></i> Buy</i></button>-->
+													<?php
+														if($row['supplier_Status']==1){
+	                                echo "<button type=\"button\" class=\"btn btn-success editbtn p-2\" style=\"float:left;\"><i class=\"fa fa-shopping-cart\"></i> Buy</i></button>";
+	                            }else{
+	                                echo "<button type=\"button\" class=\"btn btn-secondary p-2\" style=\"float:left;\"><i class=\"fa fa-shopping-cart\"></i> Buy</i></button>";
+	                            }
+                           ?>
 													</form>
 												</td>
 										<?php

@@ -392,6 +392,16 @@
           <div class="form-group row mt-2 justify-content-md-center">
           <!--<div id="searchSortContainer">-->
 
+            <!-- STATUS -->
+            <label for="sort" class="col-auto col-form-label fw-bold">Status:</label>
+            <select name="stat" id="stat" class="col-sm-10 form-select w-auto">
+              <option value="all">All</option>
+              <option value="active" selected>Active</option>
+              <option value="inactive">Inactive</option>
+            </select> <!-- END OF SORTING -->
+
+
+
             <!-- SORTING -->
             <label for="sort" class="col-auto col-form-label fw-bold">Sort by:</label>
             <select name="sort" id="sort" class="col-sm-10 form-select w-auto">
@@ -402,9 +412,20 @@
             </select> <!-- END OF SORTING -->
 
             <div class="col-5">
-              <input type="text" id="search" class="form-control w-100" autocomplete="off" placeholder="Search for Items, Brand, Supplier..." <?php if(isset($_GET['item_Name'])){ echo" value='".$_GET['item_Name']."'";} ?> >
+              <input type="text" id="search" class="form-control w-100" autocomplete="off" placeholder="Search for Items, Brand, Supplier..." <?php if(isset($_GET['item_ID'])){
+                 
+                  $query = "SELECT * from item where item_ID =".$_GET['item_ID'];
+                    $result = mysqli_query($conn,$query);
+                      if(mysqli_num_rows($result) > 0){
+                        while($row = mysqli_fetch_assoc($result)){
+                          echo" value='".$row['item_Name']."' ";
+                        }
+                      }
+                 
+               }
+             ?> >
             </div>
-            
+                        
           <!--</div>--> <!-- END OF SEARCHSORT CONTAINER -->
           </div>
         </div> 
@@ -571,12 +592,15 @@
                   sessionStorage.setItem("selectedOption", option);
                   var optionValue = $("#sort").selectedIndex;
 
+                  var statoption= "all";
+
                       $.ajax({
                           type: "POST",
                           url: "search_sort_item.php",
                           data: {
                               search: input,
-                              selected: option
+                              selected: option,
+                              stats: statoption
                           },
                           success: function(data) {
                               $("#display").html(data);
@@ -587,18 +611,48 @@
           //SEARCH AND SORT BY
           $(document).ready(function(){
 
-              $("#search").keyup(function() {
+            $("#stat").change(function() {
                   var input = $("#search").val();
                   var option = $("#sort").find(":selected").val();
                   sessionStorage.setItem("selectedOption", option);
                   var optionValue = $("#sort").selectedIndex;
+
+                  var statoption= $("#stat").find(":selected").val();
+                  sessionStorage.setItem("selectedOption", statoption);
+                  var statoptionValue = $("#stat").selectedIndex;
 
                       $.ajax({
                           type: "POST",
                           url: "search_sort_item.php",
                           data: {
                               search: input,
-                              selected: option
+                              selected: option,
+                              stats: statoption
+                          },
+                          success: function(data) {
+                              $("#display").html(data);
+                          }
+                      });
+
+              });
+
+              $("#search").keyup(function() {
+                  var input = $("#search").val();
+                  var option = $("#sort").find(":selected").val();
+                  sessionStorage.setItem("selectedOption", option);
+                  var optionValue = $("#sort").selectedIndex;
+
+                  var statoption= $("#stat").find(":selected").val();
+                  sessionStorage.setItem("selectedOption", statoption);
+                  var statoptionValue = $("#stat").selectedIndex;
+
+                      $.ajax({
+                          type: "POST",
+                          url: "search_sort_item.php",
+                          data: {
+                              search: input,
+                              selected: option,
+                              stats: statoption
                           },
                           success: function(data) {
                               $("#display").html(data);
@@ -612,12 +666,18 @@
                   var option = $("#sort").find(":selected").val();
                   sessionStorage.setItem("selectedOption", option);
                   var optionValue = $("#sort").selectedIndex;
+
+                  var statoption= $("#stat").find(":selected").val();
+                  sessionStorage.setItem("selectedOption", statoption);
+                  var statoptionValue = $("#stat").selectedIndex;
+
                   $.ajax({
                       type: "POST",
                       url: "search_sort_item.php",
                       data: {
                           search: input,
-                          selected: option
+                          selected: option,
+                          stats: statoption
                       },
                       success: function(data) { 
                           $("#display").html(data);
@@ -626,7 +686,11 @@
                   
               });
 
+            
+
           });
+
+          
 
           //Add Notif
 

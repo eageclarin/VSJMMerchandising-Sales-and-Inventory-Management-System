@@ -33,7 +33,8 @@
 
     // SQL QUERIES ==========================================================================================
     // FROM SEARCH TAB
-    if (isset($_POST['search']) && !isset($_POST['selected'])) {
+
+    if (isset($_POST['search']) && !isset($_POST['selected']) && !isset($_POST['stats'])) {
         $Name = $_POST['search'];
 
         if ($Name!="") {    
@@ -42,7 +43,7 @@
             $sql = "SELECT * FROM supplier_item INNER JOIN item ON (item.item_ID = supplier_item.item_ID) INNER JOIN supplier ON (supplier_item.supplier_ID = supplier.supplier_ID) ORDER BY item.item_ID;";  
         }
     // FROM SORT
-    } else if (isset($_POST['selected']) && !isset($_POST['search'])) {
+    } else if (isset($_POST['selected']) && !isset($_POST['search']) && !isset($_POST['stats'])) {
         $k = $_POST['selected'];
         $_SESSION['option'] = $_POST['selected'];
         
@@ -59,28 +60,76 @@
         }
 
         
-    }  
-    else if (isset($_POST['selected']) && isset($_POST['search'])) {
+    }else if(isset($_POST['stats']) && !isset($_POST['search']) && !isset($_POST['selected'])){
+        if($_POST['stats']=="all"){
+            $sql = "SELECT * FROM supplier_item INNER JOIN item ON (item.item_ID = supplier_item.item_ID) INNER JOIN supplier ON (supplier_item.supplier_ID = supplier.supplier_ID) ;";
+            
+        }else if($_POST['stats']=="inactive"){
+            $status = 0;
+            $sql = "SELECT * FROM supplier_item INNER JOIN item ON (item.item_ID = supplier_item.item_ID) INNER JOIN supplier ON (supplier_item.supplier_ID = supplier.supplier_ID) where supplier_Status = ".$status.";";
+        }else{
+            $status = 1;
+            $sql = "SELECT * FROM supplier_item INNER JOIN item ON (item.item_ID = supplier_item.item_ID) INNER JOIN supplier ON (supplier_item.supplier_ID = supplier.supplier_ID) where supplier_Status = ".$status.";";
+            
+        }
+        
+    }
+    else if (isset($_POST['selected']) && isset($_POST['search']) && isset($_POST['stats'])) {
         $Name = $_POST['search'];
         $k = $_POST['selected'];
         $_SESSION['option'] = $_POST['selected'];
+
+        if($_POST['stats']=="inactive" || $_POST['stats']=="active"){
+            if($_POST['stats']=="inactive"){
+                $status = 0;
+            }else if($_POST['stats']=="active"){
+                $status = 1;
+            }
+        }
         
         if ($k == "PriceAsc") {
-            $sql = "SELECT * FROM supplier_item INNER JOIN item ON (item.item_ID = supplier_item.item_ID) INNER JOIN supplier ON (supplier_item.supplier_ID = supplier.supplier_ID) WHERE (item_Name LIKE '%$Name%' OR item_Brand LIKE '%$Name%' OR supplier_Name LIKE '%$Name%') ORDER BY supplier_item.supplierItem_CostPrice ASC;";
+            if($_POST['stats']=="all"){
+                $sql = "SELECT * FROM supplier_item INNER JOIN item ON (item.item_ID = supplier_item.item_ID) INNER JOIN supplier ON (supplier_item.supplier_ID = supplier.supplier_ID) WHERE (item_Name LIKE '%$Name%' OR item_Brand LIKE '%$Name%' OR supplier_Name LIKE '%$Name%') ORDER BY supplier_item.supplierItem_CostPrice ASC;";
+            }else{
+                $sql = "SELECT * FROM supplier_item INNER JOIN item ON (item.item_ID = supplier_item.item_ID) INNER JOIN supplier ON (supplier_item.supplier_ID = supplier.supplier_ID) WHERE (item_Name LIKE '%$Name%' OR item_Brand LIKE '%$Name%' OR supplier_Name LIKE '%$Name%') AND supplier_Status = ".$status." ORDER BY supplier_item.supplierItem_CostPrice ASC;";
+            }
+
+
+            
         } else if ($k == "PriceDesc") {
-            $sql = "SELECT * FROM supplier_item INNER JOIN item ON (item.item_ID = supplier_item.item_ID) INNER JOIN supplier ON (supplier_item.supplier_ID = supplier.supplier_ID) WHERE (item_Name LIKE '%$Name%' OR item_Brand LIKE '%$Name%' OR supplier_Name LIKE '%$Name%') ORDER BY supplier_item.supplierItem_CostPrice DESC;"; 
+            if($_POST['stats']=="all"){
+               $sql = "SELECT * FROM supplier_item INNER JOIN item ON (item.item_ID = supplier_item.item_ID) INNER JOIN supplier ON (supplier_item.supplier_ID = supplier.supplier_ID) WHERE (item_Name LIKE '%$Name%' OR item_Brand LIKE '%$Name%' OR supplier_Name LIKE '%$Name%') ORDER BY supplier_item.supplierItem_CostPrice DESC;"; 
+            }else{
+                $sql = "SELECT * FROM supplier_item INNER JOIN item ON (item.item_ID = supplier_item.item_ID) INNER JOIN supplier ON (supplier_item.supplier_ID = supplier.supplier_ID) WHERE (item_Name LIKE '%$Name%' OR item_Brand LIKE '%$Name%' OR supplier_Name LIKE '%$Name%') AND supplier_Status = ".$status." ORDER BY supplier_item.supplierItem_CostPrice DESC;"; 
+            }
+
         } else if ($k == "ItemID"){
-            $sql = "SELECT * FROM supplier_item INNER JOIN item ON (item.item_ID = supplier_item.item_ID) INNER JOIN supplier ON (supplier_item.supplier_ID = supplier.supplier_ID) WHERE (item_Name LIKE '%$Name%' OR item_Brand LIKE '%$Name%' OR supplier_Name LIKE '%$Name%') ORDER BY item.item_ID ;";
+            if($_POST['stats']=="all"){
+                $sql = "SELECT * FROM supplier_item INNER JOIN item ON (item.item_ID = supplier_item.item_ID) INNER JOIN supplier ON (supplier_item.supplier_ID = supplier.supplier_ID) WHERE (item_Name LIKE '%$Name%' OR item_Brand LIKE '%$Name%' OR supplier_Name LIKE '%$Name%') ORDER BY item.item_ID ;";
+            }else{
+                $sql = "SELECT * FROM supplier_item INNER JOIN item ON (item.item_ID = supplier_item.item_ID) INNER JOIN supplier ON (supplier_item.supplier_ID = supplier.supplier_ID) WHERE (item_Name LIKE '%$Name%' OR item_Brand LIKE '%$Name%' OR supplier_Name LIKE '%$Name%') AND supplier_Status = ".$status." ORDER BY item.item_ID ;";
+            }
         } else if ($k == "SupplierID"){
-            $sql = "SELECT * FROM supplier_item INNER JOIN item ON (item.item_ID = supplier_item.item_ID) INNER JOIN supplier ON (supplier_item.supplier_ID = supplier.supplier_ID) WHERE (item_Name LIKE '%$Name%' OR item_Brand LIKE '%$Name%' OR supplier_Name LIKE '%$Name%') ORDER BY supplier.supplier_ID ;";
+            if($_POST['stats']=="all"){
+                $sql = "SELECT * FROM supplier_item INNER JOIN item ON (item.item_ID = supplier_item.item_ID) INNER JOIN supplier ON (supplier_item.supplier_ID = supplier.supplier_ID) WHERE (item_Name LIKE '%$Name%' OR item_Brand LIKE '%$Name%' OR supplier_Name LIKE '%$Name%') ORDER BY supplier.supplier_ID ;";
+            }else{
+                $sql = "SELECT * FROM supplier_item INNER JOIN item ON (item.item_ID = supplier_item.item_ID) INNER JOIN supplier ON (supplier_item.supplier_ID = supplier.supplier_ID) WHERE (item_Name LIKE '%$Name%' OR item_Brand LIKE '%$Name%' OR supplier_Name LIKE '%$Name%') AND supplier_Status = ".$status." ORDER BY supplier.supplier_ID ;";
+            }
         } else {
-            $sql = "SELECT * FROM supplier_item INNER JOIN item ON (item.item_ID = supplier_item.item_ID) INNER JOIN supplier ON (supplier_item.supplier_ID = supplier.supplier_ID) WHERE (item_Name LIKE '%$Name%' OR item_Brand LIKE '%$Name%' OR supplier_Name LIKE '%$Name%') ORDER BY item.item_ID ;";
+            if($_POST['stats']=="all"){
+                $sql = "SELECT * FROM supplier_item INNER JOIN item ON (item.item_ID = supplier_item.item_ID) INNER JOIN supplier ON (supplier_item.supplier_ID = supplier.supplier_ID) WHERE (item_Name LIKE '%$Name%' OR item_Brand LIKE '%$Name%' OR supplier_Name LIKE '%$Name%')  ORDER BY item.item_ID ;";
+            }else{
+                $sql = "SELECT * FROM supplier_item INNER JOIN item ON (item.item_ID = supplier_item.item_ID) INNER JOIN supplier ON (supplier_item.supplier_ID = supplier.supplier_ID) WHERE (item_Name LIKE '%$Name%' OR item_Brand LIKE '%$Name%' OR supplier_Name LIKE '%$Name%') AND supplier_Status = ".$status." ORDER BY item.item_ID ;";
+            }
         }
 
     }   // DEFAULT: BY ID
     else {
-            $sql = "SELECT * FROM supplier_item INNER JOIN item ON (item.item_ID = supplier_item.item_ID) INNER JOIN supplier ON (supplier_item.supplier_ID = supplier.supplier_ID) ORDER BY item.item_ID ;"; 
+            $status = 1;
+            $sql = "SELECT * FROM supplier_item INNER JOIN item ON (item.item_ID = supplier_item.item_ID) INNER JOIN supplier ON (supplier_item.supplier_ID = supplier.supplier_ID) AND supplier_Status = ".$status." ORDER BY item.item_ID ;"; 
     }  
+
+    
     // END OF SQL QUERIES ==========================================================================================
     
     // SHOW RESULT OF QUERY
@@ -140,7 +189,14 @@
                         <input type=hidden name=orderItemID value=<?php echo $row['item_ID']?>>
                         <input type=hidden name=orderItemSupp value=<?php echo $row['supplier_ID']?>>
                         <!--<a href="../inventory/addinventory.php"> <button class="btn-primary" name="order" type="submit">Order</button></a>-->
-                        <button type="button" class="btn btn-success buybtn p-2" style="float:left;"><i class="fa fa-shopping-cart"></i> Buy</i></button>
+                        <?php
+                            if($row['supplier_Status']==1){
+                                echo "<button type=\"button\" class=\"btn btn-success buybtn p-2\" style=\"float:left;\"><i class=\"fa fa-shopping-cart\"></i> Buy</i></button>";
+                            }else{
+                                echo "<button type=\"button\" class=\"btn btn-secondary p-2\" style=\"float:left;\"><i class=\"fa fa-shopping-cart\"></i> Buy</i></button>";
+                            }
+                        ?>
+                        
                     </form>
                 </td>    
             </tr>
@@ -148,7 +204,6 @@
         <?php  
         } // END OF WHILE
     } // END OF RESULTCHECK
-    
     echo "</tbody></table></div>";
 ?>
 
