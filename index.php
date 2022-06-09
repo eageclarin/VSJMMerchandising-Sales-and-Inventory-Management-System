@@ -358,7 +358,7 @@ $totalSum = $row['totalSum'];
 		?>
 		<!------ ORDERED FROM SUPPLIERS ------>
 		<div class="row px-3 mt-2" style="height:60%">
-			<div class="col-md-8">
+			<div class="col">
 				<span class="fs-5 pb-1 fw-bold"> Pending Purchases  </span>(from Suppliers)
 				<hr class="mt-1 ">
 				<div class="bg-dark mt-2 rounded shadow-sm table-hover">
@@ -401,23 +401,6 @@ $totalSum = $row['totalSum'];
 					</div>
 				</div>
 			</div>
-			<div class="col-md-4">
-				<!-- SALES INFO -->
-                <div class="p-3 bg-white rounded border rounded shadow-sm" style="height:35%; margin-bottom:20px; margin-top:30px;">
-                    <strong> NUMBER OF SALES </strong> <br/>
-                    <span class="text-primary fs-3"><?php echo $totalItems;?> <i class="fas fa-coins pt-2" style="float:right;"></i></span> <br/>
-                    <strong> REVENUE </strong> <br/>
-                    <span class="text-primary fs-3"> Php <?php echo number_format($totalSum,2);?><i class='fas fa-wallet pt-2' style="float:right;"></i></span> 
-                </div>
-
-				<div class="p-3 bg-white rounded border rounded shadow-sm" style="height:50%;">
-					<div class="card chart-container">
-						<canvas id="chart"></canvas>
-					</div>
-				</div>
-
-			</div>
-
 		</div>
 				
 		<!------ END OF SUPPLIERS ------>
@@ -460,35 +443,7 @@ $totalSum = $row['totalSum'];
 	</div>
 	</main>
 
-<!-- FOR CHARTS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"> </script>
-<script>
-      const ctx = document.getElementById("chart").getContext('2d');
-      const arr1 = <?php echo json_encode($months);?>;
-      const myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: ["January", "February", "March",
-          "April", "May", "June", "July", "August", "September", "October",
-          "November", "December"],
-          datasets: [{
-            label: 'Average Daily Sales',
-            backgroundColor: 'rgba(161, 198, 247, 1)',
-            borderColor: 'rgb(47, 128, 237)',
-            data: arr1,
-          }]
-        },
-        options: {
-          scales: {
-            yAxes: [{
-              ticks: {
-                beginAtZero: true,
-              }
-            }]
-          }
-        },
-      });  
-</script>
+
 
 </body>
 </html>
