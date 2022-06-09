@@ -6,6 +6,7 @@
     // DELETE ITEM FROM INVENTORY
     if (isset($_POST['delete2'])) {
         //echo "delete clicked";
+        $url = $_POST['url'];
         $itemID = $_POST['deleteID'];
         $deleteItem = "UPDATE inventory SET inventoryItem_Status = 0 WHERE branch_ID =1 AND item_ID = '$itemID';";
         $sqlDelete = mysqli_query($conn,$deleteItem);
@@ -14,7 +15,12 @@
         } else {
           echo mysqli_error($conn);
         }
-        header("Location: ./inventory.php");
+        if ($url=="salability.php") {
+            header("Location: ./salability.php");
+        } else {
+            header("Location: ./inventory.php");
+        }
+        
         unset($_SESSION['delete2']);
     }
     // EDIT AN ITEM FROM INVENTORY

@@ -137,6 +137,31 @@ $totalValue = $row['salesvalue'];
       </div> <!-- MODAL-FADE-->
       <!-- EDIT MODAL ############################################################################ -->
 
+      <!-- DELETE MODAL ############################################################################ -->
+      <div class="modal fade" id="confirmDelete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+        <div class="modal-dialog" style="top:25%;">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="confirmDeleteLabel">Delete Item</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div> <!-- MODAL-HEADER -->
+            
+            <form id="deleteform" action="search_sort.php" method="post" class="form-inline" > 
+              <div class="modal-body mb-2">   
+                <input type="hidden"  id="deleteID" name="deleteID" placeholder="Enter"> 
+                  <label >Are you sure you want to delete <strong id="deleteName" name="deleteName"> item </strong>? This item will be moved to trash. </label>                  
+              </div> <!-- MODAL-BODY -->
+              <div class="modal-footer pb-0">
+                  <input type="hidden" name="url" value="salability.php">
+                  <input  type="submit" value="Delete" name="delete2" class="form-control btn btn-primary" style="width:150px" > 
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              </div> <!-- MODAL FOOTER -->
+            </form>  
+          </div> <!-- MODAL-CONTENT -->
+        </div> <!-- MODAL-DIALOG -->
+      </div> <!-- MODAL-FADE-->
+      <!-- DELETE MODAL ############################################################################ -->
+
 
       <div id="inventoryHead" class="row"> 
         <div class="col-7">
@@ -294,7 +319,8 @@ $totalValue = $row['salesvalue'];
                 if ($k == "Salability"){
                     echo "<th> Total Sales</th>"; 
                 }  
-            echo "<th> </th>
+            echo "<td class='text-muted'> Last Transaction </td>
+                  <th> </th>
                     </tr>
                     </thead>
                      <tbody>";
@@ -316,6 +342,18 @@ $totalValue = $row['salesvalue'];
                     echo '<tr>';
                 }   
 
+                //last transaction with item
+                $ctrItemID = $row['item_ID'];
+                $lastDate = mysqli_query($conn, "SELECT * FROM supplier_transactions INNER JOIN transaction_Items ON (supplier_transactions.transaction_ID = transaction_Items.transaction_ID) WHERE transaction_Status =2 AND item_ID = '$ctrItemID' ORDER BY transaction_Items.transaction_ID DESC LIMIT 1");
+                $rowDate = mysqli_fetch_array($lastDate);
+                $date = $rowDate['transaction_Date'];
+                if (mysqli_num_rows($lastDate)) {
+                    $lastCost = $rowDate['transactionItems_CostPrice'];
+                    
+                } else {
+                    //$lastCost = $row['item_RetailPrice'];
+                }
+
                 echo "<td>" .$row['item_ID']. "</td>";  
                 echo "<td>". $row['item_Name']. "</td>";  
                 echo "<td>" .$row['item_unit']. "</td>";  
@@ -326,15 +364,39 @@ $totalValue = $row['salesvalue'];
                 echo "<td>" .$row['item_Stock']. "</td>"; 
                 echo "<td>" .$row['item_Category']. "</td>";  
                 echo "<td>" .$row['sales_sum']. "</td>";  
+                echo "<td class='text-muted'>". $date. "</td>";  
+                echo "<td hidden>" .$lastCost ."</td>";
                 ?>
-                <!--DELETE AND EDIT BUTTON-->
+                <!--DELETE AND EDIT BUTTON
                 <td style="width:100px;"> <button type="button" class="btn editbtn" style="float:left;"> <i class='fas fa-edit'></i> </button>
                     <form action="salability.php" class="mb-1" method="post">
                         <input type=hidden name=itemID1 value=<?php echo $row['item_ID']?>>
                         <button onclick='return checkdelete()' class="btn" name="delete1" type="submit" style="float:right; padding-left:0px;" <?php if($row['inventoryItem_Status']==0){echo 'disabled';} ?>><i class='fas fa-trash'></i></button>
                         
                     </form>
-                </td>    
+                </td>    -->
+                <!--DELETE AND EDIT BUTTON-->
+                <td>
+                    <button type="button" class="btn editbtn p-0" style="float:left;">
+                        <i class='fas fa-edit'></i>
+                    </button>
+                </td>
+                <td>
+                    <button class="btn delete1btn p-0" <?php if($row['inventoryItem_Status']==0){echo 'disabled';} ?>><i class='fas fa-trash'></i></button>
+                </td>
+                <td>
+                    <a href="../supplier/supplieritem.php?item_Name=<?php echo $row['item_Name']; ?>" >
+                        <button class="btn p-0"  ><i class='fas fa-shopping-cart'></i></button>
+                    </a>
+                </td>   
+                <td>
+                    <form action="itemTransactions.php" class="mb-1" method="post">
+                        <button class="btn p-0" name="more" type="submit" ><i style="font-size:15px" class="fa">&#xf0c9;</i></button>
+                        <input type=hidden name=itemID1 value=<?php echo $row['item_ID']?>>
+                        <input type=hidden name=itemIDName value='<?php echo $row['item_Name']?>'>
+                    </form>
+                </td> 
+
             </tr>
             
         <?php  
@@ -385,6 +447,19 @@ $totalValue = $row['salesvalue'];
                 $('#hiddenmarkup').val(data[5]);
                 document.getElementById("labelID").innerHTML = "Item ID: " + data[0];
               });
+
+              $('.delete1btn').on('click',function(){
+                $('#confirmDelete').modal('show');
+                $tr = $(this).closest('tr');
+
+                var data = $tr.children("td").map(function () {
+                    return $(this).text();
+                }).get();
+
+                $('#deleteID').val(data[0]);
+                document.getElementById("deleteName").innerHTML = data[1] ;
+
+            });
            });
 
          </script>   
@@ -431,6 +506,24 @@ $totalValue = $row['salesvalue'];
         });
         $("#staticBackdrop").delay(10000).fadeOut("slow");
       });
+
+      //Delete Notif
+      $('#confirmDelete').on('submit',function() {  
+      $.ajax({
+        url:'search_sort.php', 
+        data:$(this).serialize(),
+        type:'POST',
+        success:function(data){
+          console.log(data);
+          swal("Deleted!", "Item moved to trash.", "success");
+        },
+        error:function(data){
+          swal("Oops...", "Something went wrong :(", "error");
+        }
+        });
+        $("#confirmDelete").delay(10000).fadeOut("slow");
+      });
+
       });
 
       function checkdelete(){

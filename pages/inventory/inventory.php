@@ -382,6 +382,7 @@ if (isset($_POST['edit'])) { //UPDATING INVENTORY
         $("#staticBackdrop").delay(10000).fadeOut("slow");
       });
 
+      //Delete Notif
       $('#confirmDelete').on('submit',function() {  
       $.ajax({
         url:'search_sort.php', 
