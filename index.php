@@ -270,12 +270,12 @@ $totalSum = $row['totalSum'];
 		</a>
 		<!------ END OF REMINDER ------>
 
-		<!------ USER FUNCTIONS
+		<!------ USER FUNCTIONS ------>
 		<hr>
 		<div class="dropdown">
 			<a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
 				<img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-				<strong>User</strong>
+				<strong><?php echo $_SESSION["customerName"]; ?></strong>
 			</a>
 			<ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
 				<li><a class="dropdown-item" href="#">Settings</a></li>
@@ -284,13 +284,13 @@ $totalSum = $row['totalSum'];
 				<li><a class="dropdown-item" href="#">Sign out</a></li>
 			</ul>
 		</div>
-		END OF USER FUNCTIONS ------>
+		<!------ END OF USER FUNCTIONS ------>
 	</div>
 	<!------------ END OF SIDEBAR ----------->
 
 	<!----------- RIGHT SIDE ------------>
-	<div class="container-fluid bg-light w-100">
-		<!-- NAV BAR -->
+	<div class="container-fluid bg-light w-100 h-100">
+		<!-- NAV BAR 
 		<nav class="navbar px-3 py-3">
       	<ul class="nav nav-tabs  pb-2"   style="width:100%; border:0">
 			<li class="nav-item" >
@@ -319,31 +319,49 @@ $totalSum = $row['totalSum'];
 				</ul>
 			</div>
 		</ul>
-    	</nav>
+    	</nav> -->
 		
+		<!------ TITLE ------>
+		<div class="row justify-content-md-center mt-5">
+			<div class="row">
+				<div class="col position-relative">
+					<div class="text-center fs-1"> Welcome, <strong><?php echo $_SESSION["customerName"]; ?></strong> </div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col position-relative">
+					<!-- TIME AND DATE -->
+					<div class="col text-center align-self-center">
+							<div class="fs-5">
+								<span class="clock fw-bold ml-3"> <i class="bi bi-clock"></i> 00:00:00 </span>
+								<span class="day fst-italic"> <i class="bi bi-calendar3"></i> Day </span>
+								<span class="date"> Date </span>
+							</div>
+					</div>
+					<!-- END OF TIME AND DATE -->
+				</div>
+			</div>
+		</div>
+
 		<div class="row navbar-expand-md px-3 mt-3 mb-0" style="height:20%">
 			<ul class="navbar-nav d-flex">
-				
 				<li class="nav-item flex-fill">
 					<a class="nav-link d-grid h-75" href="pages/inventory/inventory.php">
 						<button class="btn btn-primary fs-5 shadow-sm"><i class="bi bi-archive-fill"></i><br>Inventory</button>
 					</a>
 				</li>
-
 				
 				<li class="nav-item flex-fill">
 					<a class="nav-link d-grid h-75" href="pages/supplier/suppliers.php">
 						<button class="btn btn-success fs-5 shadow-sm"><i class="bi bi-people-fill"></i><br>Suppliers</button>
 					</a>
 				</li>
-
 				
 				<li class="nav-item flex-fill">
 					<a class="nav-link d-grid h-75" href="pages/sales/sales.php">
 						<button class="btn btn-danger fs-5 shadow-sm"><i class="bi bi-table"></i><br>Reports</button>
 					</a>
 				</li>
-
 				
 				<li class="nav-item flex-fill">
 					<a class="nav-link d-grid h-75" href="pages/order/order.php">
@@ -357,7 +375,7 @@ $totalSum = $row['totalSum'];
 		<?php
 		?>
 		<!------ ORDERED FROM SUPPLIERS ------>
-		<div class="row px-3 mt-2" style="height:30%">
+		<div class="row px-3 mt-1" style="height:50%">
 			<div class="col">
 				<span class="fs-5 pb-1 fw-bold"> Pending Purchases  </span>(from Suppliers)
 				<hr class="mt-1 ">
@@ -406,9 +424,9 @@ $totalSum = $row['totalSum'];
 		<!------ END OF SUPPLIERS ------>
 		<!-- MONTHLY SALES -->
 
-		<!------ BOTTOM ------>
+		<!------ BOTTOM
 		<div class="row px-3 pt-0 mt-4" style="height:25%">
-			<!-- SALES -->
+			SALES 
 			<?php 
 			$today= date("Y-m-d");
 			$today1= date("Y-m-d", strtotime('+1 day'));
@@ -429,17 +447,11 @@ $totalSum = $row['totalSum'];
 					</div>
 				</div>
 			</div>
-			<!-- END OF SALES -->
+			END OF SALES
 
-			<!-- TIME AND DATE -->
-			<div class="col text-end align-self-center">
-				<div class="clock fw-bold fs-1 text-danger">00:00:00</div>
-				<div class="day fs-3 fst-italic"> Day </div>
-				<div class="date fs-3"> Date </div>
-			</div>
-			<!-- END OF TIME AND DATE -->
+			
 		</div>
-		<!------ END OF BOTTOM ------>
+		END OF BOTTOM ------>
 	</div>
 	</main>
 

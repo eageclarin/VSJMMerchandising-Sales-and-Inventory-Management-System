@@ -2,6 +2,11 @@ body {
     height: 100%;
 }
 
+.container {
+    min-width: 85%;
+    max-width: 90%;
+}
+
 input[type=text] {
     border: none;
 }

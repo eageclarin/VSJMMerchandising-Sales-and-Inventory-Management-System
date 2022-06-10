@@ -32,17 +32,17 @@
     
         switch($u) {
             case 'u':
-                $update = "Already in cart. Updated item quantity.";
+                $update = "Updated item quantity.";
                 break;
             case 'i':
-                $update = "Item added to cart.";
+                $update = "Item added to sales.";
                 break;
             case 'n':
                 $update = "Item out of stock / not in inventory.";
                 $updateStyle = "style='color: #dc3545;'";
                 break;
             case 'd':
-                $update = "Item removed from cart.";
+                $update = "Item removed from sales.";
                 $updateStyle = "style='color: #dc3545;'";
                 break;
             case 'q':
@@ -228,20 +228,20 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
-            /*------ PAYMENT ------*/        
+            /*------ PAYMENT     
             var cash = document.getElementById('moneyInput').value;
             if (cash == 0 || cash == '') {
                 document.getElementById('pay').disabled = true;
             } else {
                 document.getElementById('pay').disabled = false;
-            }
+            }  ------*/   
 
             /*------ SEARCH ITEM ------*/  
             $("#searchItem").autocomplete({
                 source: function(request, response) {
                     var results = $.ui.autocomplete.filter(plang, request.term);
 
-                    response(results.slice(0,2));
+                    response(results.slice(0,5));
                 }
             });
 
@@ -258,7 +258,22 @@
                     document.getElementById('addItem').click();
                 }
             });
+
+            clockUpdate();
+			setInterval(clockUpdate, 1000);
         });
+
+        function clockUpdate() {
+            const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+			const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+			var da = weekday[date.getUTCDay()];
+			var mo = month[date.getUTCMonth()];
+			var d = date.getDate();
+			var y = date.getFullYear();
+
+			$('.day').text(da);
+			$('.date').text(mo + ' ' + d + ', ' + y);
+        }
     </script>
 </head>
 <body>
@@ -304,21 +319,27 @@
     <!------------ BODY ----------->
     <main class="container pt-5">
         <!------ TITLE ------>
-        <div class="row w-100" style="height:20%">
+        <div class="row w-100 mt-5" style="height:10%">
             <div class="col position-relative">
                 <span class="position-absolute top-50 start-50 translate-middle fs-1 fw-bold"> SALES ENTRY </span>
             </div>
         </div>
+        <div class="row text-center">
+            <div class="col position-relative">
+                <span class="day fst-italic"> <i class="bi bi-calendar3"></i> Day </span>
+                <span class="date"> Date </span>
+            </div>
+        </div>
 
         <!------ ORDER FUNCTIONS ------>
-        <div class="row w-100 mx-auto" style="height:80%">
-            <!------ ITEMS ------>
+        <div class="row w-100 mx-auto mt-5" style="height:80%">
+           <!---- ITEMS
             <div class="col-6 mr-2">
-                <!------ CATEG SORT SEARCH ------>
+                CATEG SORT SEARCH 
                 <div class="row">
                     <div class="col-7">
                         <div class="form-group row">
-                            <!-- categ -->
+                            categ
                             <label for="categ" class="col-auto col-form-label fw-bold">Category:</label>
                             <select name="categ" id="categ" class="col-sm-10 form-select w-25" onchange="sort()">
                                 <option value="All" selected >All</option>
@@ -330,9 +351,9 @@
                                 <option value="Paints">Paints and Accessories</option>
                                 <option value="Wood">Wood</option>
                             </select> 
-                            <!-- end of categ -->
+                            end of categ
 
-                            <!-- sort -->
+                            sort
                             <label for="sort" class="col-auto col-form-label fw-bold">Sort by:</label>
                             <select name="sort" id="sort" class="col-sm-10 form-select w-25" onchange="sort()">
                                 <option value="ID" selected >ID</option>
@@ -342,24 +363,24 @@
                                 <option value="item_Stock">Stocks</option>
                                 <option value="Salability">Salability</option>
                             </select>
-                            <!-- end of sort -->
+                            end of sort
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-group row">
                         <div class="col">
-                            <!-- search item -->
+                            search item
                             <form method="POST" action="order.php?action=addSearch" class="d-flex mb-0">
                                 <input type="text" name="item" autcomplete="off" class="form-control form-control me-2 ui-autocomplete-input border" id="searchItem" onkeyup="search()" placeholder="Search Item...">
                                 <button class="btn btn-success" id="addItem" type="submit"><i class="fa fa-check btn-icon-prepend"></i>Add</button>
                             </form>
                         
-                            <!-- end of search item -->
+                            end of search item
                         </div>
                         </div>
                     </div>
                 </div>
-                <!------ END OF CATEG SORT SEARCH ------>
+                END OF CATEG SORT SEARCH
 
                 <div class="row mt-3" style="overflow-y:scroll; height:80%" id="display">
                 <?php
@@ -377,7 +398,7 @@
                         $unit = $rowDisplay['item_unit'];
                         $stocks = $rowDisplay['item_Stock'];
                 ?>
-                        <!-- item -->
+                        item
                         <div class="col">
                             <form method="POST" action="order.php?action=addCart">
                             <div class="row">
@@ -439,14 +460,13 @@
                 ?>
                 </div>
             </div>
-            <!------ END OF ITEMS ------>
+            END OF ITEMS ------>
 
-            <!------ ORDER ------>
-            <div class="col">
-                <!------ CART ------>
-                <div class="cart">
+            <div class="col-8 mr-2">
+                 <!------ CART ------>
+                 <div class="cart">
                     <div class="row text-center border-bottom p-2">
-                        <div class="col-4">Name</div>
+                        <div class="col-5">Name</div>
                         <div class="col-2">Price/Unit</div>
                         <div class="col">Qty</div>
                         <div class="col-2">Total</div>
@@ -492,7 +512,7 @@
                         <!-- display item information -->
                         <div class="row text-center border-bottom p-2 mt-2">
                             <!-- item name -->
-                            <div class="col-4 text-start fw-bold text-wrap">
+                            <div class="col-5 text-start fw-bold text-wrap">
                                 <?php echo $iName ?> 
                             </div>
 
@@ -533,12 +553,21 @@
                         ?>
                 </div>
                 <!------ END OF CART ------>
-                
+            </div>
+            <!------ ORDER ------>
+            <div class="col">
+                <!-- search item -->
+                <form method="POST" action="order.php?action=addSearch" class="d-flex mb-0">
+                    <input type="text" name="item" autcomplete="off" class="form-control form-control me-2 ui-autocomplete-input border" id="searchItem" onkeyup="search()" placeholder="Search Item...">
+                        <button class="btn btn-success" id="addItem" type="submit"><i class="fa fa-check btn-icon-prepend"></i>Add</button>
+                </form>  
+                <!-- end of search item -->
+
                 <!-- order total -->
                 <div class="pb-0 mt-4"> <p id="update" <?php echo $updateStyle ?>><?php echo $update ?></p></div>
                 <div class="row">
-                    <div class="col-2">
-                        <p class="fs-4"> Total </p>
+                    <div class="col-5">
+                        <p class="fs-5"> Total Sales </p>
                     </div>
                     <div class="col">
                         <p id="total" class="fw-bold text-end fs-2">
@@ -551,14 +580,17 @@
                 <!-- buttons -->
                 <div class="row">
                     <div class="col d-grid gap-2">
-                        <!-- order button trigger modal -->
+                        <!-- order button trigger modal 
                         <button <?php echo $button ?> type="button" class="btn btn-lg btn-primary" id="order" data-toggle="modal" data-target="#receipt">
-                            Order
-                        </button>
+                            Check Summary
+                        </button> -->
+
+                        <form action="updateItem.php?action=order" method="post"></form>
+                        <button class="w-100 btn btn-lg rounded-4 btn-primary" name="pay" id="pay" type="submit">Submit Sales</button>
 
                         <!-- empty cart -->
                         <button type="submit" <?php echo $button ?> form="emptyForm" class="btn btn-lg btn-outline-danger">
-                            Empty Cart
+                            Reset
                         </button>
                         <form action="updateItem.php?action=delete" method="post" id="emptyForm"></form>
                     </div>
