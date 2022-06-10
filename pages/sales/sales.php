@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sales Report</title>
+    <title>Sales</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="./style.css?ts=<?=time()?>">
@@ -78,81 +78,91 @@ $totalSum = $row['totalSum'];
     <!-- END OF NAVBAR -->
 
     <div class="container-fluid bg-light p-5 pt-2 mb-0">
-        <div id="head">
-            <!--Heading -->
+      <!--  <div id="head">
+            Heading -->
             <div id="inventoryHead" >
-                <span class="fs-1 fw-bold"> SALES REPORT </span>
+                <span class="fs-1 fw-bold"> SALES</span>
             </div> 
+
             
-            <!-- Average Daily Sales Chart -->
-            <div id="monthly">
-                <div class="p-3 bg-white rounded border rounded shadow-sm" style="height:100%;">
-                    <div class="card chart-container">
-                        <canvas id="chart"></canvas>
+            <!--<div id="group">-->
+            <div class='row'>
+                <div class="p-0 mb-3 rounded border shadow-sm">
+                    <div class="pl-2 pb-1 pt-1 card-header" >
+                        <small style="font-weight:bold;">Sales Reports</small>
                     </div>
-                </div>
-            </div>
-            
-            <div id="group">
-                <!-- SALES INFO -->
+                <!-- SALES INFO 
                 <div class="p-3 bg-white rounded border rounded shadow-sm" id="weekly">
                     <strong> NUMBER OF SALES </strong> <br/>
                     <span class="text-primary fs-3"><?php echo $totalItems;?> <i class="fas fa-coins pt-2" style="float:right;"></i></span> <br/>
                     <strong> REVENUE </strong> <br/>
                     <span class="text-primary fs-3"> Php <?php echo number_format($totalSum,2);?><i class='fas fa-wallet pt-2' style="float:right;"></i></span> 
-                </div>
+                </div>-->
 
-                <!-- This Week's Sales -->
-                <div class="p-3 bg-white rounded border rounded shadow-sm" id="weekly" style="float:right;">
-                    <div class="card chart-container">
-                        <canvas id="chart2"></canvas>
+                <!-- Buttons 
+                <div id="exportBtn">-->
+                <!-- Download Sales Report Excel File -->
+                <div class='row p-2'>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <form action="export.php" method="post">
+                                <label></label> <br> 
+                                <button class="btn btn-success w-100" name="export" type="submit" ><i class='fas fa-download'></i> Export Sales</button> 
+                            </form>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Buttons -->
-                <div id="exportBtn">
-                    <!-- Download Sales Report Excel File -->
-                    <form action="export.php" method="post">
-                        <button class="btn btn-success" style="float:left; width:48%; margin-bottom:15px; margin-right:15px;" name="export" type="submit" ><i class='fas fa-download'></i> Sales Report</button> 
-                    </form>
-
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <!--summary button -->
+                            <label></label> <br> 
+                            <button class="btn btn-primary dropdown-toggle w-100" name="export" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" ><i class='fas fa-download' ></i> Summary</button>   
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <li><a class="dropdown-item" href="pdf_DailyReport.php"  target="_blank">Daily Sales</a></li>
+                                <li><a class="dropdown-item" href="pdf_WeeklyReport.php"  target="_blank">Weekly Sales</a></li>
+                                <li><a class="dropdown-item" href="pdf_MonthlyReport.php"  target="_blank">Monthly Sales</a></li>
+                                <li><a class="dropdown-item" href="pdf_QuarterlyReport.php" target="_blank">Quarterly Sales</a></li>
+                                <li><a class="dropdown-item" href="pdf_TodaysReport.php?from_date=<?php echo date('Y-m-d'); ?>&to_date=<?php echo date('Y-m-d'); ?>" target="_blank">Sales Today</a></li>
+                                <li><button class="dropdown-item" type="submit" form="customReport_Form">Sales in Date Range</button></li>
+                            </ul>
+                        </div>
+                    </div>
                     
-                    <!-- Summaries in PDF -->
-                    
-                    <form action="pdf_CustomReport.php" method="GET" target="_blank">
-
-                        <!-- Choose Date -->
-                        <div class="p-1 mb-0 rounded border shadow-sm" style="float:right;width:48%;">
-                            <small class="font-weight-bold" style="padding-left:2px; badding-bottom:0px; font-weight:bold;">Custom Date</small>
-                                <div class="form-floating">   
-                                    <label style="padding-top:1px;"><small>From </small> </label>      
-                                    <input type="date" name="from_date" id="from_date" value="<?php if(isset($_GET['from_date'])){ echo $_GET['from_date']; } else {
-                                        echo '2022-01-01';
-                                    } ?>" class="form-control" onchange="transactionDate()" style="padding:0px;padding-left:65px; padding-right:10px; height:30px; font-size:14px;">
-                                </div>          
-                                <div class="pt-1 form-floating">
-                                    <label style="padding-top:6px;"><small>To</small> </label>
-                                    <input type="date" name="to_date" id="to_date" value="<?php if(isset($_GET['to_date'])){ echo $_GET['to_date']; } else {echo date("Y-m-d");} ?>" class="form-control" onchange="transactionDate()" min="2022-01-01" style="padding:0px;padding-left:65px; padding-right:10px; height:30px; font-size:14px;">
+                    <div class="col-md-6">
+                        <div class="form-group"> 
+                            <!-- Summaries in PDF -->
+                            <form action="pdf_CustomReport.php" method="GET" target="_blank" id="customReport_Form">
+                                <div class='row'>
+                                    <div class='col'>
+                                        <div class="form-group">   
+                                            <label style="padding-top:1px;"><small>From </small> </label>      
+                                            <input type="date" name="from_date" id="from_date" value="<?php if(isset($_GET['from_date'])){ echo $_GET['from_date']; } else {
+                                            echo '2022-01-01';
+                                            } ?>" class="form-control" onchange="transactionDate()" >
+                                        </div>     
+                                    </div>
+                                    
+                                    <div class='col'>
+                                        <div class="form-group">
+                                            <label style="padding-top:1px;"><small>To</small> </label>
+                                            <input type="date" name="to_date" id="to_date" value="<?php if(isset($_GET['to_date'])){ echo $_GET['to_date']; } else {echo date("Y-m-d");} ?>" class="form-control" onchange="transactionDate()" min="2022-01-01" >
+                                        </div>
+                                    </div>
                                 </div>
-                        </div> 
-                        
-                        <!--summary button -->
-                        <button class="btn btn-primary dropdown-toggle" style="float:left; width:48%; margin-bottom:10px; " name="export" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" ><i class='fas fa-download' ></i> Summary</button>   
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li><a class="dropdown-item" href="pdf_DailyReport.php"  target="_blank">Daily Sales</a></li>
-                            <li><a class="dropdown-item" href="pdf_WeeklyReport.php"  target="_blank">Weekly Sales</a></li>
-                            <li><a class="dropdown-item" href="pdf_MonthlyReport.php"  target="_blank">Monthly Sales</a></li>
-                            <li><a class="dropdown-item" href="pdf_QuarterlyReport.php" target="_blank">Quarterly Sales</a></li>
-                            <li><a class="dropdown-item" href="pdf_TodaysReport.php?from_date=<?php echo date('Y-m-d'); ?>&to_date=<?php echo date('Y-m-d'); ?>" target="_blank">Sales Today</a></li>
-                            <li><button class="dropdown-item" type="submit">Sales in Date Range</button></li>
-                        </ul>
-                          
+                            </form>  
+                               
+                        </div>
+                    </div>
+                
+                </div><!--end row-->
+                    
 
-                    </form> 
+                    
 
-                </div> <!-- END OF exportBtn-->
+
+                <!--</div>  END OF exportBtn-->
             </div><!-- END OF group -->
-        </div><!-- END OF head -->
+        <!--</div> END OF head -->
 
             <!--<div class="col-md-12" style="float:left;">
                 <div class="card mt-3">
@@ -265,7 +275,7 @@ $totalSum = $row['totalSum'];
             </div>-->
 
         <!-- Daily Sales Table -->
-        <div class="card mt-0" style="float:left; width:100%">
+        <div class="card mt-0" style="float:left; width:100%;">
             <div class="card-body">
                 <div class= "container1">
                     <table class="table pr-3">
@@ -415,63 +425,6 @@ $totalSum = $row['totalSum'];
     }
 
 ?>
-<!-- FOR CHARTS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"> </script>
-<script>
-      const ctx = document.getElementById("chart").getContext('2d');
-      const arr1 = <?php echo json_encode($months);?>;
-      const myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: ["January", "February", "March",
-          "April", "May", "June", "July", "August", "September", "October",
-          "November", "December"],
-          datasets: [{
-            label: 'Average Daily Sales',
-            backgroundColor: 'rgba(161, 198, 247, 1)',
-            borderColor: 'rgb(47, 128, 237)',
-            data: arr1,
-          }]
-        },
-        options: {
-          scales: {
-            yAxes: [{
-              ticks: {
-                beginAtZero: true,
-              }
-            }]
-          }
-        },
-      });  
-</script>
-<script>
-      const ctx2 = document.getElementById("chart2").getContext('2d');
-      const arr = <?php echo json_encode($days);?>;
-      const myChart2 = new Chart(ctx2, {
-        type: 'bar',
-        data: {
-          labels: ["S","M", "T", "W", "Th",
-          "F", "S"],
-          datasets: [{
-            label: 'This Week',
-            backgroundColor: 'rgba(161, 198, 247, 1)',
-            borderColor: 'rgb(47, 128, 237)',
-            data: arr,
-          }]
-        },
-        options: {
-          scales: {
-            yAxes: [{
-              ticks: {
-                beginAtZero: true,
-              }
-            }]
-          }
-        },
-      });
-</script>
-<!-- END OF CHARTS -->
-
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 </body>

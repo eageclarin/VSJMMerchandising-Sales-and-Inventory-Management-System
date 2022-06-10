@@ -43,12 +43,7 @@
 		<ul class="nav nav-pills flex-column mb-auto">
 			<li class="nav-item">
 				<a href="sales.php" class="nav-link <?php echo $s ?>">
-				<i class="bi bi-table"></i> Sales Report
-				</a>
-			</li>
-			<li class="nav-item">
-				<a href="#" class="nav-link <?php echo $si ?>">
-				<i class="bi bi-receipt"></i> Other Reports
+				<i class="bi bi-table"></i> Sales
 				</a>
 			</li>
 		</ul>
