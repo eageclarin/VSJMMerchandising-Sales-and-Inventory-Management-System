@@ -385,7 +385,7 @@ $totalValue = $row['salesvalue'];
                     <button class="btn delete1btn p-0" <?php if($row['inventoryItem_Status']==0){echo 'disabled';} ?>><i class='fas fa-trash'></i></button>
                 </td>
                 <td>
-                    <a href="../supplier/supplieritem.php?item_Name=<?php echo $row['item_Name']; ?>" >
+                    <a href="../supplier/supplieritem.php?item_ID=<?php echo $row['item_ID']; ?>" >
                         <button class="btn p-0"  ><i class='fas fa-shopping-cart'></i></button>
                     </a>
                 </td>   
