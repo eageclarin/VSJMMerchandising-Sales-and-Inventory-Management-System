@@ -320,31 +320,31 @@ $totalSum = $row['totalSum'];
 			</div>
 		</ul>
     	</nav>
-		<!------ MAIN PAGES
+		
 		<div class="row navbar-expand-md px-3 mt-3 mb-0" style="height:20%">
 			<ul class="navbar-nav d-flex">
-				INVENTORY
+				
 				<li class="nav-item flex-fill">
 					<a class="nav-link d-grid h-75" href="pages/inventory/inventory.php">
 						<button class="btn btn-primary fs-5 shadow-sm"><i class="bi bi-archive-fill"></i><br>Inventory</button>
 					</a>
 				</li>
 
-				SUPPLIERS
+				
 				<li class="nav-item flex-fill">
 					<a class="nav-link d-grid h-75" href="pages/supplier/suppliers.php">
 						<button class="btn btn-success fs-5 shadow-sm"><i class="bi bi-people-fill"></i><br>Suppliers</button>
 					</a>
 				</li>
 
-				SALES
+				
 				<li class="nav-item flex-fill">
 					<a class="nav-link d-grid h-75" href="pages/sales/sales.php">
 						<button class="btn btn-danger fs-5 shadow-sm"><i class="bi bi-table"></i><br>Reports</button>
 					</a>
 				</li>
 
-				ORDER
+				
 				<li class="nav-item flex-fill">
 					<a class="nav-link d-grid h-75" href="pages/order/order.php">
 						<button class="btn btn-warning fs-5 shadow-sm"><i class="bi bi-cart-fill"></i><br>Sales Entry</button>
@@ -352,12 +352,12 @@ $totalSum = $row['totalSum'];
 				</li>
 			</ul>
 		</div>
-		END OF MAIN PAGES ------>
+		
 		
 		<?php
 		?>
 		<!------ ORDERED FROM SUPPLIERS ------>
-		<div class="row px-3 mt-2" style="height:60%">
+		<div class="row px-3 mt-2" style="height:30%">
 			<div class="col">
 				<span class="fs-5 pb-1 fw-bold"> Pending Purchases  </span>(from Suppliers)
 				<hr class="mt-1 ">
