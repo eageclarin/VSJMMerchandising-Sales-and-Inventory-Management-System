@@ -285,6 +285,7 @@ $totalSum = $row['totalSum'];
                             if (isset($_GET['to_date1'])) {
                                 $from_date = $_GET['to_date1'];
                                 $to_date = $_GET['to_date1'];
+                                $to_date = date('Y-m-d', strtotime($_GET['to_date1'].'+1 day'));
                                 //unset($_GET['to_date']);
                             } else {
                                 $from_date = date("Y-m-d");

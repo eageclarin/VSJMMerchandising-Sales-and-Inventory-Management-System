@@ -52,7 +52,7 @@ if(isset($_GET['from_date']) && isset($_GET['to_date']))
     
     if(mysqli_num_rows($result) > 0)
     {
-        $sql2 = "SELECT order_Date, COUNT(DISTINCT orders.order_ID) AS totalOrders, SUM(orderItems_Quantity) AS totalItems, SUM(orderItems_TotalPrice) AS totalSales FROM orders INNER JOIN order_items ON (orders.order_ID = order_items.order_ID) WHERE order_Date BETWEEN '$from_date' AND '$to_date' GROUP BY order_Date;";
+        $sql2 = "SELECT order_Date, COUNT(DISTINCT orders.order_ID) AS totalOrders, SUM(orderItems_Quantity) AS totalItems, SUM(orderItems_TotalPrice) AS totalSales FROM orders INNER JOIN order_items ON (orders.order_ID = order_items.order_ID) WHERE order_Date BETWEEN '$from_date' AND '$to_date' GROUP BY DAY(order_Date);";
         $result2 = mysqli_query($conn, $sql2);
   
             $pdf->SetFont('Arial','B',8);
