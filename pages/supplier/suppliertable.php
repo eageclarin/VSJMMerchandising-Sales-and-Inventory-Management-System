@@ -97,46 +97,51 @@
 			  display: none;
 			}
 
-			label {
+			#tab01 {
 			  display: inline-block;
 			  margin: 0 0 -1px;
 			  padding: 15px 25px;
-			  font-weight: 600;
+			  font-weight: 700;
+			  font-size: 18;
 			  text-align: center;
-			  color: #bbb;
+			  color: black;
 			  border: 1px solid transparent;
+			  background-color: #5cb85c;
+			  border-radius: 12px 12px 0 0;
 
 			}
 
-			label:before {
+			#tab01:before {
 			  font-family: fontawesome;
 			  font-weight: normal;
 			  margin-right: 10px;
 
+
+
 			}
 
 			label[for*='1']:before {
-			  content: '\f0c9';
-			}
-
-			label[for*='2']:before {
-			  content: '\f09d';
-			}
-
-			label[for*='3']:before {
 			  content: '\f05a';
 			}
 
-			label:hover {
-			  color: #888;
-			  cursor: pointer;
+			label[for*='2']:before {
+			  content: '\f0c9';
 			}
 
-			input:checked + label {
-			  color: #555;
+			label[for*='3']:before {
+			  content: '\f09d';
+			}
+
+			#tab01:hover {
+			  cursor: pointer;
+			  background-color: #72d474;
+			}
+
+			input:checked + #tab01 {
+			  color: black;
 			  border: 1px solid #ddd;
-			  border-top: 2px solid #343a40;
 			  border-bottom: 1px solid #fff;
+			  background-color: #f0ad4e;
 			}
 
 			#tab1:checked ~ #content1,
@@ -209,10 +214,13 @@
     </nav>
         
     <div class="container-fluid bg-light p-4">
-    	<div class="text-center fs-1 fw-bold"> SUPPLIERS </div>
+    	<div style="position: relative; text-align: center;">
+	    	<div style="position: absolute;"><span><button class="btn btn-dark mt-3" type="button" onclick="location.href='suppliers.php'"><i class="fa fa-chevron-left"></i> Go Back</button></span></div>
+	    	<div class="text-center fs-1 fw-bold" style="display: inline-block;"> SUPPLIERS </div>
     	<br>
-    	
+    	</div>
 		<div class="supplier_choice">
+
 			<?php
 
 				$supplier_chosen = $_GET['supplier_ID'];
@@ -398,7 +406,7 @@
 							<input type="number" step="0.01" class="form-control"  id="editMarkup" name="editMarkup" placeholder="Enter">
 							<input type="hidden" step="0.01" class="form-control"  id="hiddenmarkup" name="hiddenmarkup" placeholder="Enter">
 						</div> 
-						<label for="editStock" >Number of Stocks: </label>
+						<label for="editStock" >Quantity: </label>
 						<div>
 							<input type="number" step="any" class="form-control"  id="editStock" name="editStock" placeholder="Enter">
 						</div> 
@@ -670,16 +678,42 @@
 
 				<div id="tabs-w-content">
 					  <input id="tab1" type="radio" name="tabs" checked>
-					  <label for="tab1">Items</label>
+					  <label for="tab1" id="tab01">Information</label>
 					    
 					  <input id="tab2" type="radio" name="tabs">
-					  <label for="tab2">Transactions</label>
+					  <label for="tab2" id="tab01">Items</label>
 					    
 					  <input id="tab3" type="radio" name="tabs">
-					  <label for="tab3">Information</label>
-					    
+					  <label for="tab3" id="tab01">Transactions</label>
 					    
 					  <section id="content1">
+					  	
+					     <?php					
+
+							$sql = "SELECT * from supplier where supplier_ID=".$supplier_chosen;
+							$result = $conn-> query($sql) or die($conn->error);
+							if ($result-> num_rows >0) {
+								while ($row = $result-> fetch_assoc()) {
+									echo "<table class=\"table table-borderless\"><tr><th class='colhead'><span class='thick'><i class=\"fa fa-folder\"></i>  ID  </span></th><td>".$row["supplier_ID"]."</td></tr>";
+									echo "<tr><th class='colhead'><span class='thick'><i class=\"fa fa-circle-o\"></i>  Status  </span></th><td>";
+									if($row["supplier_Status"] == 0){
+										echo "Inactive";
+									} else{
+										echo "Active";
+									}
+									echo "</td></tr>";
+									echo "<tr><th class='colhead'><span class='thick'><i class=\"fa fa-user\"></i>  Supplier Agent  </span></th><td>".$row["supplier_ContactPerson"]."</td></tr>";
+									echo "<tr><th class='colhead'><span class='thick'><i class=\"fa fa-phone\"></i>  Contact Number  </span></th><td>".$row["supplier_ContactNum"]."</td></tr>";
+									echo "<tr><th class='colhead'><span class='thick'><i class=\"fa fa-map-marker\"></i>  Supplier Address  </span></th><td>".$row["supplier_Address"]."</td></tr></table>";
+								}
+							}
+							echo "<button class=\"btn btn-success mt-3\" onclick=\"changeLoc('delete','".$supplier_chosen."')\"><i class=\"fa fa-circle-o\"></i> Change Status
+							</button>";
+						?>
+						
+					  </section>
+
+					  <section id="content2">
 					   	<div class='table-wrapper' style="overflow-y:scroll; height: 325px">
 					   	<table class='table table-hover'> 
            				<thead><tr>
@@ -765,7 +799,7 @@
 
 					  </section>
 					    
-					  <section id="content2">
+					  <section id="content3">
 					  	<div class='table-wrapper' style="overflow-y:scroll; height: 325px">
 					   	<table id="transaction_table" class='table table-hover'> 
            				<thead><tr>
@@ -836,36 +870,11 @@
 	            </div>
 					  </section>
 					    
-					  <section id="content3">
-					  	
-					     <?php					
 
-							$sql = "SELECT * from supplier where supplier_ID=".$supplier_chosen;
-							$result = $conn-> query($sql) or die($conn->error);
-							if ($result-> num_rows >0) {
-								while ($row = $result-> fetch_assoc()) {
-									echo "<table class=\"table table-borderless\"><tr><th class='colhead'><span class='thick'><i class=\"fa fa-folder\"></i>  ID  </span></th><td>".$row["supplier_ID"]."</td></tr>";
-									echo "<tr><th class='colhead'><span class='thick'><i class=\"fa fa-circle-o\"></i>  Status  </span></th><td>";
-									if($row["supplier_Status"] == 0){
-										echo "Inactive";
-									} else{
-										echo "Active";
-									}
-									echo "</td></tr>";
-									echo "<tr><th class='colhead'><span class='thick'><i class=\"fa fa-user\"></i>  Contact Person  </span></th><td>".$row["supplier_ContactPerson"]."</td></tr>";
-									echo "<tr><th class='colhead'><span class='thick'><i class=\"fa fa-phone\"></i>  Contact Number  </span></th><td>".$row["supplier_ContactNum"]."</td></tr>";
-									echo "<tr><th class='colhead'><span class='thick'><i class=\"fa fa-map-marker\"></i>  Supplier Address  </span></th><td>".$row["supplier_Address"]."</td></tr></table>";
-								}
-							}
-							echo "<button class=\"btn btn-success mt-3\" onclick=\"changeLoc('delete','".$supplier_chosen."')\"><i class=\"fa fa-circle-o\"></i> Change Status
-							</button>";
-						?>
-						
-					  </section>
 				</div>
 
 			</div>
-			<button class="btn btn-dark mt-3" type="button" onclick="location.href='suppliers.php'"><i class="fa fa-chevron-left"></i> Go Back</button>
+			
 	</div>
 	</main>
 

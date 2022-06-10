@@ -221,7 +221,7 @@
                             <input type="number" step="0.01" class="form-control"  id="editMarkup1" name="editMarkup1" placeholder="Enter">
                             <input type="hidden" step="0.01" class="form-control"  id="hiddenmarkup" name="hiddenmarkup" placeholder="Enter">
                         </div> 
-                        <label for="editStock1" >Number of Stocks: </label>
+                        <label for="editStock1" >Quantity: </label>
                         <div>
                             <input type="number" step="any" class="form-control"  id="editStock1" name="editStock1" placeholder="Enter">
                         </div> 
