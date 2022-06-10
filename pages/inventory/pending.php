@@ -209,7 +209,7 @@ if(isset($_POST['cancel'])){
     <!-- END OF NAV BAR --> 
 
     <div class="container-fluid bg-light p-5 pt-2">
-    <h1> Pending Orders</h1>
+    <p class="fs-1 fw-bold mb-3"> PENDING ORDERS</p>
 
     <!-- TO BE PURCHASED CARD -->
     <div class="card" style="width: 49%; min-height:70%; float:left;">

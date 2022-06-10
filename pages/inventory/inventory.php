@@ -252,16 +252,16 @@ if (isset($_POST['edit'])) { //UPDATING INVENTORY
           <span class="fs-1 fw-bold"> INVENTORY </span>
         </div>
 
-        <div class="col-5" style="float:right;">
+       <!-- <div class="col-5" style="float:right;">
           <div class="p-3 bg-white rounded border rounded shadow-sm " style="width:49%;float:left;height:80px;">
-            <strong>Total items:</strong> <span class="text-primary fs-6"><?php echo number_format($totalItems);?></span> </br>
-            <strong class="mb-0">Total Assets: </strong><span class="text-primary fs-6"> Php <?php echo number_format($totalValue,2) ?> </span>
+            <strong>Total items:</strong> <span class="text-primary fs-6"><?php //echo number_format($totalItems);?></span> </br>
+            <strong class="mb-0">Total Assets: </strong><span class="text-primary fs-6"> Php <?php //echo number_format($totalValue,2) ?> </span>
           </div>
           <div class="p-3 bg-white rounded border rounded shadow-sm mr-2" style="width:49%; float:right;height:80px;">
           <strong>Total Cost of Items: </strong></br>
-             <span class="text-primary fs-5"> Php <?php echo number_format($totalCost,2) ?> </span>
+             <span class="text-primary fs-5"> Php <?php// echo number_format($totalCost,2) ?> </span>
           </div>
-        </div>
+        </div> -->
       </div> <!-- END OF INVENTORY HEAD -->
       
         <div id="filters" class="row mt-3">
@@ -320,7 +320,7 @@ if (isset($_POST['edit'])) { //UPDATING INVENTORY
           <button class="btn btn-dark"style="float:right; " type="button" onclick="location.href='../supplier/suppliers.php'">New Item</button>
           <!-- DOWNLOAD ITEMS IN INVENTORY -->
           <form action="export.php" method="post">
-            <button class="btn btn-success" style="float:right; margin-right:10px" name="exportItems" type="submit" >Download Items</button>
+            <button class="btn btn-success" style="float:right; margin-right:10px" name="exportItems" type="submit" >Export Inventory</button>
           </form>
         </div>
 

@@ -77,7 +77,7 @@ if (isset($_POST['deleteSelected'])) {
 <!DOCTYPE html>
 <html>
   <head>
-    <title> Archive </title>
+    <title> Trash </title>
     <link rel="stylesheet" href="./style.css?ts=<?=time()?>">
     <script type="text/javascript" src="inventory.js"></script>
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
@@ -205,7 +205,7 @@ if (isset($_POST['deleteSelected'])) {
         <div class="modal-dialog panel-warning" style="top:25%;">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title text-danger" id="confirmDeleteLabel">Delete All Archived Items</h5>
+              <h5 class="modal-title text-danger" id="confirmDeleteLabel">Empty Trash</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div> <!-- MODAL-HEADER -->
             
@@ -272,7 +272,7 @@ if (isset($_POST['deleteSelected'])) {
 
       <div id="inventoryHead" class="row"> 
         <div class="col-7">
-          <span class="fs-1 fw-bold"> ARCHIVED ITEMS </span>
+          <span class="fs-1 fw-bold"> TRASH </span>
         </div>
           
         <div class="col-5 py-auto mr-3 align-self-end">
@@ -327,12 +327,11 @@ if (isset($_POST['deleteSelected'])) {
             <button class="btn btn-outline-secondary " style="float:right; margin-right:10px" name="restoreSelected" type="submit" form='selectedForm'><i class='fas fa-undo-alt'></i>  Restore Selected</button>
             
         </div> 
-          
-          <!-- DOWNLOAD ITEMS IN INVENTORY -->
+          <button class="btn deletebtn btn-dark" style="float:right; margin-right:10px" name="deletebtn" id="deletebtn"  type="submit" >Empty Trash</button>
           <form action="archive.php" method="post">
             <button class="btn btn-success" style="float:right; margin-right:10px" name="restoreAll" type="submit" >Restore All</button>
           </form>
-          <button class="btn deletebtn btn-dark" style="float:right; margin-right:10px" name="deletebtn" id="deletebtn"  type="submit" >Delete All</button> <br/>
+           <br/>
         </div>
         <!-- DISPLAY LIST OF ITEMS IN INVENTORY -->
         <div id="display" class="mt-3">

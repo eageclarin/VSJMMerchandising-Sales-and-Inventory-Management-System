@@ -57,11 +57,11 @@
 				<i class="bi bi-archive"></i> Inventory
 				</a>
 			</li>
-			<li class="nav-item">
-				<a href="categbrands.php" class="nav-link <?php echo $c ?>">
+			<!-- <li class="nav-item">
+				<a href="categbrands.php" class="nav-link <?php //echo $c ?>">
 					<i class="bi bi-grid"></i> Categories and Brands
 				</a>
-			</li>
+			</li> -->
 			<li class="nav-item">
 				<a href="pending.php" class="nav-link <?php echo $p ?>"> <i class="bi bi-clock"></i> Pending </a>
 			</li>
@@ -75,10 +75,10 @@
 				<a href="items.php" class="nav-link <?php echo $it ?>"> <i class="bi bi-collection"></i> All Items </a>
 			</li>
 			<li class="nav-item">
-				<a href="returnitem.php" class="nav-link <?php echo $r ?>"> <i class="bi bi-arrow-return-left"></i> Returns </a>
+				<a href="returnitem.php" class="nav-link <?php echo $r ?>"> <i class="bi bi-arrow-return-left"></i> Return Items </a>
 			</li>
 			<li class="nav-item">
-				<a href="archive.php" class="nav-link <?php echo $a ?>"> <i class="bi bi-archive"></i> Archive </a>
+				<a href="archive.php" class="nav-link <?php echo $a ?>"> <i class="bi bi-trash"></i> Trash </a>
 			</li>
 		</ul>
 		<!------ END OF TABS ------>

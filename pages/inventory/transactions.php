@@ -11,6 +11,7 @@ $to_date=date("Y-m-d");
 ?>
 <!DOCTYPE html><html class=''>
 <head>
+  <title> Transactions </title>
   <link rel="stylesheet" href="./style.css?ts=<?=time()?>">
   <script type="text/javascript" src="inventory.js"></script>
   <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
