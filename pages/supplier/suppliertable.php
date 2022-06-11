@@ -552,7 +552,7 @@
 
 									</div>
 
-									<p>Item Cost Price:<input type="text" name="supplierItem_CostPrice" class="form-control" placeholder="Enter"></p>
+									<p>Item Cost Price:<input type="number" step="0.01" name="supplierItem_CostPrice" class="form-control" placeholder="Enter"></p>
 
 									
 								</div>
