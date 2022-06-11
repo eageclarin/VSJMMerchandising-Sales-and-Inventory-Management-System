@@ -207,7 +207,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
+    <title> Sales Entry </title>
     <!-- CSS -->
     <link rel="stylesheet" href="order.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -593,8 +593,8 @@
                             Check Summary
                         </button> -->
 
-                        <form action="updateItem.php?action=order" method="post"></form>
-                        <button class="w-100 btn btn-lg rounded-4 btn-primary" name="pay" id="pay" type="submit">Submit Sales</button>
+                        <form action="updateItem.php?action=order" method="post">
+                        <button class="w-100 btn btn-lg rounded-4 btn-primary" name="pay" id="pay" type="submit">Submit Sales</button></form>
 
                         <!-- empty cart -->
                         <button type="submit" <?php echo $button ?> form="emptyForm" class="btn btn-lg btn-outline-danger">
