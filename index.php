@@ -196,7 +196,7 @@ $totalSum = $row['totalSum'];
 					<ul>
 						<a href="pages/inventory/inventory.php"><li class='dropdown-item text-white'><i class="bi bi-archive" style="margin-right: 8px;"></i>Inventory </li></a>
 						<a href="pages/inventory/salability.php" ><li class='dropdown-item text-white'><i class="bi bi-graph-up-arrow" style="margin-right: 8px;"></i>Salability</li></a>
-						<a href="pages/inventory/salability.php" ><li class='dropdown-item text-white'><i class="bi bi-collection" style="margin-right: 8px;"></i>All Items</li></a>
+						<a href="pages/inventory/items.php" ><li class='dropdown-item text-white'><i class="bi bi-collection" style="margin-right: 8px;"></i>All Items</li></a>
 						<a href="pages/inventory/returnitem.php" ><li class='dropdown-item text-white'><i class="bi bi-arrow-return-left" style="margin-right: 8px;"></i>Return Items </li></a>
 						<a href="pages/inventory/archive.php" ><li class='dropdown-item text-white'><i class="bi bi-trash" style="margin-right: 8px;"></i>Trash </li></a>
 
