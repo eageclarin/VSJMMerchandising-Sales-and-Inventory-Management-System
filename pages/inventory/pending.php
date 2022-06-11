@@ -4,7 +4,7 @@ include_once '../../env/conn.php';
 require_once '../../env/auth_check.php';
 $n=0;
 $k=0;
-
+$empty = false;
 //ORDER BUTTON IN PENDING ORDERS
 if (isset($_POST['order'])) {
   $transID=$_POST['transaction'];
@@ -110,7 +110,8 @@ if(isset($_POST['deliver'])){
   } //END OF UPDATING TRANSACTION STATUS
 } else {//END OF CHECKLIST NOT EMPTY 
   //INSERT ALERT HERE: SUMTH LIKE 'NO ITEMS ARE CHECKED. CHECK OR CANCEL THE DELIVERY'
-  echo "<script>alert('No items are checked'); </script>";
+  //echo "<script>alert('No items are checked'); </script>";
+  $empty = true;
 }
 }// END OF DELIVER BUTTON SET
 
@@ -172,7 +173,7 @@ if(isset($_POST['cancel'])){
 <body >
     <main >
     <?php include 'navbar.php'; ?>
-    <!-- NAV BAR -->
+    <!-- NAV BAR 
     <div class="container-fluid bg-light" style="padding-right:0;padding-left:0; padding-bottom:0">
     <nav class="navbar  px-3 py-3" style=" width:100%">
       <ul class="nav nav-tabs pb-2" style="width:100%">
@@ -206,7 +207,27 @@ if(isset($_POST['cancel'])){
       
       
     </nav>
-    <!-- END OF NAV BAR --> 
+     END OF NAV BAR --> 
+
+      <!-- EMPTY MODAL ############################################################################ -->
+       <div class="modal fade" id="confirmDelete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+        <div class="modal-dialog panel-danger" style="top:25%; width:25%;">
+          <div class="modal-content ">
+            <div class="modal-header ">
+              <h5 class="modal-title" id="confirmDeleteLabel">No Items are Checked.</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div> <!-- MODAL-HEADER -->
+            
+            <form id="deleteform" action="search_sort.php" method="post" class="form-inline" > 
+              <div class="modal-body mb-2">   
+                <input type="hidden"  id="deleteID" name="deleteID" placeholder="Enter"> 
+                  <label >Please make sure you have checked all items that are delivered. If you want to cancel this delivery, click on the delete button. </label>          <br/>         
+              </div> <!-- MODAL-BODY -->
+            </form>  
+          </div> <!-- MODAL-CONTENT -->
+        </div> <!-- MODAL-DIALOG -->
+      </div> <!-- MODAL-FADE-->
+      <!-- EMPTY MODAL ############################################################################ -->
 
     <div class="container-fluid bg-light p-5 pt-2">
     <p class="fs-1 fw-bold mb-3"> PENDING ORDERS</p>
@@ -451,7 +472,7 @@ if(isset($_POST['cancel'])){
   }
 
   function check2(){
-      return confirm('Are you sure you want to proceed with this transaction?');
+      return confirm('Have you check all items delivered?');
   }
 
  
@@ -459,3 +480,11 @@ if(isset($_POST['cancel'])){
 
 </body>
 </html>
+
+<?php
+ 
+ if ($empty==true) {
+   echo "<script>$(document).ready(function(){
+     $('#confirmDelete').modal('show'); });</script>";
+ }
+?>
