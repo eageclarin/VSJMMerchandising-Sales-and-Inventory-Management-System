@@ -182,6 +182,80 @@ $totalSum = $row['totalSum'];
 		</a>
 		<hr class="mb-1">
 
+		<!-- MENUS -->
+		<div class="accordion accordion-flush" id="accordionFlushExample" >
+			<div class="accordion-item bg-dark">
+				<h2 class="accordion-header" id="flush-headingOne">
+				<button class="accordion-button collapsed bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+					Inventory 
+				</button>
+				</h2>
+				<div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+				<div class="accordion-body">
+					<ul>
+						<li class='dropdown-item'><a href="pages/inventory/inventory.php">Inventory</a> </li>
+						<li class='dropdown-item'><a href="pages/inventory/salability.php">Salability</a> </li>
+						<li class='dropdown-item'><a href="pages/inventory/items.php">All Items</a> </li>
+						<li class='dropdown-item'><a href="pages/inventory/returnitem.php">Return Items</a> </li>
+						<li class='dropdown-item'><a href="pages/inventory/archive.php">Trash</a> </li>
+					</ul>
+				</div>
+				</div>
+			</div>
+			<div class="accordion-item bg-dark">
+				<h2 class="accordion-header" id="flush-headingTwo">
+				<button class="accordion-button collapsed bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+					Suppliers
+				</button>
+				</h2>
+				<div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+				<div class="accordion-body">
+					<ul>
+						<li class='dropdown-item'><a href="pages/supplier/suppliers.php">Suppliers</a> </li>
+						<li class='dropdown-item'><a href="pages/supplier/supplieritem.php">Supplier Items</a> </li>
+					</ul>
+				</div>
+				</div>
+			</div>
+			<div class="accordion-item bg-dark">
+				<h2 class="accordion-header" id="flush-headingThree">
+				<button class="accordion-button collapsed bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+					Reports
+				</button>
+				</h2>
+				<div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+				<div class="accordion-body">
+					<ul >
+						<li class='dropdown-item'><a href="pages/sales/sales.php" style="color:white;">Sales</a> </li>
+					</ul>
+				</div>
+				</div>
+			</div>
+
+			<div class="accordion-item bg-dark">
+				<h2 class="accordion-header" id="flush-headingFour">
+				<button class="accordion-button collapsed bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
+					Transactions
+				</button>
+				</h2>
+				<div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
+				<div class="accordion-body">
+					<ul >
+						<li class='dropdown-item'><a href="pages/inventory/pending.php"  style="color:white;">Pending</a> </li>
+						<li class='dropdown-item'><a href="pages/inventory/transactions.php"  style="color:white;">Transactions</a> </li>
+					</ul>
+				</div>
+				</div>
+			</div>
+			<h2 class="accordion-header" id="flush-headingFour">
+				<button class="accordion-button collapsed bg-dark text-white" type="button" onclick="window.location.href='pages/order/order.php'" >
+					Sales Entry
+				</button>
+			</h2>
+
+		</div>
+		<!-- END OF MENUS -->
+
 		<!------ REMINDER ------>
 		<ul class="nav nav-pills flex-column mb-auto">
 			<li class="nav-item">
