@@ -102,3 +102,14 @@ main {
   .accordion-item .accordion-body .dropdown-item {
     border-radius: 5px;
   }
+
+   .accordion-body { 
+        padding-top: 10px !important;
+        padding-bottom: 0px !important;
+
+    }
+
+    a .dropdown-item{
+        border-bottom: 1px solid #525151;
+        
+    }

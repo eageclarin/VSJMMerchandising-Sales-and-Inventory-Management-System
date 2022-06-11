@@ -187,17 +187,18 @@ $totalSum = $row['totalSum'];
 			<div class="accordion-item bg-dark">
 				<h2 class="accordion-header" id="flush-headingOne">
 				<button class="accordion-button collapsed bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-					Inventory 
+				<i class="bi bi-archive" style="margin-right: 8px;"></i>	Inventory 
 				</button>
 				</h2>
 				<div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
 				<div class="accordion-body">
 					<ul>
-						<li class='dropdown-item'><a class="text-white" href="pages/inventory/inventory.php">Inventory</a> </li>
-						<li class='dropdown-item'><a class="text-white" href="pages/inventory/salability.php">Salability</a> </li>
-						<li class='dropdown-item'><a class="text-white" href="pages/inventory/items.php">All Items</a> </li>
-						<li class='dropdown-item'><a class="text-white" href="pages/inventory/returnitem.php">Return Items</a> </li>
-						<li class='dropdown-item'><a class="text-white" href="pages/inventory/archive.php">Trash</a> </li>
+						<a href="pages/inventory/inventory.php"><li class='dropdown-item text-white'><i class="bi bi-archive" style="margin-right: 8px;"></i>Inventory </li></a>
+						<a href="pages/inventory/salability.php" ><li class='dropdown-item text-white'><i class="bi bi-graph-up-arrow" style="margin-right: 8px;"></i>Salability</li></a>
+						<a href="pages/inventory/salability.php" ><li class='dropdown-item text-white'><i class="bi bi-collection" style="margin-right: 8px;"></i>All Items</li></a>
+						<a href="pages/inventory/returnitem.php" ><li class='dropdown-item text-white'><i class="bi bi-arrow-return-left" style="margin-right: 8px;"></i>Return Items </li></a>
+						<a href="pages/inventory/archive.php" ><li class='dropdown-item text-white'><i class="bi bi-trash" style="margin-right: 8px;"></i>Trash </li></a>
+
 					</ul>
 				</div>
 				</div>
@@ -205,14 +206,14 @@ $totalSum = $row['totalSum'];
 			<div class="accordion-item bg-dark">
 				<h2 class="accordion-header" id="flush-headingTwo">
 				<button class="accordion-button collapsed bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-					Suppliers
+				<i class="bi bi-people-fill" style="margin-right: 8px;"></i>	Suppliers
 				</button>
 				</h2>
 				<div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
 				<div class="accordion-body">
 					<ul>
-						<li class='dropdown-item'><a class="text-white" href="pages/supplier/suppliers.php">Suppliers</a> </li>
-						<li class='dropdown-item'><a class="text-white" href="pages/supplier/supplieritem.php">Supplier Items</a> </li>
+						<a href="pages/supplier/suppliers.php" ><li class='dropdown-item text-white'><i class="bi bi-people-fill" style="margin-right: 8px;"></i>Suppliers </li></a>
+						<a href="pages/supplier/supplieritem.php" ><li class='dropdown-item text-white'><i class="bi bi-collection" style="margin-right: 8px;"></i>Supplier Items </li></a>
 					</ul>
 				</div>
 				</div>
@@ -220,13 +221,13 @@ $totalSum = $row['totalSum'];
 			<div class="accordion-item bg-dark">
 				<h2 class="accordion-header" id="flush-headingThree">
 				<button class="accordion-button collapsed bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
-					Reports
+				<i class="bi bi-table" style="margin-right: 8px;"></i> 	Reports
 				</button>
 				</h2>
 				<div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
 				<div class="accordion-body">
 					<ul >
-						<li class='dropdown-item'><a href="pages/sales/sales.php" class="text-white">Sales</a> </li>
+						<a href="pages/sales/sales.php" ><li class='dropdown-item text-white' ><i class="bi bi-table" style="margin-right: 8px;"></i>Sales </li></a>
 					</ul>
 				</div>
 				</div>
@@ -235,25 +236,38 @@ $totalSum = $row['totalSum'];
 			<div class="accordion-item bg-dark">
 				<h2 class="accordion-header" id="flush-headingFour">
 				<button class="accordion-button collapsed bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
-					Transactions
+				<i class="bi bi-newspaper" style="margin-right: 8px;"></i>	Transactions
 				</button>
 				</h2>
 				<div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
 				<div class="accordion-body">
 					<ul >
-						<li class='dropdown-item'><a href="pages/inventory/pending.php"  style="color:white;">Pending</a> </li>
-						<li class='dropdown-item'><a href="pages/inventory/transactions.php"  style="color:white;">Transactions</a> </li>
+						<a href="pages/inventory/pending.php" ><li class='dropdown-item text-white'><i class="bi bi-clock" style="margin-right: 8px;"></i>Pending </li></a>
+						<a href="pages/inventory/transactions.php"  ><li class='dropdown-item text-white'><i class="bi bi-newspaper" style="margin-right: 8px;"></i>Transactions</li></a> 
 					</ul>
 				</div>
 				</div>
 			</div>
+			<div class="accordion-item bg-dark">
 			<h2 class="accordion-header" id="flush-headingFour">
-				<button class="accordion-button collapsed bg-dark text-white" type="button" onclick="window.location.href='pages/order/order.php'" >
-					Sales Entry
+				<!--<button class="accordion-button collapsed bg-dark text-white" type="button" onclick="window.location.href='pages/order/order.php'" >
+					<i class="bi bi-cart-fill" style="margin-right: 8px;"></i> Sales Entry
+				</button>-->
+				<button class="accordion-button collapsed bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFive">
+					<i class="bi bi-cart-fill" style="margin-right: 8px;"></i> Sales Entry
 				</button>
 			</h2>
+			<div id="flush-collapseFive" class="accordion-collapse collapse" aria-labelledby="flush-headingFive" data-bs-parent="#accordionFlushExample">
+				<div class="accordion-body">
+					<ul >
+						<a href="pages/inventory/pending.php" ><li class='dropdown-item text-white'><i class="bi bi-cart-fill" style="margin-right: 8px;"></i>Sales Entry </li></a>
+					</ul>
+				</div>
+				</div>
+			</div>
 
 		</div>
+		<hr class="mb-1">
 		<!-- END OF MENUS -->
 
 		<!------ REMINDER ------>
