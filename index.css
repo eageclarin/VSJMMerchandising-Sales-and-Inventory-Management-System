@@ -98,3 +98,7 @@ main {
     background-color: #495057;
     color: white;
   }
+
+  .accordion-item .accordion-body .dropdown-item {
+    border-radius: 5px;
+  }
