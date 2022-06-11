@@ -277,7 +277,10 @@
     </script>
 </head>
 <body>
+
+    
     <!----------- NAVIGATION BAR ------------>
+    
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark p-3">
         <a href="../../index.php" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
 		<img src="../../img/logo.png" class="me-2" width="40"/>
@@ -294,6 +297,9 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link"  href="../sales/sales.php">Sales</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link"  href="../inventory/transactions.php">Transactions</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link"  href="order.php">Sales Entry</a>
@@ -314,10 +320,12 @@
 				</ul>
 			</div>
     </nav>
+    
     <!----------- END NAVIGATION BAR ------------>
 
     <!------------ BODY ----------->
     <main class="container pt-5">
+        
         <!------ TITLE ------>
         <div class="row w-100 mt-5" style="height:10%">
             <div class="col position-relative">
