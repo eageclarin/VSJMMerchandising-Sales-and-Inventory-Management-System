@@ -37,18 +37,23 @@ include "conn.php";
         $sql = "SELECT order_Date, YEAR(order_Date) as year, MONTHNAME(order_Date) as month, DAY(order_Date) as day,  COUNT(DISTINCT orders.order_ID) AS totalOrders, SUM(orderItems_Quantity) AS totalItems, SUM(orderItems_TotalPrice) AS totalSales FROM orders INNER JOIN order_items ON (orders.order_ID = order_items.order_ID) GROUP BY DAY(order_Date);" ;
         $result = mysqli_query($conn,$sql);
         $resultCheck = mysqli_num_rows($result);
+        $total = 0;
         if ($resultCheck>0){
-          while ($row = mysqli_fetch_assoc($result)) {
-            $pdf->SetFont('Arial','',8);
+            while ($row = mysqli_fetch_assoc($result)) {
+                $pdf->SetFont('Arial','',8);
+                $y= $pdf ->GetY();
+                $pdf->Cell(95,8,$row['month']. " " .$row['day'] .", ".$row['year'],1,0,'C');
+                $pdf->Cell(95,8,$row['totalSales'],1,1,'C');
+                $total = $total + $row['totalSales'];
+                
+            }
             $y= $pdf ->GetY();
-            $pdf->Cell(95,8,$row['month']. " " .$row['day'] .", ".$row['year'],1,0,'C');
-            //$pdf ->Cell(30,5,'');
-            $pdf->Cell(95,8,$row['totalSales'],1,1,'C');
-            
-          }
-          $y1=$pdf ->GetY();
+            $pdf->SetFont('Arial','B',10);
+            $pdf->Cell(95,8,'',0,0,'L');
+            $pdf->Cell(95,8,'Grand Total:                       '.$total,0,1,'L');
+            $y1=$pdf ->GetY();
             $pdf ->SetY($y);
-          $pdf ->SetY($y1+10);
+            $pdf ->SetY($y1+10);
         } else {
             $pdf->SetFont('Arial','B',10);
             $pdf->Cell(0,8,"No Record Found",0,'C');
