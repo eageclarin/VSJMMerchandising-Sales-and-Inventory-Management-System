@@ -60,7 +60,7 @@
 				<i class="bi bi-archive" style="margin-right: 8px;"></i>	Inventory 
 				</button>
 				</h2>
-				<div id="flush-collapseOne" class="accordion-collapse <?php if(!$in && !$sa && !$it && !$r && !$a){echo 'collapse';} ?>" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+				<div id="flush-collapseOne" class="accordion-collapse <?php if($in !=="active" && $sa !=="active" && $it !=="active" && $r !=="active" && $a!=="active"){echo 'collapse';} ?>" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
 				<div class="accordion-body p-1 m-0 pb-0">
 					<ul>
 						<a href="../inventory/inventory.php"><li class='dropdown-item text-white <?php echo $in ?>'><i class="bi bi-archive" style="margin-right: 8px;"></i>Inventory </li></a>
@@ -109,7 +109,7 @@
 				<i class="bi bi-newspaper" style="margin-right: 8px;"></i>	Transactions
 				</button>
 				</h2>
-				<div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
+				<div id="flush-collapseFour" class="accordion-collapse <?php if($p !=="active" && $t !=="active"){echo 'collapse';} ?>" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
 				<div class="accordion-body p-1 m-0 pb-0">
 					<ul >
 						<a href="../inventory/pending.php" ><li class='dropdown-item text-white <?php echo $p ?>'><i class="bi bi-clock" style="margin-right: 8px;"></i>Pending </li></a>
