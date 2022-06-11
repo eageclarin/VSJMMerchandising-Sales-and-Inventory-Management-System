@@ -90,3 +90,11 @@ main {
   a {
     color: white;
   }
+
+  .accordion-body ul {
+    padding-left: 0;
+  }
+  .accordion-item .accordion-body .dropdown-item:hover {
+    background-color: #495057;
+    color: white;
+  }

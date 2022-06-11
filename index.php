@@ -193,11 +193,11 @@ $totalSum = $row['totalSum'];
 				<div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
 				<div class="accordion-body">
 					<ul>
-						<li class='dropdown-item'><a href="pages/inventory/inventory.php">Inventory</a> </li>
-						<li class='dropdown-item'><a href="pages/inventory/salability.php">Salability</a> </li>
-						<li class='dropdown-item'><a href="pages/inventory/items.php">All Items</a> </li>
-						<li class='dropdown-item'><a href="pages/inventory/returnitem.php">Return Items</a> </li>
-						<li class='dropdown-item'><a href="pages/inventory/archive.php">Trash</a> </li>
+						<li class='dropdown-item'><a class="text-white" href="pages/inventory/inventory.php">Inventory</a> </li>
+						<li class='dropdown-item'><a class="text-white" href="pages/inventory/salability.php">Salability</a> </li>
+						<li class='dropdown-item'><a class="text-white" href="pages/inventory/items.php">All Items</a> </li>
+						<li class='dropdown-item'><a class="text-white" href="pages/inventory/returnitem.php">Return Items</a> </li>
+						<li class='dropdown-item'><a class="text-white" href="pages/inventory/archive.php">Trash</a> </li>
 					</ul>
 				</div>
 				</div>
@@ -211,8 +211,8 @@ $totalSum = $row['totalSum'];
 				<div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
 				<div class="accordion-body">
 					<ul>
-						<li class='dropdown-item'><a href="pages/supplier/suppliers.php">Suppliers</a> </li>
-						<li class='dropdown-item'><a href="pages/supplier/supplieritem.php">Supplier Items</a> </li>
+						<li class='dropdown-item'><a class="text-white" href="pages/supplier/suppliers.php">Suppliers</a> </li>
+						<li class='dropdown-item'><a class="text-white" href="pages/supplier/supplieritem.php">Supplier Items</a> </li>
 					</ul>
 				</div>
 				</div>
@@ -226,7 +226,7 @@ $totalSum = $row['totalSum'];
 				<div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
 				<div class="accordion-body">
 					<ul >
-						<li class='dropdown-item'><a href="pages/sales/sales.php" style="color:white;">Sales</a> </li>
+						<li class='dropdown-item'><a href="pages/sales/sales.php" class="text-white">Sales</a> </li>
 					</ul>
 				</div>
 				</div>
