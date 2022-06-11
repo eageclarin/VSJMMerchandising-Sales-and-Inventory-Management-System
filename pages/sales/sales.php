@@ -44,6 +44,7 @@ $totalSum = $row['totalSum'];
     </div>   
 
     <!-- NAV BAR -->
+    <!--
     <div class="container-fluid bg-light" style="padding-right:0;padding-left:0; padding-bottom:0">
     <nav class="navbar  px-3 py-3" style=" width:100%">
       <ul class="nav nav-tabs pb-2" style="width:100%">
@@ -75,9 +76,11 @@ $totalSum = $row['totalSum'];
 			</div>
       </ul>
     </nav>
+    -->
     <!-- END OF NAVBAR -->
 
     <div class="container-fluid bg-light p-5 pt-2 mb-0">
+         <br>
       <!--  <div id="head">
             Heading -->
             <div id="inventoryHead" >

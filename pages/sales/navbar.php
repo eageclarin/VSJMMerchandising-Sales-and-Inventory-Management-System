@@ -9,63 +9,138 @@
    ?>
 
 
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		
+	<!-- CSS -->
+	<link rel="stylesheet" href="navbar.css" />
+
+
+</head>
+
+<main>
+	
 	<!------------ SIDEBAR ----------->
-    <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px;height:100%;">
+	<div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark h-100" style="width: 280px;">
 		<a href="../../index.php" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
 		<img src="../../img/logo.png" class="me-2" width="40"/>
 		<span class="fs-5"> VSJM Merchandising</span>
 		</a>
+		<hr class="mb-1">
+	
+		<div style="height:70%;">
+		<!-- MENUS -->
+		<div class="accordion accordion-flush" id="accordionFlushExample" >
+			<div class="accordion-item bg-dark">
+				<h2 class="accordion-header" id="flush-headingOne">
+				<button class="accordion-button collapsed bg-dark text-white p-2 m-0" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+				<i class="bi bi-archive" style="margin-right: 8px;"></i>	Inventory 
+				</button>
+				</h2>
+				<div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+				<div class="accordion-body p-1 m-0 pb-0">
+					<ul>
+						<a href="../inventory/inventory.php"><li class='dropdown-item text-white'><i class="bi bi-archive" style="margin-right: 8px;"></i>Inventory </li></a>
+						<a href="../inventory/salability.php" ><li class='dropdown-item text-white'><i class="bi bi-graph-up-arrow" style="margin-right: 8px;"></i>Salability</li></a>
+						<a href="../inventory/items.php" ><li class='dropdown-item text-white'><i class="bi bi-collection" style="margin-right: 8px;"></i>All Items</li></a>
+						<a href="../inventory/returnitem.php" ><li class='dropdown-item text-white'><i class="bi bi-arrow-return-left" style="margin-right: 8px;"></i>Return Items </li></a>
+						<a href="../inventory/archive.php" ><li class='dropdown-item text-white'><i class="bi bi-trash" style="margin-right: 8px;"></i>Trash </li></a>
 
-		<!------ OTHER PAGES
-		<div class="mt-3 container w-100">
-			<div class="row d-flex justify-content-between">
-				<div class="col-auto p-0">
-					<a href="../inventory/inventory.php">
-						<button class="btn btn-primary">Inventory</button>
-					</a>
+					</ul>
 				</div>
-				<div class="col-auto p-0">
-					<a href="sales.php">
-						<button class="btn btn-danger">Sales</button>
-					</a>
-				</div>
-				<div class="col-auto p-0">
-					<a href="../order/order.php">
-						<button class="btn btn-warning">Order</button>
-					</a>
 				</div>
 			</div>
-		</div>
-		END OF OTHER PAGES ------>
-		<hr>
+			<div class="accordion-item bg-dark">
+				<h2 class="accordion-header" id="flush-headingTwo">
+				<button class="accordion-button collapsed bg-dark text-white p-2 m-0" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+				<i class="bi bi-people-fill" style="margin-right: 8px;"></i>	Suppliers
+				</button>
+				</h2>
+				<div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+				<div class="accordion-body p-1 m-0 pb-0">
+					<ul>
+						<a href="../supplier/suppliers.php" ><li class='dropdown-item text-white'><i class="bi bi-people-fill" style="margin-right: 8px;"></i>Suppliers </li></a>
+						<a href="../supplier/supplieritem.php" ><li class='dropdown-item text-white'><i class="bi bi-collection" style="margin-right: 8px;"></i>Supplier Items </li></a>
+					</ul>
+				</div>
+				</div>
+			</div>
+			<div class="accordion-item bg-dark">
+				<h2 class="accordion-header" id="flush-headingThree">
+				<button class="accordion-button collapsed bg-dark text-white p-2 m-0" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+				<i class="bi bi-table" style="margin-right: 8px;"></i> 	Reports
+				</button>
+				</h2>
+				<div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+				<div class="accordion-body p-1 m-0 pb-0">
+					<ul >
+						<a href="../sales/sales.php" ><li class='dropdown-item text-white' ><i class="bi bi-table" style="margin-right: 8px;"></i>Sales </li></a>
+					</ul>
+				</div>
+				</div>
+			</div>
 
-		<!------ TABS ------>
+			<div class="accordion-item bg-dark">
+				<h2 class="accordion-header" id="flush-headingFour">
+				<button class="accordion-button collapsed bg-dark text-white p-2 m-0" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
+				<i class="bi bi-newspaper" style="margin-right: 8px;"></i>	Transactions
+				</button>
+				</h2>
+				<div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
+				<div class="accordion-body p-1 m-0 pb-0">
+					<ul >
+						<a href="../inventory/pending.php" ><li class='dropdown-item text-white'><i class="bi bi-clock" style="margin-right: 8px;"></i>Pending </li></a>
+						<a href="../inventory/transactions.php"  ><li class='dropdown-item text-white'><i class="bi bi-newspaper" style="margin-right: 8px;"></i>Transactions</li></a> 
+					</ul>
+				</div>
+				</div>
+			</div>
+			<div class="accordion-item bg-dark">
+			<h2 class="accordion-header" id="flush-headingFour">
+				<!--<button class="accordion-button collapsed bg-dark text-white" type="button" onclick="window.location.href='pages/order/order.php'" >
+					<i class="bi bi-cart-fill" style="margin-right: 8px;"></i> Sales Entry
+				</button>-->
+				<button class="accordion-button collapsed bg-dark text-white p-2 m-0" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFive">
+					<i class="bi bi-cart-fill" style="margin-right: 8px;"></i> Sales Entry
+				</button>
+			</h2>
+			<div id="flush-collapseFive" class="accordion-collapse collapse" aria-labelledby="flush-headingFive" data-bs-parent="#accordionFlushExample">
+				<div class="accordion-body p-1 m-0 pb-0">
+					<ul >
+						<a href="../order/order.php" ><li class='dropdown-item text-white'><i class="bi bi-cart-fill" style="margin-right: 8px;"></i>Sales Entry </li></a>
+					</ul>
+				</div>
+				</div>
+			</div>
+
+		</div>
+		
+		<!-- END OF MENUS -->
+		</div>
+		<div style="height:38%;">
+		<hr class="mb-1">
+		<!------ REMINDER ------>
 		<ul class="nav nav-pills flex-column mb-auto">
 			<li class="nav-item">
-				<a href="sales.php" class="nav-link <?php echo $s ?>">
-				<i class="bi bi-table"></i> Sales
-				</a>
-			</li>
-		</ul>
-		<!------ END OF TABS ------>
-
-        <div class="col mt-3">
-            <div class="fw-bold fs-4 fst-italic mb-0"> Reminders </div>
-
-			<!-- SHOW LOW ON STOCKS ITEMS AND PENDING DELIVERIES-->
+				<p class="fw-bold fs-5 fst-italic mb-0"> Reminders </p>
+				<!-- SHOW LOW ON STOCKS ITEMS AND PENDING DELIVERIES-->
 			<?php
 				//LOW ON STOCKS	
 				$sql = "SELECT * FROM inventory INNER JOIN item ON (inventory.item_ID = item.item_ID) WHERE inventoryItem_Status = 1 AND item_Stock<=10";
 				$result = mysqli_query($conn,$sql);
 				$resultCheck = mysqli_num_rows($result);
 				if ($resultCheck>0){ 
-					echo '<span class="text-warning mt-3 pb-2">Low on Stocks</span>';
-					echo '<div class="container flex-column mb-2 gap-2" style="max-height:150px;overflow-y:scroll" id="style-1">';
+					echo '<small class="text-warning mt-3 pb-2">Low on Stocks</small>';
+					echo "<div class='table-wrapper' style='height:auto; max-height:60px;' id='style-1'>";
+					echo '<div class="container flex-column mb-auto gap-2">';
 					while ($row = mysqli_fetch_assoc($result)) {	
 			?>
 						<div class="rounded p-2 py-1 row mb-2" style="background-color: #343a40;" id="reminder">
-							<div class="col-9 px-0">
-								<a href="../inventory/inventory.php" class="text-white"><?php echo $row['item_Name'] ?></a>
+							<div class="col-9 px-0 text-muted" >
+								<a href="pages/inventory/inventory.php" class="text-light"><?php echo $row['item_Name'] ?></a>
 							</div>
 							<div class="col px-0 text-danger text-end">
 								<?php echo $row['item_Stock'] .$row['item_unit'] ?>
@@ -74,6 +149,7 @@
 			<?php
 					}
 					echo '</div>';
+					echo '</div>';
 				}
 
 				//PENDING ORDERS
@@ -81,13 +157,15 @@
 				$result1 = mysqli_query($conn,$sql1);
 				$resultCheck1 = mysqli_num_rows($result1);
 				if ($resultCheck1>0){ 
-					echo '<span class="text-warning mt-3 pb-2">Pending Orders</span>';
-					echo '<div class="container flex-column mb-2 gap-2" style="max-height:150px;overflow-y:scroll" id="style-1">';
+					
+					echo '<small class="text-warning mt-3 pb-2">Pending Orders</small>';
+					echo "<div class='table-wrapper' style='height:auto; max-height:60px;' id='style-1'>";
+					echo '<div class="container flex-column mb-auto gap-2">';
 					while ($row1 = mysqli_fetch_assoc($result1)) {	
 			?>
 						<div class="rounded p-2 py-1 row mb-2" style="background-color: #343a40;" id="reminder">
 							<div class="col-9 px-0">
-								<a href="../inventory/pending.php" class="text-white"><?php echo $row1['transaction_ID'] .': ' .$row1['supplier_Name'] ?></a>
+								<a href="pages/inventory/pending.php" class="text-light"><?php echo $row1['transaction_ID'] .': ' .$row1['supplier_Name'] ?></a>
 							</div>
 							<div class="col px-0 text-danger text-end">
 								<?php echo number_format($row1['transaction_TotalPrice'],2) ?>
@@ -96,6 +174,7 @@
 			<?php
 					  	}
 			
+					echo '</div>';
 					echo "</div>";
 				}
 
@@ -104,13 +183,14 @@
 				$result1 = mysqli_query($conn,$sql1);
 				$resultCheck1 = mysqli_num_rows($result1);
 				if ($resultCheck1>0){ 
-					echo '<span class="text-warning mt-3 pb-2">Deliveries</span>';
-					echo '<div class="container flex-column mb-auto gap-2" style="max-height:150px;overflow-y:scroll" id="style-1">';
+					echo '<small class="text-warning mt-3 pb-2">Deliveries</small>';
+					echo "<div class='table-wrapper' style='height:auto; max-height:60px;' id='style-1'>";
+					echo '<div class="container flex-column mb-auto gap-2">';
 					while ($row1 = mysqli_fetch_assoc($result1)) {	
 			?>
 						<div class="rounded p-2 py-1 row mb-2" style="background-color: #343a40;" id="reminder">
 							<div class="col-9 px-0">
-								<a href="../inventory/ending.php" class="text-white"><?php echo $row1['transaction_ID'] .': ' .$row1['supplier_Name'] ?></a>
+								<a href="pages/inventory/pending.php" class="text-light"><?php echo $row1['transaction_ID'] .': ' .$row1['supplier_Name'] ?></a>
 							</div>
 							<div class="col px-0 text-danger text-end">
 								<?php echo number_format($row1['transaction_TotalPrice'],2) ?>
@@ -119,8 +199,35 @@
 			<?php
 					}
 					echo '</div>';
+					echo '</div>';
 				}
 				?>
+				
+			</li>
+		</ul>
+		<!-- <a class="nav-link d-grid p-0 mt-auto" href="env/backup.php" >
+			<button class="btn btn-light"><i class="bi bi-save"></i> Backup Database</button>
+		</a> -->
+		<!------ END OF REMINDER ------>
+			</div>
+		<!------ USER FUNCTIONS ------>
+		<hr>
+		<div class="dropdown">
+			<a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+				<img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+				<strong><?php echo $_SESSION["customerName"]; ?></strong>
+			</a>
+			<ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+				<li><a class="dropdown-item" href="#">Settings</a></li>
+				<li><a class="dropdown-item" href="#">Profile</a></li>
+				<li><hr class="dropdown-divider"></li>
+				<li><a class="dropdown-item" href="#">Sign out</a></li>
+			</ul>
 		</div>
+		<!------ END OF USER FUNCTIONS ------>
 	</div>
 	<!------------ END OF SIDEBAR ----------->
+</main>
+	
+
+</html>
