@@ -1,10 +1,31 @@
 <?php
 		$url = substr($_SERVER["SCRIPT_NAME"],strrpos($_SERVER["SCRIPT_NAME"],"/")+1);
+		$in = $c = $t = $s = $it = $r = $p = $a = 'text-white';
 		$s = $si = 'text-white';
 		if ($url == 'suppliers.php' || $url == 'editsupplier.php' || $url == 'suppliertable.php') {
 			$s = 'active';
 		} else if ($url == 'supplieritem.php') {
 			$si = 'active';
+		} else if ($url == 'inventory.php') {
+			$in = 'active';
+		} else if ($url == 'pending.php') {
+			$p = 'active';
+		} else if ($url == 'transactions.php') {
+			$t = 'active';
+		} else if ($url == 'salability.php') {
+			$sa = 'active';
+		} else if ($url == 'items.php') {
+			$it = 'active';
+		} else if ($url == 'returnitem.php') {
+			$r = 'active';
+		} else if ($url == 'pending.php') {
+			$p = 'active';
+		} else if ($url == 'archive.php') {
+			$a = 'active';
+		} else if ($url == 'sales.php') {
+			$sales = 'active';
+		} else if ($url == 'order.php') {
+			$o = 'active';
 		}
    ?>
 
@@ -42,11 +63,11 @@
 				<div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
 				<div class="accordion-body p-1 m-0 pb-0">
 					<ul>
-						<a href="../inventory/inventory.php"><li class='dropdown-item text-white'><i class="bi bi-archive" style="margin-right: 8px;"></i>Inventory </li></a>
-						<a href="../inventory/salability.php" ><li class='dropdown-item text-white'><i class="bi bi-graph-up-arrow" style="margin-right: 8px;"></i>Salability</li></a>
-						<a href="../inventory/items.php" ><li class='dropdown-item text-white'><i class="bi bi-collection" style="margin-right: 8px;"></i>All Items</li></a>
-						<a href="../inventory/returnitem.php" ><li class='dropdown-item text-white'><i class="bi bi-arrow-return-left" style="margin-right: 8px;"></i>Return Items </li></a>
-						<a href="../inventory/archive.php" ><li class='dropdown-item text-white'><i class="bi bi-trash" style="margin-right: 8px;"></i>Trash </li></a>
+						<a href="../inventory/inventory.php"><li class='dropdown-item text-white <?php echo $in ?>'><i class="bi bi-archive" style="margin-right: 8px;"></i>Inventory </li></a>
+						<a href="../inventory/salability.php" ><li class='dropdown-item text-white <?php echo $sa ?>'><i class="bi bi-graph-up-arrow" style="margin-right: 8px;"></i>Salability</li></a>
+						<a href="../inventory/items.php" ><li class='dropdown-item text-white <?php echo $it ?>'><i class="bi bi-collection" style="margin-right: 8px;"></i>All Items</li></a>
+						<a href="../inventory/returnitem.php" ><li class='dropdown-item text-white <?php echo $r ?>'><i class="bi bi-arrow-return-left" style="margin-right: 8px;"></i>Return Items </li></a>
+						<a href="../inventory/archive.php" ><li class='dropdown-item text-white <?php echo $a ?>'><i class="bi bi-trash" style="margin-right: 8px;"></i>Trash </li></a>
 
 					</ul>
 				</div>
@@ -54,15 +75,15 @@
 			</div>
 			<div class="accordion-item bg-dark">
 				<h2 class="accordion-header" id="flush-headingTwo">
-				<button class="accordion-button collapsed bg-dark text-white p-2 m-0" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-				<i class="bi bi-people-fill" style="margin-right: 8px;"></i>	Suppliers
+				<button class="accordion-button collapsed bg-dark text-white p-2 m-0 " type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+				<i class="bi bi-people-fill " style="margin-right: 8px;"></i>	Suppliers
 				</button>
 				</h2>
-				<div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+				<div id="flush-collapseTwo" class="accordion-collapse <?php if(!$s || !$si){echo 'collapse';} ?>" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
 				<div class="accordion-body p-1 m-0 pb-0">
 					<ul>
-						<a href="suppliers.php" ><li class='dropdown-item text-white'><i class="bi bi-people-fill" style="margin-right: 8px;"></i>Suppliers </li></a>
-						<a href="supplieritem.php" ><li class='dropdown-item text-white'><i class="bi bi-collection" style="margin-right: 8px;"></i>Supplier Items </li></a>
+						<a href="suppliers.php" ><li class='dropdown-item text-white <?php echo $s ?>'><i class="bi bi-people-fill" style="margin-right: 8px;"></i>Suppliers </li></a>
+						<a href="supplieritem.php" ><li class='dropdown-item text-white <?php echo $si ?>'><i class="bi bi-collection" style="margin-right: 8px;"></i>Supplier Items </li></a>
 					</ul>
 				</div>
 				</div>
@@ -76,7 +97,7 @@
 				<div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
 				<div class="accordion-body p-1 m-0 pb-0">
 					<ul >
-						<a href="../sales/sales.php" ><li class='dropdown-item text-white' ><i class="bi bi-table" style="margin-right: 8px;"></i>Sales </li></a>
+						<a href="../sales/sales.php" ><li class='dropdown-item text-white <?php echo $sales ?>' ><i class="bi bi-table" style="margin-right: 8px;"></i>Sales </li></a>
 					</ul>
 				</div>
 				</div>
@@ -91,8 +112,8 @@
 				<div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
 				<div class="accordion-body p-1 m-0 pb-0">
 					<ul >
-						<a href="../inventory/pending.php" ><li class='dropdown-item text-white'><i class="bi bi-clock" style="margin-right: 8px;"></i>Pending </li></a>
-						<a href="../inventory/transactions.php"  ><li class='dropdown-item text-white'><i class="bi bi-newspaper" style="margin-right: 8px;"></i>Transactions</li></a> 
+						<a href="../inventory/pending.php" ><li class='dropdown-item text-white <?php echo $p ?>'><i class="bi bi-clock" style="margin-right: 8px;"></i>Pending </li></a>
+						<a href="../inventory/transactions.php"  ><li class='dropdown-item text-white <?php echo $t ?>'><i class="bi bi-newspaper" style="margin-right: 8px;"></i>Transactions</li></a> 
 					</ul>
 				</div>
 				</div>
@@ -109,7 +130,7 @@
 			<div id="flush-collapseFive" class="accordion-collapse collapse" aria-labelledby="flush-headingFive" data-bs-parent="#accordionFlushExample">
 				<div class="accordion-body p-1 m-0 pb-0">
 					<ul >
-						<a href="../order/order.php" ><li class='dropdown-item text-white'><i class="bi bi-cart-fill" style="margin-right: 8px;"></i>Sales Entry </li></a>
+						<a href="../order/order.php" ><li class='dropdown-item text-white <?php echo $o ?>'><i class="bi bi-cart-fill" style="margin-right: 8px;"></i>Sales Entry </li></a>
 					</ul>
 				</div>
 				</div>
