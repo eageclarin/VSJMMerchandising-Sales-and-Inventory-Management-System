@@ -102,7 +102,7 @@
 			  margin: 0 0 -1px;
 			  padding: 15px 25px;
 			  font-weight: 700;
-			  font-size: 18;
+			  font-size: 16;
 			  text-align: center;
 			  color: black;
 			  border: 1px solid transparent;
@@ -714,7 +714,7 @@
 					  </section>
 
 					  <section id="content2">
-					   	<div class='table-wrapper' style="overflow-y:scroll; height: 325px">
+					   	<div class='table-wrapper' style="overflow-y:scroll; height: 350px">
 					   	<table class='table table-hover'> 
            				<thead><tr>
 							<th>Item ID</th>
@@ -800,7 +800,7 @@
 					  </section>
 					    
 					  <section id="content3">
-					  	<div class='table-wrapper' style="overflow-y:scroll; height: 325px">
+					  	<div class='table-wrapper' style="overflow-y:scroll; height: 350px">
 					   	<table id="transaction_table" class='table table-hover'> 
            				<thead><tr>
 							<th>Transaction ID</th>
