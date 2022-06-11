@@ -181,6 +181,7 @@
     </div> 
 
     <!-- NAV BAR -->
+    <!--
     <div class="container-fluid bg-light" style="padding-right:0;padding-left:0; padding-bottom:0">
     <nav class="navbar  px-3 py-3" style=" width:100%">
       <ul class="nav nav-tabs pb-2" style="width:100%">
@@ -212,13 +213,16 @@
 			</div>
       </ul>
     </nav>
+  -->
         
     <div class="container-fluid bg-light p-4">
+    	<br>
     	<div style="position: relative; text-align: center;">
 	    	<div style="position: absolute;"><span><button class="btn btn-dark mt-3" type="button" onclick="location.href='suppliers.php'"><i class="fa fa-chevron-left"></i> Go Back</button></span></div>
 	    	<div class="text-center fs-1 fw-bold" style="display: inline-block;"> SUPPLIERS </div>
     	<br>
     	</div>
+    	<br><br>
 		<div class="supplier_choice">
 
 			<?php

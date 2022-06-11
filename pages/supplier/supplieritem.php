@@ -47,6 +47,7 @@
     </div>   
 
     <!-- NAV BAR -->
+    <!--
     <div class="container-fluid bg-light" style="padding-right:0;padding-left:0; padding-bottom:0">
     <nav class="navbar  px-3 py-3" style=" width:100%">
       <ul class="nav nav-tabs pb-2" style="width:100%">
@@ -63,7 +64,7 @@
         <li class="nav-item">
           <a class="nav-link " href="../order/order.php"><i class="bi bi-cart-fill"></i> Sales Entry</a>
         </li>
-
+      -->
        <!-- <div class="btn-group" style="display:block; margin-left: auto; margin-right:5">
 				<button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" id="dropdownUser1" aria-expanded="false">
 					<img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
@@ -76,6 +77,7 @@
 				<li><a class="dropdown-item" href="login.php">Sign out</a></li>
 				</ul>
 			</div>-->
+      <!--
       <div class="btn-group" style="display:block; margin-left: auto; margin-right:5">
         <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" id="dropdownUser1" aria-expanded="false">
           <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
@@ -90,12 +92,13 @@
       </div>
       </ul>
     </nav>
-
-
+-->
+  
     <div class="container-fluid bg-light p-5 pt-2">
       <div class="row justify-content-md-center">
         <div class="row">
           <div class="col position-relative">
+            <br>
             <div class="text-center fs-1 fw-bold"> SUPPLIER ITEMS </div>
           </div>
         </div>
