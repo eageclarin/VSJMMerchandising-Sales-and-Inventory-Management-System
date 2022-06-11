@@ -181,17 +181,18 @@ $totalSum = $row['totalSum'];
 		<span class="fs-5"> VSJM Merchandising</span>
 		</a>
 		<hr class="mb-1">
-
+	
+		<div style="height:70%;">
 		<!-- MENUS -->
 		<div class="accordion accordion-flush" id="accordionFlushExample" >
 			<div class="accordion-item bg-dark">
 				<h2 class="accordion-header" id="flush-headingOne">
-				<button class="accordion-button collapsed bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+				<button class="accordion-button collapsed bg-dark text-white p-2 m-0" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
 				<i class="bi bi-archive" style="margin-right: 8px;"></i>	Inventory 
 				</button>
 				</h2>
 				<div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-				<div class="accordion-body">
+				<div class="accordion-body p-1 m-0 pb-0">
 					<ul>
 						<a href="pages/inventory/inventory.php"><li class='dropdown-item text-white'><i class="bi bi-archive" style="margin-right: 8px;"></i>Inventory </li></a>
 						<a href="pages/inventory/salability.php" ><li class='dropdown-item text-white'><i class="bi bi-graph-up-arrow" style="margin-right: 8px;"></i>Salability</li></a>
@@ -205,12 +206,12 @@ $totalSum = $row['totalSum'];
 			</div>
 			<div class="accordion-item bg-dark">
 				<h2 class="accordion-header" id="flush-headingTwo">
-				<button class="accordion-button collapsed bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+				<button class="accordion-button collapsed bg-dark text-white p-2 m-0" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
 				<i class="bi bi-people-fill" style="margin-right: 8px;"></i>	Suppliers
 				</button>
 				</h2>
 				<div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-				<div class="accordion-body">
+				<div class="accordion-body p-1 m-0 pb-0">
 					<ul>
 						<a href="pages/supplier/suppliers.php" ><li class='dropdown-item text-white'><i class="bi bi-people-fill" style="margin-right: 8px;"></i>Suppliers </li></a>
 						<a href="pages/supplier/supplieritem.php" ><li class='dropdown-item text-white'><i class="bi bi-collection" style="margin-right: 8px;"></i>Supplier Items </li></a>
@@ -220,12 +221,12 @@ $totalSum = $row['totalSum'];
 			</div>
 			<div class="accordion-item bg-dark">
 				<h2 class="accordion-header" id="flush-headingThree">
-				<button class="accordion-button collapsed bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+				<button class="accordion-button collapsed bg-dark text-white p-2 m-0" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
 				<i class="bi bi-table" style="margin-right: 8px;"></i> 	Reports
 				</button>
 				</h2>
 				<div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
-				<div class="accordion-body">
+				<div class="accordion-body p-1 m-0 pb-0">
 					<ul >
 						<a href="pages/sales/sales.php" ><li class='dropdown-item text-white' ><i class="bi bi-table" style="margin-right: 8px;"></i>Sales </li></a>
 					</ul>
@@ -235,12 +236,12 @@ $totalSum = $row['totalSum'];
 
 			<div class="accordion-item bg-dark">
 				<h2 class="accordion-header" id="flush-headingFour">
-				<button class="accordion-button collapsed bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
+				<button class="accordion-button collapsed bg-dark text-white p-2 m-0" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
 				<i class="bi bi-newspaper" style="margin-right: 8px;"></i>	Transactions
 				</button>
 				</h2>
 				<div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushExample">
-				<div class="accordion-body">
+				<div class="accordion-body p-1 m-0 pb-0">
 					<ul >
 						<a href="pages/inventory/pending.php" ><li class='dropdown-item text-white'><i class="bi bi-clock" style="margin-right: 8px;"></i>Pending </li></a>
 						<a href="pages/inventory/transactions.php"  ><li class='dropdown-item text-white'><i class="bi bi-newspaper" style="margin-right: 8px;"></i>Transactions</li></a> 
@@ -253,12 +254,12 @@ $totalSum = $row['totalSum'];
 				<!--<button class="accordion-button collapsed bg-dark text-white" type="button" onclick="window.location.href='pages/order/order.php'" >
 					<i class="bi bi-cart-fill" style="margin-right: 8px;"></i> Sales Entry
 				</button>-->
-				<button class="accordion-button collapsed bg-dark text-white" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFive">
+				<button class="accordion-button collapsed bg-dark text-white p-2 m-0" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFive">
 					<i class="bi bi-cart-fill" style="margin-right: 8px;"></i> Sales Entry
 				</button>
 			</h2>
 			<div id="flush-collapseFive" class="accordion-collapse collapse" aria-labelledby="flush-headingFive" data-bs-parent="#accordionFlushExample">
-				<div class="accordion-body">
+				<div class="accordion-body p-1 m-0 pb-0">
 					<ul >
 						<a href="pages/inventory/pending.php" ><li class='dropdown-item text-white'><i class="bi bi-cart-fill" style="margin-right: 8px;"></i>Sales Entry </li></a>
 					</ul>
@@ -267,13 +268,15 @@ $totalSum = $row['totalSum'];
 			</div>
 
 		</div>
-		<hr class="mb-1">
+		
 		<!-- END OF MENUS -->
-
+		</div>
+		<div style="height:38%;">
+		<hr class="mb-1">
 		<!------ REMINDER ------>
 		<ul class="nav nav-pills flex-column mb-auto">
 			<li class="nav-item">
-				<p class="fw-bold fs-5 fst-italic mb-3"> Reminder </p>
+				<p class="fw-bold fs-5 fst-italic mb-0"> Reminders </p>
 				<!-- SHOW LOW ON STOCKS ITEMS AND PENDING DELIVERIES-->
 			<?php
 				//LOW ON STOCKS	
@@ -281,8 +284,8 @@ $totalSum = $row['totalSum'];
 				$result = mysqli_query($conn,$sql);
 				$resultCheck = mysqli_num_rows($result);
 				if ($resultCheck>0){ 
-					echo '<span class="text-warning mt-3 pb-2">Low on Stocks</span>';
-					echo "<div class='table-wrapper' style='height:auto; max-height:150px;' id='style-1'>";
+					echo '<small class="text-warning mt-3 pb-2">Low on Stocks</small>';
+					echo "<div class='table-wrapper' style='height:auto; max-height:60px;' id='style-1'>";
 					echo '<div class="container flex-column mb-auto gap-2">';
 					while ($row = mysqli_fetch_assoc($result)) {	
 			?>
@@ -306,8 +309,8 @@ $totalSum = $row['totalSum'];
 				$resultCheck1 = mysqli_num_rows($result1);
 				if ($resultCheck1>0){ 
 					
-					echo '<span class="text-warning mt-3 pb-2">Pending Orders</span>';
-					echo "<div class='table-wrapper' style='height:auto; max-height:150px;' id='style-1'>";
+					echo '<small class="text-warning mt-3 pb-2">Pending Orders</small>';
+					echo "<div class='table-wrapper' style='height:auto; max-height:60px;' id='style-1'>";
 					echo '<div class="container flex-column mb-auto gap-2">';
 					while ($row1 = mysqli_fetch_assoc($result1)) {	
 			?>
@@ -331,8 +334,8 @@ $totalSum = $row['totalSum'];
 				$result1 = mysqli_query($conn,$sql1);
 				$resultCheck1 = mysqli_num_rows($result1);
 				if ($resultCheck1>0){ 
-					echo '<span class="text-warning mt-3 pb-2">Deliveries</span>';
-					echo "<div class='table-wrapper' style='height:auto; max-height:150px;' id='style-1'>";
+					echo '<small class="text-warning mt-3 pb-2">Deliveries</small>';
+					echo "<div class='table-wrapper' style='height:auto; max-height:60px;' id='style-1'>";
 					echo '<div class="container flex-column mb-auto gap-2">';
 					while ($row1 = mysqli_fetch_assoc($result1)) {	
 			?>
@@ -353,11 +356,11 @@ $totalSum = $row['totalSum'];
 				
 			</li>
 		</ul>
-		<a class="nav-link d-grid p-0 mt-auto" href="env/backup.php" >
+		<!-- <a class="nav-link d-grid p-0 mt-auto" href="env/backup.php" >
 			<button class="btn btn-light"><i class="bi bi-save"></i> Backup Database</button>
-		</a>
+		</a> -->
 		<!------ END OF REMINDER ------>
-
+			</div>
 		<!------ USER FUNCTIONS ------>
 		<hr>
 		<div class="dropdown">
@@ -540,6 +543,9 @@ $totalSum = $row['totalSum'];
 			
 		</div>
 		END OF BOTTOM ------>
+		<a class="d-grid p-0 mt-auto" href="env/backup.php" >
+			<button class="btn btn-dark w-25"><i class="bi bi-save"></i> Backup Database</button>
+		</a>
 	</div>
 	</main>
 
