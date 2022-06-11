@@ -29,11 +29,9 @@ $res = mysqli_query($conn, $sql);
 
     //QUERY EDITED
         
-    $pdf->SetFont('Arial','B',8);
-    $pdf->Cell(50,10,'Order Date',1,0,'C');
-    $pdf->Cell(46,10,'Total No. of Orders',1,0,'C');
-    $pdf->Cell(46,10,'Total No. of Items',1,0,'C');
-    $pdf->Cell(46,10,'Total Sales',1,1,'C');
+    $pdf->SetFont('Arial','B',10);
+    $pdf->Cell(95,10,'Order Date',1,0,'C');
+    $pdf->Cell(95,10,'Total Sales',1,1,'C');
     $y = $pdf->GetY();
     $date = date("Y-m-d");
     $sql = "SELECT YEAR(order_Date) AS year, MONTHNAME(order_Date) AS month, WEEK(order_Date) AS week, order_Date, COUNT(DISTINCT orders.order_ID) AS totalOrders, SUM(orderItems_Quantity) AS totalItems, SUM(orderItems_TotalPrice) AS totalSales FROM orders INNER JOIN order_items ON (orders.order_ID = order_items.order_ID) GROUP BY WEEK(order_Date), MONTH(order_Date), YEAR(order_Date)" ;
@@ -43,11 +41,8 @@ $res = mysqli_query($conn, $sql);
       while ($row = mysqli_fetch_assoc($result)) {
         $pdf->SetFont('Arial','',8);
         $y= $pdf ->GetY();
-        $pdf->Cell(50,8,"Week ".$row['week']. " (" .$row['month'].", ".$row['year'] .")",1,0,'C');
-        //$pdf ->Cell(30,5,'');
-        $pdf->Cell(46,8,$row['totalOrders'],1,0);
-        $pdf->Cell(46,8,$row['totalItems'],1,0);
-        $pdf->Cell(46,8,$row['totalSales'],1,1);
+        $pdf->Cell(95,8,"Week ".$row['week']. " (" .$row['month'].", ".$row['year'] .")",1,0,'C');
+        $pdf->Cell(95,8,$row['totalSales'],1,1,'C');
         
       }
       $y1=$pdf ->GetY();
@@ -71,12 +66,10 @@ $res = mysqli_query($conn, $sql);
                 $pdf->SetFont('Arial','B',12);
                 $pdf->Cell(0,8,'Week '.$timestamp1.' ('.$month.')' ,1,0);
                 $pdf->Ln(8);
-
                 $sql1 = "SELECT DISTINCT order_items.order_ID, WEEK(orders.order_Date)  
                          FROM order_items
                          INNER JOIN orders on orders.order_ID = order_items.order_ID";
                 $result1 = mysqli_query($conn, $sql1);
-
                 foreach($result1 as $row)
                 {
                     $timestamp = $row['WEEK(orders.order_Date)'];
@@ -95,7 +88,6 @@ $res = mysqli_query($conn, $sql);
                         $pdf->Cell(20,10,'Quantity',1,0);
                         $pdf->Cell(20,10,'Order Total',1,1);
                         $y = $pdf->GetY();
-
                         $current = $row['order_ID'];
                         foreach($result as $row)
                         {
