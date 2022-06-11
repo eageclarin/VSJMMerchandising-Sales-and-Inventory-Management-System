@@ -748,7 +748,7 @@
 												<td>". $row["item_Category"]."</td>
 												<td>". $row["supplierItem_CostPrice"]."</td>
 												<td><button class=\"btn editbtn1 p-0\" style=\"float:left;\"><i class='fas fa-edit'></i></button></td>
-												<td><a onclick='return checkdelete()' href='deletesupplieritem.php?item_ID=".$row['item_ID']."&supplier_ID=".$supplier_chosen."'\"><button style=\"border: none;\"><i class='fas fa-trash'></i></a></button></td>";
+												<td><a style=\"color:black;\" onclick='return checkdelete()' href='deletesupplieritem.php?item_ID=".$row['item_ID']."&supplier_ID=".$supplier_chosen."'\"><button style=\"border: none; \"><i class='fas fa-trash'></i></a></button></td>";
 										//echo "<td><a onclick='return checkdelete()' href='deleteitemtransactions.php?item_ID=".$row['item_ID']."&supplier_ID=".$supplier_chosen."'\"><button>Delete Item & Transactions</a></button></td>";
 												
 												?>
@@ -842,7 +842,7 @@
 												<td>". $row["transactionItems_TotalPrice"]."</td>
 												<td>". $row["transaction_TotalPrice"]."</td>
 												<td><button class=\"btn editbtn2 p-0\" style=\"float:left;\" ><i class='fas fa-edit'></i></button></td>
-												<td><button style=\"border: none;\"> <a onclick='return checkdelete()' href='deletetransaction.php?transaction_ID=".$row['transaction_ID']."'><i class='fas fa-trash'></i></button></a></td>
+												<td><button style=\"border: none;\"> <a style=\"color:black;\" onclick='return checkdelete()' href='deletetransaction.php?transaction_ID=".$row['transaction_ID']."'><i class='fas fa-trash'></i></button></a></td>
 						
 										</tr>";
 
