@@ -62,15 +62,21 @@ if(isset($_GET['from_date']) && isset($_GET['to_date']))
             $date = date("Y-m-d");
             $result = mysqli_query($conn,$sql);
             $resultCheck = mysqli_num_rows($result);
+            $total = 0;
             if ($resultCheck>0){
                 while ($row = mysqli_fetch_assoc($result2)) {
                     $pdf->SetFont('Arial','',8);
                     $y= $pdf ->GetY();
                     $pdf->Cell(95,8,$row['order_Date'],1,0,'C');
                     $pdf->Cell(95,8,$row['totalSales'],1,1,'C');
+                    $total = $total + $row['totalSales'];
                 
-            }
-            $y1=$pdf ->GetY();
+                }
+                $y= $pdf ->GetY();
+                $pdf->SetFont('Arial','B',10);
+                $pdf->Cell(95,8,'',0,0,'L');
+                $pdf->Cell(95,8,'Grand Total:                       '.$total,0,1,'L');
+                $y1=$pdf ->GetY();
                 $pdf ->SetY($y);
             $pdf ->SetY($y1+10);
             } else {
