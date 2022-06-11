@@ -55,11 +55,9 @@ if(isset($_GET['from_date']) && isset($_GET['to_date']))
         $sql2 = "SELECT order_Date, COUNT(DISTINCT orders.order_ID) AS totalOrders, SUM(orderItems_Quantity) AS totalItems, SUM(orderItems_TotalPrice) AS totalSales FROM orders INNER JOIN order_items ON (orders.order_ID = order_items.order_ID) WHERE order_Date BETWEEN '$from_date' AND '$to_date' GROUP BY DAY(order_Date);";
         $result2 = mysqli_query($conn, $sql2);
   
-            $pdf->SetFont('Arial','B',8);
-            $pdf->Cell(50,10,'Order Date',1,0,'C');
-            $pdf->Cell(46,10,'Total No. of Orders',1,0,'C');
-            $pdf->Cell(46,10,'Total No. of Items',1,0,'C');
-            $pdf->Cell(46,10,'Total Sales',1,1,'C');
+            $pdf->SetFont('Arial','B',10);
+            $pdf->Cell(95,12,'Order Date',1,0,'C');
+            $pdf->Cell(95,12,'Total Sales',1,1,'C');
             $y = $pdf->GetY();
             $date = date("Y-m-d");
             $result = mysqli_query($conn,$sql);
@@ -68,10 +66,8 @@ if(isset($_GET['from_date']) && isset($_GET['to_date']))
                 while ($row = mysqli_fetch_assoc($result2)) {
                     $pdf->SetFont('Arial','',8);
                     $y= $pdf ->GetY();
-                    $pdf->Cell(50,8,$row['order_Date'],1,0,'C');
-                    $pdf->Cell(46,8,$row['totalOrders'],1,0);
-                    $pdf->Cell(46,8,$row['totalItems'],1,0);
-                    $pdf->Cell(46,8,$row['totalSales'],1,1);
+                    $pdf->Cell(95,8,$row['order_Date'],1,0,'C');
+                    $pdf->Cell(95,8,$row['totalSales'],1,1,'C');
                 
             }
             $y1=$pdf ->GetY();
@@ -90,4 +86,3 @@ if(isset($_GET['from_date']) && isset($_GET['to_date']))
 
 $pdf->Output();
 ?>
-
