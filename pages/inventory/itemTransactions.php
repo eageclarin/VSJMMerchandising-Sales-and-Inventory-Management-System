@@ -8,6 +8,7 @@ $n=0;
 ?>
 <!DOCTYPE html><html class=''>
 <head>
+  <title>Item Transactions</title>
   <link rel="stylesheet" href="./style.css?ts=<?=time()?>">
   <script type="text/javascript" src="inventory.js"></script>
   <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
