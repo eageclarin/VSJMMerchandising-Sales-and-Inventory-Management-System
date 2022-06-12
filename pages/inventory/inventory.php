@@ -344,7 +344,7 @@ if (isset($_POST['edit'])) { //UPDATING INVENTORY
           retail = $('#editRetail').val();
           var costPrice = $('#editCost').val();
           if (costPrice!="") {
-            alert(costPrice);
+            
             var newmarkup = Number(parseFloat(retail/costPrice).toFixed(2));
             $('#editMarkup').val(newmarkup);
           }
