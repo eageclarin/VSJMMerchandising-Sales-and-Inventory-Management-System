@@ -187,7 +187,7 @@
                     $lastCost = $rowDate['transactionItems_CostPrice'];
                     
                 } else {
-                    $lastCost = $row['item_RetailPrice'];
+                    $lastCost = $row['item_RetailPrice']/$row['Item_markup'];
                 }
                 
 
