@@ -89,7 +89,7 @@ $totalSum = $row['totalSum'];
 
             
             <!--<div id="group">-->
-            <div class='row'>
+            <div class='row mt-0'>
                 <div class="p-0 mb-3 rounded border shadow-sm">
                     <div class="pl-2 pb-1 pt-1 card-header" >
                         <small style="font-weight:bold;">Sales Reports</small>
