@@ -354,7 +354,7 @@ if(isset($_POST['cancel'])){
   <!-------------DELIVERED CARD --------------->
   <div class="card" style="width: 49%;min-height:70%; float:right;">
     <div class="card-header bg-dark text-white">
-      <h3 class="card-title">To be Delivered</h3>
+      <h3 class="card-title">For Delivery</h3>
     </div>
     <div class="card-body">
       <?php
