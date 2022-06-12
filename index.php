@@ -416,6 +416,7 @@ $totalSum = $row['totalSum'];
 		<div class="row justify-content-md-center mt-5">
 			<div class="row">
 				<div class="col position-relative">
+				
 					<div class="text-center fs-1"> Welcome, <strong><?php echo $_SESSION["customerName"]; ?></strong> </div>
 				</div>
 			</div>
@@ -453,12 +454,17 @@ $totalSum = $row['totalSum'];
 						<button class="btn btn-danger fs-5 shadow-sm"><i class="bi bi-table"></i><br>Reports</button>
 					</a>
 				</li>
-				
+				<li class="nav-item flex-fill">
+					<a class="nav-link d-grid h-75" href="pages/inventory/transactions.php">
+						<button class="btn btn-info fs-5 shadow-sm"><i class="bi bi-newspaper"></i><br>Transactions</button>
+					</a>
+				</li>
 				<li class="nav-item flex-fill">
 					<a class="nav-link d-grid h-75" href="pages/order/order.php">
 						<button class="btn btn-warning fs-5 shadow-sm"><i class="bi bi-cart-fill"></i><br>Sales Entry</button>
 					</a>
 				</li>
+				
 			</ul>
 		</div>
 		
@@ -543,7 +549,7 @@ $totalSum = $row['totalSum'];
 			
 		</div>
 		END OF BOTTOM ------>
-		<a class="d-grid p-0 mt-auto" href="env/backup.php" >
+		<a class="d-grid p-0 mt-auto " href="env/backup.php" >
 			<button class="btn btn-dark w-25"><i class="bi bi-save"></i> Backup Database</button>
 		</a>
 	</div>
