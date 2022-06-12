@@ -336,7 +336,7 @@ if(isset($_POST['cancel'])){
                             } // END OF RESULT1 WHILE LOOP
                           } //END OF RESULTCHECK1
                           echo "</table>";
-                          echo "<a href='../supplier/suppliertable.php?supplier_ID=".$supplier."'>Add Items</a>";?>
+                          echo "<a style='color:cadetblue;' href='../supplier/suppliertable.php?supplier_ID=".$supplier."'>Add Items</a>";?>
               
                       </div> <!-- END OF CONTENT -->
                     </section>
