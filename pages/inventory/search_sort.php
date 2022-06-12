@@ -187,7 +187,7 @@
                     $lastCost = $rowDate['transactionItems_CostPrice'];
                     
                 } else {
-                    //$lastCost = $row['item_RetailPrice'];
+                    $lastCost = $row['item_RetailPrice'];
                 }
                 
 
@@ -276,6 +276,7 @@
                 $('#editBrand').val(data[3]);
                 $('#editRetail').val(data[4]);
                 $('#editMarkup').val(data[5]);
+                $('#editCost').val(data[9]);
                 $('#editStock').val(data[6]);
                 $('#editCategory').val(data[7]);
                 const $select = document.querySelector('#item_Category');
