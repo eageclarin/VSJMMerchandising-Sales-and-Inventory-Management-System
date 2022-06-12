@@ -123,9 +123,6 @@
                             <tr> 
                                 <th> Transaction ID </th>
                                 <th> Supplier </th>
-                                <th> Supplier Contact Person </th>
-                                <th> Supplier Contact Number</th>
-                                <th> Supplier Address </th>
                                 <th> Item </th>
                                 <th> Brand </th>
                                 <th> Transaction Date </th>
@@ -151,9 +148,7 @@
                 $output .= "<td>" .$row1['transaction_ID']. "</td>";
                 if(isset($_POST['export'])){
                     $output .= "<td>". $row1['supplier_Name']. "</td>";
-                    $output .= "<td>" .$row1['supplier_ContactPerson']. "</td>";
-                    $output .= "<td>" .$row1['supplier_ContactNum']. "</td>";
-                    $output .= "<td>" .$row1['supplier_Address']. "</td>";
+                    
                 }
                 $output .="<td>" . $row1['item_Name'] . "</td>"; 
                 $output .="<td>" . $row1['item_Brand'] . "</td>"; 
@@ -165,6 +160,8 @@
                 $output .= "</tr>"; 
 
             }
+        }else{
+            $output .= "<td>No purchases for this month.</td>";
         } 
         
         $output .= "</table>"; 
