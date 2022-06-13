@@ -25,11 +25,11 @@ if(isset($_GET['from_date']) && isset($_GET['to_date']))
     $to_date = date('Y-m-d', strtotime($_GET['to_date'].'+1 day'));
     
 
-    $sql = "SELECT item.item_ID, item.item_Name, item.item_unit, item.item_Brand, order_items.order_ID, order_items.orderItems_Quantity, order_items.orderItems_TotalPrice, orders.order_Date, orders.order_Total 
+    $sql = "SELECT item.item_ID, item.item_Name, item.item_unit, item.item_Brand, sales_items.sales_ID, sales_items.salesItems_Quantity, sales_items.salesItems_TotalPrice, sales.sales_Date, sales.sales_Total 
             FROM item 
-            INNER JOIN order_items on order_items.item_ID = item.item_ID 
-            INNER JOIN orders on orders.order_ID = order_items.order_ID 
-            WHERE orders.order_Date BETWEEN '$from_date' AND '$to_date'";                                   
+            INNER JOIN sales_items on sales_items.item_ID = item.item_ID 
+            INNER JOIN sales on sales.sales_ID = sales_items.sales_ID 
+            WHERE sales.sales_Date BETWEEN '$from_date' AND '$to_date'";                                   
     $result = mysqli_query($conn, $sql);
     
     $pdf = new PDF();
@@ -52,7 +52,7 @@ if(isset($_GET['from_date']) && isset($_GET['to_date']))
     
     if(mysqli_num_rows($result) > 0)
     {
-        $sql2 = "SELECT order_Date, COUNT(DISTINCT orders.order_ID) AS totalOrders, SUM(orderItems_Quantity) AS totalItems, SUM(orderItems_TotalPrice) AS totalSales FROM orders INNER JOIN order_items ON (orders.order_ID = order_items.order_ID) WHERE order_Date BETWEEN '$from_date' AND '$to_date' GROUP BY DAY(order_Date);";
+        $sql2 = "SELECT sales_Date, COUNT(DISTINCT sales.sales_ID) AS totalOrders, SUM(salesItems_Quantity) AS totalItems, SUM(salesItems_TotalPrice) AS totalSales FROM sales INNER JOIN sales_items ON (sales.sales_ID = sales_items.sales_ID) WHERE sales_Date BETWEEN '$from_date' AND '$to_date' GROUP BY DAY(sales_Date);";
         $result2 = mysqli_query($conn, $sql2);
   
             $pdf->SetFont('Arial','B',10);
@@ -67,7 +67,7 @@ if(isset($_GET['from_date']) && isset($_GET['to_date']))
                 while ($row = mysqli_fetch_assoc($result2)) {
                     $pdf->SetFont('Arial','',8);
                     $y= $pdf ->GetY();
-                    $pdf->Cell(95,8,$row['order_Date'],1,0,'C');
+                    $pdf->Cell(95,8,$row['sales_Date'],1,0,'C');
                     $pdf->Cell(95,8,$row['totalSales'],1,1,'C');
                     $total = $total + $row['totalSales'];
                 

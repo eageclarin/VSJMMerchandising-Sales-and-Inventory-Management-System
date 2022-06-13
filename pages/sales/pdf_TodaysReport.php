@@ -25,11 +25,11 @@ if(isset($_GET['from_date']) && isset($_GET['to_date']))
     //$to_date = date('Y-m-d', strtotime($_GET['to_date'].'+1 day'));
     
 
-    $sql = "SELECT item.item_ID, item.item_Name, item.item_unit, item.item_Brand, order_items.order_ID, order_items.orderItems_Quantity, order_items.orderItems_TotalPrice, orders.order_Date, orders.order_Total 
+    $sql = "SELECT item.item_ID, item.item_Name, item.item_unit, item.item_Brand, sales_items.sales_ID, sales_items.salesItems_Quantity, sales_items.salesItems_TotalPrice, sales.sales_Date, sales.sales_Total 
             FROM item 
-            INNER JOIN order_items on order_items.item_ID = item.item_ID 
-            INNER JOIN orders on orders.order_ID = order_items.order_ID 
-            WHERE orders.order_Date BETWEEN '$from_date' AND '$to_date'";                                   
+            INNER JOIN sales_items on sales_items.item_ID = item.item_ID 
+            INNER JOIN sales on sales.sales_ID = sales_items.sales_ID 
+            WHERE sales.sales_Date BETWEEN '$from_date' AND '$to_date'";                                   
     $result = mysqli_query($conn, $sql);
     
     $pdf = new PDF();
@@ -65,46 +65,46 @@ if(isset($_GET['from_date']) && isset($_GET['to_date']))
             $pdf->Cell(20,10,'Order Total',1,1);
             $y = $pdf->GetY();
 
-            $sql3 = "SELECT DISTINCT (DATE(order_Date)) from orders WHERE order_Date BETWEEN '$from_date' AND '$to_date'";
+            $sql3 = "SELECT DISTINCT (DATE(sales_Date)) from sales WHERE sales_Date BETWEEN '$from_date' AND '$to_date'";
             $result3 = mysqli_query($conn, $sql3);
 
             foreach($result3 as $row)
             {
-                $date = date("Y-m-d", strtotime($row['(DATE(order_Date))']));
-                $sql1 = "SELECT DISTINCT order_items.order_ID, orders.order_Date  
-                            FROM order_items
-                            INNER JOIN orders on orders.order_ID = order_items.order_ID";
+                $date = date("Y-m-d", strtotime($row['(DATE(sales_Date))']));
+                $sql1 = "SELECT DISTINCT sales_items.sales_ID, sales.sales_Date  
+                            FROM sales_items
+                            INNER JOIN sales on sales.sales_ID = sales_items.sales_ID";
                 $result1 = mysqli_query($conn, $sql1);
 
 
                 foreach($result1 as $row)
                 {
-                    $date2 = date("Y-m-d", strtotime($row['order_Date']));
+                    $date2 = date("Y-m-d", strtotime($row['sales_Date']));
                     if($date2 == $date)
                     {
                         
 
                         $result2 = mysqli_query($conn, $sql);
-                        $current = $row['order_ID'];
+                        $current = $row['sales_ID'];
 
                         foreach($result as $row)
                         {
-                            $previous = $row['order_ID'];
+                            $previous = $row['sales_ID'];
                             if($current == $previous)
                             {
                                 $pdf->SetFont('Arial','',8);
                                 $y= $pdf ->GetY();
-                                $pdf->MultiCell(30,8,$row['order_Date'],1,'L');
+                                $pdf->MultiCell(30,8,$row['sales_Date'],1,'L');
                                 $y1=$pdf ->GetY();
                                 $pdf ->SetY($y);
                                 $pdf ->Cell(30,5,'');
-                                $pdf->Cell(15,8,$row['order_ID'],1,0);
+                                $pdf->Cell(15,8,$row['sales_ID'],1,0);
                                 $pdf->Cell(15,8,$row['item_ID'],1,0);
                                 $pdf->Cell(45,8,$row['item_Name'],1,0);
                                 $pdf->Cell(15,8,$row['item_unit'],1,0);
                                 $pdf->Cell(30,8,$row['item_Brand'],1,0);
-                                $pdf->Cell(20,8,$row['orderItems_Quantity'],1,0);
-                                $pdf->Cell(20,8,$row['orderItems_TotalPrice'],1,1);   
+                                $pdf->Cell(20,8,$row['salesItems_Quantity'],1,0);
+                                $pdf->Cell(20,8,$row['salesItems_TotalPrice'],1,1);   
                             }
                         }
                     }

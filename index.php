@@ -4,7 +4,7 @@ session_start();
 include_once 'env/conn.php';
 require_once 'auth_check.php';
 
-$result = mysqli_query($conn, "SELECT SUM(orderItems_TotalPrice) AS totalSum, COUNT(item_ID) AS totalItems, order_Date FROM order_items INNER JOIN orders on orders.order_ID = order_items.order_ID ");
+$result = mysqli_query($conn, "SELECT SUM(salesItems_TotalPrice) AS totalSum, COUNT(item_ID) AS totalItems, sa;es_Date FROM sales_items INNER JOIN sales on sales.sales_ID = sales_items.sales_ID ");
 $row = mysqli_fetch_array($result);
 $totalItems = $row['totalItems'];
 $totalSum = $row['totalSum'];
@@ -14,7 +14,7 @@ $totalSum = $row['totalSum'];
     $date = date("Y-m-d");
     $year=date_create($date);
     $year = date_format($year,"Y");
-    $sql = "SELECT AVG(daily) AS daily, orderDate FROM (SELECT SUM(order_Total) as daily, order_Date AS orderDate FROM orders WHERE YEAR(order_Date)='$year' GROUP BY order_Date) AS average GROUP BY MONTH(orderDate);";                                    
+    $sql = "SELECT AVG(daily) AS daily, salesDate FROM (SELECT SUM(sales_Total) as daily, sales AS orderDate FROM sales WHERE YEAR(sales_Date)='$year' GROUP BY sales_Date) AS average GROUP BY MONTH(orderDate);";                                    
     $result = mysqli_query($conn,$sql);
     $resultCheck = mysqli_num_rows($result);
     if ($resultCheck>0){
@@ -261,7 +261,7 @@ $totalSum = $row['totalSum'];
 			<div id="flush-collapseFive" class="accordion-collapse collapse" aria-labelledby="flush-headingFive" data-bs-parent="#accordionFlushExample">
 				<div class="accordion-body p-1 m-0 pb-0">
 					<ul >
-						<a href="pages/order/order.php" ><li class='dropdown-item text-white'><i class="bi bi-cart-fill" style="margin-right: 8px;"></i>Sales Entry </li></a>
+						<a href="pages/salesEntry/salesEntry.php" ><li class='dropdown-item text-white'><i class="bi bi-cart-fill" style="margin-right: 8px;"></i>Sales Entry </li></a>
 					</ul>
 				</div>
 				</div>
@@ -460,7 +460,7 @@ $totalSum = $row['totalSum'];
 					</a>
 				</li>
 				<li class="nav-item flex-fill">
-					<a class="nav-link d-grid h-75" href="pages/order/order.php">
+					<a class="nav-link d-grid h-75" href="pages/salesEntry/salesEntry.php">
 						<button class="btn btn-warning fs-5 shadow-sm"><i class="bi bi-cart-fill"></i><br>Sales Entry</button>
 					</a>
 				</li>
@@ -527,7 +527,7 @@ $totalSum = $row['totalSum'];
 			<?php 
 			$today= date("Y-m-d");
 			$today1= date("Y-m-d", strtotime('+1 day'));
-			$result = mysqli_query($conn, "SELECT COUNT(order_ID) as orderCount, SUM(order_Total) AS orderTotal FROM orders WHERE order_Date BETWEEN '$today' AND '$today1'");
+			$result = mysqli_query($conn, "SELECT COUNT(sales_ID) as orderCount, SUM(sales_Total) AS orderTotal FROM sales WHERE sales_Date BETWEEN '$today' AND '$today1'");
 			$row = mysqli_fetch_array($result);
 			
 			$orderCount = $row['orderCount'];

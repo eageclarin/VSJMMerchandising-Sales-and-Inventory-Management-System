@@ -42,7 +42,7 @@ require_once '../../env/auth_check.php';
           <a class="nav-link " href="../sales/sales.php"><i class="bi bi-table"></i> Sales</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="../order/order.php"><i class="bi bi-cart-fill"></i> Sales Entry</a>
+          <a class="nav-link " href="../salesEntry/salesEntry.php"><i class="bi bi-cart-fill"></i> Sales Entry</a>
         </li>
 
         <div class="btn-group" style="display:block; margin-left: auto; margin-right:2">
