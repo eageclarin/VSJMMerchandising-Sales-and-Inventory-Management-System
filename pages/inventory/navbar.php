@@ -130,7 +130,7 @@
 			<div id="flush-collapseFive" class="accordion-collapse collapse" aria-labelledby="flush-headingFive" data-bs-parent="#accordionFlushExample">
 				<div class="accordion-body p-1 m-0 pb-0">
 					<ul >
-						<a href="../salesEntry/salesEntry.php" ><li class='dropdown-item text-white <?php echo $o ?>'><i class="bi bi-cart-fill" style="margin-right: 8px;"></i>Sales Entry </li></a>
+						<a href="../order/order.php" ><li class='dropdown-item text-white <?php echo $o ?>'><i class="bi bi-cart-fill" style="margin-right: 8px;"></i>Sales Entry </li></a>
 					</ul>
 				</div>
 				</div>

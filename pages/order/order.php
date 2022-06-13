@@ -74,7 +74,7 @@
                         $name = $rowGet['item_Name'];
                         $price = $rowGet['item_RetailPrice'];
                     } else {
-                        echo "<script> window.location.replace('salesEntry.php?update=n') </script>";
+                        echo "<script> window.location.replace('order.php?update=n') </script>";
                         //header('location: order.php?update=n'); //item not in inventory
                     }
  
@@ -100,7 +100,7 @@
                         //update total
                         //decrease stock??
                         if ($resUpdate) {
-                            echo "<script> window.location.replace('salesEntry.php?update=u') </script>";
+                            echo "<script> window.location.replace('order.php?update=u') </script>";
                             //header('location: order.php?update=u'); //item in cart. updated item quantity
                         }
                     } else { //if product not in cart
@@ -112,7 +112,7 @@
                         //update total
                         //decrease stock??
                         if ($resInsert) {
-                            echo "<script> window.location.replace('salesEntry.php?update=i') </script>";
+                            echo "<script> window.location.replace('order.php?update=i') </script>";
                             //header('location: order.php?update=i'); //item added to cart
                         }
                     }
@@ -134,7 +134,7 @@
                         $id = $rowGet['item_ID'];
                         $price = $rowGet['item_RetailPrice'];
                     } else {
-                        echo "<script> window.location.replace('salesEntry.php?update=n') </script>";
+                        echo "<script> window.location.replace('order.php?update=n') </script>";
                         //header('location: order.php?search=n'); //item not in inventory
                     }
  
@@ -157,7 +157,7 @@
                         //update total
                         //decrease stock??
                         if ($resUpdate) {
-                            echo "<script> window.location.replace('salesEntry.php?update=u') </script>";
+                            echo "<script> window.location.replace('order.php?update=u') </script>";
                             //header('location: order.php?update=u'); //item in cart. updated item quantity
                         }
                     } else { //if product not in cart yet
@@ -171,7 +171,7 @@
                         //update total
                         //decrease stock??
                         if ($resInsert) {
-                            echo "<script> window.location.replace('salesEntry.php?update=i') </script>";
+                            echo "<script> window.location.replace('order.php?update=i') </script>";
                             //header('location: order.php?update=i'); //item added to cart
                         }
                     }
@@ -194,7 +194,7 @@
                         //update total
                         //increase stock
                         if ($resDelete) {
-                            echo "<script> window.location.replace('salesEntry.php?update=d') </script>";
+                            echo "<script> window.location.replace('order.php?update=d') </script>";
                             //header('location: order.php?update=d');
                         }
                     }
@@ -210,7 +210,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title> Sales Entry </title>
     <!-- CSS -->
-    <link rel="stylesheet" href="salesEntry.css" />
+    <link rel="stylesheet" href="order.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -225,7 +225,7 @@
     
     <!-- JAVASCRIPT -->
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
-    <script src="salesEntry.js"></script>
+    <script src="order.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function() {
@@ -311,7 +311,7 @@
                 <a class="nav-link"  href="../inventory/transactions.php">Transactions</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link"  href="salesEntry.php">Sales Entry</a>
+                <a class="nav-link"  href="order.php">Sales Entry</a>
             </li>
         </ul>
         </div>
@@ -336,14 +336,14 @@
     <main class="container pt-5">
         
         <!------ TITLE ------>
-        <div class="row mt-5" style="height:10%">
+        <div class="row w-100 mt-5" style="height:10%">
             <div class="col position-relative">
                 <span class="position-absolute top-50 start-50 translate-middle fs-1 fw-bold"> SALES ENTRY </span>
             </div>
         </div>
         <div class="row text-center">
             <div class="col position-relative">
-                <span class="day fst-italic"> Day </span>
+                <span class="day fst-italic"> <i class="bi bi-calendar3"></i> Day </span>
                 <span class="date"> Date </span>
             </div>
         </div>
@@ -558,7 +558,7 @@
 
                             <!-- item delete button -->
                             <div class="col-1">
-                                <form action="salesEntry.php?action=delete&itemID=<?php echo $iID ?>" method="post">
+                                <form action="order.php?action=delete&itemID=<?php echo $iID ?>" method="post">
                                     <button type="submit" class="btn btn-danger" id="delItem" aria-label="Close">X</button>
                                 </form>
                             </div>
@@ -574,7 +574,7 @@
             <!------ ORDER ------>
             <div class="col">
                 <!-- search item -->
-                <form method="POST" action="salesEntry.php?action=addSearch" class="d-flex mb-0">
+                <form method="POST" action="order.php?action=addSearch" class="d-flex mb-0">
                     <input type="hidden" name="itemQty" id="searchQty" value="" />
                     <input type="text" name="item" autcomplete="off" class="form-control form-control me-2 ui-autocomplete-input border" id="searchItem" onkeyup="search()" placeholder="Search Item...">
                     <button class="btn btn-success" id="addItem" type="submit"><i class="fa fa-check btn-icon-prepend"></i>Add</button>

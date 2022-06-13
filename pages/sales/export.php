@@ -12,7 +12,7 @@
                                 <th> Total Sales </th>
                             </tr>";
 
-        $sql1 = "SELECT order_Date, COUNT(DISTINCT orders.order_ID) AS totalOrders, SUM(orderItems_Quantity) AS totalItems, SUM(orderItems_TotalPrice) AS totalSales FROM sales INNER JOIN order_items ON (orders.order_ID = order_items.order_ID) GROUP BY order_Date;";   
+        $sql1 = "SELECT order_Date, COUNT(DISTINCT orders.order_ID) AS totalOrders, SUM(orderItems_Quantity) AS totalItems, SUM(orderItems_TotalPrice) AS totalSales FROM orders INNER JOIN order_items ON (orders.order_ID = order_items.order_ID) GROUP BY order_Date;";   
         $result1 = mysqli_query($conn,$sql1);
         $resultCheck1 = mysqli_num_rows($result1);            
                     
