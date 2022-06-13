@@ -80,11 +80,9 @@
                             $resStock = mysqli_query($conn, $sqlStock);
                         }
                         
-
-                        
                         $sqlEmpty = "TRUNCATE TABLE cart";
                         if(mysqli_query($conn, $sqlEmpty)) {
-                            header("location: order.php");
+                            header("location: order.php?update=a");
                         }
                     }
                 

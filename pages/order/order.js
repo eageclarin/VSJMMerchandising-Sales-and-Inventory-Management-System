@@ -1,4 +1,4 @@
-//search item
+/*search item
 function search(){
   var option = $('#sort').find(":selected").val();
   var input = $('#searchItem').val();
@@ -13,14 +13,34 @@ function search(){
       success: function(data) {
           $("#display").html(data);
       }
-  });*/
+  });
 
   const $select = document.querySelector('#categ');
   $select.value = 'All';
   sort();
-}
+} */
 
-//sort and category item
+/*function search() {
+  var input = $('#searchItem').val();
+
+  if (event.keyCode === 13) {
+    event.preventDefault();
+    let item = prompt("How many?", 1);
+
+    if (item != null) {
+      $.ajax({
+        type: "POST",
+        url: "searchSort.php",
+        data: { search: input },
+        success: function(data) {
+            $("#display").html(data);
+        }
+      });
+    }
+  }
+}*/
+
+/*sort and category item
 function sort(){
   var option = $('#sort').find(":selected").val();
   var categOption = $('#categ').find(":selected").val();
@@ -41,7 +61,7 @@ function sort(){
       }
   });
 
-}
+}*/
 
 //change qty
 function changeQty(getID, getQty) {

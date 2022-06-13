@@ -3,16 +3,16 @@
     include_once '../../env/conn.php';
     
     if (isset($_POST['selected'])) {
-        $k = $_POST['selected'];
-        $c = $_POST['categSort'];
+        //$k = $_POST['selected'];
+        //$c = $_POST['categSort'];
         $Name = $_POST['search'];
-        $_SESSION['option'] = $_POST['selected'];
+        //$_SESSION['option'] = $_POST['selected'];
         
-        if ($c!="All") {
+        /*if ($c!="All") {
             $addFilter = "AND item_Category = '$c' ";
         } else {
             $addFilter ="";
-        }
+        }*/
 
         
         if ($Name!="") {    
@@ -21,7 +21,8 @@
             $addSearch = "";
         }
 
-        if ($k == "PriceAsc") {
+        $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) WHERE  inventoryItem_Status = 1 " .$addFilter .$addSearch ." ;"; 
+        /*if ($k == "PriceAsc") {
             $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) WHERE  inventoryItem_Status = 1 " .$addFilter .$addSearch ." ORDER BY item_RetailPrice ASC;"; 
         } else if ($k == "PriceDesc") {
             $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) WHERE  inventoryItem_Status = 1 " .$addFilter .$addSearch ." ORDER BY item_RetailPrice DESC;"; 
@@ -35,7 +36,7 @@
             $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) INNER JOIN (SELECT SUM(orderItems_Quantity) as sales_sum, item_ID as order_itemID FROM order_items GROUP BY item_ID) as orders ON (inventory.item_ID = orders.order_itemID) WHERE  inventoryItem_Status = 1 " .$addFilter .$addSearch ." ORDER BY sales_sum DESC;"; 
         } else {
             $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) WHERE  inventoryItem_Status = 1 " .$addFilter .$addSearch ." ;"; 
-        }
+        }*/
     /* UNUSED===================
     // FROM CATEGORY  
     } else if (isset($_POST['category'])) {

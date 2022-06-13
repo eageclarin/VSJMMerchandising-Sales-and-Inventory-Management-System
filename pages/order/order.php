@@ -48,6 +48,9 @@
             case 'q':
                 $update = "Item quantity updated.";
                 break;
+            case 'a':
+                $update = "Sales Entry submitted.";
+                break;
         }
     }
     
@@ -116,8 +119,8 @@
                 }
                 break;
             case "addSearch":
-                if (isset($_POST['item'])) {
-                    $name = $_POST['item'];
+                if (isset($_POST['item']) && isset($_POST['itemQty'])) {
+                    $name = $_POST['item']; $qty = $_POST['itemQty'];
                     $id = $price = '';
                     $sqlGet = "SELECT * FROM item i
                         INNER JOIN inventory iv ON (i.item_ID = iv.item_ID)
@@ -135,22 +138,19 @@
                         //header('location: order.php?search=n'); //item not in inventory
                     }
  
-                    $qty = 1;
-                    $iTotal = $price * $qty;
-
                     $sqlSearch = "SELECT * FROM cart WHERE itemID = $id";
                     $resSearch = mysqli_query($conn, $sqlSearch);
                     $countSearch = mysqli_num_rows($resSearch);
                     $rowSearch = mysqli_fetch_assoc($resSearch);
 
                     if($countSearch >= 1) { //if product already in cart
-                        $qty = $rowSearch['quantity'];
+                        $qtySearch = $rowSearch['quantity'];
                         $itemTotal = $rowSearch['itemTotalP'];
                         
-                        $qty++;
-                        $itemTotal = $qty * $price;
+                        $qtySearch += $qty;
+                        $itemTotal = $qtySearch * $price;
 
-                        $sqlUpdate = "UPDATE cart SET quantity = '$qty', itemTotalP = '$itemTotal'
+                        $sqlUpdate = "UPDATE cart SET quantity = '$qtySearch', itemTotalP = '$itemTotal'
                             WHERE itemID = '$id'";
                         $resUpdate = mysqli_query($conn, $sqlUpdate);
 
@@ -161,6 +161,7 @@
                             //header('location: order.php?update=u'); //item in cart. updated item quantity
                         }
                     } else { //if product not in cart yet
+                        $iTotal = $price * $qty;
                         $sqlInsert = "INSERT INTO cart (
                             itemID, itemName, itemPrice, quantity, itemTotalP)
                             VALUES (
@@ -228,6 +229,8 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
+            clockUpdate();
+			setInterval(clockUpdate, 1000);
             /*------ PAYMENT     
             var cash = document.getElementById('moneyInput').value;
             if (cash == 0 || cash == '') {
@@ -245,25 +248,16 @@
                 }
             });
 
-            /*------ ENTER KEY - SUBMIT ------*/  
-            document.getElementById('searchItem').addEventListener('keyup', function(event) {
+            $('#qty').addEventListener('keyup', function(event) {
                 if (event.keyCode === 13) {
                     event.preventDefault();
                     document.getElementById('addItem').click();
                 }
             });
-            document.getElementById('qty').addEventListener('keyup', function(event) {
-                if (event.keyCode === 13) {
-                    event.preventDefault();
-                    document.getElementById('addItem').click();
-                }
-            });
-
-            clockUpdate();
-			setInterval(clockUpdate, 1000);
         });
 
         function clockUpdate() {
+            var date = new Date();
             const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 			const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 			var da = weekday[date.getUTCDay()];
@@ -273,6 +267,21 @@
 
 			$('.day').text(da);
 			$('.date').text(mo + ' ' + d + ', ' + y);
+        } 
+
+        function search() {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                var item = prompt("How many?", "1");
+
+                if (item != null) {
+                    document.getElementById('searchQty').value = parseInt(item);
+                    if (document.getElementById('searchQty') != "") {
+                        //document.getElementById('demo').innerHTML = document.getElementById('searchQty').value;
+                        $('#addItem').click();
+                    }
+                }   
+            }
         }
     </script>
 </head>
@@ -566,12 +575,14 @@
             <div class="col">
                 <!-- search item -->
                 <form method="POST" action="order.php?action=addSearch" class="d-flex mb-0">
+                    <input type="hidden" name="itemQty" id="searchQty" value="" />
                     <input type="text" name="item" autcomplete="off" class="form-control form-control me-2 ui-autocomplete-input border" id="searchItem" onkeyup="search()" placeholder="Search Item...">
-                        <button class="btn btn-success" id="addItem" type="submit"><i class="fa fa-check btn-icon-prepend"></i>Add</button>
+                    <button class="btn btn-success" id="addItem" type="submit"><i class="fa fa-check btn-icon-prepend"></i>Add</button>
                 </form>  
                 <!-- end of search item -->
 
                 <!-- order total -->
+                <p id="demo"></p>
                 <div class="pb-0 mt-4"> <p id="update" <?php echo $updateStyle ?>><?php echo $update ?></p></div>
                 <div class="row">
                     <div class="col-5">
@@ -593,8 +604,11 @@
                             Check Summary
                         </button> -->
 
-                        <form action="updateItem.php?action=order" method="post">
-                        <button class="w-100 btn btn-lg rounded-4 btn-primary" name="pay" id="pay" type="submit">Submit Sales</button></form>
+                        <form action="updateItem.php?action=order" method="post" id="orderForm">
+                            <input type="hidden" name="total" value="<?php echo $totalPrice ?>" />
+                        </form>
+                        
+                        <button class="w-100 btn btn-lg rounded-4 btn-primary" name="pay" id="pay" form="orderForm" type="submit">Submit Sales</button>
 
                         <!-- empty cart -->
                         <button type="submit" <?php echo $button ?> form="emptyForm" class="btn btn-lg btn-outline-danger">
@@ -604,20 +618,20 @@
                     </div>
                 </div>
                 <!-- end of buttons -->
-
-                <!------ MODAL ------>
+                
+                <!------ MODAL
                 <div class="modal fade bd-example-modal-lg" id="receipt" tabindex="-1" role="dialog" aria-labelledby="receiptLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
-                    <!-- modal header -->
+                    modal header
                     <div class="modal-header">
                         <h5 class="modal-title" id="receiptLabel">Receipt</h5>
                         <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
                         </button>
                     </div>
-                    <!-- end of modal header -->
+                    end of modal header
 
-                    <!-- modal body -->
+                    modal body
                     <div class="modal-body">
                         <div class="container-fluid">
                             <div class="row w-100 m-0 pb-3">
@@ -684,12 +698,12 @@
                             </div>
                         </div>
                     </div>
-                    <!-- end of modal body -->
+                   end of modal body 
 
                     </div>
                 </div>
                 </div>
-                <!------ END OF MODAL ------>
+                END OF MODAL ------>
 
             </div>
             <!------ END OF ORDER ------>
