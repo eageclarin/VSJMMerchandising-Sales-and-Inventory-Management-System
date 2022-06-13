@@ -76,21 +76,21 @@ CREATE TABLE inventory (
 );
 
 
-CREATE TABLE orders(
-order_ID int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-order_Date datetime NOT NULL,
-order_Total float(53) NOT NULL
+CREATE TABLE sales(
+sales_ID int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+sales_Date datetime NOT NULL,
+sales_Total float(53) NOT NULL
 );
 
 
-CREATE TABLE order_items(
+CREATE TABLE sales_items(
 item_ID int NOT NULL,
-order_ID int NOT NULL,
-orderItems_Quantity int NOT NULL,
-orderItems_TotalPrice float(53) NOT NULL,
-PRIMARY KEY (item_ID,order_ID),
+sales_ID int NOT NULL,
+salesItems_Quantity int NOT NULL,
+salesItems_TotalPrice float(53) NOT NULL,
+PRIMARY KEY (item_ID,sales_ID),
 FOREIGN KEY(item_ID) REFERENCES item(item_ID) ON UPDATE CASCADE,
-FOREIGN KEY(order_ID) REFERENCES orders(order_ID) ON UPDATE CASCADE
+FOREIGN KEY(sales_ID) REFERENCES sales(sales_ID) ON UPDATE CASCADE
 );
 
 CREATE TABLE cart (

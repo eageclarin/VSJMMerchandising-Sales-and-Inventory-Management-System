@@ -24,7 +24,7 @@
                         $resUpdate = mysqli_query($conn, $sqlUpdate);
                         
                         if($resUpdate) {
-                            header("location: order.php?update=q");
+                            header("location: salesEntry.php?update=q");
                         }
                     }
                 }
@@ -47,14 +47,14 @@
                     $totalPrice = $_POST['total'];
                     
                     //insert into orders
-                    $sqlOrder = "INSERT INTO orders (order_Date, order_Total)
+                    $sqlOrder = "INSERT INTO sales (sales_Date, sales_Total)
                                 VALUES ('$date','$totalPrice')";
                     $resOrder = mysqli_query($conn, $sqlOrder); 
 
                     //if isnerted
                     if ($resOrder){
                          //get recent id
-                        $sqlID = "SELECT order_ID AS id FROM orders WHERE order_ID = @@Identity";
+                        $sqlID = "SELECT sales_ID AS id FROM Sales WHERE sales_ID = @@Identity";
                         $resID = mysqli_query($conn, $sqlID);
                         $rowID = mysqli_fetch_assoc($resID);
                         $recentID = $rowID['id'];
@@ -71,7 +71,7 @@
                             $itemTotal = $rowItems['itemTotalP'];
   
                             //store to order_items
-                            $sqlOrderItems = "INSERT INTO order_items (item_ID, order_ID, orderItems_Quantity, orderItems_TotalPrice)
+                            $sqlOrderItems = "INSERT INTO sales_items (item_ID, sales_ID, salesItems_Quantity, salesItems_TotalPrice)
                             VALUES ('$id','$recentID', '$qty', '$itemTotal')";
                             $resOrderItems = mysqli_query($conn, $sqlOrderItems);
 
@@ -82,7 +82,7 @@
                         
                         $sqlEmpty = "TRUNCATE TABLE cart";
                         if(mysqli_query($conn, $sqlEmpty)) {
-                            header("location: order.php?update=a");
+                            header("location: salesEntry.php?update=a");
                         }
                     }
                 
@@ -91,7 +91,7 @@
             case "delete":
                 $sqlEmpty = "TRUNCATE TABLE cart";
                 if(mysqli_query($conn, $sqlEmpty)) {
-                    header("location: order.php");
+                    header("location: salesEntry.php");
                 }
         }
     }
