@@ -127,7 +127,7 @@ $to_date=date("Y-m-d");
         </div>              
       </form> 
 
-      <div class='table-wrapper' style="height:600px;">
+      <div class='table-wrapper' style="height:550px;">
       <?php  
         if (isset($_GET['from_date'])) {
           $from_date = $_GET['from_date'];

@@ -249,7 +249,8 @@ if(isset($_POST['cancel'])){
           $resultCheck = mysqli_num_rows($result); ?>
 
           <!-- PANELS -->
-          <div class = "container" style="width: 100%;">
+          <div class = "container" style="width: 100%; height:600px;">
+          <div class='table-wrapper' style="height:590px;">
               <?php 
                 if ($resultCheck>0){
                   while ($row = mysqli_fetch_assoc($result)) {
@@ -336,13 +337,14 @@ if(isset($_POST['cancel'])){
                             } // END OF RESULT1 WHILE LOOP
                           } //END OF RESULTCHECK1
                           echo "</table>";
-                          echo "<a href='../supplier/suppliertable.php?supplier_ID=".$supplier."'>Add Items</a>";?>
+                          echo "<a style='color:cadetblue;' href='../supplier/suppliertable.php?supplier_ID=".$supplier."'>Add Items</a>";?>
               
                       </div> <!-- END OF CONTENT -->
                     </section>
                   <?php
                   } 
                 }?>  
+              </div> <!-- END TABLE-WRAPPER -->
           </div><!-- END CONTAINER -->
       </div> <!-- END CARD BODY -->  
     </div> <!-- END CARD -->
@@ -352,15 +354,15 @@ if(isset($_POST['cancel'])){
   <!-------------DELIVERED CARD --------------->
   <div class="card" style="width: 49%;min-height:70%; float:right;">
     <div class="card-header bg-dark text-white">
-      <h3 class="card-title">To be Delivered</h3>
+      <h3 class="card-title">For Delivery</h3>
     </div>
     <div class="card-body">
       <?php
         $sql = "SELECT * FROM supplier_transactions INNER JOIN supplier ON (supplier_transactions.supplier_ID = supplier.supplier_ID) WHERE transaction_Status =1 ;";   
         $result = mysqli_query($conn,$sql);
         $resultCheck = mysqli_num_rows($result); ?>
-      <div class = "container" style="width: 100%;">
-        
+      <div class = "container" style="width: 100%; height: 600px;">
+      <div class='table-wrapper' style="height:590px;">
           <?php 
             if ($resultCheck>0){
               while ($row = mysqli_fetch_assoc($result)) {
@@ -438,7 +440,7 @@ if(isset($_POST['cancel'])){
                 <?php
                   } 
                 }?>  
-            
+            </div> <!-- END TABLE-WRAPPER -->
           </div><!-- END CONTAINER -->
       </div> <!-- END CARD BODY -->  
     </div> <!-- END CARD -->

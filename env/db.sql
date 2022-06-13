@@ -126,7 +126,7 @@ INSERT INTO branch (
 INSERT INTO user (
 	user_ID, username, user_pword
 ) VALUES (
-	1, 'user1', md5('1234')),
-	(2, 'user2',md5('0825'));
+	1, 'M.Campo', md5('Maribel123')),
+	(2, 'E.Campano',md5('Ernesto123'));
 
 
