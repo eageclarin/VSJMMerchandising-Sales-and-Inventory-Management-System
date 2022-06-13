@@ -117,9 +117,9 @@ $to_date=date("Y-m-d");
               <div class="dropdown">
                 <button class="btn btn-success dropdown-toggle form-control" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Download</button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                  <li><a class="dropdown-item" href="export.php?exportTransactions=all#">All Transactions</a></li>
-                  <li><a class="dropdown-item" href="export.php?exportTransactions=month#">Transactions for this Month</a></li>
-                  <li><a class="dropdown-item" href="export.php?exportTransactions=range&from=<?php echo $from_date?>&to=<?php echo $to_date?>#" id=exportRange onclick="changeRange()">Transactions in Date Range</a></li>
+                  <li><a class="dropdown-item text-dark" href="export.php?exportTransactions=all#">All Transactions</a></li>
+                  <li><a class="dropdown-item text-dark" href="export.php?exportTransactions=month#">Transactions for this Month</a></li>
+                  <li><a class="dropdown-item text-dark" href="export.php?exportTransactions=range&from=<?php echo $from_date?>&to=<?php echo $to_date?>#" id=exportRange onclick="changeRange()">Transactions in Date Range</a></li>
                 </ul>
               </div>
             </div>               
