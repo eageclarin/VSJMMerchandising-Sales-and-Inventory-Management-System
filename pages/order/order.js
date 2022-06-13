@@ -115,5 +115,10 @@ function checkStock(input, stock, item) {
     //qtyInput.html = stock;
     qtyInput.value = stock;
   }
+
+  if (input.keyCode === 13) {
+    input.preventDefault();
+    document.getElementById('addItem').click();
+  }
 }
 

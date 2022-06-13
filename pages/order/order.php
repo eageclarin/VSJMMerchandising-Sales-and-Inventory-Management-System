@@ -247,13 +247,6 @@
                     response(results.slice(0,5));
                 }
             });
-
-            $('#qty').addEventListener('keyup', function(event) {
-                if (event.keyCode === 13) {
-                    event.preventDefault();
-                    document.getElementById('addItem').click();
-                }
-            });
         });
 
         function clockUpdate() {
@@ -276,7 +269,7 @@
 
                 if (item != null) {
                     document.getElementById('searchQty').value = parseInt(item);
-                    if (document.getElementById('searchQty') != "") {
+                    if (document.getElementById('searchQty').value != "") {
                         //document.getElementById('demo').innerHTML = document.getElementById('searchQty').value;
                         $('#addItem').click();
                     }
@@ -336,7 +329,7 @@
     <main class="container pt-5">
         
         <!------ TITLE ------>
-        <div class="row w-100 mt-5" style="height:10%">
+        <div class="row mt-5" style="height:10%">
             <div class="col position-relative">
                 <span class="position-absolute top-50 start-50 translate-middle fs-1 fw-bold"> SALES ENTRY </span>
             </div>
@@ -574,7 +567,7 @@
             <!------ ORDER ------>
             <div class="col">
                 <!-- search item -->
-                <form method="POST" action="order.php?action=addSearch" class="d-flex mb-0">
+                <form method="POST" action="order.php?action=addSearch" id="addSearchForm" class="d-flex mb-0">
                     <input type="hidden" name="itemQty" id="searchQty" value="" />
                     <input type="text" name="item" autcomplete="off" class="form-control form-control me-2 ui-autocomplete-input border" id="searchItem" onkeyup="search()" placeholder="Search Item...">
                     <button class="btn btn-success" id="addItem" type="submit"><i class="fa fa-check btn-icon-prepend"></i>Add</button>
@@ -608,7 +601,7 @@
                             <input type="hidden" name="total" value="<?php echo $totalPrice ?>" />
                         </form>
                         
-                        <button class="w-100 btn btn-lg rounded-4 btn-primary" name="pay" id="pay" form="orderForm" type="submit">Submit Sales</button>
+                        <button <?php echo $button ?> class="w-100 btn btn-lg rounded-4 btn-primary" name="pay" id="pay" form="orderForm" type="submit">Submit Sales</button>
 
                         <!-- empty cart -->
                         <button type="submit" <?php echo $button ?> form="emptyForm" class="btn btn-lg btn-outline-danger">
