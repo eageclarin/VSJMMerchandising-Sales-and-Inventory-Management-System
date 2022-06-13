@@ -351,9 +351,9 @@ if (isset($_POST['deleteSelected'])) {
     if (isset($_POST['search1'])) {
         $Name = $_POST['search1'];
         if ($Name!="") {    
-            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) INNER JOIN (SELECT SUM(salesItems_Quantity) as sales_sum, item_ID as sales_itemID FROM sales_items GROUP BY item_ID) as sales ON (inventory.item_ID = sales.sales_itemID) WHERE (item_Name LIKE '%$Name%' OR item_Brand LIKE '%$Name%' OR item_category LIKE '%$Name%'); ";
+            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) INNER JOIN (SELECT SUM(orderItems_Quantity) as sales_sum, item_ID as order_itemID FROM order_items GROUP BY item_ID) as orders ON (inventory.item_ID = orders.order_itemID) WHERE (item_Name LIKE '%$Name%' OR item_Brand LIKE '%$Name%' OR item_category LIKE '%$Name%'); ";
         } else {
-            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) INNER JOIN (SELECT SUM(salesItems_Quantity) as sales_sum, item_ID as sales_itemID FROM sales_items GROUP BY item_ID) as sales ON (inventory.item_ID = sales.sales_itemID) ORDER BY sales_sum DESC;"; 
+            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) INNER JOIN (SELECT SUM(orderItems_Quantity) as sales_sum, item_ID as order_itemID FROM order_items GROUP BY item_ID) as orders ON (inventory.item_ID = orders.order_itemID) ORDER BY sales_sum DESC;"; 
         
         }
     } 
@@ -363,9 +363,9 @@ if (isset($_POST['deleteSelected'])) {
         $category= $_POST['category'];
         echo "<h4> ".$category . "</h4>";
         if ($category=='All') {
-            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) INNER JOIN (SELECT SUM(salesItems_Quantity) as sales_sum, item_ID as sales_itemID FROM sales_items GROUP BY item_ID) as sales ON (inventory.item_ID = sales.sales_itemID) ORDER BY sales_sum DESC;";
+            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) INNER JOIN (SELECT SUM(orderItems_Quantity) as sales_sum, item_ID as order_itemID FROM order_items GROUP BY item_ID) as orders ON (inventory.item_ID = orders.order_itemID) ORDER BY sales_sum DESC;";
         } else {
-            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) INNER JOIN (SELECT SUM(salesItems_Quantity) as sales_sum, item_ID as sales_itemID FROM sales_items GROUP BY item_ID) as sales ON (inventory.item_ID = sales.sales_itemID) WHERE item_Category = '$category' ORDER BY sales_sum DESC;";
+            $sql = "SELECT * FROM item INNER JOIN inventory ON (item.item_ID = inventory.item_ID) INNER JOIN (SELECT SUM(orderItems_Quantity) as sales_sum, item_ID as order_itemID FROM order_items GROUP BY item_ID) as orders ON (inventory.item_ID = orders.order_itemID) WHERE item_Category = '$category' ORDER BY sales_sum DESC;";
         }
     // DEFAULT: BY ID    
     }  else {

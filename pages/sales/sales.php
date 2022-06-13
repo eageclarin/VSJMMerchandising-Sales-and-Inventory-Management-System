@@ -31,7 +31,7 @@
 include "conn.php";
 require_once '../../env/auth_check.php';
 
-$result = mysqli_query($conn, "SELECT SUM(salesItems_TotalPrice) AS totalSum, COUNT(item_ID) AS totalItems, sales_Date FROM sales_items INNER JOIN sales on sales.sales_ID = sales_items.sales_ID");
+$result = mysqli_query($conn, "SELECT SUM(orderItems_TotalPrice) AS totalSum, COUNT(item_ID) AS totalItems, order_Date FROM order_items INNER JOIN orders on orders.order_ID = order_items.order_ID");
 $row = mysqli_fetch_array($result);
 $totalItems = $row['totalItems'];
 $totalSum = $row['totalSum'];
@@ -322,8 +322,8 @@ $totalSum = $row['totalSum'];
                             </h5>
                             <!-- TOTAL SALES INFO -->
                                 <?php
-                                    $result = mysqli_query($conn, "SELECT SUM(salesItems_TotalPrice) AS totalSum, COUNT(item_ID) AS totalItems, sales_Date FROM sales_items INNER JOIN sales on sales.sales_ID = sales_items.sales_ID 
-                                    WHERE sales_Date BETWEEN '$from_date' AND '$to_date' ");
+                                    $result = mysqli_query($conn, "SELECT SUM(orderItems_TotalPrice) AS totalSum, COUNT(item_ID) AS totalItems, order_Date FROM order_items INNER JOIN orders on orders.order_ID = order_items.order_ID 
+                                    WHERE order_Date BETWEEN '$from_date' AND '$to_date' ");
                                     $row = mysqli_fetch_array($result);
                                     $totalItems_Day = $row['totalItems'];
                                     $totalSum_Day = $row['totalSum'];
@@ -348,11 +348,11 @@ $totalSum = $row['totalSum'];
                             <?php 
 
 
-                                    $sql = "SELECT item.item_ID, item.item_Name, item.item_unit, item.item_Brand, sales_items.sales_ID, sales_items.salesItems_Quantity, sales_items.salesItems_TotalPrice, sales.sales_Date, sales.sales_Total 
+                                    $sql = "SELECT item.item_ID, item.item_Name, item.item_unit, item.item_Brand, order_items.order_ID, order_items.orderItems_Quantity, order_items.orderItems_TotalPrice, orders.order_Date, orders.order_Total 
                                             FROM item 
-                                            INNER JOIN sales_items on sales_items.item_ID = item.item_ID 
-                                            INNER JOIN sales on sales.sales_ID = sales_items.sales_ID 
-                                            WHERE sales.sales_Date BETWEEN '$from_date' AND '$to_date'";
+                                            INNER JOIN order_items on order_items.item_ID = item.item_ID 
+                                            INNER JOIN orders on orders.order_ID = order_items.order_ID 
+                                            WHERE orders.order_Date BETWEEN '$from_date' AND '$to_date'";
                                     $result = mysqli_query($conn, $sql);
 
                                     if(mysqli_num_rows($result) > 0)
@@ -361,14 +361,14 @@ $totalSum = $row['totalSum'];
                                         {
                                             ?>
                                             <tr>
-                                                <td><?= $row['sales_Date']; ?></td>
-                                                <td><?= $row['sales_ID']; ?></td>
+                                                <td><?= $row['order_Date']; ?></td>
+                                                <td><?= $row['order_ID']; ?></td>
                                                 <td><?= $row['item_ID']; ?></td>
                                                 <td><?= $row['item_Name']; ?></td>
                                                 <td><?= $row['item_unit']; ?></td>
                                                 <td><?= $row['item_Brand']; ?></td>
-                                                <td><?= $row['salesItems_Quantity']; ?></td>
-                                                <td><?= $row['salesItems_TotalPrice']; ?></td>
+                                                <td><?= $row['orderItems_Quantity']; ?></td>
+                                                <td><?= $row['orderItems_TotalPrice']; ?></td>
                                                 
                                             </tr>
                                             <?php
@@ -400,12 +400,12 @@ $totalSum = $row['totalSum'];
     $date = date("Y-m-d");
     $week=date_create($date);
     $week = date_format($week,"W");
-    $sql = "SELECT SUM(sales_Total) AS orderTotal, sales_Date FROM sales WHERE WEEK(sales_Date) = '$week' GROUP BY sales_Date;";                                    
+    $sql = "SELECT SUM(order_Total) AS orderTotal, order_Date FROM orders WHERE WEEK(order_Date) = '$week' GROUP BY order_Date;";                                    
     $result = mysqli_query($conn,$sql);
     $resultCheck = mysqli_num_rows($result);
     if ($resultCheck>0){
         while ($row = mysqli_fetch_assoc($result)) {
-            $index=date_create($row['sales_Date']);
+            $index=date_create($row['order_Date']);
             $index = date_format($index,"w");
             $days[$index] = $row['orderTotal'];
         }
@@ -416,7 +416,7 @@ $totalSum = $row['totalSum'];
     $date = date("Y-m-d");
     $year=date_create($date);
     $year = date_format($year,"Y");
-    $sql = "SELECT AVG(daily) AS daily, orderDate FROM (SELECT SUM(sales_Total) as daily, sales_Date AS orderDate FROM sales WHERE YEAR(sales_Date)='$year' GROUP BY sales_Date) AS average GROUP BY MONTH(orderDate);";                                    
+    $sql = "SELECT AVG(daily) AS daily, orderDate FROM (SELECT SUM(order_Total) as daily, order_Date AS orderDate FROM orders WHERE YEAR(order_Date)='$year' GROUP BY order_Date) AS average GROUP BY MONTH(orderDate);";                                    
     $result = mysqli_query($conn,$sql);
     $resultCheck = mysqli_num_rows($result);
     if ($resultCheck>0){
