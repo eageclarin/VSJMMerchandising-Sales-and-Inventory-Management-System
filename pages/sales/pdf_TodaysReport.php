@@ -104,7 +104,7 @@ if(isset($_GET['from_date']) && isset($_GET['to_date']))
                                 $pdf->Cell(15,8,$row['item_unit'],1,0);
                                 $pdf->Cell(30,8,$row['item_Brand'],1,0);
                                 $pdf->Cell(20,8,$row['orderItems_Quantity'],1,0);
-                                $pdf->Cell(20,8,$row['orderItems_TotalPrice'],1,1);   
+                                $pdf->Cell(20,8,number_format($row['orderItems_TotalPrice'],2),1,1);   
                             }
                         }
                     }

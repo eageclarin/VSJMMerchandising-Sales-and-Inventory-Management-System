@@ -68,14 +68,14 @@ if(isset($_GET['from_date']) && isset($_GET['to_date']))
                     $pdf->SetFont('Arial','',8);
                     $y= $pdf ->GetY();
                     $pdf->Cell(95,8,$row['order_Date'],1,0,'C');
-                    $pdf->Cell(95,8,$row['totalSales'],1,1,'C');
+                    $pdf->Cell(95,8,number_format($row['totalSales'],2),1,1,'C');
                     $total = $total + $row['totalSales'];
                 
                 }
                 $y= $pdf ->GetY();
                 $pdf->SetFont('Arial','B',10);
                 $pdf->Cell(95,8,'',0,0,'L');
-                $pdf->Cell(95,8,'Grand Total:                       '.$total,0,1,'L');
+                $pdf->Cell(95,8,'Grand Total:                       '.number_format($total,2),0,1,'L');
                 $y1=$pdf ->GetY();
                 $pdf ->SetY($y);
             $pdf ->SetY($y1+10);
